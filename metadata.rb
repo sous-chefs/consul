@@ -6,9 +6,8 @@ description      'Installs/Configures consul'
 long_description 'Installs/Configures consul'
 version          '0.1.0'
 
-%w(ubuntu redhat).each do |flavor|
-  supports flavor
-end
+%w(ubuntu redhat).each {|os| supports os}
 
-suggests 'ark'
+depends 'ark'
 suggests 'golang'
+  
