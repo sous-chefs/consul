@@ -18,7 +18,8 @@
 #
 include_recipe 'ark'
 
-install_version = [node[:consul][:version], node[:os], node[:consul][:arch]].join('_')
+install_arch = kernel['machine'] =~ /x86_64/ ? 'amd64' : '386'
+install_version = [node[:consul][:version], node[:os], install_arch].join('_')
 install_checksum = node[:consul][:checksum].fetch(install_version)
 
 Chef::Debug("Consul version: #{install_version}")

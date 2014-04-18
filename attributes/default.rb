@@ -16,7 +16,6 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #
-default[:consul][:arch] = kernel['machine'] =~ /x86_64/ ? 'amd64' : '386'
 default[:consul][:base_url] = 'https://dl.bintray.com/mitchellh/consul/'
 default[:consul][:version] = '0.1.0'
 default[:consul][:checksums] = {
