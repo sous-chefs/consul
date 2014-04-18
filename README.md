@@ -1,10 +1,11 @@
 # consul-cookbook
 
-TODO: Enter the cookbook description here.
+Installs and configures [Consul][1].
 
 ## Supported Platforms
 
-TODO: List your supported platforms.
+CentOS 5.10, 6.5
+Ubuntu 12.04, 14.04
 
 ## Attributes
 
@@ -16,9 +17,9 @@ TODO: List your supported platforms.
     <th>Default</th>
   </tr>
   <tr>
-    <td><tt>['consul']['bacon']</tt></td>
-    <td>Boolean</td>
-    <td>whether to include bacon</td>
+    <td><tt>['consul']['version']</tt></td>
+    <td>String</td>
+    <td>Version to install</td>
     <td><tt>true</tt></td>
   </tr>
 </table>
@@ -37,15 +38,21 @@ Include `consul` in your node's `run_list`:
 }
 ```
 
-## Contributing
+### consul::default
 
-1. Fork the repository on Github
-2. Create a named feature branch (i.e. `add-new-recipe`)
-3. Write you change
-4. Write tests for your change (if applicable)
-5. Run the tests, ensuring they all pass
-6. Submit a Pull Request
+Include `consul` in your node's `run_list`:
+
+```json
+{
+  "run_list": [
+    "recipe[consul::default]"
+  ]
+}
+```
 
 ## License and Authors
 
-Author:: John Bellone (<jbellone@bloomberg.net>)
+Author:: John Bellone [@johnbellone][2] (<jbellone@bloomberg.net>)
+
+[1]: http://consul.io
+[2]: https://twitter.com/johnbellone
