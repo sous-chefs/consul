@@ -20,7 +20,13 @@ Ubuntu 12.04, 14.04
     <td><tt>['consul']['version']</tt></td>
     <td>String</td>
     <td>Version to install</td>
-    <td><tt>true</tt></td>
+    <td><tt>0.1.0</tt></td>
+  </tr>
+  <tr>
+    <td><tt>['consul']['base_url']</tt></td>
+    <td>String</td>
+    <td>Base URL for binary downloads</td>
+    <td><tt>https://dl.bintray.com/mitchellh/consul/</tt></td>
   </tr>
 </table>
 
@@ -33,19 +39,19 @@ Include `consul` in your node's `run_list`:
 ```json
 {
   "run_list": [
-    "recipe[consul::default]"
+    "recipe[consul]"
   ]
 }
 ```
 
-### consul::default
+### consul::binary_install
 
-Include `consul` in your node's `run_list`:
+Include `consul::binary_install` in your node's `run_list`:
 
 ```json
 {
   "run_list": [
-    "recipe[consul::default]"
+    "recipe[consul::binary_install]"
   ]
 }
 ```
