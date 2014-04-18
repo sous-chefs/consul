@@ -1,8 +1,5 @@
 #
-# Cookbook Name:: consul
-# Author:: John Bellone <jbellone@bloomberg.net>
-#
-# Copyright 2014 Bloomberg Finance L.P.
+# Copyright 2014 John Bellone <jbellone@bloomberg.net>
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -16,6 +13,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #
+
 default[:consul][:base_url] = 'https://dl.bintray.com/mitchellh/consul/'
 default[:consul][:version] = '0.1.0'
 default[:consul][:checksums] = {
