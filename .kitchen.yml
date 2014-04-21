@@ -12,6 +12,7 @@ platforms:
   - name: centos-5.10
 
 suites:
-  - name: default
-    run_list: recipe[consul]
-    attributes:
+  - name: binary_install
+    run_list: recipe[consul::binary_install]
+  - name: source_install
+    run_list: recipe[consul::source_install]

@@ -28,21 +28,19 @@ Ubuntu 12.04, 14.04
     <td>Base URL for binary downloads</td>
     <td><tt>https://dl.bintray.com/mitchellh/consul/</tt></td>
   </tr>
+    <tr>
+    <td><tt>['consul']['install_dir']</tt></td>
+    <td>String</td>
+    <td>Directory to install binary to.</td>
+    <td><tt>/usr/local/bin</tt></td>
+  </tr>
 </table>
 
 ## Usage
 
 ### consul::default
 
-Include `consul` in your node's `run_list`:
-
-```json
-{
-  "run_list": [
-    "recipe[consul]"
-  ]
-}
-```
+This uses the binary installation recipe by default.
 
 ### consul::binary_install
 
@@ -56,9 +54,22 @@ Include `consul::binary_install` in your node's `run_list`:
 }
 ```
 
+### consul::source_install
+
+Include `consul::source_install` in your node's `run_list`:
+
+```json
+{
+  "run_list": [
+    "recipe[consul::source_install]"
+  ]
+}
+```
+
 ## License and Authors
 
-Author:: John Bellone [@johnbellone][2] (<jbellone@bloomberg.net>)
+Author:: [John Bellone][3] [@johnbellone][2] (<jbellone@bloomberg.net>)
 
 [1]: http://consul.io
 [2]: https://twitter.com/johnbellone
+[3]: https://github.com/johnbellone
