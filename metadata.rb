@@ -6,7 +6,8 @@ description      'Installs/Configures consul'
 long_description 'Installs/Configures consul'
 version          '0.1.0'
 
-%w(ubuntu redhat).each {|os| supports os}
+supports 'ubuntu', '>= 12.04'
+supports 'redhat', '>= 5.10'
 
-depends 'ark'
-suggests 'golang'
+depends 'ark', '~> 0.8.0'
+depends 'golang', '~> 1.3.0'
