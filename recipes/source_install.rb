@@ -14,13 +14,12 @@
 # limitations under the License.
 #
 
-# TODO: Throw some gnarly errors if golang has less than 1.2 version.
-include_recipe 'golang'
+include_recipe 'golang::default'
 
 # TODO: Regular expression to support branches?
 source_version = "v#{node[:consul][:version]}"
 
 ark 'consul' do
-  source URL.join('https://github.com/hashicorp/consul/archive/', "#{source_version}.zip").to_s
+  url URI.join('https://github.com/hashicorp/consul/archive/', "#{source_version}.tar.gz").to_s
   action [:install_with_make]
 end
