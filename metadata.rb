@@ -1,7 +1,7 @@
 name             'consul'
 maintainer       'John Bellone'
 maintainer_email 'jbellone@bloomberg.net'
-license          'Apache 2.0'
+license          'Apache v2.0'
 description      'Installs/Configures consul'
 long_description 'Installs/Configures consul'
 version          '0.1.0'
@@ -9,8 +9,7 @@ version          '0.1.0'
 recipe 'consul', 'Installs consul service from binary.'
 recipe 'consul::source_install', 'Install consul service from source.'
 
-supports 'ubuntu', '>= 12.04'
-supports 'redhat', '>= 5.10'
+%w(redhat centos ubuntu debian).each { |os| supports os }
 
 depends 'ark', '~> 0.8.0'
 depends 'golang', '~> 1.3.0'
