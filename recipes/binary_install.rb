@@ -14,18 +14,16 @@
 # limitations under the License.
 #
 
-include_recipe 'golang::default'
+include_recipe 'ark'
 
-# TODO: Regular expression to support branches?
-source_version = "v#{node[:consul][:version]}"
-
-env = {
- 'PATH' => "#{node[:go][:install_dir]}/bin:#{node[:go][:gobin]}:/usr/bin",
- 'GOPATH' => node[:go][:gopath]
-}
+install_arch = node[:kernel][:machine] =~ /x86_64/ ? 'amd64' : '386'
+install_version = [node[:consul][:version], node[:os], install_arch].join('_')
+install_checksum = node[:consul][:checksums].fetch(install_version)
 
 ark 'consul' do
-  environment env
-  url URI.join('https://github.com/hashicorp/consul/archive/', "#{source_version}.tar.gz").to_s
-  action [:install_with_make]
+  path node[:consul][:install_dir]
+  version node[:consul][:version]
+  checksum install_checksum
+  url URI.join(node[:consul][:base_url], "#{install_version}.zip").to_s
+  action :dump
 end

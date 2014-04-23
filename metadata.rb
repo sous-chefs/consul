@@ -6,7 +6,8 @@ description      'Installs/Configures consul'
 long_description 'Installs/Configures consul'
 version          '0.1.0'
 
-recipe 'consul', 'Installs consul service from binary.'
+recipe 'consul', 'Installs and starts consul service.'
+recipe 'consul::binary_install', 'Installs consul service from binary.'
 recipe 'consul::source_install', 'Install consul service from source.'
 
 %w(redhat centos ubuntu debian).each { |os| supports os }

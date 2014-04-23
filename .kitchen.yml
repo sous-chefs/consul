@@ -13,8 +13,13 @@ platforms:
 
 suites:
   - name: default
-    run_list: recipe[consul]
-  - name: source_install
+    run_list: 
+      - recipe[consul::binary_install]
+      - recipe[consul]
+  - name: binary
+    run_list: 
+      - recipe[consul::binary_install]
+  - name: source
     run_list: 
       - recipe[golang]
       - recipe[consul::source_install]
