@@ -29,5 +29,4 @@ ark 'consul' do
   environment env
   url URI.join('https://github.com/hashicorp/consul/archive/', "#{source_version}.tar.gz").to_s
   action [:install_with_make]
-  notifies :start, 'service[consul]', :delayed
 end
