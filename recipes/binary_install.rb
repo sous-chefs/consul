@@ -28,3 +28,8 @@ ark 'consul' do
   url URI.join(node[:consul][:base_url], "#{install_version}.zip").to_s
   action :dump
 end
+
+file '/usr/local/bin/consul' do
+  mode '0755'
+  action :touch
+end
