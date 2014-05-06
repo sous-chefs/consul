@@ -1,9 +1,16 @@
+# 0.2.0
+
+Bumps the release of [Consul][1] to 0.2.0
+
+* Bug fixes
+  * Source installation now works properly;
+  * Test kitchen tests all green;
+
 # 0.1.0
 
-Initial release of consul
+Initial release of [Consul][1] cookbook.
 
-* Enhancements
-  * an enhancement
+* Features
+  * Source and binary installation recipes
 
-* Bug Fixes
-  * a bug fix
+[1]: http://consul.io
