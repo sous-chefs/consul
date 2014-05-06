@@ -29,3 +29,4 @@ default[:consul][:checksums] = {
 # Service attributes
 default[:consul][:service_mode] = 'bootstrap'
 default[:consul][:data_dir] = '/var/lib/consul'
+default[:consul][:servers] = []
