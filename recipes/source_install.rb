@@ -21,12 +21,13 @@ include_recipe 'golang::default'
 source_version = "v#{node[:consul][:version]}"
 
 env = {
- 'PATH' => "#{node[:go][:install_dir]}/bin:#{node[:go][:gobin]}:/usr/bin",
+ 'PATH' => "#{node[:go][:install_dir]}/go/bin:#{node[:go][:install_dir]}/bin:#{node[:go][:gobin]}:/usr/bin",
  'GOPATH' => node[:go][:gopath]
 }
 
 ark 'consul' do
+  has_binaries ['bin/consul']
   environment env
   url URI.join('https://github.com/hashicorp/consul/archive/', "#{source_version}.tar.gz").to_s
-  action [:install_with_make]
+  action :install
 end
