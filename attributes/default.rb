@@ -17,6 +17,7 @@
 
 default[:consul][:base_url] = 'https://dl.bintray.com/mitchellh/consul/'
 default[:consul][:version] = '0.2.0'
+default[:consul][:install_method] = 'binary'
 default[:consul][:install_dir] = '/usr/local/bin'
 default[:consul][:checksums] = {
   '0.2.0_darwin_amd64' => '0a03a42fa3ea945d19152bc2429b4098a195a68f7a8f10a1b63e805f7f251fe9',
@@ -24,3 +25,8 @@ default[:consul][:checksums] = {
   '0.2.0_linux_amd64' => '2802ce8e173ee37e1a1e992ba230963e09d4b41ce4ac60c1222714c036787b4f',
   '0.2.0_windows_386' => '353da0b0321293d81a1e2351b7bc6902d462c6573e44a4495d1a61df6b0a0179'
 }
+
+# Service attributes
+default[:consul][:service_mode] = 'bootstrap'
+default[:consul][:data_dir] = '/var/lib/consul'
+default[:consul][:servers] = []

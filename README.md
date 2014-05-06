@@ -20,7 +20,7 @@ Ubuntu 12.04, 14.04
     <td><tt>['consul']['version']</tt></td>
     <td>String</td>
     <td>Version to install</td>
-    <td><tt>0.1.0</tt></td>
+    <td><tt>0.2.0</tt></td>
   </tr>
   <tr>
     <td><tt>['consul']['base_url']</tt></td>
@@ -28,11 +28,35 @@ Ubuntu 12.04, 14.04
     <td>Base URL for binary downloads</td>
     <td><tt>https://dl.bintray.com/mitchellh/consul/</tt></td>
   </tr>
-    <tr>
+  <tr>
+    <td><tt>['consul']['install_method']</tt></td>
+    <td>String</td>
+    <td>Method to install consul with when using default recipe: binary or source</td>
+    <td><tt>binary</tt></td>
+  </tr>
+  <tr>
     <td><tt>['consul']['install_dir']</tt></td>
     <td>String</td>
     <td>Directory to install binary to.</td>
     <td><tt>/usr/local/bin</tt></td>
+  </tr>
+  <tr>
+    <td><tt>['consul']['service_mode']</tt></td>
+    <td>String</td>
+    <td>Mode to run consul as: bootstrap, server, or client</td>
+    <td><tt>bootstrap</tt></td>
+  </tr>
+  <tr>
+    <td><tt>['consul']['data_dir']</tt></td>
+    <td>String</td>
+    <td>Location to store consul's data in</td>
+    <td><tt>/var/lib/consul</tt></td>
+  </tr>
+  <tr>
+    <td><tt>['consul']['servers']</tt></td>
+    <td>Array Strings</td>
+    <td>Consul servers to join</td>
+    <td><tt>[]</tt></td>
   </tr>
 </table>
 
@@ -40,7 +64,7 @@ Ubuntu 12.04, 14.04
 
 ### consul::default
 
-This uses the binary installation recipe by default.
+This uses the binary installation recipe by default. It also starts consul at boot time.
 
 ### consul::binary_install
 
