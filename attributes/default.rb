@@ -17,6 +17,7 @@
 
 default[:consul][:base_url] = 'https://dl.bintray.com/mitchellh/consul/'
 default[:consul][:version] = '0.2.0'
+default[:consul][:install_method] = 'binary'
 default[:consul][:install_dir] = '/usr/local/bin'
 default[:consul][:checksums] = {
   '0.2.0_darwin_amd64' => '0a03a42fa3ea945d19152bc2429b4098a195a68f7a8f10a1b63e805f7f251fe9',

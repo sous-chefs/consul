@@ -20,6 +20,9 @@ platforms:
         install_dir: '/usr'
 
 suites:
+  - name: default
+    run_list:
+      - recipe[consul::default]
   - name: binary
     run_list: 
       - recipe[consul::binary_install]
