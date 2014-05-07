@@ -17,17 +17,24 @@
 
 include_recipe 'golang::default'
 
-# TODO: Regular expression to support branches?
-source_version = "v#{node[:consul][:version]}"
+directory "#{node[:go][:gopath]}/src/github.com/hashicorp" do
+  owner 'root'
+  group 'root'
+  mode 00755
+  recursive true
+  action :create
+end
 
-env = {
- 'PATH' => "#{node[:go][:install_dir]}/go/bin:#{node[:go][:install_dir]}/bin:#{node[:go][:gobin]}:/usr/bin",
- 'GOPATH' => node[:go][:gopath]
-}
+git "#{node[:go][:gopath]}/src/github.com/hashicorp/consul" do
+  repository "https://github.com/hashicorp/consul.git"
+  reference node[:consul][:source_revision]
+  action :checkout
+end
 
-ark 'consul' do
-  has_binaries ['bin/consul']
-  environment env
-  url URI.join('https://github.com/hashicorp/consul/archive/', "#{source_version}.tar.gz").to_s
+golang_package 'github.com/hashicorp/consul' do
   action :install
+end
+
+link "#{node[:consul][:install_dir]}/consul" do
+  to "#{default[:go][:gobin]}/consul"
 end
