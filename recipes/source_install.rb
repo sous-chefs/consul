@@ -20,7 +20,7 @@ include_recipe 'golang::default'
 directory "#{node[:go][:gopath]}/src/github.com/hashicorp" do
   owner 'root'
   group 'root'
-  mode 00755
+  mode '00755'
   recursive true
   action :create
 end
@@ -36,5 +36,5 @@ golang_package 'github.com/hashicorp/consul' do
 end
 
 link "#{node[:consul][:install_dir]}/consul" do
-  to "#{default[:go][:gobin]}/consul"
+  to "#{node[:go][:gobin]}/consul"
 end
