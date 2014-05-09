@@ -90,7 +90,7 @@ Include `consul::source_install` in your node's `run_list`:
 }
 ```
 
-## License and Authors
+## Authors
 
 Author:: [John Bellone][3] [@johnbellone][2] (<jbellone@bloomberg.net>)
 
