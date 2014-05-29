@@ -37,3 +37,8 @@ default[:consul][:source_revision] = "master"
 default[:consul][:service_mode] = 'bootstrap'
 default[:consul][:data_dir] = '/var/lib/consul'
 default[:consul][:servers] = []
+
+# UI attributes
+default[:consul][:client_addr] = '0.0.0.0'
+default[:consul][:ui_dir] = '/var/lib/consul/ui'
+default[:consul][:serve_ui] = false

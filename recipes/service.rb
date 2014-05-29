@@ -13,6 +13,10 @@ else
   raise 'node[:consul][:service_mode] must be "bootstrap", "server", or "client"'
 end
 
+if node[:consul][:serve_ui]
+  service_params = "#{service_params} -ui-dir #{node[:consul][:ui_dir]}/consul_ui -client #{node[:consul][:client_addr]}"
+end
+
 template '/etc/init.d/consul' do
   source 'consul-init.erb'
   mode 0755
