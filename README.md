@@ -60,6 +60,35 @@ Ubuntu 12.04, 14.04
   </tr>
 </table>
 
+### Consul UI Attributes
+
+<table>
+  <tr>
+    <th>Key</th>
+    <th>Type</th>
+    <th>Description</th>
+    <th>Default</th>
+  </tr>
+  <tr>
+    <td><tt>['consul']['client_address']</tt></td>
+    <td>String</td>
+    <td>Address to bind to</td>
+    <td><tt>0.0.0.0</tt></td>
+  </tr>
+  <tr>
+    <td><tt>['consul']['ui_dir']</tt></td>
+    <td>String</td>
+    <td>Location to download the UI to</td>
+    <td><tt>/var/lib/consul/ui</tt></td>
+  </tr>
+  <tr>
+    <td><tt>['consul']['serve_ui']</tt></td>
+    <td>Boolean</td>
+    <td>Determines whether the consul service also serve's the UI</td>
+    <td><tt>false</tt></td>
+  </tr>
+</table>
+
 ## Usage
 
 ### consul::default
@@ -86,6 +115,20 @@ Include `consul::source_install` in your node's `run_list`:
 {
   "run_list": [
     "recipe[consul::source_install]"
+  ]
+}
+```
+
+### consul::ui
+
+This installs the UI into a specified directory.
+
+Include `consul::ui` in your node's `run_list`:
+
+```json
+{
+  "run_list": [
+    "recipe[consul::ui]"
   ]
 }
 ```
