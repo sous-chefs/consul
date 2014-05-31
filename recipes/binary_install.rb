@@ -29,7 +29,7 @@ ark 'consul' do
   action :dump
 end
 
-file '/usr/local/bin/consul' do
+file "#{node[:consul][:install_dir]}/consul" do
   mode '0755'
   action :touch
 end
