@@ -36,6 +36,7 @@ default[:consul][:source_revision] = "master"
 # Service attributes
 default[:consul][:service_mode] = 'bootstrap'
 default[:consul][:data_dir] = '/var/lib/consul'
+default[:consul][:config_dir] = '/etc/consul.d'
 default[:consul][:servers] = []
 
 # UI attributes
