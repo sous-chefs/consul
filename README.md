@@ -141,8 +141,9 @@ Include `consul::ui` in your node's `run_list`:
 
 ## Authors
 
-Author:: [John Bellone][3] [@johnbellone][2] (<jbellone@bloomberg.net>)
+Created and maintained by [John Bellone][3] [@johnbellone][2] (<jbellone@bloomberg.net>) and a growing community of [contributors][4].
 
 [1]: http://consul.io
 [2]: https://twitter.com/johnbellone
 [3]: https://github.com/johnbellone
+[4]: https://github.com/johnbellone/consul-cookbook/graphs/contributors
