@@ -53,6 +53,12 @@ Ubuntu 12.04, 14.04
     <td><tt>/var/lib/consul</tt></td>
   </tr>
   <tr>
+    <td><tt>['consul']['config_dir']</tt></td>
+    <td>String</td>
+    <td>Location to read service definitions from (directoy will be created)</td>
+    <td><tt>/etc/consul.d</tt></td>
+  </tr>
+  <tr>
     <td><tt>['consul']['servers']</tt></td>
     <td>Array Strings</td>
     <td>Consul servers to join</td>
