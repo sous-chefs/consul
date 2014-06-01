@@ -23,9 +23,3 @@ suites:
   - name: default
     run_list:
       - recipe[consul::default]
-  - name: binary
-    run_list: 
-      - recipe[consul::binary_install]
-  - name: source
-    run_list: 
-      - recipe[consul::source_install]
