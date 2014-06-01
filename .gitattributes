@@ -1,0 +1,8 @@
+Berksfile export-ignore
+Gemfile export-ignore
+Thorfile export-ignore
+Vagrantfile export-ignore
+.gitignore export-ignore
+.gitmodules export-ignore
+.gitattributes export-ignore
+chefignore export-ignore
