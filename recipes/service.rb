@@ -31,6 +31,6 @@ template '/etc/init.d/consul' do
 end
 
 service 'consul' do
-  supports status: true, restart: true
+  supports status: true, restart: true, reload: true
   action [:enable, :start]
 end
