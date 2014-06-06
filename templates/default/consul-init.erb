@@ -14,7 +14,7 @@
 #                       * Multi Datacenter
 ### END INIT INFO
 
-CMD="<%= @consul_binary %> agent <%= @service_params %> -data-dir <%= @data_dir %> -config-dir <%= @config_dir %>"
+CMD="<%= @consul_binary %> agent -config-dir <%= @config_dir %>"
 NAME="consul"
 
 PIDFILE="/var/run/$NAME.pid"
