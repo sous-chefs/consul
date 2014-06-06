@@ -86,8 +86,23 @@ case "$1" in
         exit 1
     fi
     ;;
+    reload)
+    if is_running; then
+        echo -n "Reloading $NAME..."
+        kill -HUP `get_pid`
+        sleep 1
+        echo
+
+        if ! is_running; then
+            echo "$NAME has died, see $LOGFILE"
+            exit 1
+        fi
+    else
+        echo "$NAME not running"
+    fi
+    ;;
     *)
-    echo "Usage: $0 {start|stop|restart|status}"
+    echo "Usage: $0 {start|stop|restart|reload|status}"
     exit 1
     ;;
 esac
