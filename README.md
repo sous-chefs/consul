@@ -20,7 +20,7 @@ Ubuntu 12.04, 14.04
     <td><tt>['consul']['version']</tt></td>
     <td>String</td>
     <td>Version to install</td>
-    <td><tt>0.2.0</tt></td>
+    <td><tt>0.2.1</tt></td>
   </tr>
   <tr>
     <td><tt>['consul']['base_url']</tt></td>
