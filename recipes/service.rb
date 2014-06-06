@@ -14,7 +14,7 @@ else
 end
 
 if node[:consul][:serve_ui]
-  service_params = "#{service_params} -ui-dir #{node[:consul][:ui_dir]}/consul_ui -client #{node[:consul][:client_addr]}"
+  service_params = "#{service_params} -ui-dir #{node[:consul][:ui_dir]} -client #{node[:consul][:client_addr]}"
 end
 
 directory node[:consul][:config_dir]
