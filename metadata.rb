@@ -21,4 +21,4 @@ supports 'ubuntu', '= 14.04'
 depends 'ark', '~> 0.8.0'
 depends 'golang', '~> 1.3.0'
 
-%w(yum-repoforge).each { |cb| depends cb }
+%w(yum-repoforge runit).each { |cb| depends cb }

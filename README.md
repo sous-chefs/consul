@@ -103,6 +103,24 @@ Installs and configures [Consul][1].
     <td>address that we advertise to other nodes in the cluster</td>
     <td>Value of <i>bind_addr</i></td>
   </tr>
+  <tr>
+    <td><tt>['consul']['init_style']</tt></td>
+    <td>String</td>
+    <td>Service init mode for running consul as: init or runit</td>
+    <td><tt>init</tt></td>
+  </tr>
+  <tr>
+    <td><tt>['consul']['service_user']</tt></td>
+    <td>String</td>
+    <td>For runit service: run consul as this user (init uses 'root')</td>
+    <td><tt>consul</tt></td>
+  </tr>
+  <tr>
+    <td><tt>['consul']['servers']</tt></td>
+    <td>String</td>
+    <td>For runit service: run consul as this group (init uses 'root')</td>
+    <td><tt>consul</tt></td>
+  </tr>
 </table>
 
 ### Consul UI Attributes
