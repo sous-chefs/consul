@@ -4,8 +4,8 @@ Installs and configures [Consul][1].
 
 ## Supported Platforms
 
-CentOS 5.10, 6.5
-Ubuntu 12.04, 14.04
+- CentOS 5.10, 6.5
+- Ubuntu 12.04, 14.04
 
 ## Attributes
 
