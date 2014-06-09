@@ -64,6 +64,45 @@ Ubuntu 12.04, 14.04
     <td>Consul servers to join</td>
     <td><tt>[]</tt></td>
   </tr>
+  <tr>
+    <td><tt>['consul']['bind_addr']</tt></td>
+    <td>String</td>
+    <td>address that should be bound to for internal cluster communications</td>
+    <td><tt>0.0.0.0</tt></td>
+  </tr>
+  <tr>
+    <td><tt>['consul']['datacenter']</tt></td>
+    <td>String</td>
+    <td>Name of Datacenter</td>
+    <td><tt>dc1</tt></td>
+  </tr>
+  <tr>
+    <td><tt>['consul']['domain']</tt></td>
+    <td>String</td>
+    <td>Domain for service lookup dns queries</td>
+    <td><tt>.consul</tt></td>
+  </tr>
+  <tr>
+    <td><tt>['consul']['log_level']</tt></td>
+    <td>String</td>
+    <td>
+      The level of logging to show after the Consul agent has started.
+      Available: "trace", "debug", "info", "warn", "err"
+    </td>
+    <td><tt>info</tt></td>
+  </tr>
+  <tr>
+    <td><tt>['consul']['node_name']</tt></td>
+    <td>String</td>
+    <td>The name of this node in the cluster</td>
+    <td>hostname of the machine</td>
+  </tr>
+  <tr>
+    <td><tt>['consul']['advertise_addr']</tt></td>
+    <td>String</td>
+    <td>address that we advertise to other nodes in the cluster</td>
+    <td>Value of <i>bind_addr</i></td>
+  </tr>
 </table>
 
 ### Consul UI Attributes

@@ -22,6 +22,15 @@ if node[:consul][:serve_ui]
   service_config[:client_addr] = node[:consul][:client_addr]
 end
 
+copy_params = [
+    :bind_addr, :datacenter, :domain, :log_level, :node_name, :advertise_addr
+]
+copy_params.each do |key|
+    if node[:consul][key]
+        service_config[key] = node[:consul][key]
+    end
+end
+
 directory node[:consul][:config_dir]
 
 template '/etc/init.d/consul' do
