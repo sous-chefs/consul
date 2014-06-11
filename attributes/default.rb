@@ -33,6 +33,9 @@ default[:consul][:service_mode] = 'bootstrap'
 default[:consul][:data_dir] = '/var/lib/consul'
 default[:consul][:config_dir] = '/etc/consul.d'
 default[:consul][:servers] = []
+default[:consul][:init_style] = 'init'   # 'init', 'runit'
+default[:consul][:service_user] = 'consul'
+default[:consul][:service_group] = 'consul'
 
 # UI attributes
 default[:consul][:client_addr] = '0.0.0.0'
