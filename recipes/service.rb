@@ -17,22 +17,20 @@ else
 end
 
 # Create service user
-unless consul_user == 'root'
-  user "consul service user: #{consul_user}" do
-    username  consul_user
-    home      "/dev/null"
-    shell     "/bin/false"
-    comment   "consul service user"
-  end
+user "consul service user: #{consul_user}" do
+  not_if { consul_user == 'root' }
+  username  consul_user
+  home      "/dev/null"
+  shell     "/bin/false"
+  comment   "consul service user"
 end
 
 # Create service group
-unless consul_group == 'root'
-  group "consul service group: #{consul_group}" do
-    group_name  consul_group
-    members     consul_user
-    append      true
-  end
+group "consul service group: #{consul_group}" do
+  not_if { consul_group == 'root' }
+  group_name  consul_group
+  members     consul_user
+  append      true
 end
 
 # Create service directories
