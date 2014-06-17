@@ -116,7 +116,7 @@ Installs and configures [Consul][1].
     <td><tt>consul</tt></td>
   </tr>
   <tr>
-    <td><tt>['consul']['servers']</tt></td>
+    <td><tt>['consul']['service_group']</tt></td>
     <td>String</td>
     <td>For runit service: run consul as this group (init uses 'root')</td>
     <td><tt>consul</tt></td>
