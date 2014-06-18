@@ -24,12 +24,12 @@ suites:
     run_list:
       - recipe[consul::default]
     attributes:
-        consul:
-            datacenter: FortMeade
+      consul:
+          datacenter: FortMeade
   - name: ui
     run_list:
       - recipe[consul::default]
       - recipe[consul::ui]
     attributes:
-        consul:
-           serve_ui: true
+      consul:
+         serve_ui: true
