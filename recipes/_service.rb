@@ -73,7 +73,7 @@ when 'server'
 when 'client'
   service_config['start_join'] = node[:consul][:servers]
 else
-  raise 'node[:consul][:service_mode] must be "bootstrap", "server", or "client"'
+  Chef::Application.fatal! 'node[:consul][:service_mode] must be "bootstrap", "server", or "client"'
 end
 
 if node[:consul][:serve_ui]
