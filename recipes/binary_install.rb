@@ -33,3 +33,5 @@ file "#{node[:consul][:install_dir]}/consul" do
   mode '0755'
   action :touch
 end
+
+include_recipe 'consul::service'
