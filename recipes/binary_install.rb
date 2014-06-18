@@ -34,4 +34,4 @@ file "#{node[:consul][:install_dir]}/consul" do
   action :touch
 end
 
-include_recipe 'consul::service'
+include_recipe 'consul::_service'

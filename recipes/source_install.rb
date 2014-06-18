@@ -39,4 +39,4 @@ link "#{node[:consul][:install_dir]}/consul" do
   to "#{node[:go][:gobin]}/consul"
 end
 
-include_recipe 'consul::service'
+include_recipe 'consul::_service'
