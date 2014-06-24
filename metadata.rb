@@ -8,7 +8,8 @@ version          '0.2.3'
 
 recipe 'consul', 'Installs and starts consul service.'
 recipe 'consul::binary_install', 'Installs consul service from binary.'
-recipe 'consul::source_install', 'Install consul service from source.'
+recipe 'consul::source_install', 'Installs consul service from source.'
+recipe 'consul::ui', 'Installs consul ui service.'
 
 %w(redhat centos).each do |name|
   supports name, '~> 6.5'
