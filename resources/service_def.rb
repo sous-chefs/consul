@@ -25,21 +25,21 @@ attribute :id, kind_of: String
 attribute :port, kind_of: Integer
 attribute :tags, kind_of: Array, default: nil
 attribute :check, kind_of: Hash, default: nil, callbacks: {
-  "Checks must be a hash containing either a `:ttl` key/value or a `:script` and `:interval` key/value" => ->(check) {
+  'Checks must be a hash containing either a `:ttl` key/value or a `:script` and `:interval` key/value' => ->(check) do
     Chef::Resource::ConsulServiceDef.validate_check(check)
-  }
+  end
 }
 
 def self.validate_check(check)
-  if !check.is_a?(Hash)
+  unless check.is_a?(Hash)
     return false
   end
 
-  if check.has_key?(:ttl) && (!check.has_key?(:interval) && !check.has_key?(:script))
+  if check.key?(:ttl) && (!check.key?(:interval) && !check.key?(:script))
     return true
   end
 
-  if check.has_key?(:interval) && check.has_key?(:script)
+  if check.key?(:interval) && check.key?(:script)
     return true
   end
 
@@ -60,9 +60,9 @@ def to_hash
       name: name
     }
   }
-  hash[:service][:id]    = id if !id.nil?
-  hash[:service][:port]  = port if !port.nil?
-  hash[:service][:tags]  = tags if !tags.nil?
-  hash[:service][:check] = check if !check.nil?
+  hash[:service][:id]    = id unless id.nil?
+  hash[:service][:port]  = port unless port.nil?
+  hash[:service][:tags]  = tags unless tags.nil?
+  hash[:service][:check] = check unless check.nil?
   hash
 end

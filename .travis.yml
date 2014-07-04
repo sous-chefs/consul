@@ -1,0 +1,9 @@
+---
+rvm:
+  - 1.9.3
+  - 2.0.0
+  - 2.1
+before_script:
+  - bin/berks install
+script:
+  - bin/rspec spec

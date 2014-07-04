@@ -24,15 +24,15 @@ end
   end
 end
 
-describe command "consul members" do
+describe command 'consul members' do
   it { should return_exit_status 0 }
   it { should return_stdout %r{\balive\b} }
   it { should return_stdout %r{\brole=consul\b} }
   it { should return_stdout %r{\bbootstrap=1\b} }
 end
 
-describe "config file attributes" do
-  context command "consul members" do
+describe 'config file attributes' do
+  context command 'consul members' do
     it { should return_stdout %r{\bdc=FortMeade\b} }
   end
 end

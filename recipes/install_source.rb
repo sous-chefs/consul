@@ -26,7 +26,7 @@ directory "#{node[:go][:gopath]}/src/github.com/hashicorp" do
 end
 
 git "#{node[:go][:gopath]}/src/github.com/hashicorp/consul" do
-  repository "https://github.com/hashicorp/consul.git"
+  repository 'https://github.com/hashicorp/consul.git'
   reference node[:consul][:source_revision]
   action :checkout
 end

@@ -1,9 +1,9 @@
 begin
-    require 'rspec/its'
+  require 'rspec/its'
 rescue LoadError
-    require 'rubygems/dependency_installer'
-    Gem::DependencyInstaller.new.install('rspec-its')
-    require 'rspec/its'
+  require 'rubygems/dependency_installer'
+  Gem::DependencyInstaller.new.install('rspec-its')
+  require 'rspec/its'
 end
 
 require 'serverspec'
