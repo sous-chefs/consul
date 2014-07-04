@@ -1,3 +1,6 @@
+# 0.3.0
+Bumps the release of [Consul][1] to 0.3.0
+
 # 0.2.0
 
 Bumps the release of [Consul][1] to 0.2.0
