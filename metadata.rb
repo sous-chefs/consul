@@ -12,6 +12,7 @@ recipe 'consul::source_install', 'Installs consul service from source.'
 recipe 'consul::ui', 'Installs consul ui service.'
 
 %w(redhat centos).each do |name|
+  supports name, '~> 7.0'
   supports name, '~> 6.5'
   supports name, '~> 5.10'
 end
