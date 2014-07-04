@@ -15,4 +15,4 @@
 # limitations under the License.
 #
 
-include_recipe "consul::#{ node[:consul][:install_method] }_install"
+include_recipe "consul::install_#{node[:consul][:install_method]}#"
