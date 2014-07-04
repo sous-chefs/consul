@@ -26,13 +26,13 @@ end
 
 describe command "consul members" do
   it { should return_exit_status 0 }
-  it { should return_stdout /\balive\b/ }
-  it { should return_stdout /\brole=consul\b/ }
-  it { should return_stdout /\bbootstrap=1\b/ }
+  it { should return_stdout %r{\balive\b} }
+  it { should return_stdout %r{\brole=consul\b} }
+  it { should return_stdout %r{\bbootstrap=1\b} }
 end
 
 describe "config file attributes" do
-    context command "consul members" do
-        it { should return_stdout /\bdc=FortMeade\b/ }
-    end
+  context command "consul members" do
+    it { should return_stdout %r{\bdc=FortMeade\b} }
+  end
 end
