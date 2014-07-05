@@ -5,6 +5,9 @@ require 'chefspec/server'
 require File.expand_path('../support/matchers', __FILE__)
 
 RSpec.configure do |config|
+  config.color = true
+  config.alias_example_group_to :describe_recipe, type: :recipe
+
   config.filter_run :focus
   config.run_all_when_everything_filtered = true
 
@@ -26,3 +29,14 @@ RSpec.configure do |config|
 end
 
 at_exit { ChefSpec::Coverage.report! }
+
+RSpec.shared_context 'recipe tests', type: :recipe do
+  let(:chef_run) { ChefSpec::Runner.new(node_attributes).converge(described_recipe) }
+
+  def node_attributes
+    {
+     platform: 'ubuntu',
+     version: '12.04'
+    }
+  end
+end
