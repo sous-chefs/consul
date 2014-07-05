@@ -1,10 +1,14 @@
-# consul-cookbook
+consul-cookbook
+===============
+![Release](http://img.shields.io/github/release/johnbellone/consul-cookbook.svg)
+[![Build Status](http://img.shields.io/travis/johnbellone/consul-cookbook.svg)][5]
+[![Code Climate](http://img.shields.io/codeclimate/github/johnbellone/consul-cookbook.svg)][6]
 
 Installs and configures [Consul][1].
 
 ## Supported Platforms
 
-- CentOS 5.10, 6.5
+- CentOS 5.10, 6.5, 7.0
 - Ubuntu 12.04, 14.04
 
 ## Attributes
@@ -20,7 +24,7 @@ Installs and configures [Consul][1].
     <td><tt>['consul']['version']</tt></td>
     <td>String</td>
     <td>Version to install</td>
-    <td><tt>0.2.1</tt></td>
+    <td><tt>0.3.0</tt></td>
   </tr>
   <tr>
     <td><tt>['consul']['base_url']</tt></td>
@@ -204,3 +208,5 @@ Created and maintained by [John Bellone][3] [@johnbellone][2] (<jbellone@bloombe
 [2]: https://twitter.com/johnbellone
 [3]: https://github.com/johnbellone
 [4]: https://github.com/johnbellone/consul-cookbook/graphs/contributors
+[5]: http://travis-ci.org/johnbellone/consul-cookbook
+[6]: https://codeclimate.com/github/johnbellone/lockrun-cookbook
