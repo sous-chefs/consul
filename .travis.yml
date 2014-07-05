@@ -1,9 +1,22 @@
 ---
+language: ruby
+script: bin/rspec
 rvm:
   - 1.9.3
   - 2.0.0
   - 2.1
-before_script:
-  - bin/berks install
-script:
-  - bin/rspec spec
+branches:
+  only:
+    - master
+builder_args: --jobs 7
+notifications:
+  irc:
+    channels:
+      - 'chat.freenode.net#bloomberg'
+    use_notice: true
+    skip_join: true
+    template:
+      - "%{message} (%{author}): %{build_url}"
+matrix:
+  fast_finish: true
+
