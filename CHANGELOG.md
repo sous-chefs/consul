@@ -1,3 +1,10 @@
+# 0.4.0
+Adds [ChefSpec][3] tests and software lint/metrics.
+
+* Breaking Changes
+- Renames *binary_install* recipe to *install_binary*
+- Renames *source_install* recipe to *source_binary*
+
 # 0.3.0
 Bumps the release of [Consul][1] to 0.3.0
 
