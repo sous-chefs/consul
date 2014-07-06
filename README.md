@@ -2,7 +2,7 @@ consul-cookbook
 ===============
 ![Release](http://img.shields.io/github/release/johnbellone/consul-cookbook.svg)
 [![Build Status](http://img.shields.io/travis/johnbellone/consul-cookbook.svg)][5]
-[![Code Climate](http://img.shields.io/codeclimate/github/johnbellone/consul-cookbook.svg)][6]
+[![Code Coverage](http://img.shields.io/coveralls/johnbellone/consul-cookbook.svg)][6]
 
 Installs and configures [Consul][1].
 
@@ -209,4 +209,4 @@ Created and maintained by [John Bellone][3] [@johnbellone][2] (<jbellone@bloombe
 [3]: https://github.com/johnbellone
 [4]: https://github.com/johnbellone/consul-cookbook/graphs/contributors
 [5]: http://travis-ci.org/johnbellone/consul-cookbook
-[6]: https://codeclimate.com/github/johnbellone/lockrun-cookbook
+[6]: https://coveralls.io/r/johnbellone/consul-cookbook

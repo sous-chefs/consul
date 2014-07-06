@@ -2,7 +2,9 @@ require 'chefspec'
 require 'chefspec/berkshelf'
 require 'chefspec/cacher'
 require 'chefspec/server'
-require File.expand_path('../support/matchers', __FILE__)
+require 'coveralls'
+
+Coveralls.wear!
 
 RSpec.configure do |config|
   config.color = true
