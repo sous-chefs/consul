@@ -113,7 +113,7 @@ when 'init'
   service 'consul' do
     supports status: true, restart: true, reload: true
     action [:enable, :start]
-    subscribes :reload, "file[#{node[:consul][:config_dir]}/default.json]", :immediately
+    subscribes :reload, "file[#{node[:consul][:config_dir]}/default.json]", :delayed
   end
 when 'runit'
   include_recipe 'runit'
