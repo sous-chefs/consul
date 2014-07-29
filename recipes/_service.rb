@@ -113,7 +113,7 @@ when 'init'
   service 'consul' do
     supports status: true, restart: true, reload: true
     action [:enable, :start]
-    subscribes :reload, "file[#{node[:consul][:config_dir]}/default.json]", :delayed
+    subscribes :restart, "file[#{node[:consul][:config_dir]}/default.json]", :delayed
   end
 when 'runit'
   include_recipe 'runit'
@@ -121,7 +121,7 @@ when 'runit'
   runit_service 'consul' do
     supports status: true, restart: true, reload: true
     action [:enable, :start]
-    subscribes :reload, "file[#{node[:consul][:config_dir]}/default.json]", :immediately
+    subscribes :restart, "file[#{node[:consul][:config_dir]}/default.json]", :immediately
     log true
     options(
       consul_binary: "#{node[:consul][:install_dir]}/consul",
