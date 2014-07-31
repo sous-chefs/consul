@@ -20,7 +20,7 @@ end
 supports 'ubuntu', '= 12.04'
 supports 'ubuntu', '= 14.04'
 
-depends 'ark', '~> 0.8.0'
+depends 'ark'
 depends 'golang', '~> 1.3.0'
 depends 'runit'
 depends 'yum-repoforge'
