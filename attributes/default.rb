@@ -42,6 +42,16 @@ default[:consul][:init_style] = 'init'   # 'init', 'runit'
 default[:consul][:service_user] = 'consul'
 default[:consul][:service_group] = 'consul'
 
+# Optionally bind to a specific interface
+# Useful for multi box vagrant
+default[:consul][:bind_interface] = nil
+if node[:consul][:bind_interface]
+  if node["network"]["interfaces"][node[:consul][:bind_interface]]
+    iface = node["network"]["interfaces"][node[:consul][:bind_interface]]["addresses"].detect{|k,v| v[:family] == "inet"}.first
+    node.default[:consul][:bind_addr] = iface
+  end
+end
+
 # UI attributes
 default[:consul][:client_addr] = '0.0.0.0'
 default[:consul][:ui_dir] = '/var/lib/consul/ui'
