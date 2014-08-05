@@ -1,3 +1,6 @@
+# 0.4.1
+Adds support to bind to the IP of a named interface.
+
 # 0.4.0
 Adds [ChefSpec][3] tests and software lint/metrics.
 
