@@ -49,6 +49,8 @@ if node[:consul][:bind_interface]
   if node["network"]["interfaces"][node[:consul][:bind_interface]]
     iface = node["network"]["interfaces"][node[:consul][:bind_interface]]["addresses"].detect{|k,v| v[:family] == "inet"}.first
     node.default[:consul][:bind_addr] = iface
+  else
+    Chef::Application.fatal!("Interface specified in node[:consul][:bind_interface] does not exist!")
   end
 end
 
