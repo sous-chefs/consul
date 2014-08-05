@@ -26,6 +26,8 @@ suites:
     attributes:
       consul:
           datacenter: FortMeade
+          bind_interface: eth0
+          advertise_interface: eth0
   - name: ui
     run_list:
       - recipe[consul::default]
