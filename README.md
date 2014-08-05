@@ -125,6 +125,16 @@ Installs and configures [Consul][1].
     <td>For runit service: run consul as this group (init uses 'root')</td>
     <td><tt>consul</tt></td>
   </tr>
+  <tr>
+    <td><tt>['consul']['bind_interface']</tt></td>
+    <td>String</td>
+    <td>
+      Interface to bind to, such as 'eth1'.  Sets bind_addr
+      attribute to the IP of the specified interface if it exists.
+    </td>
+    <td><tt>nil</tt></td>
+  </tr>
+
 </table>
 
 ### Consul UI Attributes
