@@ -134,7 +134,15 @@ Installs and configures [Consul][1].
     </td>
     <td><tt>nil</tt></td>
   </tr>
-
+  <tr>
+    <td><tt>['consul']['advertise_interface']</tt></td>
+    <td>String</td>
+    <td>
+      Interface to advertise, such as 'eth1'.  Sets advertise_addr
+      attribute to the IP of the specified interface if it exists.
+    </td>
+    <td><tt>nil</tt></td>
+  </tr>
 </table>
 
 ### Consul UI Attributes
