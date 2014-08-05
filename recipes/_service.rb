@@ -81,6 +81,23 @@ if node[:consul][:serve_ui]
   service_config[:client_addr] = node[:consul][:client_addr]
 end
 
+iface_config = {
+  :bind_interface => :bind_addr, 
+  :advertise_interface => :advertise_addr
+}
+
+iface_config.each_pair do |interface,addr|
+  return unless node[:consul][interface]
+  
+  if node["network"]["interfaces"][node[:consul][interface]]
+    ip = node["network"]["interfaces"][node[:consul][interface]]["addresses"].detect{|k,v| v[:family] == "inet"}.first
+    node.default[:consul][addr] = ip
+  else
+    Chef::Application.fatal!("Interface specified in node[:consul][#{interface}] does not exist!")
+  end
+
+end
+
 copy_params = [
   :bind_addr, :datacenter, :domain, :log_level, :node_name, :advertise_addr
 ]
