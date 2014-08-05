@@ -57,7 +57,7 @@ iface_config.each_pair do |interface,addr|
     ip = node["network"]["interfaces"][node[:consul][interface]]["addresses"].detect{|k,v| v[:family] == "inet"}.first
     node.default[:consul][addr] = ip
   else
-    Chef::Application.fatal!("Interface specified in node[:consul][:bind_interface] does not exist!")
+    Chef::Application.fatal!("Interface specified in node[:consul][#{interface}] does not exist!")
   end
 
 end
