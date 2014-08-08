@@ -78,6 +78,23 @@ else
   Chef::Application.fatal! 'node[:consul][:service_mode] must be "bootstrap", "server", or "client"'
 end
 
+iface_addr_map = {
+  :bind_interface => :bind_addr,
+  :advertise_interface => :advertise_addr,
+  :client_interface => :client_addr
+}
+
+iface_addr_map.each_pair do |interface,addr|
+  next unless node[:consul][interface]
+
+  if node["network"]["interfaces"][node[:consul][interface]]
+    ip = node["network"]["interfaces"][node[:consul][interface]]["addresses"].detect{|k,v| v[:family] == "inet"}.first
+    node.default[:consul][addr] = ip
+  else
+    Chef::Application.fatal!("Interface specified in node[:consul][#{interface}] does not exist!")
+  end
+end
+
 if node[:consul][:serve_ui]
   service_config[:ui_dir] = node[:consul][:ui_dir]
   service_config[:client_addr] = node[:consul][:client_addr]
