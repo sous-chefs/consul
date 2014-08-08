@@ -33,6 +33,8 @@ suites:
       consul:
           datacenter: FortMeade
           init_style: runit
+          bind_interface: eth0
+          advertise_interface: eth0
   - name: ui
     run_list:
       - recipe[consul::default]
@@ -40,3 +42,4 @@ suites:
     attributes:
       consul:
          serve_ui: true
+         client_interface: eth0
