@@ -25,6 +25,8 @@ consul_directories << '/var/lib/consul'
 # Select service user & group
 case node[:consul][:init_style]
 when 'runit'
+  include_recipe 'runit'
+
   consul_user = node[:consul][:service_user]
   consul_group = node[:consul][:service_group]
   consul_directories << '/var/log/consul'
@@ -116,8 +118,6 @@ when 'init'
     subscribes :restart, "file[#{node[:consul][:config_dir]}/default.json]", :delayed
   end
 when 'runit'
-  include_recipe 'runit'
-
   runit_service 'consul' do
     supports status: true, restart: true, reload: true
     action [:enable, :start]
