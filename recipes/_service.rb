@@ -101,19 +101,19 @@ when 'init'
       consul_binary: "#{node[:consul][:install_dir]}/consul",
       config_dir: node[:consul][:config_dir],
     )
-    notifies :restart, 'service[consul]', :immediately
+    notifies :restart, 'service[consul]', :delayed
   end
 
   service 'consul' do
     supports status: true, restart: true, reload: true
-    action [:enable, :start]
+    action [:enable]
     subscribes :restart, "file[#{node[:consul][:config_dir]}/default.json]", :delayed
   end
 when 'runit'
   runit_service 'consul' do
     supports status: true, restart: true, reload: true
-    action [:enable, :start]
-    subscribes :restart, "file[#{node[:consul][:config_dir]}/default.json]", :immediately
+    action [:enable]
+    subscribes :restart, "file[#{node[:consul][:config_dir]}/default.json]", :delayed
     log true
     options(
       consul_binary: "#{node[:consul][:install_dir]}/consul",
