@@ -13,16 +13,16 @@
 # limitations under the License.
 #
 
-include_recipe 'ark'
+include_recipe 'ark::default'
 
-install_version = [node[:consul][:version], 'web_ui'].join('_')
-install_checksum = node[:consul][:checksums].fetch(install_version)
+install_version = [node['consul']['version'], 'web_ui'].join('_')
+install_checksum = node['consul']['checksums'].fetch(install_version)
 
 ark 'consul_ui' do
   name ''
-  path node[:consul][:ui_dir]
-  version node[:consul][:version]
+  path node['consul']['ui_dir']
+  version node['consul']['version']
   checksum install_checksum
-  url URI.join(node[:consul][:base_url], "#{install_version}.zip").to_s
+  url ::URI.join(node['consul']['base_url'], "#{install_version}.zip").to_s
   action :put
 end

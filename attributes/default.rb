@@ -15,11 +15,11 @@
 # limitations under the License.
 #
 
-default[:consul][:base_url] = 'https://dl.bintray.com/mitchellh/consul/'
-default[:consul][:version] = '0.3.0'
-default[:consul][:install_method] = 'binary'
-default[:consul][:install_dir] = '/usr/local/bin'
-default[:consul][:checksums] = {
+default['consul']['base_url'] = 'https://dl.bintray.com/mitchellh/consul/'
+default['consul']['version'] = '0.3.0'
+default['consul']['install_method'] = 'binary'
+default['consul']['install_dir'] = '/usr/local/bin'
+default['consul']['checksums'] = {
   '0.3.0_darwin_amd64' => '9dfbc70c01ebbc3e7dba0e4b31baeddbdcbd36ef99f5ac87ca6bbcc7405df405',
   '0.3.0_linux_386'    => '2513496374f8f15bda0da4da33122e93f82ce39f661ee3e668c67a5b7e98fd5f',
   '0.3.0_linux_amd64'  => 'da1337ab3b236bad19b791a54a8df03a8c2a340500a392000c21608696957b15',
@@ -31,23 +31,23 @@ default[:consul][:checksums] = {
   '0.3.1_web_ui'       => 'd8982803fffb84d3202260161f6310bd6bddb5b12bf690cf00210cd659a31ddd',
   '0.3.1_windows_386'  => '102bda6e02b193a9417e80795875bf7d18259fc5daff3d048d274beef690eb26'
 }
-default[:consul][:source_revision] = 'master'
+default['consul']['source_revision'] = 'master'
 
 # Service attributes
-default[:consul][:service_mode] = 'bootstrap'
-default[:consul][:data_dir] = '/var/lib/consul'
-default[:consul][:config_dir] = '/etc/consul.d'
-default[:consul][:servers] = []
-default[:consul][:init_style] = 'init'   # 'init', 'runit'
-default[:consul][:service_user] = 'consul'
-default[:consul][:service_group] = 'consul'
+default['consul']['service_mode'] = 'bootstrap'
+default['consul']['data_dir'] = '/var/lib/consul'
+default['consul']['config_dir'] = '/etc/consul.d'
+default['consul']['servers'] = []
+default['consul']['init_style'] = 'init'   # 'init', 'runit'
+default['consul']['service_user'] = 'consul'
+default['consul']['service_group'] = 'consul'
 
 # Optionally bind to a specific interface
-default[:consul]["bind_interface"] = nil
-default[:consul]["advertise_interface"] = nil
-default[:consul]["client_interface"] = nil
+default['consul']['bind_interface'] = nil
+default['consul']['advertise_interface'] = nil
+default['consul']['client_interface'] = nil
 
 # UI attributes
-default[:consul][:client_addr] = '0.0.0.0'
-default[:consul][:ui_dir] = '/var/lib/consul/ui'
-default[:consul][:serve_ui] = false
+default['consul']['client_addr'] = '0.0.0.0'
+default['consul']['ui_dir'] = '/var/lib/consul/ui'
+default['consul']['serve_ui'] = false

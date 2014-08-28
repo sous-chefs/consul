@@ -17,7 +17,7 @@
 
 include_recipe 'golang::default'
 
-directory "#{node[:go][:gopath]}/src/github.com/hashicorp" do
+directory File.join(node['go']['gopath'], 'src/github.com/hashicorp') do
   owner 'root'
   group 'root'
   mode '00755'
@@ -25,9 +25,9 @@ directory "#{node[:go][:gopath]}/src/github.com/hashicorp" do
   action :create
 end
 
-git "#{node[:go][:gopath]}/src/github.com/hashicorp/consul" do
+git File.join(node['go']['gopath'], '/src/github.com/hashicorp/consul') do
   repository 'https://github.com/hashicorp/consul.git'
-  reference node[:consul][:source_revision]
+  reference node['consul']['source_revision']
   action :checkout
 end
 
@@ -35,8 +35,6 @@ golang_package 'github.com/hashicorp/consul' do
   action :install
 end
 
-link "#{node[:consul][:install_dir]}/consul" do
-  to "#{node[:go][:gobin]}/consul"
+link File.join(node['consul']['install_dir'], 'consul') do
+  to File.join(node['go']['gobin'], 'consul')
 end
-
-include_recipe 'consul::_service'
