@@ -1,3 +1,9 @@
+# 0.4.1
+Adds support to bind to the IP of a named interface.
+
+* Additions
+  - bind_interface, advertise_interface, client_interface attributes
+
 # 0.4.0
 Adds [ChefSpec][3] tests and software lint/metrics.
 
