@@ -26,6 +26,8 @@ suites:
     attributes:
       consul:
           datacenter: FortMeade
+          bind_interface: eth0
+          advertise_interface: eth0
   - name: runit
     run_list:
       - recipe[consul::default]
@@ -33,8 +35,6 @@ suites:
       consul:
           datacenter: FortMeade
           init_style: runit
-          bind_interface: eth0
-          advertise_interface: eth0
   - name: ui
     run_list:
       - recipe[consul::default]
