@@ -1,5 +1,5 @@
 # 0.4.1
-Bumps default version of Consul to 0.3.0.
+Bumps default version of Consul to 0.3.1.
 
 Adds support to bind to the IP of a named interface.
 - bind_interface, advertise_interface, client_interface attributes
