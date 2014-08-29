@@ -2,7 +2,12 @@
 Adds support to bind to the IP of a named interface.
 
 * Additions
-  - bind_interface, advertise_interface, client_interface attributes
+- bind_interface, advertise_interface, client_interface attributes
+  (thanks [@romesh-mccullough][5])
+
+* Test/Quality Coverage
+- Expands test coverage to the `consul::ui` recipe.
+- Passes [foodcritic][4] lint testing.
 
 # 0.4.0
 Adds [ChefSpec][3] tests and software lint/metrics.
@@ -38,3 +43,6 @@ Initial release of [Consul][1] cookbook.
 
 [1]: http://consul.io
 [2]: https://github.com/reset
+[3]: https://github.com/sethvargo/chefspec
+[4]: http://acrmp.github.io/foodcritic/
+[5]: https://github.com/romesh-mccullough

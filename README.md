@@ -9,6 +9,7 @@ Installs and configures [Consul][1].
 ## Supported Platforms
 
 - CentOS 5.10, 6.5, 7.0
+- RHEL 5.10, 6.5, 7.0
 - Ubuntu 12.04, 14.04
 
 ## Attributes
