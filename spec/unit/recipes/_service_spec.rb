@@ -39,6 +39,10 @@ describe_recipe 'consul::_service' do
 
     it { expect(chef_run).to include_recipe('runit::default') }
     it do
+      expect(chef_run).to create_directory('/etc/consul.d')
+        .with(mode: 0755)
+    end
+    it do
       expect(chef_run).to create_user('consul service user: consul')
         .with(shell: '/bin/false')
         .with(username: 'consul')
