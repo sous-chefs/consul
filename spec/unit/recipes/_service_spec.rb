@@ -1,9 +1,12 @@
 require 'spec_helper'
 
 describe_recipe 'consul::_service' do
-  it { expect(chef_run).to create_directory('/var/lib/consul') }
-  it { expect(chef_run).to create_directory('/etc/consul.d') }
-  it { expect(chef_run).to create_directory('/var/log/consul') }
+  it do
+    expect(chef_run).to create_directory('/var/lib/consul')
+      .with(mode: 0755)
+    expect(chef_run).to create_directory('/etc/consul.d')
+      .with(mode: 0755)
+  end
 
   context 'with default attributes' do
     it { expect(chef_run).not_to include_recipe('runit::default') }
