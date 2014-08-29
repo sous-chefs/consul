@@ -47,7 +47,7 @@ def self.validate_check(check)
 end
 
 def path
-  ::File.join(node[:consul][:config_dir], "service-#{name}.json")
+  ::File.join(node['consul']['config_dir'], "service-#{name}.json")
 end
 
 def to_json
