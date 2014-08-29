@@ -6,9 +6,9 @@ Adds support to bind to the IP of a named interface.
   (thanks [@romesh-mccullough][5])
 
 Test/Quality Coverage
-- Expands test coverage to the `consul::ui` recipe.
-- Passes [foodcritic][4] lint testing.
-- Only test against rubies of future past.
+- Expands test coverage to the `consul::ui` and `consul::_service` recipes.
+- Passes some more [rubocop][6] and [foodcritic][4] code quality tests.
+- Only test in Travis against rubies of future past.
 
 # 0.4.0
 Adds [ChefSpec][3] tests and software lint/metrics.
@@ -42,3 +42,4 @@ Source and binary installation recipes.
 [3]: https://github.com/sethvargo/chefspec
 [4]: http://acrmp.github.io/foodcritic/
 [5]: https://github.com/romesh-mccullough
+[6]: https://github.com/bbatsov/rubocop

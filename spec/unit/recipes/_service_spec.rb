@@ -33,7 +33,7 @@ describe_recipe 'consul::_service' do
   context %Q(with node['consul']['init_style'] = 'runit') do
     let(:chef_run) do
       ChefSpec::Runner.new(node_attributes) do |node|
-        node.override['consul']['init_style'] = 'runit'
+        node.set['consul']['init_style'] = 'runit'
       end.converge(described_recipe)
     end
 
