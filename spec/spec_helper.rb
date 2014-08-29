@@ -4,6 +4,8 @@ require 'chefspec/cacher'
 require 'chefspec/server'
 require 'coveralls'
 
+require_relative 'support/matchers'
+
 Coveralls.wear!
 
 RSpec.configure do |config|

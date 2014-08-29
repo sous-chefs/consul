@@ -23,9 +23,9 @@ consul_directories << node['consul']['config_dir']
 consul_directories << '/var/lib/consul'
 
 # Select service user & group
-case node['consul'][:init_style]
+case node['consul']['init_style']
 when 'runit'
-  include_recipe 'runit'
+  include_recipe 'runit::default'
 
   consul_user = node['consul']['service_user']
   consul_group = node['consul']['service_group']
@@ -136,7 +136,7 @@ when 'runit'
     log true
     options(
       consul_binary: "#{node['consul']['install_dir']}/consul",
-      config_dir: node['consul'][:config_dir],
+      config_dir: node['consul']['config_dir'],
     )
   end
 end
