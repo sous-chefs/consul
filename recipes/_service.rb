@@ -111,6 +111,14 @@ end
 
 consul_config_filename = File.join(node['consul']['config_dir'], 'default.json')
 
+file consul_config_filename do
+  user consul_user
+  group consul_group
+  mode 0600
+  action :create
+  content JSON.pretty_generate(service_config, quirks_mode: true)
+end
+
 case node['consul']['init_style']
 when 'init'
   template '/etc/init.d/consul' do
@@ -139,12 +147,4 @@ when 'runit'
       config_dir: node['consul']['config_dir'],
     )
   end
-end
-
-file consul_config_filename do
-  user consul_user
-  group consul_group
-  mode 0600
-  action :create
-  content JSON.pretty_generate(service_config, quirks_mode: true)
 end
