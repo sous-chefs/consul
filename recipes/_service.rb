@@ -66,13 +66,18 @@ end
 service_config = {}
 service_config['data_dir'] = node['consul']['data_dir']
 
+num_cluster = node['consul']['bootstrap_expect']
 case node['consul']['service_mode']
 when 'bootstrap'
   service_config['server'] = true
   service_config['bootstrap'] = true
 when 'cluster'
   service_config['server'] = true
-  service_config['bootstrap_expect'] = node['consul']['bootstrap_expect']
+  if num_cluster > 1
+    service_config['bootstrap_expect'] = num_cluster
+  else
+    service_config['bootstrap'] = true
+  end
 when 'server'
   service_config['server'] = true
   service_config['start_join'] = node['consul']['servers']
