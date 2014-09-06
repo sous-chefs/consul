@@ -19,6 +19,7 @@ require 'json'
 
 # Configure directories
 consul_directories = []
+consul_directories << node['consul']['data_dir']
 consul_directories << node['consul']['config_dir']
 consul_directories << '/var/lib/consul'
 
@@ -69,6 +70,9 @@ case node['consul']['service_mode']
 when 'bootstrap'
   service_config['server'] = true
   service_config['bootstrap'] = true
+when 'cluster'
+  service_config['server'] = true
+  service_config['bootstrap_expect'] = node['consul']['bootstrap_expect']
 when 'server'
   service_config['server'] = true
   service_config['start_join'] = node['consul']['servers']
