@@ -48,7 +48,7 @@ Installs and configures [Consul][1].
   <tr>
     <td><tt>['consul']['service_mode']</tt></td>
     <td>String</td>
-    <td>Mode to run consul as: bootstrap, bootstrap-cluster, server, or client</td>
+    <td>Mode to run consul as: bootstrap, cluster, server, or client</td>
     <td><tt>bootstrap</tt></td>
   </tr>
     <tr>

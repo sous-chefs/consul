@@ -65,8 +65,8 @@ end
 # Determine service params
 service_config = {}
 service_config['data_dir'] = node['consul']['data_dir']
+num_cluster = node['consul']['bootstrap_expect'].to_i
 
-num_cluster = node['consul']['bootstrap_expect']
 case node['consul']['service_mode']
 when 'bootstrap'
   service_config['server'] = true
