@@ -196,26 +196,26 @@ Installs and configures [Consul][1].
 
 This uses the binary installation recipe by default. It also starts consul at boot time.
 
-### consul::binary_install
+### consul::install_binary
 
-Include `consul::binary_install` in your node's `run_list`:
+Include `consul::install_binary` in your node's `run_list`:
 
 ```json
 {
   "run_list": [
-    "recipe[consul::binary_install]"
+    "recipe[consul::install_binary]"
   ]
 }
 ```
 
-### consul::source_install
+### consul::install_source
 
-Include `consul::source_install` in your node's `run_list`:
+Include `consul::install_source` in your node's `run_list`:
 
 ```json
 {
   "run_list": [
-    "recipe[consul::source_install]"
+    "recipe[consul::install_source]"
   ]
 }
 ```
