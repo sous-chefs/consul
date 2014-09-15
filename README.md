@@ -234,6 +234,31 @@ Include `consul::ui` in your node's `run_list`:
 }
 ```
 
+### LWRP
+
+#### Adding service without check
+    consul_service "voice1" do
+      port 5060
+      tags: ["_sip._udp"]
+    end
+
+#### Adding service with check
+
+    consul_service "voice1" do
+      port 5060
+      tags: ["_sip._udp"]
+      check (
+        interval: '10s',
+        script: 'echo ok'
+      )
+    end
+
+#### Removing service
+
+    consul_service "voice1" do
+      action :delete
+    end
+
 ## Authors
 
 Created and maintained by [John Bellone][3] [@johnbellone][2] (<jbellone@bloomberg.net>) and a growing community of [contributors][4].

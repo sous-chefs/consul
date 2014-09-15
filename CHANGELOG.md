@@ -1,3 +1,6 @@
+# 0.4.2
+Bumps default version of Consul to 0.4.0
+
 # 0.4.1
 Bumps default version of Consul to 0.3.1.
 
