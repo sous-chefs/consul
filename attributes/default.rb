@@ -16,7 +16,7 @@
 #
 
 default['consul']['base_url'] = 'https://dl.bintray.com/mitchellh/consul/'
-default['consul']['version'] = '0.3.1'
+default['consul']['version'] = '0.4.0'
 default['consul']['install_method'] = 'binary'
 default['consul']['install_dir'] = '/usr/local/bin'
 default['consul']['checksums'] = {
@@ -29,7 +29,12 @@ default['consul']['checksums'] = {
   '0.3.1_linux_386'    => '9b8340fdf464a99fc9dc108115602c761b703a16277fbd9f4f164123cf2a9f11',
   '0.3.1_linux_amd64'  => 'c33da8ac24f01eefe8549e8d4d301b4e18a71b61f06ae1377a88ccd6eab2cfbb',
   '0.3.1_web_ui'       => 'd8982803fffb84d3202260161f6310bd6bddb5b12bf690cf00210cd659a31ddd',
-  '0.3.1_windows_386'  => '102bda6e02b193a9417e80795875bf7d18259fc5daff3d048d274beef690eb26'
+  '0.3.1_windows_386'  => '102bda6e02b193a9417e80795875bf7d18259fc5daff3d048d274beef690eb26',
+  '0.4.0_darwin_amd64' => '87a1b0f37e773d92c939ca7dd6a50985acc4fb4aaec31384756ef896aef4035b',
+  '0.4.0_linux_386'    => 'e2d494654cfed1b9248734f5cb9d34dba9f356dffdcc8a09ab0ab85d170dba7c',
+  '0.4.0_linux_amd64'  => '4f8cd1cc5d90be9e1326fee03d3c96289a4f8b9b6ccb062d228125a1adc9ea0c',
+  '0.4.0_windows_386'  => '895387de34352f29e8cb91066b44750a958d4a44a88ac39e164cf9c62b521b08',
+  '0.4.0_web_ui'       => '0ee574e616864b658ba6ecf16db1183b63c5a4a36401880fb0404a2ea18536a6'
 }
 default['consul']['source_revision'] = 'master'
 
