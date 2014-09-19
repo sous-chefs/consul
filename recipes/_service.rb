@@ -149,7 +149,7 @@ when 'runit'
   runit_service 'consul' do
     supports status: true, restart: true, reload: true
     action [:enable, :start]
-    subscribes :restart, "file[#{consul_config_filename}]", :immediately
+    subscribes :restart, "file[#{consul_config_filename}]", :delayed
     log true
     options(
       consul_binary: "#{node['consul']['install_dir']}/consul",
