@@ -1,3 +1,7 @@
+# 0.4.3
+* Fix race condition when installing Consul as a runit service
+* Documentation fixes
+
 # 0.4.2
 Bumps default version of Consul to 0.4.0
 
