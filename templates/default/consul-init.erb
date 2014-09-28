@@ -45,7 +45,7 @@ case "$1" in
     stop)
     if is_running; then
         echo -n "Stopping $NAME..."
-        kill `get_pid`
+        kill -INT `get_pid`
         for i in {1..10}
         do
             if ! is_running; then
