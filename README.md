@@ -94,6 +94,12 @@ Installs and configures [Consul][1].
     <td><tt>.consul</tt></td>
   </tr>
   <tr>
+    <td><tt>['consul']['enable_syslog']</tt></td>
+    <td>Boolean</td>
+    <td>enables logging to syslog</td>
+    <td><tt>nil</tt></td>
+  </tr>
+  <tr>
     <td><tt>['consul']['log_level']</tt></td>
     <td>String</td>
     <td>
