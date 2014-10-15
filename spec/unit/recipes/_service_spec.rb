@@ -41,6 +41,8 @@ describe_recipe 'consul::_service' do
     it do
       expect(chef_run).to create_directory('/etc/consul.d')
         .with(mode: 0755)
+      expect(chef_run).to create_directory('/var/log/consul')
+        .with(mode: 0755)
     end
     it do
       expect(chef_run).to create_user('consul service user: consul')

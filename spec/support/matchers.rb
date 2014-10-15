@@ -29,3 +29,7 @@ end
 def dump_ark(name)
   ChefSpec::Matchers::ResourceMatcher.new(:ark, :dump, name)
 end
+
+def install_ark(name)
+  ChefSpec::Matchers::ResourceMatcher.new(:ark, :install, name)
+end
