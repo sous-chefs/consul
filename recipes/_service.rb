@@ -136,7 +136,7 @@ when 'init'
     variables(
       gomaxprocs: node['cpu']['total']
     )
-    notifies :restart, 'service[consul]', :immediately
+    notifies :create, 'template[/etc/init.d/consul]', :immediately
   end
   template '/etc/init.d/consul' do
     source 'consul-init.erb'
