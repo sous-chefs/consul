@@ -1,3 +1,6 @@
+# 0.4.4
+* Adds server list to a consul instance running as a cluster with a `bootstrap_expect` value greater than one.
+
 # 0.4.3
 * Fix race condition when installing Consul as a runit service
 * Documentation fixes
