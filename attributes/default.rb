@@ -56,6 +56,3 @@ default['consul']['client_interface'] = nil
 default['consul']['client_addr'] = '0.0.0.0'
 default['consul']['ui_dir'] = '/var/lib/consul/ui'
 default['consul']['serve_ui'] = false
-
-#golang attributes - should use number of processors
-default['consul']['gomaxprocs'] = 2

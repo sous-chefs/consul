@@ -134,7 +134,7 @@ when 'init'
     source 'consul-sysconfig.erb'
     mode 0755
     variables(
-      gomaxprocs: node['consul']['gomaxprocs']
+      gomaxprocs: node['cpu']['total']
     )
     notifies :restart, 'service[consul]', :immediately
   end
