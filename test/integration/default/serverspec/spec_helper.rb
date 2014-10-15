@@ -1,8 +1,3 @@
 require 'serverspec'
-
-include SpecInfra::Helper::Exec
-include SpecInfra::Helper::DetectOS
-
-RSpec.configure do |c|
-  c.path = '/usr/local/bin:/sbin:/bin:/usr/bin'
-end
+set :backend, :exec
+set :path, '/usr/local/bin:/bin:/sbin:/usb/sbin:$PATH'
