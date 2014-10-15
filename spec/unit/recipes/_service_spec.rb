@@ -19,6 +19,11 @@ describe_recipe 'consul::_service' do
         .with(mode: 0600)
     end
     it do
+      expect(chef_run).to create_template('/etc/sysconfig/consul')
+        .with(source: 'consul-sysconfig.erb')
+        .with(mode: 0755)
+    end
+    it do
       expect(chef_run).to create_template('/etc/init.d/consul')
         .with(source: 'consul-init.erb')
         .with(mode: 0755)
