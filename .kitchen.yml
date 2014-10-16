@@ -28,6 +28,7 @@ suites:
           datacenter: FortMeade
           bind_interface: eth0
           advertise_interface: eth0
+          encrypt: CGXC2NsXW4AvuB4h5ODYzQ==
   - name: runit
     run_list:
       - recipe[consul::default]
