@@ -18,6 +18,8 @@ if [ -f /etc/sysconfig/consul ]; then
 . /etc/sysconfig/consul
 fi
 
+export GOMAXPROCS=${GOMAXPROCS:-2}
+
 CMD="<%= @consul_binary %> agent -config-dir <%= @config_dir %>"
 NAME="consul"
 
