@@ -75,6 +75,7 @@ when 'cluster'
   service_config['server'] = true
   if num_cluster > 1
     service_config['bootstrap_expect'] = num_cluster
+    service_config['start_join'] = node['consul']['servers']
   else
     service_config['bootstrap'] = true
   end
