@@ -24,6 +24,9 @@ describe_recipe 'consul::_service' do
         .with(mode: 0755)
     end
     it do
+      expect(chef_run).to render_file('/etc/sysconfig/consul').with_content('GOMAXPROCS=1')
+    end
+    it do
       expect(chef_run).to create_template('/etc/init.d/consul')
         .with(source: 'consul-init.erb')
         .with(mode: 0755)

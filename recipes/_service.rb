@@ -133,9 +133,6 @@ when 'init'
   template '/etc/sysconfig/consul' do
     source 'consul-sysconfig.erb'
     mode 0755
-    variables(
-      gomaxprocs: node['cpu']['total']
-    )
     notifies :create, 'template[/etc/init.d/consul]', :immediately
   end
   template '/etc/init.d/consul' do
