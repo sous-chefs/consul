@@ -1,3 +1,3 @@
 require 'serverspec'
 set :backend, :exec
-set :path, '/usr/local/bin:/bin:/sbin:/usb/sbin:$PATH'
+set :path, '$PATH:/usr/local/bin:/sbin:/bin:/usr/bin'

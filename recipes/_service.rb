@@ -75,6 +75,7 @@ when 'cluster'
   service_config['server'] = true
   if num_cluster > 1
     service_config['bootstrap_expect'] = num_cluster
+    service_config['start_join'] = node['consul']['servers']
   else
     service_config['bootstrap'] = true
   end
@@ -110,7 +111,7 @@ if node['consul']['serve_ui']
 end
 
 copy_params = [
-  :bind_addr, :datacenter, :domain, :log_level, :node_name, :advertise_addr
+  :bind_addr, :datacenter, :domain, :log_level, :node_name, :advertise_addr, :enable_syslog, :encrypt
 ]
 copy_params.each do |key|
   if node['consul'][key]

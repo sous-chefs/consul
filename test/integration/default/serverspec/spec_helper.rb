@@ -1,3 +1,6 @@
 require 'serverspec'
 set :backend, :exec
-set :path, '/usr/local/bin:/bin:/sbin:/usb/sbin:$PATH'
+
+RSpec.configure do |c|
+  c.path = '/usr/local/bin:/sbin:/bin:/usr/bin'
+end

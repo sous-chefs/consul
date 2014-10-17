@@ -49,6 +49,8 @@ describe_recipe 'consul::_service' do
     it do
       expect(chef_run).to create_directory('/etc/consul.d')
         .with(mode: 0755)
+      expect(chef_run).to create_directory('/var/log/consul')
+        .with(mode: 0755)
     end
     it do
       expect(chef_run).to create_user('consul service user: consul')
@@ -73,6 +75,40 @@ describe_recipe 'consul::_service' do
         .with(supports: {status: true, restart: true, reload: true})
         .with(options: {consul_binary: '/usr/local/bin/consul', config_dir: '/etc/consul.d'})
       expect(chef_run).to start_runit_service('consul')
+    end
+  end
+
+  context 'with a cluster service_mode, bootstrap_expect > 1, and a server list to join' do
+    let(:chef_run) do
+      ChefSpec::Runner.new(node_attributes) do |node|
+        node.set['consul']['service_mode'] = 'cluster'
+        node.set['consul']['bootstrap_expect'] = '3'
+        node.set['consul']['servers'] = [ 'server1', 'server2', 'server3' ]
+      end.converge(described_recipe)
+    end
+    it do
+      expect(chef_run).to create_file('/etc/consul.d/default.json')
+        .with_content(/start_join/)
+        .with_content(/server1/)
+        .with_content(/server2/)
+        .with_content(/server3/)
+    end
+  end
+
+  context 'with a cluster service_mode, bootstrap_expect = 1, and a server list' do
+    let(:chef_run) do
+      ChefSpec::Runner.new(node_attributes) do |node|
+        node.set['consul']['service_mode'] = 'cluster'
+        node.set['consul']['bootstrap_expect'] = '1'
+        node.set['consul']['servers'] = [ 'server1', 'server2', 'server3' ]
+      end.converge(described_recipe)
+    end
+    it do
+      expect(chef_run).to_not create_file('/etc/consul.d/default.json')
+        .with_content(/start_join/)
+        .with_content(/server1/)
+        .with_content(/server2/)
+        .with_content(/server3/)
     end
   end
 end
