@@ -170,7 +170,78 @@ Installs and configures [Consul][1].
     </td>
     <td><tt>{}</tt></td>
   </tr>
-
+  <tr>
+    <td><tt>['consul']['encrypt_enabled']</tt></td>
+    <td>Boolean</td>
+    <td>
+      To enable Consul gossip encryption
+    </td>
+    <td><tt>nil</tt></td>
+  </tr>
+  <tr>
+    <td><tt>['consul']['verify_incoming']</tt></td>
+    <td>Boolean</td>
+    <td>
+      If set to True, Consul requires that all incoming connections make use of TLS.
+    </td>
+    <td><tt>nil</tt></td>
+  </tr>
+  <tr>
+    <td><tt>['consul']['verify_outgoing']</tt></td>
+    <td>Boolean</td>
+    <td>
+      If set to True, Consul requires that all outgoing connections make use of TLS.
+    </td>
+    <td><tt>nil</tt></td>
+  </tr>
+  <tr>
+    <td><tt>['consul']['key_file']</tt></td>
+    <td>String</td>
+    <td>
+      The content of PEM encoded private key
+    </td>
+    <td><tt>nil</tt></td>
+  </tr>
+  <tr>
+    <td><tt>['consul']['key_file_path']</tt></td>
+    <td>String</td>
+    <td>
+      Path where the private key is stored on the disk
+    </td>
+    <td><tt>nil</tt></td>
+  </tr>
+  <tr>
+    <td><tt>['consul']['ca_file']</tt></td>
+    <td>String</td>
+      The content of PEM encoded ca cert
+    <td>
+    </td>
+    <td><tt>nil</tt></td>
+  </tr>
+  <tr>
+    <td><tt>['consul']['ca_file_path']</tt></td>
+    <td>String</td>
+    <td>
+      Path where ca is stored on the disk
+    </td>
+    <td><tt>nil</tt></td>
+  </tr>
+  <tr>
+    <td><tt>['consul']['cert_file']</tt></td>
+    <td>String</td>
+    <td>
+      The content of PEM encoded cert. It should only contain the public key.
+    </td>
+    <td><tt>nil</tt></td>
+  </tr>
+  <tr>
+    <td><tt>['consul']['cert_file_path']</tt></td>
+    <td>String</td>
+    <td>
+        Path where cert is stored on the disk
+    </td>
+    <td><tt>nil</tt></td>
+  </tr>
 </table>
 
 ### Consul UI Attributes

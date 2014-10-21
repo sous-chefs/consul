@@ -43,8 +43,11 @@ default['consul']['checksums'] = {
 }
 default['consul']['source_revision'] = 'master'
 
+config_dir = "/etc/consul.d"
 # Service attributes
 default['consul']['service_mode'] = 'bootstrap'
+# In the cluster mode, set the default cluster size to 3
+default['consul']['bootstrap_expect'] = 3
 default['consul']['data_dir'] = '/var/lib/consul'
 default['consul']['config_dir'] = '/etc/consul.d'
 case node['platform_family']
@@ -56,6 +59,7 @@ else
   default['consul']['etc_config_dir'] = '/etc/sysconfig/consul'
 end
 
+default['consul']['config_dir'] = config_dir
 default['consul']['servers'] = []
 default['consul']['init_style'] = 'init'   # 'init', 'runit'
 default['consul']['service_user'] = 'consul'
@@ -68,6 +72,21 @@ default['consul']['ports'] = {
   'serf_wan' => 8302,
   "server"   => 8300,
 }
+
+# Gossip encryption
+default['consul']['encrypt_enabled'] = false
+default['consul']['encrypt'] = nil
+# TLS support
+default['consul']['verify_incoming'] = false
+default['consul']['verify_outgoing'] = false
+# Cert in pem format
+default['consul']['ca_cert'] = nil
+default['consul']['ca_path'] = "#{config_dir}/ca.pem"
+default['consul']['cert_file'] = nil
+default['consul']['cert_path'] = "#{config_dir}/cert.pem"
+# Cert in pem format. It can be unique for each host
+default['consul']['key_file'] = nil
+default['consul']['key_file_path'] = "#{config_dir}/key.pem"
 
 # Optionally bind to a specific interface
 default['consul']['bind_interface'] = nil
