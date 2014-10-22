@@ -176,7 +176,7 @@ Installs and configures [Consul][1].
     <td>
       To enable Consul gossip encryption
     </td>
-    <td><tt>nil</tt></td>
+    <td><tt>false</tt></td>
   </tr>
   <tr>
     <td><tt>['consul']['verify_incoming']</tt></td>
@@ -184,7 +184,7 @@ Installs and configures [Consul][1].
     <td>
       If set to True, Consul requires that all incoming connections make use of TLS.
     </td>
-    <td><tt>nil</tt></td>
+    <td><tt>false</tt></td>
   </tr>
   <tr>
     <td><tt>['consul']['verify_outgoing']</tt></td>
@@ -192,7 +192,7 @@ Installs and configures [Consul][1].
     <td>
       If set to True, Consul requires that all outgoing connections make use of TLS.
     </td>
-    <td><tt>nil</tt></td>
+    <td><tt>false</tt></td>
   </tr>
   <tr>
     <td><tt>['consul']['key_file']</tt></td>
@@ -208,7 +208,7 @@ Installs and configures [Consul][1].
     <td>
       Path where the private key is stored on the disk
     </td>
-    <td><tt>nil</tt></td>
+    <td><tt>/etc/consul.d/key.pem</tt></td>
   </tr>
   <tr>
     <td><tt>['consul']['ca_file']</tt></td>
@@ -224,7 +224,7 @@ Installs and configures [Consul][1].
     <td>
       Path where ca is stored on the disk
     </td>
-    <td><tt>nil</tt></td>
+    <td><tt>/etc/consul.d/ca.pem</tt></td>
   </tr>
   <tr>
     <td><tt>['consul']['cert_file']</tt></td>
@@ -240,7 +240,55 @@ Installs and configures [Consul][1].
     <td>
         Path where cert is stored on the disk
     </td>
-    <td><tt>nil</tt></td>
+    <td><tt>/etc/consul.d/cert.pem</tt></td>
+  </tr>
+</table>
+
+### Databag Attributes (optional)
+Following attributes, if exist in the [encrypted databag][7], override the node attributes
+
+<table>
+  <tr>
+    <th>Key</th>
+    <th>Databag item</th>
+    <th>Type</th>
+    <th>Description</th>
+  </tr>
+  <tr>
+    <td><tt>key_file</tt></td>
+    <td>['consul']['encrypt']</td>
+    <td>String</td>
+    <td>The content of PEM encoded private key</td>
+  </tr>
+  <tr>
+    <td><tt>key_file_{fqdn}</tt></td>
+    <td>['consul']['encrypt']</td>
+    <td>String</td>
+    <td>Node's(identified by fqdn) unique PEM encoded private key. If it exists, it will override the databag and node key_file attribute</td>
+  </tr>
+  <tr>
+    <td><tt>ca_file</tt></td>
+    <td>['consul']['encrypt']</td>
+    <td>String</td>
+    <td>The content of PEM encoded ca cert</td>
+  </tr>
+  <tr>
+    <td><tt>encrypt</tt></td>
+    <td>['consul']['encrypt']</td>
+    <td>String</td>
+    <td>Consul Gossip encryption key</td>
+  </tr>
+  <tr>
+    <td><tt>cert_file</tt></td>
+    <td>['consul']['encrypt']</td>
+    <td>String</td>
+    <td>The content of PEM encoded cert</td>
+  </tr>
+  <tr>
+    <td><tt>cert_file_{fqdn}</tt></td>
+    <td>['consul']['encrypt']</td>
+    <td>String</td>
+    <td>Node's(identified by fqdn) unique PEM encoded cert. If it exists, it will override the databag and node cert_file attribute</td>
   </tr>
 </table>
 
@@ -391,3 +439,5 @@ Created and maintained by [John Bellone][3] [@johnbellone][2] (<jbellone@bloombe
 [4]: https://github.com/johnbellone/consul-cookbook/graphs/contributors
 [5]: http://travis-ci.org/johnbellone/consul-cookbook
 [6]: https://coveralls.io/r/johnbellone/consul-cookbook
+[7]: https://docs.getchef.com/essentials_data_bags.html
+
