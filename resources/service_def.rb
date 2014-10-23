@@ -22,7 +22,7 @@ default_action :create
 
 attribute :name, name_attribute: true, required: true, kind_of: String
 attribute :id, kind_of: String
-attribute :port, kind_of: Integer
+attribute :port, kind_of: Integer, required: true
 attribute :tags, kind_of: Array, default: nil
 attribute :check, kind_of: Hash, default: nil, callbacks: {
   'Checks must be a hash containing either a `:ttl` key/value or a `:script` and `:interval` key/value' => ->(check) do
@@ -47,7 +47,7 @@ def self.validate_check(check)
 end
 
 def path
-  ::File.join(node['consul']['config_dir'], "service-#{name}.json")
+  ::File.join(node['consul']['config_dir'], "service-#{name}-#{port}.json")
 end
 
 def to_json
