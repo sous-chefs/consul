@@ -142,13 +142,13 @@ if node.consul.verify_incoming || node.consul.verify_outgoing
   service_config['verify_outgoing'] = node.consul.verify_outgoing
   service_config['verify_incoming'] = node.consul.verify_incoming
 
-  ca_path = node.consul.ca_path
+  ca_path = node.consul.ca_path % { config_dir: node.consul.config_dir }
   service_config['ca_file'] = ca_path
 
-  cert_path = node.consul.cert_path
+  cert_path = node.consul.cert_path % { config_dir: node.consul.config_dir }
   service_config['cert_file'] = cert_path
 
-  key_path = node.consul.key_file_path
+  key_path = node.consul.key_file_path % { config_dir: node.consul.config_dir }
   service_config['key_file'] = key_path
 
   # Search for key_file_hostname since key and cert file can be unique/host
