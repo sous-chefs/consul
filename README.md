@@ -33,6 +33,12 @@ Installs and configures [Consul][1].
     <td>Base URL for binary downloads</td>
     <td><tt>https://dl.bintray.com/mitchellh/consul/</tt></td>
   </tr>
+   <tr>
+    <td><tt>['consul']['encrypt']</tt></td>
+    <td>String</td>
+    <td>Encryption string for consul cluster.</td>
+    <td><tt>nil</tt></td>
+  </tr>
   <tr>
     <td><tt>['consul']['install_method']</tt></td>
     <td>String</td>
