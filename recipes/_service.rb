@@ -85,7 +85,7 @@ when 'server'
 when 'client'
   service_config['start_join'] = node['consul']['servers']
 else
-  Chef::Application.fatal! %Q(node['consul']['service_mode'] must be "bootstrap", "server", or "client")
+  Chef::Application.fatal! %Q(node['consul']['service_mode'] must be "bootstrap", "cluster", "server", or "client")
 end
 
 iface_addr_map = {
