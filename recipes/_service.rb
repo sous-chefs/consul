@@ -131,6 +131,11 @@ end
 
 case node['consul']['init_style']
 when 'init'
+  template '/etc/sysconfig/consul' do
+    source 'consul-sysconfig.erb'
+    mode 0755
+    notifies :create, 'template[/etc/init.d/consul]', :immediately
+  end
   template '/etc/init.d/consul' do
     source 'consul-init.erb'
     mode 0755
