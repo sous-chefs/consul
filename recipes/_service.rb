@@ -131,6 +131,11 @@ end
 
 case node['consul']['init_style']
 when 'init'
+  directory "/etc/sysconfig" do
+    action :create
+    mode "0755"
+  end
+
   template '/etc/sysconfig/consul' do
     source 'consul-sysconfig.erb'
     mode 0755
