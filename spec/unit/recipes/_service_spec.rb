@@ -19,14 +19,6 @@ describe_recipe 'consul::_service' do
         .with(mode: 0600)
     end
     it do
-      expect(chef_run).to create_template('/etc/sysconfig/consul')
-        .with(source: 'consul-sysconfig.erb')
-        .with(mode: 0755)
-    end
-    it do
-      expect(chef_run).to render_file('/etc/sysconfig/consul').with_content('GOMAXPROCS=1')
-    end
-    it do
       expect(chef_run).to create_template('/etc/init.d/consul')
         .with(source: 'consul-init.erb')
         .with(mode: 0755)
@@ -35,6 +27,34 @@ describe_recipe 'consul::_service' do
       expect(chef_run).to enable_service('consul')
         .with(supports: {status: true, restart: true, reload: true})
       expect(chef_run).to start_service('consul')
+    end
+  end
+
+  context 'config on centos' do
+    let(:chef_run) do
+      ChefSpec::Runner.new(platform: 'centos', version: '6.3').converge(described_recipe)
+    end
+    it do
+      expect(chef_run).to create_template('/etc/sysconfig/consul')
+        .with(source: 'consul-sysconfig.erb')
+        .with(mode: 0755)
+    end
+    it do
+      expect(chef_run).to render_file('/etc/sysconfig/consul').with_content('GOMAXPROCS=1')
+    end
+  end
+
+  context 'config on ubuntu' do
+    let(:chef_run) do
+      ChefSpec::Runner.new(platform: 'ubuntu', version: '14.04').converge(described_recipe)
+    end
+    it do
+      expect(chef_run).to create_template('/etc/default/consul')
+        .with(source: 'consul-sysconfig.erb')
+        .with(mode: 0755)
+    end
+    it do
+      expect(chef_run).to render_file('/etc/default/consul').with_content('GOMAXPROCS=1')
     end
   end
 

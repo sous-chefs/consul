@@ -14,8 +14,8 @@
 #                       * Multi Datacenter
 ### END INIT INFO
 
-if [ -f /etc/sysconfig/consul ]; then
-. /etc/sysconfig/consul
+if [ -f <%= node['consul']['etc_config_dir'] %> ]; then
+. <%= node['consul']['etc_config_dir'] %>
 fi
 
 export GOMAXPROCS=${GOMAXPROCS}

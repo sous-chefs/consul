@@ -47,6 +47,15 @@ default['consul']['source_revision'] = 'master'
 default['consul']['service_mode'] = 'bootstrap'
 default['consul']['data_dir'] = '/var/lib/consul'
 default['consul']['config_dir'] = '/etc/consul.d'
+case node['platform_family']
+when 'debian'
+  default['consul']['etc_config_dir'] = '/etc/default/consul'
+when 'rhel'
+  default['consul']['etc_config_dir'] = '/etc/sysconfig/consul'
+else
+  default['consul']['etc_config_dir'] = '/etc/sysconfig/consul'
+end
+
 default['consul']['servers'] = []
 default['consul']['init_style'] = 'init'   # 'init', 'runit'
 default['consul']['service_user'] = 'consul'
