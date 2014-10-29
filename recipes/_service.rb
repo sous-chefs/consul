@@ -131,13 +131,7 @@ end
 
 case node['consul']['init_style']
 when 'init'
-  if platform_family?('debian')
-    etc_config_dir = '/etc/default/consul'
-  else
-    etc_config_dir = '/etc/sysconfig/consul'
-  end
-
-  template etc_config_dir do
+  template node['consul']['etc_config_dir'] do
     source 'consul-sysconfig.erb'
     mode 0755
     notifies :create, 'template[/etc/init.d/consul]', :immediately
