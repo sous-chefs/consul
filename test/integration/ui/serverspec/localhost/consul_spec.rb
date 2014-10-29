@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe file('/var/lib/consul/ui/consul_ui/index.html') do
+describe file('/var/lib/consul/ui/index.html') do
   it { should be_file }
 end
 
