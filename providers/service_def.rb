@@ -25,11 +25,13 @@ action :create do
     content new_resource.to_json
 
     action :create
+    notifies :reload, 'service[consul]', :immediately
   end
 end
 
 action :delete do
   file new_resource.path do
     action :delete
+    notifies :reload, 'service[consul]', :immediately
   end
 end
