@@ -65,7 +65,10 @@ Please specify the name of the test recipe that executes your recipe:
   let(:node) { chef_run.node }
 
   def node_attributes
-    {}
+    {
+     platform: 'ubuntu',
+     version: '12.04'
+    }
   end
 
   let(:step_into) do

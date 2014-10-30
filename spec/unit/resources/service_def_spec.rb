@@ -12,6 +12,9 @@ describe_resource "consul_service_def" do
         '"script": "curl http://localhost:8888/health"'].each do |content|
         expect(chef_run).to render_file(service_def_path)
           .with_content(content)
+
+        expect(chef_run.file(service_def_path))
+          .to notify('service[consul]').to(:reload).delayed
       end
     end
   end
@@ -21,6 +24,8 @@ describe_resource "consul_service_def" do
 
     it "de-register the service" do
       expect(chef_run).to delete_file(service_def_path)
+      expect(chef_run.file(service_def_path))
+        .to notify('service[consul]').to(:reload).delayed
     end
   end
 end
