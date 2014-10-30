@@ -15,23 +15,31 @@
 # limitations under the License.
 #
 
-use_inline_resources
+use_inline_resources if defined? use_inline_resources
+
+def set_updated
+  r = yield
+  new_resource.updated_by_last_action(r.updated_by_last_action?)
+end
 
 action :create do
-  file new_resource.path do
-    user node['consul']['service_user']
-    group node['consul']['service_group']
-    mode 0600
-    content new_resource.to_json
-
-    action :create
-    notifies :reload, 'service[consul]', :delayed
+  set_updated do
+    file new_resource.path do
+      user node['consul']['service_user']
+      group node['consul']['service_group']
+      mode 0600
+      content new_resource.to_json
+      action :create
+      notifies :reload, 'service[consul]', :delayed
+    end
   end
 end
 
 action :delete do
-  file new_resource.path do
-    action :delete
-    notifies :reload, 'service[consul]', :delayed
+  set_updated do
+    file new_resource.path do
+      action :delete
+      notifies :reload, 'service[consul]', :delayed
+    end
   end
 end
