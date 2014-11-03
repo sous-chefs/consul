@@ -127,6 +127,8 @@ file consul_config_filename do
   mode 0600
   action :create
   content JSON.pretty_generate(service_config, quirks_mode: true)
+  # https://github.com/johnbellone/consul-cookbook/issues/72
+  notifies :restart, "service[consul]"
 end
 
 case node['consul']['init_style']
