@@ -152,6 +152,15 @@ Installs and configures [Consul][1].
       attribute to the IP of the specified interface if it exists.
     </td>
     <td><tt>nil</tt></td>
+  </tr>  
+  <tr>
+    <td><tt>['consul']['extra_params']</tt></td>
+    <td>Hash</td>
+    <td>
+      Any extra params to be put in the agent options
+      http://www.consul.io/docs/agent/options.html#disable_remote_exec
+    </td>
+    <td><tt>{}</tt></td>
   </tr>
   <tr>
     <td><tt>['consul']['advertise_interface']</tt></td>
