@@ -281,6 +281,7 @@ To bootstrap a consul cluster follow the following steps:
  5.  Apply the consul cookbook to the rest of your nodes with `node['consul']['service_mode'] = 'client'` (I put this in the environment)
  6.  Start added services and checks to your cookbooks.
  7.  If you want to get values out of consul to power your chef, curl localhost:8500/v1/kv/key/path?raw in your cookbook.
+
 ## Authors
 
 Created and maintained by [John Bellone][3] [@johnbellone][2] (<jbellone@bloomberg.net>) and a growing community of [contributors][4].
