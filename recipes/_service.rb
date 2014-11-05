@@ -63,27 +63,26 @@ consul_directories.each do |dirname|
 end
 
 # Determine service params
-service_config = node['consul']['extra_params']
-service_config['data_dir'] = node['consul']['data_dir']
+node['consul']['extra_params']['data_dir'] = node['consul']['data_dir']
 num_cluster = node['consul']['bootstrap_expect'].to_i
 
 case node['consul']['service_mode']
 when 'bootstrap'
-  service_config['server'] = true
-  service_config['bootstrap'] = true
+  node['consul']['extra_params']['server'] = true
+   node['consul']['extra_params']['bootstrap'] = true
 when 'cluster'
-  service_config['server'] = true
+   node['consul']['extra_params']['server'] = true
   if num_cluster > 1
-    service_config['bootstrap_expect'] = num_cluster
-    service_config['start_join'] = node['consul']['servers']
+     node['consul']['extra_params']['bootstrap_expect'] = num_cluster
+     node['consul']['extra_params']['start_join'] = node['consul']['servers']
   else
-    service_config['bootstrap'] = true
+     node['consul']['extra_params']['bootstrap'] = true
   end
 when 'server'
-  service_config['server'] = true
-  service_config['start_join'] = node['consul']['servers']
+   node['consul']['extra_params']['server'] = true
+   node['consul']['extra_params']['start_join'] = node['consul']['servers']
 when 'client'
-  service_config['start_join'] = node['consul']['servers']
+   node['consul']['extra_params']['start_join'] = node['consul']['servers']
 else
   Chef::Application.fatal! %Q(node['consul']['service_mode'] must be "bootstrap", "cluster", "server", or "client")
 end
@@ -106,16 +105,17 @@ iface_addr_map.each_pair do |interface,addr|
 end
 
 if node['consul']['serve_ui']
-  service_config['ui_dir'] = node['consul']['ui_dir']
-  service_config['client_addr'] = node['consul']['client_addr']
+   node['consul']['extra_params']['ui_dir'] = node['consul']['ui_dir']
+   node['consul']['extra_params']['client_addr'] = node['consul']['client_addr']
 end
 
 copy_params = [
   :bind_addr, :datacenter, :domain, :log_level, :node_name, :advertise_addr, :enable_syslog, :encrypt
 ]
+
 copy_params.each do |key|
   if node['consul'][key]
-    service_config[key] = node['consul'][key]
+     node['consul']['extra_params'][key] = node['consul'][key]
   end
 end
 
@@ -126,7 +126,7 @@ file consul_config_filename do
   group consul_group
   mode 0600
   action :create
-  content JSON.pretty_generate(service_config, quirks_mode: true)
+  content JSON.pretty_generate( node['consul']['extra_params'], quirks_mode: true)
   # https://github.com/johnbellone/consul-cookbook/issues/72
   notifies :restart, "service[consul]"
 end
