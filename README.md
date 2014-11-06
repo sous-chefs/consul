@@ -248,6 +248,11 @@ Include `consul::ui` in your node's `run_list`:
 
 ### LWRP
 
+##### Adding event watch
+    consul_event_watch_def 'event-name' do
+      handler "chef-client"
+    end
+
 ##### Adding service without check
     consul_service_def 'voice1' do
       port 5060

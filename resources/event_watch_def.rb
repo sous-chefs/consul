@@ -36,5 +36,6 @@ def to_hash
     type: "event"
   }
   hash[:name] = name
-  hash[:handler] = handler
+  hash[:handler] = handler unless handler.nil?
+  hash
 end
