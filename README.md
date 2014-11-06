@@ -249,7 +249,15 @@ Include `consul::ui` in your node's `run_list`:
 ### LWRP
 
 ##### Adding event watch
+
     consul_event_watch_def 'event-name' do
+      handler "chef-client"
+    end
+
+##### Adding key watch
+
+    consul_event_watch_def 'key-watch-name' do
+      key "/key/path"
       handler "chef-client"
     end
 
