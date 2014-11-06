@@ -285,7 +285,7 @@ Include `consul::ui` in your node's `run_list`:
 ####  Getting Started
 
 To bootstrap a consul cluster follow the following steps:
- 0.  Make sure that ports 8300-8302 UDP/TCP are all open.
+ 0.  Make sure that ports 8300-8302 (by default, if you configured differnt ones open those)  UDP/TCP are all open.
  1.  Bootstrap a few (preferablly 3 nodes) to be your consul servers, these will be the KV masters.
  2.  Put `node['consul']['servers'] =["Array of the bootstrapped servers ips or dns names"]` in your environment.
  3.  Apply the consul cookbook to these nodes with `node['consul']['service_mode'] = 'cluster'` (I put this in this in a CONSUL_MASTER role).
