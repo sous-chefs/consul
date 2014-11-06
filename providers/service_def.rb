@@ -30,7 +30,6 @@ action :create do
       mode 0600
       content new_resource.to_json
       action :create
-      notifies :reload, 'service[consul]', :delayed
     end
   end
 end
@@ -39,7 +38,6 @@ action :delete do
   set_updated do
     file new_resource.path do
       action :delete
-      notifies :reload, 'service[consul]', :delayed
     end
   end
 end
