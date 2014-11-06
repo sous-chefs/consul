@@ -162,6 +162,15 @@ Installs and configures [Consul][1].
     </td>
     <td><tt>nil</tt></td>
   </tr>
+  <tr>
+    <td><tt>['consul']['extra_params']</tt></td>
+    <td>hash</td>
+    <td>
+       Pass a hash of extra params to the default.json config file
+    </td>
+    <td><tt>{}</tt></td>
+  </tr>
+
 </table>
 
 ### Consul UI Attributes
