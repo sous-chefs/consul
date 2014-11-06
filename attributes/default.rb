@@ -70,3 +70,4 @@ default['consul']['client_interface'] = nil
 default['consul']['client_addr'] = '0.0.0.0'
 default['consul']['ui_dir'] = '/var/lib/consul/ui'
 default['consul']['serve_ui'] = false
+default['consul']['extra_params'] = {}
