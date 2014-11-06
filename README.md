@@ -1,4 +1,4 @@
-consul-cookbook
+consul-cookbook - TESTING GITHUB DEMO PLS IGNORE
 ===============
 ![Release](http://img.shields.io/github/release/johnbellone/consul-cookbook.svg)
 [![Build Status](http://img.shields.io/travis/johnbellone/consul-cookbook.svg)][5]
