@@ -271,6 +271,17 @@ Include `consul::ui` in your node's `run_list`:
       action :delete
     end
 
+####  Getting Started
+To bootstrap a consul cluster follow the following steps:
+  
+ 1.  Bootstrap a few (preferablly 3 nodes) to be your consul servers, these will be the KV masters.
+ 2.  Put `node['consul']['servers'] =["Array of the bootstrapped servers ips or dns names"]` in your environment.
+ 3.  Apply the consul cookbook to these nodes with `node['consul']['service_mode'] = 'cluster'` (I put this in this in a CONSUL_MASTER role). 
+ 4.  Let these machines converge, once you can run `consul members` and get a list of all of the servers your ready to move on
+ 5.  Apply the consul cookbook to the rest of your nodes with `node['consul']['service_mode'] = 'client'` (I put this in the environment)
+ 6.  Start added services and checks to your cookbooks.
+ 7.  If you want to get values out of consul to power your chef, curl localhost:8500/v1/kv/key/path?raw in your cookbook.
+
 ## Authors
 
 Created and maintained by [John Bellone][3] [@johnbellone][2] (<jbellone@bloomberg.net>) and a growing community of [contributors][4].
