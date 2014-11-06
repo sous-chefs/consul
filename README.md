@@ -248,9 +248,12 @@ Include `consul::ui` in your node's `run_list`:
 
 ### LWRP
 
-##### Adding event watch
-    consul_event_watch_def 'event-name' do
+##### Adding key watch
+
+    consul_event_watch_def 'key-watch-name' do
+      key "/key/path"
       handler "chef-client"
+      notifies :reload, 'service[consul]', :delayed
     end
 
 ##### Adding service without check
