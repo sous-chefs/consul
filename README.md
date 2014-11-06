@@ -249,10 +249,11 @@ Include `consul::ui` in your node's `run_list`:
 ### LWRP
 
 ##### Adding service without check
+
     consul_service_def 'voice1' do
       port 5060
       tags ['_sip._udp']
-      notifies :reload, 'service[consul]', :delayed
+      notifies :reload, 'service[consul]'
     end
 
 ##### Adding service with check
@@ -264,19 +265,20 @@ Include `consul::ui` in your node's `run_list`:
         interval: '10s',
         script: 'echo ok'
       )
-      notifies :reload, 'service[consul]', :delayed
+      notifies :reload, 'service[consul]'
     end
 
 ##### Removing service
 
     consul_service_def 'voice1' do
       action :delete
-      notifies :reload, 'service[consul]', :delayed
+      notifies :reload, 'service[consul]'
     end
 
-NOTE: The consumer is resposible for notifying consul service. See #76 for more details.
+> Be sure to notify the Consul resource to restart when your service def changes.
 
 ####  Getting Started
+
 To bootstrap a consul cluster follow the following steps:
 
  1.  Bootstrap a few (preferablly 3 nodes) to be your consul servers, these will be the KV masters.
