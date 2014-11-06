@@ -131,4 +131,18 @@ describe_recipe 'consul::_service' do
         .with_content(/server3/)
     end
   end
+
+  context 'with extra params' do
+    let(:chef_run) do
+      ChefSpec::Runner.new(node_attributes) do |node|
+        node.set['consul']['extra_params']['disable_remote_exec'] = true 
+      end.converge(described_recipe)
+    end
+    it do
+      expect(chef_run).to_not create_file('/etc/consul.d/default.json')
+        .with_content(/"disable_remote_exec" : "true"/)
+    end
+  end
+
+
 end

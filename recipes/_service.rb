@@ -63,7 +63,7 @@ consul_directories.each do |dirname|
 end
 
 # Determine service params
-service_config = {}
+service_config = JSON.parse(node['consul']['extra_params'].to_json)
 service_config['data_dir'] = node['consul']['data_dir']
 num_cluster = node['consul']['bootstrap_expect'].to_i
 
