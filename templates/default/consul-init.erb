@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 ### BEGIN INIT INFO
 # Provides:          consul
 # Required-Start:    $network $remote_fs $syslog
@@ -34,6 +34,7 @@ case "$1" in
         echo "$NAME already running"
     else
         echo "Starting $NAME"
+        exec 2> >(while IFS= read -r line; do logger -t consul "$line"; done)
         $CMD >> "$LOGFILE" &
         echo $! > "$PIDFILE"
         if ! is_running; then
