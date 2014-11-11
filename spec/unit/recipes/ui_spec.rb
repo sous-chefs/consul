@@ -5,6 +5,6 @@ describe_recipe 'consul::ui' do
   it do
     expect(chef_run).to put_ark('consul_ui')
       .with(path: '/var/lib/consul/ui')
-      .with(version: '0.4.0')
+      .with(version: '0.4.1')
   end
 end
