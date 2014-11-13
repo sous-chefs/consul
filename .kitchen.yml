@@ -6,18 +6,14 @@ provisioner:
   name: chef_zero
 
 platforms:
-  - name: ubuntu-12.04
   - name: ubuntu-14.04
-  - name: centos-6.5
-    attributes:
-      golang:
-        install_dir: '/usr'
+  - name: ubuntu-12.04
+  - name: ubuntu-10.04
+  - name: centos-7.0
+  - name: centos-6.0
   - name: centos-5.10
     run_list:
       - recipe[yum-repoforge::default]
-    attributes:
-      golang:
-        install_dir: '/usr'
 
 suites:
   - name: default
@@ -29,6 +25,12 @@ suites:
           bind_interface: eth0
           advertise_interface: eth0
           encrypt: CGXC2NsXW4AvuB4h5ODYzQ==
+  - name: source
+    run_list:
+      - recipe[consul::default]
+    attributes:
+      consul:
+        install_method: source
   - name: runit
     run_list:
       - recipe[consul::default]
