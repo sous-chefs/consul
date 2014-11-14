@@ -2,7 +2,7 @@ require 'spec_helper'
 
 describe_recipe 'consul::install_source' do
   before do
-    stub_command("/opt/go/bin/go version | grep \"go1.3 \"").and_return(false)
+    stub_command("/opt/go/bin/go version | grep \"go1.2 \"").and_return(false)
   end
 
   it { expect(chef_run).to include_recipe('golang::default') }
