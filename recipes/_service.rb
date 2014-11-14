@@ -130,6 +130,15 @@ end
 
 case node['consul']['init_style']
 when 'init'
+  template '/etc/default/consul' do
+    source 'etc.default.consul.erb'
+    mode 0644
+    variables(
+      gomaxprocs: "#{node['consul']['gomaxprocs']}",
+    )
+    notifies :restart, 'service[consul]', :delayed
+  end
+
   template '/etc/init.d/consul' do
     source 'consul-init.erb'
     mode 0755
@@ -137,7 +146,7 @@ when 'init'
       consul_binary: "#{node['consul']['install_dir']}/consul",
       config_dir: node['consul']['config_dir'],
     )
-    notifies :restart, 'service[consul]', :immediately
+    notifies :restart, 'service[consul]', :delayed
   end
 
   service 'consul' do

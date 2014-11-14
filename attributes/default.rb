@@ -51,6 +51,7 @@ default['consul']['servers'] = []
 default['consul']['init_style'] = 'init'   # 'init', 'runit'
 default['consul']['service_user'] = 'consul'
 default['consul']['service_group'] = 'consul'
+default['consul']['gomaxprocs'] = 1
 
 # Optionally bind to a specific interface
 default['consul']['bind_interface'] = nil

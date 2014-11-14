@@ -14,11 +14,14 @@
 #                       * Multi Datacenter
 ### END INIT INFO
 
-CMD="<%= @consul_binary %> agent -config-dir <%= @config_dir %>"
+CMD=("<%= @consul_binary %>" agent -config-dir "<%= @config_dir %>")
 NAME="consul"
+CONFIG=/etc/default/consul
 
 PIDFILE="/var/run/$NAME.pid"
 LOGFILE="/var/log/$NAME.log"
+
+test -s "$CONFIG" && source $CONFIG
 
 get_pid() {
     cat "$PIDFILE"
@@ -35,7 +38,7 @@ case "$1" in
     else
         echo "Starting $NAME"
         exec 2> >(while IFS= read -r line; do logger -t consul "$line"; done)
-        $CMD >> "$LOGFILE" &
+        eval "${CMD[@]}" >> "$LOGFILE" &
         echo $! > "$PIDFILE"
         if ! is_running; then
             echo "Unable to start $NAME, see $LOGFILE"
