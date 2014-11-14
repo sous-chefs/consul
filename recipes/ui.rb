@@ -23,5 +23,5 @@ ark 'consul_ui' do
   home_dir node['consul']['ui_dir']
   version node['consul']['version']
   checksum install_checksum
-  url ::URI.join(node['consul']['base_url'], "#{install_version}.zip").to_s
+  url node['consul']['base_url'] % { version: install_version }
 end
