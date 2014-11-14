@@ -19,20 +19,20 @@ describe_recipe 'consul::_service' do
         .with(mode: 0600)
     end
     it do
-      expect(chef_run).to create_template('/etc/init.d/consul')
-        .with(source: 'consul-init.erb')
-        .with(mode: 0755)
-    end
-    it do
       expect(chef_run).to enable_service('consul')
         .with(supports: {status: true, restart: true, reload: true})
       expect(chef_run).to start_service('consul')
     end
   end
 
-  context 'config on centos' do
+  context 'init on centos' do
     let(:chef_run) do
       ChefSpec::Runner.new(platform: 'centos', version: '6.3').converge(described_recipe)
+    end
+    it do
+      expect(chef_run).to create_template('/etc/init.d/consul')
+        .with(source: 'consul-init.erb')
+        .with(mode: 0755)
     end
     it do
       expect(chef_run).to create_template('/etc/sysconfig/consul')
@@ -44,9 +44,14 @@ describe_recipe 'consul::_service' do
     end
   end
 
-  context 'config on ubuntu' do
+  context 'init on ubuntu' do
     let(:chef_run) do
       ChefSpec::Runner.new(platform: 'ubuntu', version: '14.04').converge(described_recipe)
+    end
+    it do
+      expect(chef_run).to create_template('/etc/init/consul.conf')
+        .with(source: 'consul.conf.erb')
+        .with(mode: 0755)
     end
     it do
       expect(chef_run).to create_template('/etc/default/consul')
