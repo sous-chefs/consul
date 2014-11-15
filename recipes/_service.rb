@@ -111,10 +111,14 @@ if node['consul']['serve_ui']
 end
 
 copy_params = [
-  :bind_addr, :datacenter, :domain, :log_level, :node_name, :advertise_addr, :enable_syslog, :encrypt
+  :bind_addr, :datacenter, :domain, :log_level, :node_name, :advertise_addr, :ports, :enable_syslog, :encrypt
 ]
 copy_params.each do |key|
   if node['consul'][key]
+    if key == :ports
+      Chef::Application.fatal! 'node[:consul][:ports] must be a Hash' unless node[:consul][key].kind_of?(Hash)
+    end
+
     service_config[key] = node['consul'][key]
   end
 end
