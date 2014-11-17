@@ -60,13 +60,13 @@ default['consul']['servers'] = []
 default['consul']['init_style'] = 'init'   # 'init', 'runit'
 default['consul']['service_user'] = 'consul'
 default['consul']['service_group'] = 'consul'
-default[:consul][:ports] = {
-    :dns => 8600,
-    :http => 8500,
-    :rpc => 8400,
-    :serf_lan => 8301,
-    :serf_wan => 8302,
-    :server => 8300,
+default['consul']['ports'] = {
+  'dns'      => 8600,
+  'http'     => 8500,
+  'rpc'      => 8400,
+  'serf_lan' => 8301,
+  'serf_wan' => 8302,
+  "server"   => 8300,
 }
 
 # Optionally bind to a specific interface
