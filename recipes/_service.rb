@@ -205,7 +205,7 @@ when 'init'
       consul_binary: "#{node['consul']['install_dir']}/consul",
       config_dir: node['consul']['config_dir'],
     )
-    notifies :restart, 'service[consul]', :delayed
+    notifies :restart, 'service[consul]', :immediately
   end
 
   service 'consul' do
