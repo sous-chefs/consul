@@ -111,7 +111,7 @@ if node['consul']['serve_ui']
 end
 
 copy_params = [
-  :bind_addr, :datacenter, :domain, :log_level, :node_name, :advertise_addr, :ports, :enable_syslog, :encrypt
+  :bind_addr, :datacenter, :domain, :log_level, :node_name, :advertise_addr, :ports, :enable_syslog
 ]
 copy_params.each do |key|
   if node['consul'][key]
@@ -120,6 +120,53 @@ copy_params.each do |key|
     end
 
     service_config[key] = node['consul'][key]
+  end
+end
+
+dbi = nil
+# Gossip encryption
+if node.consul.encrypt_enabled
+  # Fetch the databag only once, and use empty hash if it doesn't exists
+  dbi = consul_encrypted_dbi || {}
+  secret = consul_dbi_key_with_node_default(dbi, 'encrypt')
+  raise "Consul encrypt key is empty or nil" if secret.nil? or secret.empty?
+  service_config['encrypt'] = secret
+else
+  # for backward compatibilty
+  service_config['encrypt'] = node.consul.encrypt unless node.consul.encrypt.nil?
+end
+
+# TLS encryption
+if node.consul.verify_incoming || node.consul.verify_outgoing
+  dbi = consul_encrypted_dbi || {} if dbi.nil?
+  service_config['verify_outgoing'] = node.consul.verify_outgoing
+  service_config['verify_incoming'] = node.consul.verify_incoming
+
+  ca_path = node.consul.ca_path % { config_dir: node.consul.config_dir }
+  service_config['ca_file'] = ca_path
+
+  cert_path = node.consul.cert_path % { config_dir: node.consul.config_dir }
+  service_config['cert_file'] = cert_path
+
+  key_path = node.consul.key_file_path % { config_dir: node.consul.config_dir }
+  service_config['key_file'] = key_path
+
+  # Search for key_file_hostname since key and cert file can be unique/host
+  key_content = dbi['key_file_' + node.fqdn] || consul_dbi_key_with_node_default(dbi, 'key_file')
+  cert_content = dbi['cert_file_' + node.fqdn] || consul_dbi_key_with_node_default(dbi, 'cert_file')
+  ca_content = consul_dbi_key_with_node_default(dbi, 'ca_cert')
+
+  # Save the certs if exists
+  {ca_path => ca_content, key_path => key_content, cert_path => cert_content}.each do |path, content|
+    unless content.nil? or content.empty?
+      file path do
+        user consul_user
+        group consul_group
+        mode 0600
+        action :create
+        content content
+      end
+    end
   end
 end
 
