@@ -25,13 +25,19 @@ Installs and configures [Consul][1].
     <td><tt>['consul']['version']</tt></td>
     <td>String</td>
     <td>Version to install</td>
-    <td><tt>0.3.0</tt></td>
+    <td><tt>0.4.1</tt></td>
   </tr>
   <tr>
     <td><tt>['consul']['base_url']</tt></td>
     <td>String</td>
     <td>Base URL for binary downloads</td>
     <td><tt>https://dl.bintray.com/mitchellh/consul/</tt></td>
+  </tr>
+   <tr>
+    <td><tt>['consul']['encrypt']</tt></td>
+    <td>String</td>
+    <td>Encryption string for consul cluster.</td>
+    <td><tt>nil</tt></td>
   </tr>
   <tr>
     <td><tt>['consul']['install_method']</tt></td>
@@ -157,10 +163,138 @@ Installs and configures [Consul][1].
     <td><tt>nil</tt></td>
   </tr>
   <tr>
+    <td><tt>['consul']['extra_params']</tt></td>
+    <td>hash</td>
+    <td>
+       Pass a hash of extra params to the default.json config file
+    </td>
+    <td><tt>{}</tt></td>
+  </tr>
+  <tr>
+    <td><tt>['consul']['encrypt_enabled']</tt></td>
+    <td>Boolean</td>
+    <td>
+      To enable Consul gossip encryption
+    </td>
+    <td><tt>false</tt></td>
+  </tr>
+  <tr>
+    <td><tt>['consul']['verify_incoming']</tt></td>
+    <td>Boolean</td>
+    <td>
+      If set to True, Consul requires that all incoming connections make use of TLS.
+    </td>
+    <td><tt>false</tt></td>
+  </tr>
+  <tr>
+    <td><tt>['consul']['verify_outgoing']</tt></td>
+    <td>Boolean</td>
+    <td>
+      If set to True, Consul requires that all outgoing connections make use of TLS.
+    </td>
+    <td><tt>false</tt></td>
+  </tr>
+  <tr>
+    <td><tt>['consul']['key_file']</tt></td>
+    <td>String</td>
+    <td>
+      The content of PEM encoded private key
+    </td>
+    <td><tt>nil</tt></td>
+  </tr>
+  <tr>
+    <td><tt>['consul']['key_file_path']</tt></td>
+    <td>String</td>
+    <td>
+      Path where the private key is stored on the disk
+    </td>
+    <td><tt>/etc/consul.d/key.pem</tt></td>
+  </tr>
+  <tr>
+    <td><tt>['consul']['ca_file']</tt></td>
+    <td>String</td>
+      The content of PEM encoded ca cert
+    <td>
+    </td>
+    <td><tt>nil</tt></td>
+  </tr>
+  <tr>
+    <td><tt>['consul']['ca_file_path']</tt></td>
+    <td>String</td>
+    <td>
+      Path where ca is stored on the disk
+    </td>
+    <td><tt>/etc/consul.d/ca.pem</tt></td>
+  </tr>
+  <tr>
+    <td><tt>['consul']['cert_file']</tt></td>
+    <td>String</td>
+    <td>
+      The content of PEM encoded cert. It should only contain the public key.
+    </td>
+    <td><tt>nil</tt></td>
+  </tr>
+  <tr>
+    <td><tt>['consul']['cert_file_path']</tt></td>
+    <td>String</td>
+    <td>
+        Path where cert is stored on the disk
+    </td>
+    <td><tt>/etc/consul.d/cert.pem</tt></td>
+  </tr>
+  <tr>
     <td><tt>['consul']['statsd_addr']</tt></td>
     <td>String</td>
     <td>This provides the address of a statsd instance (UDP).</td>
     <td><tt>nil</tt></td>
+  </tr>
+</table>
+
+### Databag Attributes (optional)
+Following attributes, if exist in the [encrypted databag][7], override the node attributes
+
+<table>
+  <tr>
+    <th>Key</th>
+    <th>Databag item</th>
+    <th>Type</th>
+    <th>Description</th>
+  </tr>
+  <tr>
+    <td><tt>key_file</tt></td>
+    <td>['consul']['encrypt']</td>
+    <td>String</td>
+    <td>The content of PEM encoded private key</td>
+  </tr>
+  <tr>
+    <td><tt>key_file_{fqdn}</tt></td>
+    <td>['consul']['encrypt']</td>
+    <td>String</td>
+    <td>Node's(identified by fqdn) unique PEM encoded private key. If it exists, it will override the databag and node key_file attribute</td>
+  </tr>
+  <tr>
+    <td><tt>ca_file</tt></td>
+    <td>['consul']['encrypt']</td>
+    <td>String</td>
+    <td>The content of PEM encoded ca cert</td>
+  </tr>
+  <tr>
+    <td><tt>encrypt</tt></td>
+    <td>['consul']['encrypt']</td>
+    <td>String</td>
+    <td>Consul Gossip encryption key</td>
+  </tr>
+  <tr>
+    <td><tt>cert_file</tt></td>
+    <td>['consul']['encrypt']</td>
+    <td>String</td>
+    <td>The content of PEM encoded cert</td>
+  </tr>
+  <tr>
+    <td><tt>cert_file_{fqdn}</tt></td>
+    <td>['consul']['encrypt']</td>
+    <td>String</td>
+    <td>Node's(identified by fqdn) unique PEM encoded cert. If it exists, it will override the databag and node cert_file attribute</td>
   </tr>
 </table>
 
@@ -248,10 +382,24 @@ Include `consul::ui` in your node's `run_list`:
 
 ### LWRP
 
+##### Adding key watch
+    consul_key_watch_def 'key-watch-name' do
+      key "/key/path"
+      handler "chef-client"
+    end
+
+
+##### Adding event watch
+    consul_event_watch_def 'event-name' do
+      handler "chef-client"
+    end
+
 ##### Adding service without check
+
     consul_service_def 'voice1' do
       port 5060
       tags ['_sip._udp']
+      notifies :reload, 'service[consul]'
     end
 
 ##### Adding service with check
@@ -263,13 +411,29 @@ Include `consul::ui` in your node's `run_list`:
         interval: '10s',
         script: 'echo ok'
       )
+      notifies :reload, 'service[consul]'
     end
 
 ##### Removing service
 
     consul_service_def 'voice1' do
       action :delete
+      notifies :reload, 'service[consul]'
     end
+
+> Be sure to notify the Consul resource to restart when your service def changes.
+
+####  Getting Started
+
+To bootstrap a consul cluster follow the following steps:
+ 0.  Make sure that ports 8300-8302 (by default, if you configured differnt ones open those)  UDP/TCP are all open.
+ 1.  Bootstrap a few (preferablly 3 nodes) to be your consul servers, these will be the KV masters.
+ 2.  Put `node['consul']['servers'] =["Array of the bootstrapped servers ips or dns names"]` in your environment.
+ 3.  Apply the consul cookbook to these nodes with `node['consul']['service_mode'] = 'cluster'` (I put this in this in a CONSUL_MASTER role).
+ 4.  Let these machines converge, once you can run `consul members` and get a list of all of the servers your ready to move on
+ 5.  Apply the consul cookbook to the rest of your nodes with `node['consul']['service_mode'] = 'client'` (I put this in the environment)
+ 6.  Start added services and checks to your cookbooks.
+ 7.  If you want to get values out of consul to power your chef, curl localhost:8500/v1/kv/key/path?raw in your cookbook.
 
 ## Authors
 
@@ -281,3 +445,5 @@ Created and maintained by [John Bellone][3] [@johnbellone][2] (<jbellone@bloombe
 [4]: https://github.com/johnbellone/consul-cookbook/graphs/contributors
 [5]: http://travis-ci.org/johnbellone/consul-cookbook
 [6]: https://coveralls.io/r/johnbellone/consul-cookbook
+[7]: https://docs.getchef.com/essentials_data_bags.html
+

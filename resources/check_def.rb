@@ -22,32 +22,13 @@ default_action :create
 
 attribute :name, name_attribute: true, required: true, kind_of: String
 attribute :id, kind_of: String
-attribute :port, kind_of: Integer
-attribute :tags, kind_of: Array, default: nil
-attribute :check, kind_of: Hash, default: nil, callbacks: {
-  'Checks must be a hash containing either a `:ttl` key/value or a `:script` and `:interval` key/value' => ->(check) do
-    Chef::Resource::ConsulServiceDef.validate_check(check)
-  end
-}
-
-def self.validate_check(check)
-  unless check.is_a?(Hash)
-    return false
-  end
-
-  if check.key?(:ttl) && (!check.key?(:interval) && !check.key?(:script))
-    return true
-  end
-
-  if check.key?(:interval) && check.key?(:script)
-    return true
-  end
-
-  false
-end
+attribute :script, kind_of: String
+attribute :ttl, kind_of: String
+attribute :interval, kind_of: String
+attribute :notes, kind_of: String
 
 def path
-  ::File.join(node['consul']['config_dir'], "service-#{id || name}.json")
+  ::File.join(node['consul']['config_dir'], "check-#{name}.json")
 end
 
 def to_json
@@ -56,13 +37,14 @@ end
 
 def to_hash
   hash = {
-    service: {
+    check: {
       name: name
     }
   }
-  hash[:service][:id]    = id unless id.nil?
-  hash[:service][:port]  = port unless port.nil?
-  hash[:service][:tags]  = tags unless tags.nil?
-  hash[:service][:check] = check unless check.nil?
+  hash[:check][:id] = id unless id.nil?
+  hash[:check][:script] = script unless script.nil?
+  hash[:check][:ttl] = ttl unless ttl.nil?
+  hash[:check][:interval] = interval unless interval.nil?
+  hash[:check][:notes] = notes unless notes.nil?
   hash
 end

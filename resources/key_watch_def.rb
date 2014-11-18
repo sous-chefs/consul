@@ -15,29 +15,28 @@
 # limitations under the License.
 #
 
-use_inline_resources if defined? use_inline_resources
+require 'json'
 
-def set_updated
-  r = yield
-  new_resource.updated_by_last_action(r.updated_by_last_action?)
+actions :create, :delete
+default_action :create
+
+attribute :name, name_attribute: true, required: true, kind_of: String
+attribute :key, required: true, kind_of: String
+attribute :handler, required: true, kind_of: String
+
+def path
+  ::File.join(node['consul']['config_dir'], "key-watch-#{name}.json")
 end
 
-action :create do
-  set_updated do
-    file new_resource.path do
-      user node['consul']['service_user']
-      group node['consul']['service_group']
-      mode 0600
-      content new_resource.to_json
-      action :create
-    end
-  end
+def to_json
+  JSON.pretty_generate(to_hash)
 end
 
-action :delete do
-  set_updated do
-    file new_resource.path do
-      action :delete
-    end
-  end
+def to_hash
+  hash =  {
+    type: "key"
+  }
+  hash[:key] = key
+  hash[:handler] = handler
+  hash
 end

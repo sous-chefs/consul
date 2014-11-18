@@ -63,7 +63,7 @@ consul_directories.each do |dirname|
 end
 
 # Determine service params
-service_config = {}
+service_config = JSON.parse(node['consul']['extra_params'].to_json)
 service_config['data_dir'] = node['consul']['data_dir']
 num_cluster = node['consul']['bootstrap_expect'].to_i
 
@@ -75,6 +75,7 @@ when 'cluster'
   service_config['server'] = true
   if num_cluster > 1
     service_config['bootstrap_expect'] = num_cluster
+    service_config['start_join'] = node['consul']['servers']
   else
     service_config['bootstrap'] = true
   end
@@ -84,7 +85,7 @@ when 'server'
 when 'client'
   service_config['start_join'] = node['consul']['servers']
 else
-  Chef::Application.fatal! %Q(node['consul']['service_mode'] must be "bootstrap", "server", or "client")
+  Chef::Application.fatal! %Q(node['consul']['service_mode'] must be "bootstrap", "cluster", "server", or "client")
 end
 
 iface_addr_map = {
@@ -110,11 +111,62 @@ if node['consul']['serve_ui']
 end
 
 copy_params = [
-  :bind_addr, :datacenter, :domain, :log_level, :node_name, :advertise_addr, :enable_syslog, :statsd_addr
+  :bind_addr, :datacenter, :domain, :log_level, :node_name, :advertise_addr, :ports, :enable_syslog, :statsd_addr
 ]
 copy_params.each do |key|
   if node['consul'][key]
+    if key == :ports
+      Chef::Application.fatal! 'node[:consul][:ports] must be a Hash' unless node[:consul][key].kind_of?(Hash)
+    end
+
     service_config[key] = node['consul'][key]
+  end
+end
+
+dbi = nil
+# Gossip encryption
+if node.consul.encrypt_enabled
+  # Fetch the databag only once, and use empty hash if it doesn't exists
+  dbi = consul_encrypted_dbi || {}
+  secret = consul_dbi_key_with_node_default(dbi, 'encrypt')
+  raise "Consul encrypt key is empty or nil" if secret.nil? or secret.empty?
+  service_config['encrypt'] = secret
+else
+  # for backward compatibilty
+  service_config['encrypt'] = node.consul.encrypt unless node.consul.encrypt.nil?
+end
+
+# TLS encryption
+if node.consul.verify_incoming || node.consul.verify_outgoing
+  dbi = consul_encrypted_dbi || {} if dbi.nil?
+  service_config['verify_outgoing'] = node.consul.verify_outgoing
+  service_config['verify_incoming'] = node.consul.verify_incoming
+
+  ca_path = node.consul.ca_path % { config_dir: node.consul.config_dir }
+  service_config['ca_file'] = ca_path
+
+  cert_path = node.consul.cert_path % { config_dir: node.consul.config_dir }
+  service_config['cert_file'] = cert_path
+
+  key_path = node.consul.key_file_path % { config_dir: node.consul.config_dir }
+  service_config['key_file'] = key_path
+
+  # Search for key_file_hostname since key and cert file can be unique/host
+  key_content = dbi['key_file_' + node.fqdn] || consul_dbi_key_with_node_default(dbi, 'key_file')
+  cert_content = dbi['cert_file_' + node.fqdn] || consul_dbi_key_with_node_default(dbi, 'cert_file')
+  ca_content = consul_dbi_key_with_node_default(dbi, 'ca_cert')
+
+  # Save the certs if exists
+  {ca_path => ca_content, key_path => key_content, cert_path => cert_content}.each do |path, content|
+    unless content.nil? or content.empty?
+      file path do
+        user consul_user
+        group consul_group
+        mode 0600
+        action :create
+        content content
+      end
+    end
   end
 end
 
@@ -126,21 +178,28 @@ file consul_config_filename do
   mode 0600
   action :create
   content JSON.pretty_generate(service_config, quirks_mode: true)
+  # https://github.com/johnbellone/consul-cookbook/issues/72
+  notifies :restart, "service[consul]"
 end
 
 case node['consul']['init_style']
 when 'init'
-  template '/etc/default/consul' do
-    source 'etc.default.consul.erb'
-    mode 0644
-    variables(
-      gomaxprocs: "#{node['consul']['gomaxprocs']}",
-    )
-    notifies :restart, 'service[consul]', :delayed
+  if platform?("ubuntu")
+    init_file = '/etc/init/consul.conf'
+    init_tmpl = 'consul.conf.erb'
+  else
+    init_file = '/etc/init.d/consul'
+    init_tmpl = 'consul-init.erb'
   end
 
-  template '/etc/init.d/consul' do
-    source 'consul-init.erb'
+  template node['consul']['etc_config_dir'] do
+    source 'consul-sysconfig.erb'
+    mode 0755
+    notifies :create, "template[#{init_file}]", :immediately
+  end
+
+  template init_file do
+    source init_tmpl
     mode 0755
     variables(
       consul_binary: "#{node['consul']['install_dir']}/consul",
@@ -150,6 +209,7 @@ when 'init'
   end
 
   service 'consul' do
+    provider Chef::Provider::Service::Upstart if platform?("ubuntu")
     supports status: true, restart: true, reload: true
     action [:enable, :start]
     subscribes :restart, "file[#{consul_config_filename}", :delayed
