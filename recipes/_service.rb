@@ -29,6 +29,9 @@ if node['consul']['init_style'] == 'runit'
   consul_directories << '/var/log/consul'
 end
 
+consul_user  = node['consul']['service_user']
+consul_group = node['consul']['service_group']
+
 # Create service user
 user "consul service user: #{consul_user}" do
   not_if { consul_user == 'root' }
