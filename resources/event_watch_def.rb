@@ -33,9 +33,13 @@ end
 
 def to_hash
   hash =  {
-    type: "event"
+    watches:[
+      {
+        type: 'event',
+        name: name,
+        handler: handler 
+      }
+    ]
   }
-  hash[:name] = name
-  hash[:handler] = handler unless handler.nil?
   hash
 end
