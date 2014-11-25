@@ -34,9 +34,13 @@ end
 
 def to_hash
   hash =  {
-    type: "key"
+    watches:[
+      {
+        type: 'key',
+        key: key,
+        handler: handler 
+      }
+    ]
   }
-  hash[:key] = key
-  hash[:handler] = handler
   hash
 end
