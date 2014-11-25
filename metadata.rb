@@ -4,7 +4,7 @@ maintainer_email 'jbellone@bloomberg.net'
 license 'Apache v2.0'
 description 'Installs/Configures consul'
 long_description 'Installs/Configures consul'
-version '0.5.1'
+version '0.5.2'
 
 recipe 'consul', 'Installs and starts consul service.'
 recipe 'consul::install_binary', 'Installs consul service from binary.'

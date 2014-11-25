@@ -7,5 +7,5 @@ describe_recipe 'consul::install_binary' do
       .with(version: '0.4.1')
       .with(path: '/usr/local/bin')
   end
-  it { expect(chef_run).to touch_file('/usr/local/bin/consul') }
+  it { expect(chef_run).to create_file('/usr/local/bin/consul') }
 end
