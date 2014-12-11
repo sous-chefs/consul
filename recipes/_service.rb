@@ -24,17 +24,13 @@ consul_directories << node['consul']['config_dir']
 consul_directories << '/var/lib/consul'
 
 # Select service user & group
-case node['consul']['init_style']
-when 'runit'
+if node['consul']['init_style'] == 'runit'
   include_recipe 'runit::default'
-
-  consul_user = node['consul']['service_user']
-  consul_group = node['consul']['service_group']
   consul_directories << '/var/log/consul'
-else
-  consul_user = 'root'
-  consul_group = 'root'
 end
+
+consul_user  = node['consul']['service_user']
+consul_group = node['consul']['service_group']
 
 # Create service user
 user "consul service user: #{consul_user}" do

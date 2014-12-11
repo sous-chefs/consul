@@ -60,8 +60,16 @@ end
 
 default['consul']['servers'] = []
 default['consul']['init_style'] = 'init'   # 'init', 'runit'
-default['consul']['service_user'] = 'consul'
-default['consul']['service_group'] = 'consul'
+
+case node['consul']['init_style'] 
+when 'runit'
+  default['consul']['service_user'] = 'consul'
+  default['consul']['service_group'] = 'consul'
+else
+  default['consul']['service_user'] = 'root'
+  default['consul']['service_group'] = 'root'
+end
+
 default['consul']['ports'] = {
   'dns'      => 8600,
   'http'     => 8500,
