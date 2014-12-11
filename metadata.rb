@@ -2,8 +2,8 @@ name 'consul'
 maintainer 'John Bellone'
 maintainer_email 'jbellone@bloomberg.net'
 license 'Apache v2.0'
-description 'Installs/Configures consul'
-long_description 'Installs/Configures consul'
+description 'Installs/Configures Consul client, server and UI.'
+long_description 'Installs/Configures Consul client, server and UI.'
 version '0.6.0'
 
 recipe 'consul', 'Installs and starts consul service.'
@@ -17,8 +17,11 @@ recipe 'consul::ui', 'Installs consul ui service.'
   supports name, '~> 5.10'
 end
 
+supports 'ubuntu', '= 10.04'
 supports 'ubuntu', '= 12.04'
 supports 'ubuntu', '= 14.04'
+
+suggests 'chef-provisioning'
 
 depends 'ark'
 depends 'golang', '~> 1.3.0'

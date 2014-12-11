@@ -1,5 +1,10 @@
-# 0.5.0
+<<<<<<< HEAD
+# 0.6.0
 * Add support for TLS, and gossip encryption
+
+New features:
+- Add [Chef Provisioning][7] recipe for bootstrapping a cluster.
+- Add LWRP for defining [an event watch][8] (thanks [@ericfode][9]
 
 # 0.4.4
 * Adds server list to a consul instance running as a cluster with a `bootstrap_expect` value greater than one.
@@ -56,3 +61,6 @@ Source and binary installation recipes.
 [4]: http://acrmp.github.io/foodcritic/
 [5]: https://github.com/romesh-mccullough
 [6]: https://github.com/bbatsov/rubocop
+[7]: https://github.com/opscode/chef-provisioning
+[8]: http://www.consul.io/docs/commands/watch.html
+[9]: https://github.com/ericfode

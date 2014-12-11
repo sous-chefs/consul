@@ -4,13 +4,13 @@ consul-cookbook
 [![Build Status](http://img.shields.io/travis/johnbellone/consul-cookbook.svg)][5]
 [![Code Coverage](http://img.shields.io/coveralls/johnbellone/consul-cookbook.svg)][6]
 
-Installs and configures [Consul][1].
+Installs and configures [Consul][1] client, server and UI.
 
 ## Supported Platforms
 
 - CentOS 5.10, 6.5, 7.0
 - RHEL 5.10, 6.5, 7.0
-- Ubuntu 12.04, 14.04
+- Ubuntu 10.04, 12.04, 14.04
 
 ## Attributes
 
@@ -331,14 +331,31 @@ Following attributes, if exist in the [encrypted databag][7], override the node 
 </table>
 
 ## Usage
+The easiest way to bootstrap a cluster is to use the cluster recipe
+and use [Chef provisioning][8] which is a relatively new
+extension. This extension allows you to use any driver and easily
+stand up a cluster. Once the [Chef Development Kit][9] has been
+installed you can run the following command to provision a cluster.
+
+```ruby
+gem install chef-provisioning chef-provisioning-fog
+export CHEF_DRIVER=fog:AWS
+chef-client -z cluster.rb
+```
+
+Please follow the [Chef provisioning README][10] which provides more
+detailed information about provisioning. You'll need to configure
+your credentials prior to provisioning.
 
 ### consul::default
-
-This uses the binary installation recipe by default. It also starts consul at boot time.
+The default recipe will install the Consul agent using the
+`consul::install_binary` recipe. It will also configure and
+start consul at the machine boot.
 
 ### consul::install_binary
-
-Include `consul::install_binary` in your node's `run_list`:
+If you only wish to simply install the binary from the official
+mirror you simply include `consul::install_binary` in your node's
+`run_list`:
 
 ```json
 {
@@ -349,8 +366,10 @@ Include `consul::install_binary` in your node's `run_list`:
 ```
 
 ### consul::install_source
-
-Include `consul::install_source` in your node's `run_list`:
+Instead if you wish to install Consul from source you simply need
+to include `consul::install_source` in your node's `run_list`. This
+will also configure the Go language framework on the node to build
+the application.
 
 ```json
 {
@@ -361,10 +380,8 @@ Include `consul::install_source` in your node's `run_list`:
 ```
 
 ### consul::ui
-
-This installs the UI into a specified directory.
-
-Include `consul::ui` in your node's `run_list`:
+Installing the separate Consul UI simply requires you to include
+the `consul::ui` recipe in your node's `run_list`.
 
 ```json
 {
@@ -440,4 +457,6 @@ Created and maintained by [John Bellone][3] [@johnbellone][2] (<jbellone@bloombe
 [5]: http://travis-ci.org/johnbellone/consul-cookbook
 [6]: https://coveralls.io/r/johnbellone/consul-cookbook
 [7]: https://docs.getchef.com/essentials_data_bags.html
-
+[8]: https://github.com/opscode/chef-provisioning
+[9]: https://github.com/opscode/chef-dk
+[10]: https://github.com/opscode/chef-provisioning/blob/master/README.md

@@ -14,22 +14,24 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #
+num_quorum = ENV.fetch('CONSUL_QUORUM', 3)
 
-include_recipe 'ark::default'
-
-install_arch = node['kernel']['machine'] =~ /x86_64/ ? 'amd64' : '386'
-install_version = [node['consul']['version'], node['os'], install_arch].join('_')
-install_checksum = node['consul']['checksums'].fetch(install_version)
-
-ark 'consul' do
-  path node['consul']['install_dir']
-  version node['consul']['version']
-  checksum install_checksum
-  url node['consul']['base_url'] % { version: install_version }
-  action :dump
+batch = machine_batch do
+  1.upto(num_quorum).each do |index|
+    machine "consul-#{index}" do
+      recipe 'consul::default'
+      attributes(consul: { service_mode: 'cluster' })
+    end
+  end
 end
 
-file File.join(node['consul']['install_dir'], 'consul') do
-  mode '0755'
-  action :touch
+include_recipe 'chef-sugar::default'
+node.default['consul']['servers'] = batch.machines.each { |m| best_ip_for(m.node) }
+
+machine 'consul-ui' do
+  recipe 'consul::ui'
+  attributes(consul: {
+    service_mode: 'client',
+    servers: node['consul']['servers']
+  })
 end
