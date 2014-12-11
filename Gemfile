@@ -6,6 +6,7 @@ gem 'rubocop'
 gem 'foodcritic'
 gem 'tailor'
 gem 'coveralls', require: false
+gem 'stove'
 
 group :test, :integration do
   gem 'chefspec'
