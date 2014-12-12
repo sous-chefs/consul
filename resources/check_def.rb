@@ -28,7 +28,7 @@ attribute :interval, kind_of: String
 attribute :notes, kind_of: String
 
 def path
-  ::File.join(node['consul']['config_dir'], "check-#{name}.json")
+  ::File.join(node['consul']['config_dir'], "check-#{id || name}.json")
 end
 
 def to_json
