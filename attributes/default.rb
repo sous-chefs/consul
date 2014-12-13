@@ -61,7 +61,7 @@ end
 default['consul']['servers'] = []
 default['consul']['init_style'] = 'init'   # 'init', 'runit'
 
-case node['consul']['init_style'] 
+case node['consul']['init_style']
 when 'runit'
   default['consul']['service_user'] = 'consul'
   default['consul']['service_group'] = 'consul'
@@ -78,6 +78,10 @@ default['consul']['ports'] = {
   'serf_wan' => 8302,
   "server"   => 8300,
 }
+
+# Consul DataBag
+default['consul']['data_bag'] = 'consul'
+default['consul']['data_bag_encrypt_item'] = 'encrypt'
 
 # Gossip encryption
 default['consul']['encrypt_enabled'] = false

@@ -4,7 +4,7 @@ class Chef
     def consul_encrypted_dbi
       begin
         # loads the secret from /etc/chef/encrypted_data_bag_secret
-        Chef::EncryptedDataBagItem.load('consul', 'encrypt')
+        Chef::EncryptedDataBagItem.load(node['consul']['data_bag'], node['consul']['data_bag_encrypt_item'])
       rescue Net::HTTPServerException => e
         raise e unless e.response.code == '404'
       end
