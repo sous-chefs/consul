@@ -18,6 +18,11 @@
 use_inline_resources
 
 action :create do
+  file new_resource.path_with_name do
+    action :delete
+    only_if { new_resource.id }
+  end
+
   file new_resource.path do
     user node['consul']['service_user']
     group node['consul']['service_group']
