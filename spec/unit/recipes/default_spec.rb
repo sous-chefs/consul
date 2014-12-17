@@ -16,7 +16,7 @@ describe_recipe 'consul::default' do
     end
 
     before do
-      stub_command("/usr/local/go/bin/go version | grep \"go1.2 \"").and_return(false)
+      stub_command("/usr/local/go/bin/go version | grep \"go1.2.2 \"").and_return(false)
     end
 
     it { expect(chef_run).not_to include_recipe('consul::install_binary') }
