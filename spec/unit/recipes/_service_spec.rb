@@ -103,6 +103,23 @@ describe_recipe 'consul::_service' do
     end
   end
 
+  context 'with a cluster service_mode, bootstrap_expect > 1 and a server list to join in retry mode' do
+    let(:chef_run) do
+      ChefSpec::Runner.new(node_attributes) do |node|
+        node.set['consul']['service_mode'] = 'cluster'
+        node.set['consul']['bootstrap_expect'] = '3'
+        node.set['consul']['servers'] = [ 'server1', 'server2', 'server3' ]
+      end.converge(described_recipe)
+    end
+    it do
+      expect(chef_run).to create_file('/etc/consul.d/default.json')
+        .with_content(/retry_join/)
+        .with_content(/server9/)
+        .with_content(/server2/)
+        .with_content(/server3/)
+    end
+  end
+
   context 'with a cluster service_mode, bootstrap_expect > 1, and a server list to join' do
     let(:chef_run) do
       ChefSpec::Runner.new(node_attributes) do |node|
