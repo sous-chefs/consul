@@ -45,6 +45,8 @@ default['consul']['source_revision'] = 'master'
 
 # Service attributes
 default['consul']['service_mode'] = 'bootstrap'
+default['consul']['retry_on_join'] = false
+
 # In the cluster mode, set the default cluster size to 3
 default['consul']['bootstrap_expect'] = 3
 default['consul']['data_dir'] = '/var/lib/consul'

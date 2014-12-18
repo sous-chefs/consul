@@ -82,6 +82,12 @@ Installs and configures [Consul][1] client, server and UI.
     <td><tt>[]</tt></td>
   </tr>
   <tr>
+    <td><tt>['consul']['retry_on_join']</tt></td>
+    <td>Boolean</td>
+    <td>Set to true to wait for servers to be up before try to elect a leader</td>
+    <td><tt>false</tt></td>
+  </tr>
+  <tr>
     <td><tt>['consul']['bind_addr']</tt></td>
     <td>String</td>
     <td>address that should be bound to for internal cluster communications</td>
