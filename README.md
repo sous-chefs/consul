@@ -219,8 +219,8 @@ Installs and configures [Consul][1] client, server and UI.
   <tr>
     <td><tt>['consul']['ca_file']</tt></td>
     <td>String</td>
-      The content of PEM encoded ca cert
     <td>
+      The content of PEM encoded ca cert
     </td>
     <td><tt>nil</tt></td>
   </tr>
