@@ -210,15 +210,23 @@ when 'init'
       consul_binary: "#{node['consul']['install_dir']}/consul",
       config_dir: node['consul']['config_dir'],
     )
-    notifies :restart, 'service[consul]', :immediately
+    notifies :restart, 'service[consul]', :delayed
   end
 
   service 'consul' do
     provider Chef::Provider::Service::Upstart if platform?("ubuntu")
     supports status: true, restart: true, reload: true
-    action [:enable, :start]
+    action :nothing
     subscribes :restart, "file[#{consul_config_filename}", :delayed
   end
+
+  ruby_block "consul_start" do
+    block {}
+    action :run
+    notifies :start, "service[consul]", :delayed
+    notifies :enable, "service[consul]", :delayed
+  end
+
 when 'runit'
   runit_service 'consul' do
     supports status: true, restart: true, reload: true
