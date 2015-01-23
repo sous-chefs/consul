@@ -230,4 +230,9 @@ when 'runit'
       config_dir: node['consul']['config_dir'],
     )
   end
+
+  service 'consul' do
+    supports :status => true, :restart => true, :reload => true
+    reload_command "'#{node['runit']['sv_bin']}' hup consul"
+  end
 end
