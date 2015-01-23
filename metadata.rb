@@ -23,6 +23,6 @@ supports 'ubuntu', '= 14.04'
 
 depends 'ark'
 depends 'chef-provisioning'
-depends 'golang', '~> 1.4.0'
+depends 'golang', '~> 1.4'
 depends 'runit'
 depends 'yum-repoforge'
