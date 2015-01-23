@@ -1,4 +1,19 @@
-<<<<<<< HEAD
+# 0.7.0
+
+* Enhancements
+  * Added cluster recipe for easily provisioning new Consul clusters. See the README for details
+  * Added support for additional options for service_config
+  * Added support for Ubuntu 10.04
+  * Allow custom data bag / data bag item for Consul encrypt. Default data bag is still `consul` and default item is still `encrypt`
+  * Bump support for Golan cookbook `~> 1.4`
+  * Added `consul/retry_on_join` attribute which to specify `retry_join` strategy instead of the default: `start_join`
+  * Added consul_service_watch LWRP
+
+* Bug Fixes
+  * No longer overwrite service user/group attribute when using non-runit init styles
+  * Setting the version attribute will now point to the appropriate download URL
+  * Use ID attribute to identify consul check definition files instead of name. If no ID is present name will be used
+
 # 0.6.0
 * Add support for TLS, and gossip encryption
 
