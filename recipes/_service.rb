@@ -86,9 +86,9 @@ else
 end
 
 iface_addr_map = {
-  :bind_interface => :bind_addr,
-  :advertise_interface => :advertise_addr,
-  :client_interface => :client_addr
+  bind_interface: :bind_addr,
+  advertise_interface: :advertise_addr,
+  client_interface: :client_addr
 }
 
 iface_addr_map.each_pair do |interface,addr|
@@ -232,7 +232,7 @@ when 'runit'
   end
 
   service 'consul' do
-    supports :status => true, :restart => true, :reload => true
+    supports status: true, restart: true, reload: true
     reload_command "'#{node['runit']['sv_bin']}' hup consul"
   end
 end
