@@ -1,3 +1,8 @@
+# 0.7.1
+
+* Bug Fixes
+  * Fixed: Reloading the Consul service when using the runit init style will
+
 # 0.7.0
 
 * Enhancements
