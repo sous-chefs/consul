@@ -1,5 +1,5 @@
 #!/bin/sh
 exec chpst -u '<%= node[:consul][:service_user] %>':'<%= node[:consul][:service_group] %>'  \
   svlogd                                                                                    \
-  /var/log/consul                                                                           \
+  /var/log/consul_<%= @options[:consul_instance] %>                                         \
 #                                                                                           #

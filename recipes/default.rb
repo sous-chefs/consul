@@ -15,5 +15,6 @@
 # limitations under the License.
 #
 
-include_recipe "consul::install_#{node['consul']['install_method']}"
-include_recipe 'consul::_service'
+
+consul_agent 'default' do
+end
