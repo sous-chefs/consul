@@ -15,6 +15,32 @@
 # limitations under the License.
 #
 
-
 consul_agent 'default' do
 end
+
+# Testing
+# consul_agent 'custom' do
+#   install_method 'source'
+#   init_style 'runit'
+#   serve_ui true
+#   data_dir '/tmp/consul_data_dir'
+#   config_dir '/tmp/consul_config_dir'
+#   bind_interface 'eth1'
+#   advertise_interface 'eth1'
+#   client_interface 'eth1'
+#     ports ({
+#       'dns'      => 18609,
+#       'http'     => 18509,
+#       'rpc'      => 18409,
+#       'serf_lan' => 18315,
+#       'serf_wan' => 18316,
+#       'server'   => 18317,
+#      })
+#   datacenter 'test_dc'
+# end
+
+# consul_ui 'custom' do
+#     data_dir '/tmp/consul_data_dir'
+#     config_dir '/tmp/consul_config_dir'
+#     ui_dir '/tmp/consul_ui_dir'
+# end
