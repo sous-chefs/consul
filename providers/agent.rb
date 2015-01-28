@@ -30,17 +30,17 @@ def create_consul
 		run_context.include_recipe 'ark::default'
 		install_arch = node['kernel']['machine'] =~ /x86_64/ ? 'amd64' : '386'
 		install_version = [new_resource.version, node['os'], install_arch].join('_')
-		install_checksum = node['consul']['checksums'].fetch(install_version)
+		install_checksum = new_resource.checksums.fetch(install_version)
 
 		ark 'consul' do
-  	path node['consul']['install_dir']
-  	version node['consul']['version']
+  	path new_resource.install_dir
+  	version new_resource.version
   	checksum install_checksum
-  	url node['consul']['base_url'] % { version: install_version }
+  	url new_resource.base_url % { version: install_version }
   	action :dump
 	end
 
-	file ::File.join(node['consul']['install_dir'], 'consul') do
+	file ::File.join(new_resource.install_dir, 'consul') do
  		mode '0755'
   	action :touch
 	end	
@@ -59,7 +59,7 @@ def create_consul
 		run_context.include_recipe 'runit::default'
 		consul_directories << "/var/log/consul_#{new_resource.name}"
 	end
-	
+
 	consul_user = new_resource.service_user
 	consul_group = new_resource.service_group
 
