@@ -17,8 +17,9 @@ end
 def load_current_resource
   @current_resource = Chef::Resource::ConsulAgent.new(@new_resource.name)
   @current_resource.data_dir(@new_resource.data_dir)
+  @current_resource.config_dir(@new_resource.config_dir)
 
-  if Dir.exists?(@current_resource.data_dir)
+  if Dir.exists?(@current_resource.data_dir) or Dir.exists?(@current_resource.config_dir)
     @current_resource.exists = true
   end
 end
