@@ -47,11 +47,10 @@ attribute :extra_params, :default => run_context.node['consul']['extra_params']
 attribute :gopath, :kind_of => String, :default => run_context.node['consul']['gopath']
 attribute :gobin, :kind_of => String, :default => run_context.node['consul']['gobin']
 
-attribute :datacenter, :kind_of => String
-attribute :domain, :kind_of => String
-attribute :log_level, :kind_of => String
-attribute :node_name, :kind_of => String
-attribute :advertise_addr, :kind_of => String
-attribute :enable_syslog, :kind_of => [TrueClass, FalseClass]
+attribute :datacenter, :kind_of => String, :default => run_context.node['consul']['datacenter']
+attribute :domain, :kind_of => String, :default => run_context.node['consul']['domain']
+attribute :log_level, :kind_of => String, :default => run_context.node['consul']['log_level']
+attribute :node_name, :kind_of => String, :default => run_context.node['consul']['node_name']
+attribute :enable_syslog, :kind_of => [TrueClass, FalseClass], :default => run_context.node['consul']['enable_syslog']
 
 attr_accessor :exists
