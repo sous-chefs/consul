@@ -27,14 +27,14 @@ end
 def create_consul
   Chef::Log.info("Setting up new consul service: #{new_resource.name}")
 
-  if new_resource.install_method == 'binary' 
+  if new_resource.install_method == 'binary'
 
     run_context.include_recipe 'ark::default'
     install_arch = node['kernel']['machine'] =~ /x86_64/ ? 'amd64' : '386'
     install_version = [new_resource.version, node['os'], install_arch].join('_')
     install_checksum = new_resource.checksums.fetch(install_version)
 
-    ark 'consul' do
+  ark 'consul' do
     path new_resource.install_dir
     version new_resource.version
     checksum install_checksum
