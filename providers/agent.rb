@@ -150,10 +150,10 @@ def create_consul
   iface_addr_map.each_pair do |interface,addr|
     next unless node['consul'][interface]
 
-    new_resource.send(interface.to_sym)
-
+    selected_interface = new_resource.send(interface.to_sym)
+    
     if node["network"]["interfaces"][run_context.node['consul'][interface]]
-      ip = node["network"]["interfaces"][new_resource.to_hash[interface]]["addresses"].detect{|k,v| v[:family] == "inet"}.first
+      ip = node["network"]["interfaces"][selected_interface]["addresses"].detect{|k,v| v[:family] == "inet"}.first
       service_config[addr] = ip 
     else
       Chef::Application.fatal!("Interface specified in node['consul'][#{interface}] does not exist!")
