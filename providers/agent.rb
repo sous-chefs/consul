@@ -19,7 +19,7 @@ def load_current_resource
   @current_resource.data_dir(@new_resource.data_dir)
   @current_resource.config_dir(@new_resource.config_dir)
 
-  if Dir.exists?(@current_resource.data_dir) or Dir.exists?(@current_resource.config_dir)
+  if Dir.exist?(@current_resource.data_dir) or Dir.exist?(@current_resource.config_dir)
     @current_resource.exists = true
   end
 end
@@ -151,7 +151,7 @@ def create_consul
     next unless node['consul'][interface]
 
     selected_interface = new_resource.send(interface.to_sym)
-    
+
     if node["network"]["interfaces"][run_context.node['consul'][interface]]
       ip = node["network"]["interfaces"][selected_interface]["addresses"].detect{|k,v| v[:family] == "inet"}.first
       service_config[addr] = ip 

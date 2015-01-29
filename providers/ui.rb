@@ -16,7 +16,7 @@ def load_current_resource
     @current_resource = Chef::Resource::ConsulUi.new(@new_resource.name)
     @current_resource.ui_dir(@new_resource.ui_dir)
 
-    if Dir.exists?(@current_resource.ui_dir)
+    if Dir.exist?(@current_resource.ui_dir)
         @current_resource.exists = true
     end
 end
