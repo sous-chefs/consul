@@ -1,6 +1,6 @@
 #!/bin/sh
 ### BEGIN INIT INFO
-# Provides:          consul
+# Provides:          consul<%= @consul_instance %>
 # Required-Start:    $network $remote_fs $syslog
 # Required-Stop:     $network $remote_fs $syslog
 # Default-Start:     2 3 4 5
@@ -21,7 +21,7 @@ fi
 export GOMAXPROCS=${GOMAXPROCS}
 
 CMD="<%= @consul_binary %> agent -config-dir <%= @config_dir %>"
-NAME="consul"
+NAME="consul<%= @consul_instance %>"
 
 PIDFILE="/var/run/$NAME.pid"
 LOGFILE="/var/log/$NAME.log"
