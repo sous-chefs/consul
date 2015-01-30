@@ -101,9 +101,9 @@ default['consul']['key_file'] = nil
 default['consul']['key_file_path'] = "%{config_dir}/key.pem"
 
 # Optionally bind to a specific interface
-default['consul']['bind_interface'] = 'lo'
-default['consul']['advertise_interface'] = 'lo'
-default['consul']['client_interface'] = 'lo'
+default['consul']['bind_interface'] = nil
+default['consul']['advertise_interface'] = nil
+default['consul']['client_interface'] = nil
 
 # UI attributes
 default['consul']['client_addr'] = '0.0.0.0'
