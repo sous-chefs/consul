@@ -58,7 +58,7 @@ Installs and configures [Consul][1] client, server and UI.
     <td><tt>bootstrap</tt></td>
   </tr>
     <tr>
-    <td><tt>['consul'][bootstrap_expect]</tt></td>
+    <td><tt>['consul']['bootstrap_expect']</tt></td>
     <td>String</td>
     <td>When bootstrapping a cluster, the number of server nodes to expect.</td>
     <td><tt>nil</tt></td>
