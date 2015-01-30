@@ -27,6 +27,13 @@ end
 def create_consul
   Chef::Log.info("Setting up new consul service: #{new_resource.name}")
 
+  # for backward compatibilty
+  if new_resource.name == 'default'
+    resource_string = nil
+  else
+    resource_string = "_#{new_resource.name}"
+  end
+
   if new_resource.install_method == 'binary'
 
     run_context.include_recipe 'ark::default'
@@ -82,7 +89,7 @@ def create_consul
 
   if new_resource.init_style == 'runit'
     run_context.include_recipe 'runit::default'
-    consul_directories << "/var/log/consul_#{new_resource.name}"
+    consul_directories << "/var/log/consul#{resource_string}"
   end
 
   consul_user = new_resource.service_user
@@ -147,9 +154,10 @@ def create_consul
     client_interface: :client_addr
   }
 
+
   iface_addr_map.each_pair do |interface,addr|
     next unless node['consul'][interface]
-
+    
     selected_interface = new_resource.send(interface.to_sym)
 
     if node["network"]["interfaces"][run_context.node['consul'][interface]]
@@ -171,13 +179,13 @@ def create_consul
 
   copy_params.each do |key|
 
-    new_resource.send(key.to_sym)
+    param = new_resource.send(key.to_sym)
 
-    if new_resource.to_hash[key]
-      if key == :ports
-        Chef::Application.fatal! 'ports must be a Hash' unless new_resource.to_hash[key].kind_of?(Hash)
+    if param
+      if param == :ports
+        Chef::Application.fatal! 'ports must be a Hash' unless param.kind_of?(Hash)
       end
-      service_config[key] = new_resource.to_hash[key]
+      service_config[key] = param
     end
   end
 
@@ -238,16 +246,16 @@ def create_consul
     action :create
     content JSON.pretty_generate(service_config, quirks_mode: true)
     # https://github.com/johnbellone/consul-cookbook/issues/72
-    notifies :restart, "service[consul_#{new_resource.name}]"
+    notifies :restart, "service[consul#{resource_string}]"
   end
 
   case new_resource.init_style
   when 'init'
     if platform?("ubuntu")
-      init_file = "/etc/init/consul_#{new_resource.name}.conf"
+      init_file = "/etc/init/consul#{resource_string}.conf"
       init_tmpl = 'consul.conf.erb'
     else
-      init_file = "/etc/init.d/consul_#{new_resource.name}"
+      init_file = "/etc/init.d/consul#{resource_string}"
       init_tmpl = 'consul-init.erb'
     end
 
@@ -263,12 +271,12 @@ def create_consul
       variables(
         consul_binary: "#{new_resource.install_dir}/consul",
         config_dir: new_resource.config_dir,
-        consul_instance: new_resource.name
+        consul_instance: resource_string
       )
-      notifies :restart, "service[consul_#{new_resource.name}]", :immediately
+      notifies :restart, "service[consul#{resource_string}]", :immediately
     end
 
-    service "consul_#{new_resource.name}" do
+    service "consul#{resource_string}" do
       provider Chef::Provider::Service::Upstart if platform?("ubuntu")
       supports status: true, restart: true, reload: true
       action [:enable, :start]
@@ -276,7 +284,7 @@ def create_consul
     end
         
     when 'runit'
-      runit_service "consul_#{new_resource.name}" do
+      runit_service "consul{resource_string}" do
       supports status: true, restart: true, reload: true
       action [:enable, :start]
       subscribes :restart, "file[#{consul_config_filename}]", :delayed
@@ -284,15 +292,15 @@ def create_consul
       options(
         consul_binary: "#{new_resource.install_dir}/consul",
         config_dir: new_resource.config_dir,
-        consul_instance: new_resource.name
+        consul_instance: resource_string
       )
       run_template_name 'consul'
       log_template_name 'consul'
       end
 
-    service "consul_#{new_resource.name}" do
+    service "consul#{resource_string}" do
       supports status: true, restart: true, reload: true
-      reload_command "'#{node['runit']['sv_bin']}' hup consul_#{new_resource.name}"
+      reload_command "'#{node['runit']['sv_bin']}' hup consul#{resource_string}"
     end
   end
 end
