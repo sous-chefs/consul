@@ -154,10 +154,9 @@ def create_consul
     client_interface: :client_addr
   }
 
-
   iface_addr_map.each_pair do |interface,addr|
     next unless node['consul'][interface]
-    
+
     selected_interface = new_resource.send(interface.to_sym)
 
     if node["network"]["interfaces"][run_context.node['consul'][interface]]
@@ -284,7 +283,7 @@ def create_consul
     end
         
     when 'runit'
-      runit_service "consul{resource_string}" do
+      runit_service "consul#{resource_string}" do
       supports status: true, restart: true, reload: true
       action [:enable, :start]
       subscribes :restart, "file[#{consul_config_filename}]", :delayed
