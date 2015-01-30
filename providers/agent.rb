@@ -9,7 +9,7 @@ action :create do
     Chef::Log.info "#{ @new_resource } already exists - nothing to do."
   else
     converge_by("Create #{ @new_resource }") do
-    create_consul
+      create_consul
     end
   end
 end
@@ -19,7 +19,7 @@ def load_current_resource
   @current_resource.data_dir(@new_resource.data_dir)
   @current_resource.config_dir(@new_resource.config_dir)
 
-  if Dir.exist?(@current_resource.data_dir) or Dir.exist?(@current_resource.config_dir)
+  if Dir.exist?(@current_resource.data_dir) || Dir.exist?(@current_resource.config_dir)
     @current_resource.exists = true
   end
 end
@@ -52,7 +52,7 @@ def create_consul
   file ::File.join(new_resource.install_dir, 'consul') do
     mode '0755'
     action :touch
-  end 
+  end
 
   else
     run_context.include_recipe 'apt::default'
@@ -154,14 +154,14 @@ def create_consul
     client_interface: :client_addr
   }
 
-  iface_addr_map.each_pair do |interface,addr|
+  iface_addr_map.each_pair do |interface, addr|
     next unless node['consul'][interface]
 
     selected_interface = new_resource.send(interface.to_sym)
 
     if node["network"]["interfaces"][run_context.node['consul'][interface]]
-      ip = node["network"]["interfaces"][selected_interface]["addresses"].detect{|k,v| v[:family] == "inet"}.first
-      service_config[addr] = ip 
+      ip = node["network"]["interfaces"][selected_interface]["addresses"].detect{ |k, v| v[:family] == "inet" }.first
+      service_config[addr] = ip
     else
       Chef::Application.fatal!("Interface specified in node['consul'][#{interface}] does not exist!")
     end
@@ -190,11 +190,11 @@ def create_consul
 
   dbi = nil
   # Gossip encryption
-  if new_resource.encrypt_enabled 
+  if new_resource.encrypt_enabled
     # Fetch the databag only once, and use empty hash if it doesn't exists
     dbi = consul_encrypted_dbi || {}
     secret = consul_dbi_key_with_node_default(dbi, 'encrypt')
-    raise "Consul encrypt key is empty or nil" if secret.nil? or secret.empty?
+    raise "Consul encrypt key is empty or nil" if secret.nil? || secret.empty?
     service_config['encrypt'] = secret
   else
     # for backward compatibilty
@@ -281,9 +281,9 @@ def create_consul
       action [:enable, :start]
       subscribes :restart, "file[#{consul_config_filename}", :delayed
     end
-        
-    when 'runit'
-      runit_service "consul#{resource_string}" do
+
+  when 'runit'
+    runit_service "consul#{resource_string}" do
       supports status: true, restart: true, reload: true
       action [:enable, :start]
       subscribes :restart, "file[#{consul_config_filename}]", :delayed
@@ -295,7 +295,7 @@ def create_consul
       )
       run_template_name 'consul'
       log_template_name 'consul'
-      end
+    end
 
     service "consul#{resource_string}" do
       supports status: true, restart: true, reload: true
