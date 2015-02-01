@@ -30,7 +30,7 @@ node.default['consul']['servers'] = batch.machines.each { |m| best_ip_for(m.node
 
 machine 'consul-ui' do
   recipe 'consul::ui'
-  attributes(consul: {
+  attributes(consul:  {
     service_mode: 'client',
     servers: node['consul']['servers']
   })

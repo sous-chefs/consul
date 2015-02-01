@@ -78,7 +78,7 @@ default['consul']['ports'] = {
   'rpc'      => 8400,
   'serf_lan' => 8301,
   'serf_wan' => 8302,
-  "server"   => 8300,
+  'server'   => 8300,
 }
 
 # Consul DataBag
