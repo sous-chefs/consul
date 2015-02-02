@@ -40,7 +40,7 @@ describe_recipe 'consul::_service' do
         .with(mode: 0755)
     end
     it do
-      expect(chef_run).to render_file('/etc/sysconfig/consul').with_content('GOMAXPROCS=1')
+      expect(chef_run).to render_file('/etc/sysconfig/consul').with_content('GOMAXPROCS=2')
     end
   end
 
@@ -59,7 +59,7 @@ describe_recipe 'consul::_service' do
         .with(mode: 0755)
     end
     it do
-      expect(chef_run).to render_file('/etc/default/consul').with_content('GOMAXPROCS=1')
+      expect(chef_run).to render_file('/etc/default/consul').with_content('GOMAXPROCS=2')
     end
   end
 

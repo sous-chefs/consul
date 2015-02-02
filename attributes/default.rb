@@ -43,6 +43,14 @@ default['consul']['checksums'] = {
 }
 default['consul']['source_revision'] = 'master'
 
+# GOMAXPROCS should be greater than 1, see
+# https://groups.google.com/forum/#!topic/consul-tool/qewFEqgAoF8
+if node['cpu']['total'] > 1
+  default['consul']['gomaxprocs'] = node['cpu']['total']
+else
+  default['consul']['gomaxprocs'] = 2
+end
+
 # Service attributes
 default['consul']['service_mode'] = 'bootstrap'
 default['consul']['retry_on_join'] = false
