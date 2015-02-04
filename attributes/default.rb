@@ -17,8 +17,29 @@
 
 default['consul']['base_url'] = "https://dl.bintray.com/mitchellh/consul/%{version}.zip"
 default['consul']['version'] = '0.4.1'
-default['consul']['install_method'] = 'binary'
+default['consul']['install_method'] = 'binary' # source,
+default['consul']['init_style'] = 'init'   # 'init', 'runit'
 default['consul']['install_dir'] = '/usr/local/bin'
+default['consul']['data_dir'] = '/var/lib/consul'
+default['consul']['config_dir'] = '/etc/consul.d'
+
+case node['platform_family']
+when 'windows'
+  default['consul']['install_method'] = 'windows'
+  default['consul']['init_style'] = 'windows'
+  default['consul']['config_dir'] = "#{ENV['SystemDrive']}\\ProgramData\\consul"
+  default['consul']['data_dir'] = "#{ENV['SystemDrive']}\\ProgramData\\consul\\data"
+  default['consul']['install_dir'] = "#{ChocolateyHelpers.chocolatey_install}\\lib\\consul.#{node['consul']['version']}"
+  default['consul']['etc_config_dir'] = "#{ChocolateyHelpers.chocolatey_install}\\lib\\consul.#{node['consul']['version']}\\tools"
+when 'debian'
+  default['consul']['etc_config_dir'] = '/etc/default/consul'
+when 'rhel'
+  default['consul']['etc_config_dir'] = '/etc/sysconfig/consul'
+else
+  default['consul']['etc_config_dir'] = '/etc/sysconfig/consul'
+end
+
+
 default['consul']['checksums'] = {
   '0.3.0_darwin_amd64' => '9dfbc70c01ebbc3e7dba0e4b31baeddbdcbd36ef99f5ac87ca6bbcc7405df405',
   '0.3.0_linux_386'    => '2513496374f8f15bda0da4da33122e93f82ce39f661ee3e668c67a5b7e98fd5f',
@@ -49,40 +70,19 @@ default['consul']['retry_on_join'] = false
 
 # In the cluster mode, set the default cluster size to 3
 default['consul']['bootstrap_expect'] = 3
-if node['platform_family'] == 'windows'
-  default['consul']['config_dir'] = '/ProgramData/consul'
-  default['consul']['data_dir'] = '/ProgramData/consul/data'
-else
-  default['consul']['data_dir'] = '/var/lib/consul'
-  default['consul']['config_dir'] = '/etc/consul.d'
-end
-
-case node['platform_family']
-when 'debian'
-  default['consul']['etc_config_dir'] = '/etc/default/consul'
-when 'rhel'
-  default['consul']['etc_config_dir'] = '/etc/sysconfig/consul'
-when 'windows'
-  #default['consul']['etc_config_dir'] = "#{ChocolateyHelpers.chocolatey_install}\\lib\\consul.#{node['consul']['version']}\\tools\\"
-else
-  default['consul']['etc_config_dir'] = '/etc/sysconfig/consul'
-end
 
 default['consul']['servers'] = []
-default['consul']['init_style'] = 'init'   # 'init', 'runit'
 
 case node['consul']['init_style']
 when 'runit'
   default['consul']['service_user'] = 'consul'
   default['consul']['service_group'] = 'consul'
+when 'windows'
+  default['consul']['service_user'] = 'Administrator'
+  default['consul']['service_group'] = 'Administrators'
 else
   default['consul']['service_user'] = 'root'
   default['consul']['service_group'] = 'root'
-end
-
-if node['platform'] == 'windows'
-  default['consul']['service_user'] = 'Administrator'
-  default['consul']['service_group'] = 'Administrators'
 end
 
 default['consul']['ports'] = {

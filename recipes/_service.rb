@@ -21,14 +21,19 @@ require 'json'
 consul_directories = []
 consul_directories << node['consul']['data_dir']
 consul_directories << node['consul']['config_dir']
-consul_directories << '/var/lib/consul'
 
-# Select service user & group
-if node['consul']['init_style'] == 'runit'
+case node['consul']['init_style']
+when 'runit'
   include_recipe 'runit::default'
   consul_directories << '/var/log/consul'
+when 'windows'
+  # already added, move along
+else
+  consul_directories << '/var/lib/consul'
 end
 
+
+# Select service user & group
 consul_user  = node['consul']['service_user']
 consul_group = node['consul']['service_group']
 
@@ -65,6 +70,7 @@ consul_directories.each do |dirname|
   directory dirname do
     if node['platform'] == 'windows'
       rights :full_control, node['consul']['service_user'], :applies_to_children => true
+      recursive true
     else
       user consul_user
       group consul_group
@@ -190,18 +196,6 @@ if node.consul.verify_incoming || node.consul.verify_outgoing
   end
 end
 
-consul_config_filename = File.join(node['consul']['config_dir'], 'default.json')
-
-file consul_config_filename do
-  user consul_user
-  group consul_group
-  mode 0600
-  action :create
-  content JSON.pretty_generate(service_config, quirks_mode: true)
-  # https://github.com/johnbellone/consul-cookbook/issues/72
-  notifies :restart, "service[consul]"
-end
-
 case node['consul']['init_style']
 when 'init'
   if platform?("ubuntu")
@@ -251,12 +245,36 @@ when 'runit'
     reload_command "'#{node['runit']['sv_bin']}' hup consul"
   end
 when 'windows'
-  service 'consul' 
 
-  # Consul needs a few things started up on Windows, so delay start
-  # start mode isn't there yet in winsw, so setting it via Registry
+  # Consul needs a few things started up on Windows before it works,
+  # but delay start start mode isn't there _yet_ in winsw, so setting
+  # it via Registry. This should be unnecessary in the next version of winsw.
   registry_key 'HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\services\consul' do
     values [{ :name => 'DelayedAutostart', :type => :dword, :data => 1}]
   end
 
+  # Set the winsw xml for the consul service
+  template "#{node['consul']['etc_config_dir']}\\consul-service.xml" do
+    source 'consul-service.xml.erb'
+    notifies :restart, "service[consul]", :delayed
+  end
+
+  # Windows service for consul has been create by Chocolatey but
+  # the service resource needs to be after the template has been created
+  service 'consul'
+
+end
+
+consul_config_filename = File.join(node['consul']['config_dir'], 'default.json')
+
+# Moved here to accomodate the windows service setup
+# (the winsw xml needs to be created first)
+file consul_config_filename do
+  user consul_user
+  group consul_group
+  mode 0600
+  action :create
+  content JSON.pretty_generate(service_config, quirks_mode: true)
+  # https://github.com/johnbellone/consul-cookbook/issues/72
+  notifies :restart, "service[consul]"
 end
