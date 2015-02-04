@@ -49,13 +49,21 @@ default['consul']['retry_on_join'] = false
 
 # In the cluster mode, set the default cluster size to 3
 default['consul']['bootstrap_expect'] = 3
-default['consul']['data_dir'] = '/var/lib/consul'
-default['consul']['config_dir'] = '/etc/consul.d'
+if node['platform_family'] == 'windows'
+  default['consul']['config_dir'] = '/ProgramData/consul'
+  default['consul']['data_dir'] = '/ProgramData/consul/data'
+else
+  default['consul']['data_dir'] = '/var/lib/consul'
+  default['consul']['config_dir'] = '/etc/consul.d'
+end
+
 case node['platform_family']
 when 'debian'
   default['consul']['etc_config_dir'] = '/etc/default/consul'
 when 'rhel'
   default['consul']['etc_config_dir'] = '/etc/sysconfig/consul'
+when 'windows'
+  #default['consul']['etc_config_dir'] = "#{ChocolateyHelpers.chocolatey_install}\\lib\\consul.#{node['consul']['version']}\\tools\\"
 else
   default['consul']['etc_config_dir'] = '/etc/sysconfig/consul'
 end
@@ -70,6 +78,11 @@ when 'runit'
 else
   default['consul']['service_user'] = 'root'
   default['consul']['service_group'] = 'root'
+end
+
+if node['platform'] == 'windows'
+  default['consul']['service_user'] = 'Administrator'
+  default['consul']['service_group'] = 'Administrators'
 end
 
 default['consul']['ports'] = {

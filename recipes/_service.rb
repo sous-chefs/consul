@@ -33,27 +33,42 @@ consul_user  = node['consul']['service_user']
 consul_group = node['consul']['service_group']
 
 # Create service user
-user "consul service user: #{consul_user}" do
-  not_if { consul_user == 'root' }
-  username consul_user
-  home '/dev/null'
-  shell '/bin/false'
-  comment 'consul service user'
+case node['consul']['init_style']
+when 'windows'
+  user "consul service user: #{consul_user}" do
+    not_if { consul_user == 'Administrator' }
+    username consul_user
+    comment 'consul service user'
+  end
+else
+  user "consul service user: #{consul_user}" do
+    not_if { consul_user == 'root' }
+    username consul_user
+    home '/dev/null'
+    shell '/bin/false'
+    comment 'consul service user'
+  end
 end
 
 # Create service group
 group "consul service group: #{consul_group}" do
-  not_if { consul_group == 'root' }
+  not_if { consul_group == 'root' && node['platform'] != 'windows'}
+  not_if { consul_group == 'Administrators' && node['platform'] == 'windows'}
   group_name consul_group
   members consul_user
   append true
 end
 
+
 # Create service directories
 consul_directories.each do |dirname|
   directory dirname do
-    owner consul_user
-    group consul_group
+    if node['platform'] == 'windows'
+      rights :full_control, node['consul']['service_user'], :applies_to_children => true
+    else
+      user consul_user
+      group consul_group
+    end
     mode 0755
   end
 end
@@ -235,4 +250,13 @@ when 'runit'
     supports status: true, restart: true, reload: true
     reload_command "'#{node['runit']['sv_bin']}' hup consul"
   end
+when 'windows'
+  service 'consul' 
+
+  # Consul needs a few things started up on Windows, so delay start
+  # start mode isn't there yet in winsw, so setting it via Registry
+  registry_key 'HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\services\consul' do
+    values [{ :name => 'DelayedAutostart', :type => :dword, :data => 1}]
+  end
+
 end

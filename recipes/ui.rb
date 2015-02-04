@@ -13,15 +13,20 @@
 # limitations under the License.
 #
 
-include_recipe 'ark::default'
 
-install_version = [node['consul']['version'], 'web_ui'].join('_')
-install_checksum = node['consul']['checksums'].fetch(install_version)
+if node['platform'] == 'windows'
+  Chef::Log.error "UI Installation not supported for Windows"
+else
+  include_recipe 'ark::default'
 
-ark 'consul_ui' do
-  path node['consul']['data_dir']
-  home_dir node['consul']['ui_dir']
-  version node['consul']['version']
-  checksum install_checksum
-  url node['consul']['base_url'] % { version: install_version }
+  install_version = [node['consul']['version'], 'web_ui'].join('_')
+  install_checksum = node['consul']['checksums'].fetch(install_version)
+
+  ark 'consul_ui' do
+    path node['consul']['data_dir']
+    home_dir node['consul']['ui_dir']
+    version node['consul']['version']
+    checksum install_checksum
+    url node['consul']['base_url'] % { version: install_version }
+  end
 end
