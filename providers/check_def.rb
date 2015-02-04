@@ -24,8 +24,12 @@ action :create do
   end
 
   file new_resource.path do
-    user node['consul']['service_user']
-    group node['consul']['service_group']
+    if node['platform'] == 'windows'
+      rights :full_control, node['consul']['service_user'], :applies_to_children => true
+    else
+      user node['consul']['service_user']
+      group node['consul']['service_group']
+    end
     mode 0600
     content new_resource.to_json
 

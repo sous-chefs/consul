@@ -1,4 +1,6 @@
-# Copyright 2014 Benny Wong <benny@bwong.net>
+#
+# Copyright 2015 Rohit Amarnath <rohit.amarnath@full360.com>
+# Copyright 2015 Full 360 Inc.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -13,20 +15,11 @@
 # limitations under the License.
 #
 
-
 if node['platform'] == 'windows'
-  Chef::Log.error "UI Installation not supported for Windows"
-else
-  include_recipe 'ark::default'
 
-  install_version = [node['consul']['version'], 'web_ui'].join('_')
-  install_checksum = node['consul']['checksums'].fetch(install_version)
+  include_recipe 'chocolatey::default'
 
-  ark 'consul_ui' do
-    path node['consul']['data_dir']
-    home_dir node['consul']['ui_dir']
+  chocolatey 'consul' do
     version node['consul']['version']
-    checksum install_checksum
-    url node['consul']['base_url'] % { version: install_version }
   end
 end
