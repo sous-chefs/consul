@@ -29,7 +29,8 @@ ark 'consul' do
   action :dump
 end
 
-file File.join(node['consul']['install_dir'], 'consul') do
+consul_file = File.join(node['consul']['install_dir'], 'consul')
+file "#{consul_file}" do
   mode '0755'
-  action :touch
+  only_if { File.exists?("#{consul_file}") }
 end
