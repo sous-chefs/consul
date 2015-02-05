@@ -32,6 +32,5 @@ end
 consul_file = File.join(node['consul']['install_dir'], 'consul')
 file "#{consul_file}" do
   mode '0755'
-  action :create
   only_if { File.exists?("#{consul_file}") }
 end
