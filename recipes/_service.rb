@@ -206,10 +206,6 @@ when 'init'
   template init_file do
     source init_tmpl
     mode 0755
-    variables(
-      consul_binary: "#{node['consul']['install_dir']}/consul",
-      config_dir: node['consul']['config_dir'],
-    )
     notifies :restart, 'service[consul]', :immediately
   end
 
@@ -225,10 +221,6 @@ when 'runit'
     action [:enable, :start]
     subscribes :restart, "file[#{consul_config_filename}]", :delayed
     log true
-    options(
-      consul_binary: "#{node['consul']['install_dir']}/consul",
-      config_dir: node['consul']['config_dir'],
-    )
   end
 
   service 'consul' do

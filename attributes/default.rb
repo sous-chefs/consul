@@ -15,11 +15,11 @@
 # limitations under the License.
 #
 
-default['consul']['base_url'] = "https://dl.bintray.com/mitchellh/consul/%{version}.zip"
-default['consul']['version'] = '0.4.1'
+default['consul']['base_url']       = "https://dl.bintray.com/mitchellh/consul/%{version}.zip"
+default['consul']['version']        = '0.4.1'
 default['consul']['install_method'] = 'binary'
-default['consul']['install_dir'] = '/usr/local/bin'
-default['consul']['checksums'] = {
+default['consul']['install_dir']    = '/usr/local/bin'
+default['consul']['checksums']      = {
   '0.3.0_darwin_amd64' => '9dfbc70c01ebbc3e7dba0e4b31baeddbdcbd36ef99f5ac87ca6bbcc7405df405',
   '0.3.0_linux_386'    => '2513496374f8f15bda0da4da33122e93f82ce39f661ee3e668c67a5b7e98fd5f',
   '0.3.0_linux_amd64'  => 'da1337ab3b236bad19b791a54a8df03a8c2a340500a392000c21608696957b15',

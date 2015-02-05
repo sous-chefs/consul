@@ -1,6 +1,6 @@
 #!/bin/sh
-exec chpst -u '<%= node[:consul][:service_user] %>':'<%= node[:consul][:service_group] %>'  \
-  <%= @options[:consul_binary] %>                                                           \
-  agent                                                                                     \
-  -config-dir '<%= @options[:config_dir] %>'                                                \
-#                                                                                           #
+
+exec 2>&1
+exec <%= node['runit']['chpst_bin'] %> \
+  -u <%= node['consul']['service_user'] %>:<%= node['consul']['service_group'] %> \
+  <%= Chef::Consul.active_binary(node) %> agent -config-dir <%= node['consul']['config_dir'] %>
