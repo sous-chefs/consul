@@ -30,6 +30,11 @@ libarchive_file 'consul.zip' do
   action :extract
 end
 
+directory File.basename(Chef::Consul.active_binary(node)) do
+  recursive true
+  action :create
+end
+
 # JW TODO: Remove after next major release.
 file Chef::Consul.active_binary(node) do
   action :delete
