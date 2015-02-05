@@ -16,4 +16,3 @@
 #
 
 include_recipe "consul::install_#{node['consul']['install_method']}"
-include_recipe 'consul::_service'

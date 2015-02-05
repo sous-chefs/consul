@@ -39,3 +39,5 @@ end
 link Chef::Consul.active_binary(node) do
   to Chef::Consul.latest_binary(node)
 end
+
+include_recipe 'consul::_service'

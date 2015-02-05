@@ -35,6 +35,8 @@ golang_package 'github.com/hashicorp/consul' do
   action :install
 end
 
-link File.join(node['consul']['install_dir'], 'consul') do
-  to File.join(node['go']['gobin'], 'consul')
+link Chef::Consul.active_binary(node) do
+  to Chef::Consul.source_binary(node)
 end
+
+include_recipe 'consul::_service'

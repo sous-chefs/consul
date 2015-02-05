@@ -42,6 +42,10 @@ class Chef
         node['consul']['base_url'] % { version: remote_filename(node) }
       end
 
+      def source_binary(node)
+        File.join(node['go']['gobin'], 'consul')
+      end
+
       def install_path(node)
         File.join(['/opt', 'consul', node['consul']['version']])
       end
