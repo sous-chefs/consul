@@ -19,4 +19,7 @@ bin/*
 .kitchen/
 .kitchen.local.yml
 
+.ruby-version
+.ruby-gemset
+
 coverage/
