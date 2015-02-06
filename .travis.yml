@@ -2,7 +2,6 @@
 language: ruby
 script: bin/rspec
 rvm:
-  - 1.9.3
   - 2.1
 branches:
   only:
