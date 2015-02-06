@@ -103,7 +103,7 @@ iface_addr_map.each_pair do |interface,addr|
 end
 
 if node['consul']['serve_ui']
-  service_config['ui_dir'] = node['consul']['ui_dir']
+  service_config['ui_dir']      = Chef::ConsulUI.active_path(node)
   service_config['client_addr'] = node['consul']['client_addr']
 end
 
