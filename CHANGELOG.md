@@ -1,3 +1,8 @@
+# 0.8.1
+
+* Bug Fixes
+  * Vanilla init script now points to the proper Consul binary and data dir
+
 # 0.8.0
 
 * Enhancements
