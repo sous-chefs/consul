@@ -28,6 +28,12 @@ libarchive_file 'consul_ui.zip' do
   action :extract
 end
 
+# JW TODO: Remove after next major release.
+file Chef::ConsulUI.active_path(node) do
+  action :delete
+  not_if "test -L #{Chef::ConsulUI.active_path(node)}"
+end
+
 link Chef::ConsulUI.active_path(node) do
   to Chef::ConsulUI.latest_dist(node)
 end
