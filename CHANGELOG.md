@@ -1,3 +1,16 @@
+# 0.8.0
+
+* Enhancements
+  * Upgrading from one version to another of Consul is now supported. The Consul service will automatically restart after upgrade.
+
+* Bug Fixes
+  * Partial convergeances will now gracefully recover on the next chef run
+  * Upstart will now respawn Consul on crash
+  * It is no longer possible to set an invalid install method
+
+* Backwards incompatible changes
+  * 'consul/ui_dir' attribute was removed. This will automatically be placed within the directory configured by 'consul/data_dir' as 'ui'
+
 # 0.7.1
 
 * Bug Fixes
