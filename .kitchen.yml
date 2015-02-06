@@ -21,10 +21,10 @@ suites:
       - recipe[consul::default]
     attributes:
       consul:
-          datacenter: FortMeade
-          bind_interface: eth0
-          advertise_interface: eth0
-          encrypt: CGXC2NsXW4AvuB4h5ODYzQ==
+        datacenter: FortMeade
+        bind_interface: eth0
+        advertise_interface: eth0
+        encrypt: CGXC2NsXW4AvuB4h5ODYzQ==
   - name: source
     run_list:
       - recipe[consul::default]
@@ -36,16 +36,16 @@ suites:
       - recipe[consul::default]
     attributes:
       consul:
-          datacenter: FortMeade
-          init_style: runit
+        datacenter: FortMeade
+        init_style: runit
   - name: ui
     run_list:
       - recipe[consul::default]
       - recipe[consul::ui]
     attributes:
       consul:
-         serve_ui: true
-         client_interface: eth0
+        serve_ui: true
+        client_interface: eth0
   - name: cluster
     run_list:
       - recipe[consul::default]
