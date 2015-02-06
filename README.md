@@ -323,12 +323,6 @@ Following attributes, if exist in the [encrypted databag][7], override the node 
     <td><tt>nil</tt></td>
   </tr>
   <tr>
-    <td><tt>['consul']['ui_dir']</tt></td>
-    <td>String</td>
-    <td>Location to download the UI to</td>
-    <td><tt>/var/lib/consul/ui</tt></td>
-  </tr>
-  <tr>
     <td><tt>['consul']['serve_ui']</tt></td>
     <td>Boolean</td>
     <td>Determines whether the consul service also serve's the UI</td>

@@ -15,5 +15,11 @@
 # limitations under the License.
 #
 
-include_recipe "consul::install_#{node['consul']['install_method']}"
-include_recipe 'consul::_service'
+case node['consul']['install_method']
+when 'binary'
+  include_recipe 'consul::install_binary'
+when 'source'
+  include_recipe 'consul::install_source'
+else
+  Chef::Application.fatal!("[consul::default] unknown install method, method=#{node['consul']['install_method']}")
+end

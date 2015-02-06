@@ -13,15 +13,27 @@
 # limitations under the License.
 #
 
-include_recipe 'ark::default'
+include_recipe 'libarchive::default'
 
-install_version = [node['consul']['version'], 'web_ui'].join('_')
-install_checksum = node['consul']['checksums'].fetch(install_version)
+archive = remote_file Chef::ConsulUI.cached_archive(node) do
+  source Chef::ConsulUI.remote_url(node)
+  checksum Chef::ConsulUI.remote_checksum(node)
+end
 
-ark 'consul_ui' do
-  path node['consul']['data_dir']
-  home_dir node['consul']['ui_dir']
-  version node['consul']['version']
-  checksum install_checksum
-  url node['consul']['base_url'] % { version: install_version }
+libarchive_file 'consul_ui.zip' do
+  path archive.path
+  extract_to Chef::ConsulUI.install_path(node)
+  extract_options :no_overwrite
+
+  action :extract
+end
+
+# JW TODO: Remove after next major release.
+file Chef::ConsulUI.active_path(node) do
+  action :delete
+  not_if "test -L #{Chef::ConsulUI.active_path(node)}"
+end
+
+link Chef::ConsulUI.active_path(node) do
+  to Chef::ConsulUI.latest_dist(node)
 end

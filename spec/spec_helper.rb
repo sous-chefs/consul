@@ -36,6 +36,10 @@ end
 at_exit { ChefSpec::Coverage.report! }
 
 RSpec.shared_context 'recipe tests', type: :recipe do
+  before do
+    stub_command("test -L /usr/local/bin/consul").and_return(true)
+  end
+
   let(:chef_run) { ChefSpec::Runner.new(node_attributes).converge(described_recipe) }
 
   def node_attributes
@@ -47,6 +51,10 @@ RSpec.shared_context 'recipe tests', type: :recipe do
 end
 
 RSpec.shared_context "resource tests", type: :resource do
+  before do
+    stub_command("test -L /usr/local/bin/consul").and_return(true)
+  end
+
   let(:chef_run) do
     ChefSpec::SoloRunner.new(node_attributes.merge(step_into)).converge(example_recipe)
   end

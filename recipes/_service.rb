@@ -103,7 +103,7 @@ iface_addr_map.each_pair do |interface,addr|
 end
 
 if node['consul']['serve_ui']
-  service_config['ui_dir'] = node['consul']['ui_dir']
+  service_config['ui_dir']      = Chef::ConsulUI.active_path(node)
   service_config['client_addr'] = node['consul']['client_addr']
 end
 
@@ -206,10 +206,6 @@ when 'init'
   template init_file do
     source init_tmpl
     mode 0755
-    variables(
-      consul_binary: "#{node['consul']['install_dir']}/consul",
-      config_dir: node['consul']['config_dir'],
-    )
     notifies :restart, 'service[consul]', :immediately
   end
 
@@ -217,18 +213,16 @@ when 'init'
     provider Chef::Provider::Service::Upstart if platform?("ubuntu")
     supports status: true, restart: true, reload: true
     action [:enable, :start]
-    subscribes :restart, "file[#{consul_config_filename}", :delayed
+    subscribes :restart, "file[#{consul_config_filename}"
+    subscribes :restart, "link[#{Chef::Consul.active_binary(node)}]"
   end
 when 'runit'
   runit_service 'consul' do
     supports status: true, restart: true, reload: true
     action [:enable, :start]
-    subscribes :restart, "file[#{consul_config_filename}]", :delayed
+    subscribes :restart, "file[#{consul_config_filename}]"
+    subscribes :restart, "link[#{Chef::Consul.active_binary(node)}]"
     log true
-    options(
-      consul_binary: "#{node['consul']['install_dir']}/consul",
-      config_dir: node['consul']['config_dir'],
-    )
   end
 
   service 'consul' do
