@@ -20,7 +20,7 @@ fi
 
 export GOMAXPROCS=${GOMAXPROCS}
 
-CMD="<%= @consul_binary %> agent -config-dir <%= @config_dir %>"
+CMD="<%= Chef::Consul.active_binary(node) %> agent -config-dir <%= node['consul']['config_dir'] %>"
 NAME="consul"
 
 PIDFILE="/var/run/$NAME.pid"
