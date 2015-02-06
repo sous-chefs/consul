@@ -30,6 +30,10 @@ class Chef
         File.join(['/opt', 'consul_ui', node['consul']['version']])
       end
 
+      def latest_dist(node)
+        File.join(install_path(node), 'dist')
+      end
+
       def remote_filename(node)
         [node['consul']['version'], 'web_ui'].join('_')
       end

@@ -28,6 +28,6 @@ libarchive_file 'consul_ui.zip' do
   action :extract
 end
 
-link Chef::Consul.active(node) do
-  to Chef::Consul.install_path(node)
+link Chef::ConsulUI.active_path(node) do
+  to Chef::ConsulUI.latest_dist(node)
 end
