@@ -1,33 +1,30 @@
 class Chef::Provider::ConsulServiceSystemd < Chef::Provider::ConsulService
   action :start do
-    service 'consul' do
+    runit_service 'consul' do
       supports status: true, restart: true, reload: true
-      provider Chef::Provider::Service::Init::Systemd
-      action [:start, :enable]
+      action :start
     end
   end
 
   action :stop do
-    service 'consul' do
+    runit_service 'consul' do
       supports status: true, restart: true, reload: true
-      provider Chef::Provider::Service::Init::Systemd
       action :stop
     end
   end
 
   action :restart do
-    service 'consul' do
+    runit_service 'consul' do
       supports status: true, restart: true, reload: true
-      provider Chef::Provider::Service::Init::Systemd
       action :restart
     end
   end
 
   action :reload do
-    service 'consul' do
+    runit_service 'consul' do
       supports status: true, restart: true, reload: true
-      provider Chef::Provider::Service::Init::Systemd
       action :reload
+      reload_command %Q(#{node['runit']['sv_bin']} hup #{service_name})
     end
   end
 end

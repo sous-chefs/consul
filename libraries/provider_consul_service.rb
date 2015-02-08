@@ -5,23 +5,15 @@ class Chef::Provider::ConsulService < Chef::Provider::LWRPBase
     true
   end
 
+  action :create do
+    consul_client 'consul' do
+      action :create
+    end
+  end
+
   action :delete do
-
-  end
-
-  action :enable do
-
-  end
-
-  action :start do
-
-  end
-
-  action :stop do
-
-  end
-
-  action :restart do
-
+    consul_client 'consul' do
+      action :delete
+    end
   end
 end

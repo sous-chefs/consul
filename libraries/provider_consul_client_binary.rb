@@ -1,5 +1,6 @@
 class Chef::Provider::ConsulClientBinary < Chef::Provider::ConsulClient
   action :create do
+    super
     include_recipe 'libarchive::default'
 
     archive = remote_file Chef::Consul.cached_archive(node) do

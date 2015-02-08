@@ -1,5 +1,6 @@
 class Chef::Provider::ConsulServiceSource < Chef::Provider::ConsulService
   action :create do
+    super
     include_recipe 'golang::default'
 
     directory File.join(node['go']['gopath'], 'src/github.com/hashicorp') do
