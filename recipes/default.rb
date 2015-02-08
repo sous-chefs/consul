@@ -15,11 +15,29 @@
 # limitations under the License.
 #
 
-case node['consul']['install_method']
-when 'binary'
-  include_recipe 'consul::install_binary'
-when 'source'
-  include_recipe 'consul::install_source'
-else
-  Chef::Application.fatal!("[consul::default] unknown install method, method=#{node['consul']['install_method']}")
+user node['consul']['service_user'] do
+  system true
+  home '/dev/null'
+  shell '/bin/false'
+  not_if { username == 'root' }
+end
+
+group node['consul']['service_group'] do
+  system true
+  members node['consul']['service_user']
+  not_if { group_name == 'root' }
+end
+
+consul_config node['consul']['config_dir'] do
+  user node['consul']['service_user']
+  group node['consul']['service_group']
+end
+
+consul_client File.join(node['consul']['install_dir'], 'consul') do
+  provider Chef::Provider::ConsulClientBinary if node['consul']['install_method'] == 'binary'
+  provider Chef::Provider::ConsulClientSource if node['consul']['install_method'] == 'source'
+end
+
+consul_service 'consul' do
+  action :start
 end
