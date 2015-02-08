@@ -15,34 +15,6 @@
 # limitations under the License.
 #
 
-include_recipe 'libarchive::default'
-
-archive = remote_file Chef::Consul.cached_archive(node) do
-  source Chef::Consul.remote_url(node)
-  checksum Chef::Consul.remote_checksum(node)
+consul_agent node['consul']['version'] do
+  action [:create, :start]
 end
-
-libarchive_file 'consul.zip' do
-  path archive.path
-  extract_to Chef::Consul.install_path(node)
-  extract_options :no_overwrite
-
-  action :extract
-end
-
-directory File.basename(Chef::Consul.active_binary(node)) do
-  recursive true
-  action :create
-end
-
-# JW TODO: Remove after next major release.
-file Chef::Consul.active_binary(node) do
-  action :delete
-  not_if "test -L #{Chef::Consul.active_binary(node)}"
-end
-
-link Chef::Consul.active_binary(node) do
-  to Chef::Consul.latest_binary(node)
-end
-
-include_recipe 'consul::_service'
