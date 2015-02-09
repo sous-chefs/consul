@@ -64,6 +64,10 @@ case "$1" in
         echo
 
         if is_running; then
+          kill -9 `get_pid`
+        fi
+
+        if is_running; then
             echo "$NAME not stopped; may still be shutting down or shutdown may have failed"
             exit 1
         else
