@@ -33,9 +33,13 @@ consul_config node['consul']['config_dir'] do
   group node['consul']['service_group']
 end
 
-consul_client File.join(node['consul']['install_dir'], 'consul') do
-  provider Chef::Provider::ConsulClientBinary if node['consul']['install_method'] == 'binary'
-  provider Chef::Provider::ConsulClientSource if node['consul']['install_method'] == 'source'
+consul_client Chef::Consul.install_path(node) do
+  filename Chef::Consul.remote_filename(node)
+  url Chef::Consul.remote_url(node)
+  checksum Chef::Consul.remote_checksum(node)
+  version node['consul']['version']
+  user node['consul']['service_user']
+  group node['consul']['service_group']
 end
 
 consul_service 'consul' do

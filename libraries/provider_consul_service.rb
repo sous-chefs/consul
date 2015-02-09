@@ -6,14 +6,8 @@ class Chef::Provider::ConsulService < Chef::Provider::LWRPBase
   end
 
   action :create do
-    consul_client 'consul' do
-      action :create
-    end
   end
 
   action :delete do
-    consul_client 'consul' do
-      action :delete
-    end
   end
 end
