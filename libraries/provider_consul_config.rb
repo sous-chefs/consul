@@ -1,3 +1,10 @@
+#
+# Cookbook Name:: consul
+# License:: Apache 2.0
+#
+# Copyright 2014, 2015 Bloomberg Finance L.P.
+#
+
 class Chef::Provider::ConsulConfig < Chef::Provider::LWRPBase
   use_inline_resources if defined?(use_inline_resources)
 

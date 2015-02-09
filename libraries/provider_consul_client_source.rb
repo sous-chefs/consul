@@ -1,3 +1,10 @@
+#
+# Cookbook Name:: consul
+# License:: Apache 2.0
+#
+# Copyright 2014, 2015 Bloomberg Finance L.P.
+#
+
 class Chef::Provider::ConsulServiceSource < Chef::Provider::ConsulService
   action :create do
     include_recipe 'golang::default'

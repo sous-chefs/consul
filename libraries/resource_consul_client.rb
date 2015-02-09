@@ -1,3 +1,10 @@
+#
+# Cookbook Name:: consul
+# License:: Apache 2.0
+#
+# Copyright 2014, 2015 Bloomberg Finance L.P.
+#
+
 class Chef::Resource::ConsulClient < Chef::Resource::LWRPBase
   self.resource_name = :consul_client
   actions :create, :delete
