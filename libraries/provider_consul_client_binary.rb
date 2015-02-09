@@ -1,28 +1,28 @@
 class Chef::Provider::ConsulClientBinary < Chef::Provider::ConsulClient
   action :create do
-    super
     include_recipe 'libarchive::default'
 
-    archive = remote_file Chef::Consul.cached_archive(node) do
-      source Chef::Consul.remote_url(node)
-      checksum Chef::Consul.remote_checksum(node)
+    archive = remote_file "#{Chef::Config[:file_cache_path]}/consul-#{new_resource.version}.zip" do
+      source new_resource.url
+      checksum new_resource.checksum
     end
 
-    libarchive_file 'consul.zip' do
+    libarchive_file ::File.basename(archive.path) do
       path archive.path
-      extract_to Chef::Consul.install_path(node)
+      extract_to new_resource.path
       extract_options :no_overwrite
-
       action :extract
     end
 
-    directory File.basename(Chef::Consul.active_binary(node)) do
+    directory ::Dir.dirname(new_resource.filename) do
       recursive true
-      action :create
+      owner 'root'
+      group 'root'
+      mode '00755'
     end
 
-    link Chef::Consul.active_binary(node) do
-      to Chef::Consul.latest_binary(node)
+    link ::File.join(new_resource.path, 'consul') do
+      to new_resource.filename
     end
   end
 end

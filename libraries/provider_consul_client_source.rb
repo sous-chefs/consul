@@ -1,19 +1,17 @@
 class Chef::Provider::ConsulServiceSource < Chef::Provider::ConsulService
   action :create do
-    super
     include_recipe 'golang::default'
 
-    directory File.join(node['go']['gopath'], 'src/github.com/hashicorp') do
+    directory new_resource.path do
+      recursive true
       owner 'root'
       group 'root'
       mode '00755'
-      recursive true
-      action :create
     end
 
-    git File.join(node['go']['gopath'], '/src/github.com/hashicorp/consul') do
-      repository 'https://github.com/hashicorp/consul.git'
-      reference node['consul']['source_revision']
+    git new_resource.path do
+      repository new_resource.url
+      reference new_resource.version
       action :checkout
     end
 
@@ -21,13 +19,15 @@ class Chef::Provider::ConsulServiceSource < Chef::Provider::ConsulService
       action :install
     end
 
-    directory File.basename(Chef::Consul.active_binary(node)) do
+    directory ::Dir.dirname(new_resource.filename) do
       recursive true
-      action :create
+      owner 'root'
+      group 'root'
+      mode '00755'
     end
 
-    link Chef::Consul.active_binary(node) do
-      to Chef::Consul.source_binary(node)
+    link ::File.join(new_resource.path, 'consul') do
+      to new_resource.filename
     end
   end
 end
