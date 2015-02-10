@@ -27,7 +27,7 @@ class Chef::Provider::ConsulConfig < Chef::Provider::LWRPBase
     file new_resource.filename do
       owner new_resource.run_user
       group new_resource.run_group
-      content JSON.parse(configuration.to_json)
+      content JSON.pretty_generate(configuration, quirks_mode: true)
     end
   end
 
