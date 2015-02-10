@@ -14,15 +14,20 @@ class Chef::Provider::ConsulConfig < Chef::Provider::LWRPBase
 
   action :create do
     directory new_resource.path do
-      user new_resource.user
-      group new_resource.group
+      owner new_resource.run_user
+      group new_resource.run_group
       mode '0644'
     end
 
-    # TODO: (jbellone) Write configuration file out as JSON.
+    # TODO: (jbellone) Figure out a better way to generate this set of
+    # options. Right now this is a bit messy. Especially if options
+    # are added after the fact.
+    invalid_options = [:path, :run_user, :run_group]
+    configuration = new_resource.to_hash.reject { |k, v| invalid_options.include?(k) }
     file new_resource.filename do
-      user new_resource.user
-      group new_resource.path
+      owner new_resource.run_user
+      group new_resource.run_group
+      content JSON.parse(configuration.to_json)
     end
   end
 
