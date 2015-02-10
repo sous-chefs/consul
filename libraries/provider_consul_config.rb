@@ -25,9 +25,11 @@ class Chef::Provider::ConsulConfig < Chef::Provider::LWRPBase
     invalid_options = [:path, :run_user, :run_group]
     configuration = new_resource.to_hash.reject { |k, v| invalid_options.include?(k) }
     file new_resource.filename do
-      owner new_resource.run_user
+      user new_resource.run_user
       group new_resource.run_group
       content JSON.pretty_generate(configuration, quirks_mode: true)
+      mode '0600'
+      action :create
     end
   end
 
