@@ -1,3 +1,8 @@
+# 0.8.2
+
+* Bug Fixes
+  * Set GOMAXPROCS when using runit service style
+
 # 0.8.1
 
 * Bug Fixes
