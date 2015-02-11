@@ -1,5 +1,7 @@
 #!/bin/sh
 
+GOMAXPROCS=<%= node['cpu']['total'] %>
+
 exec 2>&1
 exec <%= node['runit']['chpst_bin'] %> \
   -u <%= node['consul']['service_user'] %>:<%= node['consul']['service_group'] %> \
