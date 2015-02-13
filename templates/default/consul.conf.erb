@@ -6,13 +6,12 @@ start on runlevel [2345]
 stop on runlevel [!2345]
 
 script
-  if [ -f <%= node['consul']['etc_config_dir'] %> ]; then
-    . <%= node['consul']['etc_config_dir'] %>
-  fi
-  export GOMAXPROCS=${GOMAXPROCS}
-  CMD="<%= Chef::Consul.active_binary(node) %> agent -config-dir <%= node['consul']['config_dir'] %>"
-  LOGFILE="/var/log/consul.log"
-  exec $CMD >> "$LOGFILE"
+  [ -e "<%= @etc_config_dir %>" ] && . "<%= @etc_config_dir %>"
+
+  export GOMAXPROCS=${GOMAXPROCS:-2}
+  CMD="<%= Chef::Consul.active_binary(node) %> agent -config-dir <%= @config_dir %>" <%= @extra_options %>
+  LOGFILE="/var/log/<%= @service_name %>.log"
+  exec sudo -u <%= @run_user %> -g <%= @run_group %> $CMD >> "$LOGFILE"
 end script
 
 post-start exec initctl emit consul-up

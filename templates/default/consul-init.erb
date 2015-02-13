@@ -14,13 +14,11 @@
 #                       * Multi Datacenter
 ### END INIT INFO
 
-if [ -f "<%= @etc_config_dir %>" ]; then
-    . "<%= @etc_config_dir %>"
-fi
+[ -e "<%= @etc_config_dir %>" ] && . "<%= @etc_config_dir %>"
 
 export GOMAXPROCS=${GOMAXPROCS:-2}
 
-CMD="<%= Chef::Consul.active_binary(node) %> agent -config-dir <%= @config_dir %>"
+CMD="<%= Chef::Consul.active_binary(node) %> agent -config-dir <%= @config_dir %> <%= @extra_options %>"
 NAME="<%= @service_name %>"
 
 PIDFILE="/var/run/$NAME.pid"
@@ -40,7 +38,7 @@ case "$1" in
         echo "$NAME already running"
     else
         echo "Starting $NAME"
-        $CMD >> "$LOGFILE" &
+        sudo -u <%= @run_user %> -g <%= @run_group %> $CMD >> "$LOGFILE" &
         echo $! > "$PIDFILE"
         if ! is_running; then
             echo "Unable to start $NAME, see $LOGFILE"

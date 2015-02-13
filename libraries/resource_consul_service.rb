@@ -11,4 +11,6 @@ class Chef::Resource::ConsulService < Chef::Resource::LWRPBase
   default_action :start
 
   attribute :service_name, type: String, name_attribute: true, required: true
+  attribute :etc_config_dir, type: String, required: true
+  attribute :config_dir, type: String, required: true
 end
