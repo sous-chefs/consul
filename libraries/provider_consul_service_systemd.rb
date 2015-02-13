@@ -6,8 +6,16 @@
 #
 
 class Chef::Provider::ConsulServiceSystemd < Chef::Provider::ConsulService
+  action :create do
+    # TODO: (jbellone) Create unit file for system service.
+  end
+
+  action :remove do
+    # TODO: (jbellone) Delete unit file for system service.
+  end
+
   action :start do
-    service 'consul' do
+    service new_resource.service_name do
       supports status: true, restart: true, reload: true
       provider Chef::Provider::Service::Init::Systemd
       action [:start, :enable]
@@ -15,7 +23,7 @@ class Chef::Provider::ConsulServiceSystemd < Chef::Provider::ConsulService
   end
 
   action :stop do
-    service 'consul' do
+    service new_resource.service_name do
       supports status: true, restart: true, reload: true
       provider Chef::Provider::Service::Init::Systemd
       action :stop
@@ -23,7 +31,7 @@ class Chef::Provider::ConsulServiceSystemd < Chef::Provider::ConsulService
   end
 
   action :restart do
-    service 'consul' do
+    service new_resource.service_name do
       supports status: true, restart: true, reload: true
       provider Chef::Provider::Service::Init::Systemd
       action :restart
@@ -31,7 +39,7 @@ class Chef::Provider::ConsulServiceSystemd < Chef::Provider::ConsulService
   end
 
   action :reload do
-    service 'consul' do
+    service new_resource.service_name do
       supports status: true, restart: true, reload: true
       provider Chef::Provider::Service::Init::Systemd
       action :reload

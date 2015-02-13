@@ -35,8 +35,10 @@ class Chef::Provider::ConsulServiceSysvinit < Chef::Provider::ConsulService
   end
 
   action :create do
-    template '/etc/init.d/consul' do
+    super
+    template "/etc/init.d/#{new_resource.service_name}" do
       source 'consul-init.erb'
+      mode '0755'
       variables(
         run_user: new_resource.run_user,
         run_group: new_resource.run_group
@@ -45,7 +47,8 @@ class Chef::Provider::ConsulServiceSysvinit < Chef::Provider::ConsulService
   end
 
   action :delete do
-    file '/etc/init.d/consul' do
+    super
+    file "/etc/init.d/#{new_resource.service_name}" do
       action :delete
     end
   end
