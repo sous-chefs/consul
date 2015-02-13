@@ -14,14 +14,14 @@
 #                       * Multi Datacenter
 ### END INIT INFO
 
-if [ -f <%= node['consul']['etc_config_dir'] %> ]; then
-. <%= node['consul']['etc_config_dir'] %>
+if [ -f "<%= @etc_config_dir %>" ]; then
+    . "<%= @etc_config_dir %>"
 fi
 
-export GOMAXPROCS=${GOMAXPROCS}
+export GOMAXPROCS=${GOMAXPROCS:-2}
 
-CMD="<%= Chef::Consul.active_binary(node) %> agent -config-dir <%= node['consul']['config_dir'] %>"
-NAME="consul"
+CMD="<%= Chef::Consul.active_binary(node) %> agent -config-dir <%= @config_dir %>"
+NAME="<%= @service_name %>"
 
 PIDFILE="/var/run/$NAME.pid"
 LOGFILE="/var/log/$NAME.log"

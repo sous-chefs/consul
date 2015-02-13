@@ -12,9 +12,4 @@ class Chef::Provider::ConsulService < Chef::Provider::LWRPBase
     true
   end
 
-  action :create do
-  end
-
-  action :delete do
-  end
 end
