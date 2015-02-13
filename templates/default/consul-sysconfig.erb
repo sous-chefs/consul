@@ -1,1 +1,1 @@
-GOMAXPROCS=<%= node['cpu']['total'] %>
+GOMAXPROCS=<%= [ node['cpu']['total'], 2 ].max %>
