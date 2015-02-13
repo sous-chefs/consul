@@ -19,8 +19,8 @@ group node['consul']['service_group'] do
 end
 
 consul_config node['consul']['config_dir'] do
-  user node['consul']['service_user']
-  group node['consul']['service_group']
+  run_user node['consul']['service_user']
+  run_group node['consul']['service_group']
 end
 
 consul_client Chef::Consul.install_path(node) do
@@ -28,8 +28,8 @@ consul_client Chef::Consul.install_path(node) do
   url Chef::Consul.remote_url(node)
   checksum Chef::Consul.remote_checksum(node)
   version node['consul']['version']
-  user node['consul']['service_user']
-  group node['consul']['service_group']
+  run_user node['consul']['service_user']
+  run_group node['consul']['service_group']
 end
 
 consul_service 'consul' do
