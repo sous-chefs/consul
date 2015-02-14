@@ -10,9 +10,9 @@ class Chef::Resource::ConsulConfig < Chef::Resource::LWRPBase
   actions :create, :delete
   default_action :create
 
-  attribute :path, kind_of: String, required: true, name_attribute: true
-  attribute :run_user, kind_of: String, required: true
-  attribute :run_group, kind_of: String, required: true
+  attribute :config_name, kind_of: String, required: true, name_attribute: true
+  attribute :run_user, kind_of: String, required: true, default: nil
+  attribute :run_group, kind_of: String, required: true, default: nil
 
   # @see: http://www.consul.io/docs/agent/options.html
   attribute :acl_datacenter, kind_of: String, default: nil
