@@ -27,6 +27,12 @@ class Chef::Provider::ConsulService < Chef::Provider::LWRPBase
       group_name parsed_run_group
       not_if { group_name == 'root' }
     end
+
+    directory "#{new_resource.name} :create /var/lib/#{consul_name}" do
+      owner parsed_run_user
+      group parsed_run_group
+      mode '0744'
+    end
   end
 
   action :delete do
