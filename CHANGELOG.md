@@ -1,3 +1,8 @@
+# 0.8.3
+
+* Bug Fixes
+  * Export GOMAXPROCS when using runit service style
+
 # 0.8.2
 
 * Bug Fixes
