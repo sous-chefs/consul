@@ -1,6 +1,6 @@
 #!/bin/sh
 
-GOMAXPROCS=<%= node['cpu']['total'] %>
+export GOMAXPROCS=<%= node['cpu']['total'] %>
 
 exec 2>&1
 exec <%= node['runit']['chpst_bin'] %> \
