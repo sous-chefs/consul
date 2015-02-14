@@ -14,6 +14,7 @@ class Chef::Provider::ConsulService < Chef::Provider::LWRPBase
 
   action :create do
     user "#{new_resource.name} :create #{parsed_run_user}" do
+      comment 'Consul Service User'
       system true
       home '/dev/null'
       shell '/bin/false'
@@ -23,6 +24,7 @@ class Chef::Provider::ConsulService < Chef::Provider::LWRPBase
 
     group "#{new_resource.name} :create #{parsed_run_group}" do
       system true
+      append true
       members parsed_run_user
       group_name parsed_run_group
       not_if { group_name == 'root' }
