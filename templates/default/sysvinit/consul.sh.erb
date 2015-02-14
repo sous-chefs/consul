@@ -14,12 +14,13 @@
 #                       * Multi Datacenter
 ### END INIT INFO
 
-[ -e "<%= @etc_config_dir %>" ] && . "<%= @etc_config_dir %>"
+NAME="<%= @instance %>"
+ENVFILE="<%= @envfile_path %>"
 
-export GOMAXPROCS=${GOMAXPROCS:-2}
+[ -e $ENVFILE ] && . $ENVFILE
+export GOMAXPROCS=${GOMAXPROCS}
 
 CMD="<%= Chef::Consul.active_binary(node) %> agent -config-dir <%= @config_dir %> <%= @extra_options %>"
-NAME="<%= @service_name %>"
 
 PIDFILE="/var/run/$NAME.pid"
 LOGFILE="/var/log/$NAME.log"

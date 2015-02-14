@@ -6,11 +6,11 @@ start on runlevel [2345]
 stop on runlevel [!2345]
 
 script
-  [ -e "<%= @etc_config_dir %>" ] && . "<%= @etc_config_dir %>"
+  [ -e /etc/default/<%= @instance %> ] && . /etc/default/<%= @instance %>
 
   export GOMAXPROCS=${GOMAXPROCS:-2}
   CMD="<%= Chef::Consul.active_binary(node) %> agent -config-dir <%= @config_dir %>" <%= @extra_options %>
-  LOGFILE="/var/log/<%= @service_name %>.log"
+  LOGFILE="/var/log/<%= @instance %>.log"
   exec sudo -u <%= @run_user %> -g <%= @run_group %> $CMD >> "$LOGFILE"
 end script
 

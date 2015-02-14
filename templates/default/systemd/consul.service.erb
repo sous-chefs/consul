@@ -5,9 +5,9 @@ Wants=basic.target
 After=basic.target network.target
 
 [Service]
+EnvironmentFile=/etc/conf.d/<%= @instance %>
 User=<%= @run_user %>
 Group=<%= @run_group %>
-EnvironmentFile=/etc/conf.d/<%= @service_name %>
 ExecStart=<%= Chef::Consul.active_binary(node) %> agent -config-dir <%= @config_dir %> <%= @extra_options %>
 ExecReload=/bin/kill -HUP $MAINPID
 KillMode=process

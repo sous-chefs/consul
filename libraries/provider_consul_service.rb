@@ -13,16 +13,22 @@ class Chef::Provider::ConsulService < Chef::Provider::LWRPBase
   end
 
   action :create do
-    template new_resource.etc_config_dir do
-      source 'consul-sysconfig.erb'
-      mode '0755'
-      variables()
+    user "#{new_resource.name} :create #{parsed_run_user}" do
+      system true
+      home '/dev/null'
+      shell '/bin/false'
+      username parsed_run_user
+      not_if { username == 'root' }
+    end
+
+    group "#{new_resource.name} :create #{parsed_run_group}" do
+      system true
+      members parsed_run_user
+      group_name parsed_run_group
+      not_if { group_name == 'root' }
     end
   end
 
-  action :remove do
-    file new_resource.etc_config_dir do
-      action :delete
-    end
+  action :delete do
   end
 end

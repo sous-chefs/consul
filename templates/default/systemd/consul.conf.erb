@@ -1,0 +1,5 @@
+# -*- mode: conf-unix -*-
+
+GOMAXPROCS=<%= [ node['cpu']['total'], 2 ].max %>
+RUN_USER=<%= @run_user %>
+RUN_GROUP=<%= @run_group %>
