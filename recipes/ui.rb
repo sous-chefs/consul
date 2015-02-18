@@ -29,8 +29,9 @@ libarchive_file 'consul_ui.zip' do
 end
 
 # JW TODO: Remove after next major release.
-file Chef::ConsulUI.active_path(node) do
+directory Chef::ConsulUI.active_path(node) do
   action :delete
+  recursive true
   not_if "test -L #{Chef::ConsulUI.active_path(node)}"
 end
 
