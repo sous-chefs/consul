@@ -7,8 +7,6 @@ long_description 'Installs/Configures Consul client, server and UI.'
 version '0.8.1'
 
 recipe 'consul', 'Installs and starts consul service.'
-recipe 'consul::install_binary', 'Installs consul service from binary.'
-recipe 'consul::install_source', 'Installs consul service from source.'
 recipe 'consul::ui', 'Installs consul ui service.'
 
 %w(redhat centos).each do |name|
