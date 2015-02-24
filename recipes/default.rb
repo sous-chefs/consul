@@ -7,7 +7,7 @@
 #
 
 client = consul_client Chef::Consul.install_path(node) do
-  filename Chef::Consul.remote_filename(node)
+  path Chef::Consul.remote_filename(node)
   url Chef::Consul.remote_url(node)
   checksum Chef::Consul.remote_checksum(node)
   version node['consul']['version']

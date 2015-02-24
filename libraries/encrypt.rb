@@ -4,7 +4,7 @@
 #
 # Copyright 2014, 2015 Bloomberg Finance L.P.
 #
-module Consul
+module ConsulCookbook
   module Encrypt
     # TODO: (jbellone) Revisit implementation of these bits prior to
     # 1.0 release. Not sure exactly what this is used for.
@@ -28,5 +28,5 @@ Reading it from node's attributes" if value.nil?
   end
 end
 
-class Chef::Recipe; include Consul::Encrypt; end
-class Chef::Resource; include Consul::Encrypt; end
+class Chef::Recipe; include ConsulCookbook::Encrypt; end
+class Chef::Resource; include ConsulCookbook::Encrypt; end

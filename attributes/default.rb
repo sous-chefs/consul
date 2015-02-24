@@ -46,8 +46,8 @@ default['consul']['config_dir'] = '/etc/consul.d'
 default['consul']['servers'] = []
 default['consul']['init_style'] = 'init'   # 'init', 'runit'
 
-default['consul']['run_user'] = 'consul'
-default['consul']['run_group'] = 'consul'
+default['consul']['service_user'] = 'consul'
+default['consul']['service_group'] = 'consul'
 
 default['consul']['ports'] = {
   'dns'      => 8600,

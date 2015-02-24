@@ -5,7 +5,7 @@
 # Copyright 2014, 2015 Bloomberg Finance L.P.
 #
 
-class Chef::Provider::ConsulServiceSource < Chef::Provider::ConsulService
+class Chef::Provider::ConsulClientSource < Chef::Provider::ConsulClient
   action :create do
     include_recipe 'golang::default'
 

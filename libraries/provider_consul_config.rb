@@ -4,8 +4,11 @@
 #
 # Copyright 2014, 2015 Bloomberg Finance L.P.
 #
+require_relative 'helpers'
 
 class Chef::Provider::ConsulConfig < Chef::Provider::LWRPBase
+  include ConsulCookbook::Helpers
+
   use_inline_resources if defined?(use_inline_resources)
 
   def whyrun_supported?

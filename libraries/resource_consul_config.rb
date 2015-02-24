@@ -10,7 +10,7 @@ class Chef::Resource::ConsulConfig < Chef::Resource::LWRPBase
   actions :create, :delete
   default_action :create
 
-  attribute :config_name, kind_of: String, required: true, name_attribute: true
+  attribute :path, kind_of: String, name_attribute: true, required: true
   attribute :run_user, kind_of: String, required: true, default: nil
   attribute :run_group, kind_of: String, required: true, default: nil
 
@@ -25,7 +25,7 @@ class Chef::Resource::ConsulConfig < Chef::Resource::LWRPBase
   attribute :advertise_addr, kind_of: String, default: nil
   attribute :bind_addr, kind_of: String, default: nil
   attribute :bootstrap, kind_of: [TrueClass, FalseClass], default: false
-  attribute :bootstrap_expect, kind_of: Number, default: 3
+  attribute :bootstrap_expect, kind_of: Integer, default: 3
   attribute :ca_file, kind_of: String, default: nil
   attribute :cert_file, kind_of: String, default: nil
   attribute :check_update_interval, kind_of: String, default: nil
@@ -47,7 +47,7 @@ class Chef::Resource::ConsulConfig < Chef::Resource::LWRPBase
   attribute :ports, kind_of: Hash, default: nil
   attribute :protocol, kind_of: String, default: nil
   attribute :recursor, kind_of: String, default: nil
-  attribute :retry_interval, kind_of: Number, default: nil
+  attribute :retry_interval, kind_of: Integer, default: nil
   attribute :server, kind_of: [TrueClass, FalseClass], default: true
   attribute :server_name, kind_of: String, default: nil
   attribute :skip_leave_on_interrupt, kind_of: [TrueClass, FalseClass], default: false

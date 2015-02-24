@@ -10,12 +10,12 @@ module ConsulCookbook
       new_resource.instance
     end
 
-    def parsed_run_group
+    def self.parsed_run_group
       return new_resource.run_group if new_resource.run_group
       node['consul']['run_group']
     end
 
-    def parsed_run_user
+    def self.parsed_run_user
       return new_resource.run_user if new_resource.run_user
       node['consul']['run_user']
     end
