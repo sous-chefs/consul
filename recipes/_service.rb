@@ -177,6 +177,17 @@ if node.consul.verify_incoming || node.consul.verify_outgoing
   end
 end
 
+# Atlas integration
+if node.consul.atlas_autojoin or node.consul.atlas_token
+  cluster = node.consul.atlas_cluster
+  token = node.consul.atlas_token
+  raise "atlas_cluster is empty or nil" if cluster.empty? or cluster.nil?
+  raise "atlas_token is empty or nil" if token.empty? or token.nil?
+  service_config['atlas_infrastructure'] = cluster
+  service_config['atlas_join'] = node.consul.atlas_autojoin
+  service_config['atlas_token'] = token
+end
+
 consul_config_filename = File.join(node['consul']['config_dir'], 'default.json')
 
 file consul_config_filename do

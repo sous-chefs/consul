@@ -118,3 +118,8 @@ default['consul']['client_interface'] = nil
 default['consul']['client_addr']  = '0.0.0.0'
 default['consul']['serve_ui']     = false
 default['consul']['extra_params'] = {}
+
+# Atlas support
+default['consul']['atlas_autojoin'] = false
+default['consul']['atlas_cluster'] = nil
+default['consul']['atlas_token'] = nil
