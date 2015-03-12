@@ -25,7 +25,7 @@ attribute :id, kind_of: String
 attribute :port, kind_of: Integer
 attribute :tags, kind_of: Array, default: nil
 attribute :check, kind_of: Hash, default: nil, callbacks: {
-  'Checks must be a hash containing either a `:ttl` key/value or a `:script` and `:interval` key/value' => ->(check) do
+  'Checks must be a hash containing either a `:ttl` key/value or a `:script/:http` and `:interval` key/value' => ->(check) do
     Chef::Resource::ConsulServiceDef.validate_check(check)
   end
 }
@@ -35,11 +35,15 @@ def self.validate_check(check)
     return false
   end
 
-  if check.key?(:ttl) && (!check.key?(:interval) && !check.key?(:script))
+  if check.key?(:ttl) && ( [:interval, :script, :http].none?{|key| check.key?(key)} )
     return true
   end
 
   if check.key?(:interval) && check.key?(:script)
+    return true
+  end
+
+  if check.key?(:interval) && check.key?(:http)
     return true
   end
 

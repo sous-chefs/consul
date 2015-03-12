@@ -13,8 +13,13 @@ describe_resource "consul_check_def" do
       end
 
       it "register the check" do
-        ['"name": "dummy name"', '"id": "uniqueid"', '"script": "curl http://localhost:8888/health"',
-            '"interval": "10s"', '"ttl": "50s"', '"notes": "Blahblah"'].each do |content|
+        ['"name": "dummy name"',
+         '"id": "uniqueid"',
+         '"script": "curl http://localhost:8888/health"',
+         '"http": "http://localhost:8888/health"',
+         '"interval": "10s"',
+         '"ttl": "50s"',
+         '"notes": "Blahblah"'].each do |content|
           expect(chef_run).to render_file(check_def_path)
             .with_content(content)
         end

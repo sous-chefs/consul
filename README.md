@@ -419,14 +419,24 @@ the `consul::ui` recipe in your node's `run_list`.
       notifies :reload, 'service[consul]'
     end
 
-##### Adding service with check
+##### Adding services with checks
 
-    consul_service_def 'voice1' do
+    consul_service_def "voice1' do
       port 5060
       tags ['_sip._udp']
       check(
         interval: '10s',
         script: 'echo ok'
+      )
+      notifies :reload, 'service[consul]'
+    end
+
+    consul_service_def 'server1' do
+      port 80
+      tags ['http']
+      check(
+        interval: '10s',
+        http: 'http://localhost:80'
       )
       notifies :reload, 'service[consul]'
     end
