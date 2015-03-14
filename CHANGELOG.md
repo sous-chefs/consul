@@ -6,6 +6,7 @@
   - Adds support for Consul HTTP checks. [@gavinheavyside](https://github.com/gavinheavyside)
 * Bug Fixes
   - Sets correct ownership to Consul run user/group on service directories. [@thedebugger](https://github.com/thedebugger)
+
 # 0.8.3
 
 * Bug Fixes
