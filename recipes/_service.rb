@@ -118,7 +118,7 @@ additional_options.each do |option|
 end
 
 copy_params = [
-  :bind_addr, :datacenter, :domain, :log_level, :node_name, :advertise_addr, :ports, :enable_syslog
+  :bind_addr, :datacenter, :domain, :log_level, :node_name, :advertise_addr, :ports, :enable_syslog, :statsd_addr
 ]
 copy_params.each do |key|
   if node['consul'][key]

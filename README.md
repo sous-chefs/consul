@@ -249,6 +249,12 @@ Installs and configures [Consul][1] client, server and UI.
     </td>
     <td><tt>/etc/consul.d/cert.pem</tt></td>
   </tr>
+  <tr>
+    <td><tt>['consul']['statsd_addr']</tt></td>
+    <td>String</td>
+    <td>This provides the address of a statsd instance (UDP).</td>
+    <td><tt>nil</tt></td>
+  </tr>
 </table>
 
 ### Databag Attributes (optional)
