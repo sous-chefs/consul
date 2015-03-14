@@ -5,6 +5,7 @@
   - Adds systemd init style. [@ogankoester](https://github.com/logankoester)
   - Adds support for Consul HTTP checks. [@gavinheavyside](https://github.com/gavinheavyside)
 * Bug Fixes
+  - Remove hard dependency on chef-provisioning cookbook.
   - Sets correct ownership to Consul run user/group on service directories. [@thedebugger](https://github.com/thedebugger)
 
 - Removes support for EL5 (CentOS 5) and Ubuntu 10.04.

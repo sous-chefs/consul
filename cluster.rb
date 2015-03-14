@@ -14,6 +14,8 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #
+include_recipe 'chef-provisioning::default'
+
 num_quorum = ENV.fetch('CONSUL_QUORUM', 3)
 
 batch = machine_batch do
