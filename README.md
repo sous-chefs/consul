@@ -11,6 +11,7 @@ Installs and configures [Consul][1] client, server and UI.
 - CentOS 5.10, 6.5, 7.0
 - RHEL 5.10, 6.5, 7.0
 - Ubuntu 10.04, 12.04, 14.04
+- Arch Linux
 
 ## Attributes
 
