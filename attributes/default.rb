@@ -61,10 +61,10 @@ else
 end
 
 default['consul']['servers'] = []
-default['consul']['init_style'] = 'init'   # 'init', 'runit'
+default['consul']['init_style'] = 'init'   # 'init', 'runit', 'systemd'
 
 case node['consul']['init_style']
-when 'runit'
+when 'runit' || 'systemd'
   default['consul']['service_user'] = 'consul'
   default['consul']['service_group'] = 'consul'
 else

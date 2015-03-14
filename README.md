@@ -11,6 +11,7 @@ Installs and configures [Consul][1] client, server and UI.
 - CentOS 5.10, 6.5, 7.0
 - RHEL 5.10, 6.5, 7.0
 - Ubuntu 10.04, 12.04, 14.04
+- Arch Linux
 
 ## Attributes
 
@@ -135,19 +136,19 @@ Installs and configures [Consul][1] client, server and UI.
   <tr>
     <td><tt>['consul']['init_style']</tt></td>
     <td>String</td>
-    <td>Service init mode for running consul as: init or runit</td>
+    <td>Service init mode for running consul as: init,  runit or systemd</td>
     <td><tt>init</tt></td>
   </tr>
   <tr>
     <td><tt>['consul']['service_user']</tt></td>
     <td>String</td>
-    <td>For runit service: run consul as this user (init uses 'root')</td>
+    <td>For runit/systemd service: run consul as this user (init uses 'root')</td>
     <td><tt>consul</tt></td>
   </tr>
   <tr>
     <td><tt>['consul']['service_group']</tt></td>
     <td>String</td>
-    <td>For runit service: run consul as this group (init uses 'root')</td>
+    <td>For runit/systemd service: run consul as this group (init uses 'root')</td>
     <td><tt>consul</tt></td>
   </tr>
   <tr>

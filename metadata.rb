@@ -21,6 +21,8 @@ supports 'ubuntu', '= 10.04'
 supports 'ubuntu', '= 12.04'
 supports 'ubuntu', '= 14.04'
 
+supports 'arch'
+
 depends 'libarchive'
 depends 'chef-provisioning'
 depends 'golang', '~> 1.4'

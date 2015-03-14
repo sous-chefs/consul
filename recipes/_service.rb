@@ -229,4 +229,17 @@ when 'runit'
     supports status: true, restart: true, reload: true
     reload_command "'#{node['runit']['sv_bin']}' hup consul"
   end
+when 'systemd'
+  template '/etc/systemd/system/consul.service' do
+    source 'consul-systemd.erb'
+    mode 0755
+    notifies :restart, 'service[consul]', :immediately
+  end
+
+  service 'consul' do
+    supports status: true, restart: true, reload: true
+    action [:enable, :start]
+    subscribes :restart, "file[#{consul_config_filename}]"
+    subscribes :restart, "link[#{Chef::Consul.active_binary(node)}]"
+  end
 end
