@@ -23,6 +23,7 @@ default_action :create
 attribute :name, name_attribute: true, required: true, kind_of: String
 attribute :id, kind_of: String
 attribute :script, kind_of: String
+attribute :http, kind_of: String
 attribute :ttl, kind_of: String
 attribute :interval, kind_of: String
 attribute :notes, kind_of: String
@@ -48,6 +49,7 @@ def to_hash
   hash[:check][:id] = id unless id.nil?
   hash[:check][:script] = script unless script.nil?
   hash[:check][:ttl] = ttl unless ttl.nil?
+  hash[:check][:http] = http unless http.nil?
   hash[:check][:interval] = interval unless interval.nil?
   hash[:check][:notes] = notes unless notes.nil?
   hash
