@@ -7,6 +7,8 @@
 * Bug Fixes
   - Sets correct ownership to Consul run user/group on service directories. [@thedebugger](https://github.com/thedebugger)
 
+- Removes support for EL5 (CentOS 5) and Ubuntu 10.04.
+
 # 0.8.3
 
 * Bug Fixes

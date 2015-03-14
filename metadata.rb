@@ -14,13 +14,10 @@ recipe 'consul::ui', 'Installs consul ui service.'
 %w(redhat centos).each do |name|
   supports name, '~> 7.0'
   supports name, '~> 6.5'
-  supports name, '~> 5.10'
 end
 
-supports 'ubuntu', '= 10.04'
 supports 'ubuntu', '= 12.04'
 supports 'ubuntu', '= 14.04'
-
 supports 'arch'
 
 depends 'libarchive'

@@ -7,10 +7,9 @@ consul-cookbook
 Installs and configures [Consul][1] client, server and UI.
 
 ## Supported Platforms
-
-- CentOS 5.10, 6.5, 7.0
-- RHEL 5.10, 6.5, 7.0
-- Ubuntu 10.04, 12.04, 14.04
+- CentOS 6.5, 7.0
+- RHEL 6.5, 7.0
+- Ubuntu 12.04, 14.04
 - Arch Linux
 
 ## Attributes
@@ -417,7 +416,7 @@ the `consul::ui` recipe in your node's `run_list`.
 		  passingonly true
       handler "chef-client"
     end
-		
+
 ##### Adding service without check
 
     consul_service_def 'voice1' do
