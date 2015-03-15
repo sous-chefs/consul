@@ -57,7 +57,7 @@ consul_directories.each do |dirname|
     mode 0755
   end
 
-  execute "chown -R #{consul_user}:{consul_group} #{dirname}"
+  execute "chown -R #{consul_user}:#{consul_group} #{dirname}"
 end
 
 # Determine service params
