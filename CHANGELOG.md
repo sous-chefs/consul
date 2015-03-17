@@ -1,9 +1,11 @@
-# 0.9.0 (in progress)
+# 0.9.0
+
 * Enhancements
   - Adds support for publishing to statsd URL. [@akerekes](https://github.com/akerekes)
   - Adds support for Arch Linux. ([@ogankoester](https://github.com/logankoester))
   - Adds systemd init style. [@ogankoester](https://github.com/logankoester)
   - Adds support for Consul HTTP checks. [@gavinheavyside](https://github.com/gavinheavyside)
+  - Bump default Consul installed version to 0.5.0
 * Bug Fixes
   - Remove hard dependency on chef-provisioning cookbook.
   - Sets correct ownership to Consul run user/group on service directories. [@thedebugger](https://github.com/thedebugger)
