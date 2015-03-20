@@ -19,6 +19,7 @@ end
 supports 'ubuntu', '= 12.04'
 supports 'ubuntu', '= 14.04'
 supports 'arch'
+supports 'windows'
 
 recommends 'chef-provisioning'
 
@@ -26,3 +27,7 @@ depends 'libarchive'
 depends 'golang', '~> 1.4'
 depends 'runit'
 depends 'yum-repoforge'
+
+# for windows
+depends 'windows'
+depends "chocolatey"

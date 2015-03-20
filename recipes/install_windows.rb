@@ -1,6 +1,6 @@
 #
-# Copyright 2014 John Bellone <jbellone@bloomberg.net>
-# Copyright 2014 Bloomberg Finance L.P.
+# Copyright 2015 Rohit Amarnath <rohit.amarnath@full360.com>
+# Copyright 2015 Full 360 Inc.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -15,25 +15,11 @@
 # limitations under the License.
 #
 
-use_inline_resources
+if node['platform'] == 'windows'
 
-action :create do
-  file new_resource.path do
-    if node['platform'] == 'windows'
-      rights :full_control, node['consul']['service_user'], :applies_to_children => true
-    else
-      user node['consul']['service_user']
-      group node['consul']['service_group']
-    end
-    mode 0600
-    content new_resource.to_json
+  include_recipe 'chocolatey::default'
 
-    action :create
-  end
-end
-
-action :delete do
-  file new_resource.path do
-    action :delete
+  chocolatey 'consul' do
+    version node['consul']['version']
   end
 end
