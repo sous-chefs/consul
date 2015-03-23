@@ -194,20 +194,22 @@ when 'init'
   if platform?("ubuntu")
     init_file = '/etc/init/consul.conf'
     init_tmpl = 'consul.conf.erb'
+    init_mode = 0644
   else
     init_file = '/etc/init.d/consul'
     init_tmpl = 'consul-init.erb'
+    init_mode = 0755
   end
 
   template node['consul']['etc_config_dir'] do
     source 'consul-sysconfig.erb'
-    mode 0755
+    mode 0644
     notifies :create, "template[#{init_file}]", :immediately
   end
 
   template init_file do
     source init_tmpl
-    mode 0755
+    mode init_mode
     notifies :restart, 'service[consul]', :immediately
   end
 
@@ -234,7 +236,7 @@ when 'runit'
 when 'systemd'
   template '/etc/systemd/system/consul.service' do
     source 'consul-systemd.erb'
-    mode 0755
+    mode 0644
     notifies :restart, 'service[consul]', :immediately
   end
 
