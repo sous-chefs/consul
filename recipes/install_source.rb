@@ -35,7 +35,7 @@ golang_package 'github.com/hashicorp/consul' do
   action :install
 end
 
-directory File.basename(Chef::Consul.active_binary(node)) do
+directory File.dirname(Chef::Consul.active_binary(node)) do
   recursive true
   action :create
 end
