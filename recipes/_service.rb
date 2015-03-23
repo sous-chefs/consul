@@ -198,6 +198,18 @@ if node.consul.verify_incoming || node.consul.verify_outgoing
   end
 end
 
+consul_config_filename = File.join(node['consul']['config_dir'], 'default.json')
+
+file consul_config_filename do
+  user consul_user
+  group consul_group
+  mode 0600
+  action :create
+  content JSON.pretty_generate(service_config, quirks_mode: true)
+  # https://github.com/johnbellone/consul-cookbook/issues/72
+  notifies :restart, "service[consul]"
+end
+
 case node['consul']['init_style']
 when 'init'
   if platform?("ubuntu")
@@ -254,34 +266,9 @@ when 'systemd'
     subscribes :restart, "link[#{Chef::Consul.active_binary(node)}]"
   end
 when 'windows'
-  # Consul needs a few things started up on Windows before it works,
-  # but delay start start mode isn't there _yet_ in winsw, so setting
-  # it via Registry. This should be unnecessary in the next version of winsw.
-  registry_key 'HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\services\consul' do
-    values [{ :name => 'DelayedAutostart', :type => :dword, :data => 1}]
+  # Windows service for consul has been create by Chocolatey and
+  # config is managed by the chocolatey package
+  service 'consul' do
+    subscribes :restart, "file[#{consul_config_filename}]"
   end
-
-  # Set the winsw xml for the consul service
-  template "#{node['consul']['etc_config_dir']}\\consul-service.xml" do
-    source 'consul-service.xml.erb'
-    notifies :restart, "service[consul]", :delayed
-  end
-
-  # Windows service for consul has been create by Chocolatey but
-  # the service resource needs to be after the template has been created
-  service 'consul'
-end
-
-consul_config_filename = File.join(node['consul']['config_dir'], 'default.json')
-
-# Moved here to accomodate the windows service setup
-# (the winsw xml needs to be created first)
-file consul_config_filename do
-  user consul_user
-  group consul_group
-  mode 0600
-  action :create
-  content JSON.pretty_generate(service_config, quirks_mode: true)
-  # https://github.com/johnbellone/consul-cookbook/issues/72
-  notifies :restart, "service[consul]"
 end

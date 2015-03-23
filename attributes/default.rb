@@ -25,11 +25,11 @@ default['consul']['config_dir']     = '/etc/consul.d'
 
 case node['platform_family']
 when 'windows'
-  default['consul']['install_method'] = 'chocolatey'
+  default['consul']['install_method'] = 'windows'
   default['consul']['init_style']     = 'windows'
-  default['consul']['config_dir']     = "#{ENV['SystemDrive']}\\ProgramData\\consul"
+  default['consul']['config_dir']     = "#{ENV['SystemDrive']}\\ProgramData\\consul\\config"
   default['consul']['data_dir']       = "#{ENV['SystemDrive']}\\ProgramData\\consul\\data"
-  default['consul']['install_dir']    = "#{ChocolateyHelpers.chocolatey_install}\\lib\\consul.#{node['consul']['version']}\\config"
+  default['consul']['install_dir']    = "#{ChocolateyHelpers.chocolatey_install}\\lib\\consul.#{node['consul']['version']}"
   default['consul']['etc_config_dir'] = "#{ChocolateyHelpers.chocolatey_install}\\lib\\consul.#{node['consul']['version']}\\tools"
 when 'debian'
   default['consul']['etc_config_dir'] = '/etc/default/consul'
