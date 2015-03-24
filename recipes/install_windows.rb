@@ -24,3 +24,5 @@ if node['platform'] == 'windows'
     source node['consul']['choco_source']
   end
 end
+
+include_recipe 'consul::_service'
