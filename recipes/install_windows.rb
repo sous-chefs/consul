@@ -21,5 +21,6 @@ if node['platform'] == 'windows'
 
   chocolatey 'consul' do
     version node['consul']['version']
+    source node['consul']['choco_source']
   end
 end

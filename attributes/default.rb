@@ -22,6 +22,7 @@ default['consul']['init_style']     = 'init'   # 'init', 'runit', 'systemd', 'wi
 default['consul']['install_dir']    = '/usr/local/bin'
 default['consul']['data_dir']       = '/var/lib/consul'
 default['consul']['config_dir']     = '/etc/consul.d'
+default['consul']['choco_source']   = "https://chocolatey.org/api/v2/"
 
 case node['platform_family']
 when 'windows'
