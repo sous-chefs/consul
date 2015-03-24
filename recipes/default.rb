@@ -21,7 +21,7 @@ when 'binary'
 when 'source'
   include_recipe 'consul::install_source'
 when 'windows'
-  include_recipe 'consul::install_chocolatey'
+  include_recipe 'consul::install_windows'
 else
   Chef::Application.fatal!("[consul::default] unknown install method, method=#{node['consul']['install_method']}")
 end
