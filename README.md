@@ -11,6 +11,7 @@ Installs and configures [Consul][1] client, server and UI.
 - RHEL 6.5, 7.0
 - Ubuntu 12.04, 14.04
 - Arch Linux
+- Windows
 
 ## Attributes
 
@@ -42,14 +43,26 @@ Installs and configures [Consul][1] client, server and UI.
   <tr>
     <td><tt>['consul']['install_method']</tt></td>
     <td>String</td>
-    <td>Method to install consul with when using default recipe: binary or source</td>
-    <td><tt>binary</tt></td>
+    <td>Method to install consul with when using default recipe: 'binary', 'source' or 'windows'</td>
+    <td>
+      \*nix: <tt> binary</tt></br>
+      Windows: <tt>binary</tt>
+    </td>
+  </tr>
+  <tr>
+    <td><tt>['consul']['choco_source']</tt></td>
+    <td>String</td>
+    <td>Source to use for fetching the chocolatey package. Defaults to the chocolatey public feed</td>
+    <td><tt>https://chocolatey.org/api/v2/</tt></td>
   </tr>
   <tr>
     <td><tt>['consul']['install_dir']</tt></td>
     <td>String</td>
     <td>Directory to install binary to.</td>
-    <td><tt>/usr/local/bin</tt></td>
+    <td>
+      \*nix: <tt>/usr/local/bin</tt></br>
+      Windows: <tt>{chocolatey_install_dir}\lib\consul.{consul_version}</tt>
+    </td>
   </tr>
   <tr>
     <td><tt>['consul']['service_mode']</tt></td>
@@ -67,13 +80,29 @@ Installs and configures [Consul][1] client, server and UI.
     <td><tt>['consul']['data_dir']</tt></td>
     <td>String</td>
     <td>Location to store consul's data in</td>
-    <td><tt>/var/lib/consul</tt></td>
+    <td>
+      \*nix: <tt>/var/lib/consul</tt></br>
+      Windows: <tt>C:\ProgramData\consul\data</tt>
+    </td>
   </tr>
   <tr>
     <td><tt>['consul']['config_dir']</tt></td>
     <td>String</td>
     <td>Location to read service definitions from (directoy will be created)</td>
-    <td><tt>/etc/consul.d</tt></td>
+    <td>
+      \*nix: <tt>/etc/consul.d</tt></br>
+      Windows: <tt>C:\ProgramData\consul\config</tt>
+    </td>
+  </tr>
+  <tr>
+    <td><tt>['consul']['etc_config_dir']</tt></td>
+    <td>String</td>
+    <td>Misc. configuration directory that might need to be execute during service start</td>
+    <td>
+      Debian: <tt>/etc/default/consul</tt></br>
+      Windows: <tt>{chocolatey_install_dir}\lib\consul.{consul_version}\tools</tt></br>
+      Other: <tt>/etc/sysconfig/consul</tt>
+    </td>
   </tr>
   <tr>
     <td><tt>['consul']['servers']</tt></td>
@@ -115,8 +144,7 @@ Installs and configures [Consul][1] client, server and UI.
     <td><tt>['consul']['log_level']</tt></td>
     <td>String</td>
     <td>
-      The level of logging to show after the Consul agent has started.
-      Available: "trace", "debug", "info", "warn", "err"
+      The level of logging to show after the Consul agent has started: 'trace', 'debug', 'info', 'warn', or 'err'
     </td>
     <td><tt>info</tt></td>
   </tr>
@@ -135,8 +163,11 @@ Installs and configures [Consul][1] client, server and UI.
   <tr>
     <td><tt>['consul']['init_style']</tt></td>
     <td>String</td>
-    <td>Service init mode for running consul as: init,  runit or systemd</td>
-    <td><tt>init</tt></td>
+    <td>Service init mode for running consul as: 'init', 'runit', 'systemd', or 'windows'</td>
+    <td>
+      \*nix: <tt>init</tt></br>
+      Windows: <tt>windows</tt>
+    </td>
   </tr>
   <tr>
     <td><tt>['consul']['service_user']</tt></td>
@@ -387,7 +418,8 @@ the application.
 
 ### consul::ui
 Installing the separate Consul UI simply requires you to include
-the `consul::ui` recipe in your node's `run_list`.
+the `consul::ui` recipe in your node's `run_list`. Consul UI is not supported
+on Windows platform.
 
 ```json
 {
