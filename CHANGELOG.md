@@ -1,3 +1,8 @@
+# 0.9.1
+
+* Bug Fixes
+  * Lock to Chef 11 compatible version of libarchive cookbook
+
 # 0.9.0
 
 * Enhancements
