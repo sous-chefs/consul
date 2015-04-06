@@ -26,6 +26,9 @@ NAME="consul"
 PIDFILE="/var/run/$NAME.pid"
 LOGFILE="/var/log/$NAME.log"
 
+STARTIMEOUT=5
+STOPTIMEOUT=30
+
 get_pid() {
     cat "$PIDFILE"
 }
@@ -42,39 +45,50 @@ case "$1" in
         echo "Starting $NAME"
         exec 2> >(while IFS= read -r line; do logger -t consul "$line"; done)
         ${CMD[@]} >> "$LOGFILE" &
-        echo $! > "$PIDFILE"
-        if ! is_running; then
+        CONSULPID=$!
+        echo $CONSULPID > "$PIDFILE"
+        TIMEOUT="$STARTIMEOUT"
+        while [ $TIMEOUT -gt 0 ]; do
+            if is_running; then
+                break
+                sleep 1
+                let TIMEOUT=${TIMEOUT}-1
+            fi
+        done
+        if [ $TIMEOUT -eq 0 ]; then
             echo "Unable to start $NAME, see $LOGFILE"
             exit 1
         fi
+        exit 0
     fi
     ;;
     stop)
     if is_running; then
         echo -n "Stopping $NAME..."
-        kill -INT `get_pid`
-        for i in 1 2 3 4 5 6 7 8 9 10
-        do
-            if ! is_running; then
-                break
+        CONSULPID=`get_pid`
+        /bin/kill -INT "$CONSULPID" >/dev/null 2>&1
+        ret=$?
+        if [ $ret -eq 0 ]; then
+            TIMEOUT="$STOPTIMEOUT"
+            while [ $TIMEOUT -gt 0 ]; do
+                kill -0 "$CONSULPID" >/dev/null 2>&1 || break
+                sleep 1
+                let TIMEOUT=${TIMEOUT}-1
+            done
+            if is_running; then
+                echo "$NAME not stopped, sending SIGKILL"
+                kill -9 $CONSULPID
+                sleep 1
             fi
-
-            echo -n "."
-            sleep 1
-        done
-        echo
-
-        if is_running; then
-          kill -9 `get_pid`
-        fi
-
-        if is_running; then
-            echo "$NAME not stopped; may still be shutting down or shutdown may have failed"
-            exit 1
-        else
-            echo "$NAME stopped"
-            if [ -f "$PIDFILE" ]; then
-                rm "$PIDFILE"
+            if is_running; then
+                echo "$NAME not stopped; may still be shutting down or shutdown may have failed"
+                exit 1
+            else
+                echo "$NAME stopped"
+                if [ -f "$PIDFILE" ]; then
+                    rm "$PIDFILE"
+                fi
+                exit 0
             fi
         fi
     else
