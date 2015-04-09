@@ -314,7 +314,7 @@ Following attributes, if exist in the [encrypted databag][7], override the node 
     <th>Default</th>
   </tr>
   <tr>
-    <td><tt>['consul']['client_address']</tt></td>
+    <td><tt>['consul']['client_addr']</tt></td>
     <td>String</td>
     <td>Address to bind to</td>
     <td><tt>0.0.0.0</tt></td>
