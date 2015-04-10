@@ -7,8 +7,8 @@
 
 * Enhancements
   - Adds support for publishing to statsd URL. [@akerekes](https://github.com/akerekes)
-  - Adds support for Arch Linux. ([@ogankoester](https://github.com/logankoester))
-  - Adds systemd init style. [@ogankoester](https://github.com/logankoester)
+  - Adds support for Arch Linux. ([@logankoester](https://github.com/logankoester))
+  - Adds systemd init style. [@logankoester](https://github.com/logankoester)
   - Adds support for Consul HTTP checks. [@gavinheavyside](https://github.com/gavinheavyside)
   - Bump default Consul installed version to 0.5.0
 * Bug Fixes
