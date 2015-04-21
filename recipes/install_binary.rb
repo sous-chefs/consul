@@ -25,8 +25,9 @@ end
 libarchive_file 'consul.zip' do
   path archive.path
   extract_to Chef::Consul.install_path(node)
-  extract_options :no_overwrite
-
+  extract_options [:no_overwrite]
+  owner node['consul']['service_user']
+  group node['consul']['service_user']
   action :extract
 end
 
