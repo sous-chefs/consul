@@ -1,5 +1,7 @@
 consul-cookbook
 ===============
+
+[![Join the chat at https://gitter.im/johnbellone/consul-cookbook](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/johnbellone/consul-cookbook?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 ![Release](http://img.shields.io/github/release/johnbellone/consul-cookbook.svg)
 [![Build Status](http://img.shields.io/travis/johnbellone/consul-cookbook.svg)][5]
 [![Code Coverage](http://img.shields.io/coveralls/johnbellone/consul-cookbook.svg)][6]
