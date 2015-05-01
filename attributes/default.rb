@@ -53,6 +53,7 @@ default['consul']['checksums']      = {
 default['consul']['source_revision'] = 'master'
 
 # Service attributes
+default['consul']['enable'] = true
 default['consul']['service_mode'] = 'bootstrap'
 default['consul']['retry_on_join'] = false
 

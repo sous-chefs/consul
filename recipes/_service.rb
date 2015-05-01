@@ -213,25 +213,47 @@ when 'init'
     notifies :restart, 'service[consul]', :immediately
   end
 
-  service 'consul' do
-    provider Chef::Provider::Service::Upstart if platform?("ubuntu")
-    supports status: true, restart: true, reload: true
-    action [:enable, :start]
-    subscribes :restart, "file[#{consul_config_filename}"
-    subscribes :restart, "link[#{Chef::Consul.active_binary(node)}]"
+  if node['consul']['enable']
+    service 'consul' do
+      provider Chef::Provider::Service::Upstart if platform?("ubuntu")
+      supports status: true, restart: true, reload: true
+      action [:enable, :start]
+      subscribes :restart, "file[#{consul_config_filename}"
+      subscribes :restart, "link[#{Chef::Consul.active_binary(node)}]"
+    end
+  else
+    service 'consul' do
+       supports status: true, restart: true, reload: true
+       action :disable
+    end
   end
 when 'runit'
-  runit_service 'consul' do
-    supports status: true, restart: true, reload: true
-    action [:enable, :start]
-    subscribes :restart, "file[#{consul_config_filename}]"
-    subscribes :restart, "link[#{Chef::Consul.active_binary(node)}]"
-    log true
-  end
+  if node['consul']['enable']
+    runit_service 'consul' do
+      supports status: true, restart: true, reload: true
+      action [:enable, :start]
+      subscribes :restart, "file[#{consul_config_filename}]"
+      subscribes :restart, "link[#{Chef::Consul.active_binary(node)}]"
+      log true
+    end
 
-  service 'consul' do
-    supports status: true, restart: true, reload: true
-    reload_command "'#{node['runit']['sv_bin']}' hup consul"
+    service 'consul' do
+      supports status: true, restart: true, reload: true
+      reload_command "'#{node['runit']['sv_bin']}' hup consul"
+    end
+  else
+    runit_service 'consul' do
+      supports status: true, restart: true, reload: true
+      action :create
+      log true
+    end
+
+    # ignore restart notifications or sv errors will break run
+    service 'consul' do
+      supports status: true, restart: true, reload: true
+      reload_command "true"
+      restart_command "true"
+    end
   end
 when 'systemd'
   template '/etc/systemd/system/consul.service' do
