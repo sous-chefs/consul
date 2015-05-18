@@ -217,7 +217,7 @@ when 'init'
     provider Chef::Provider::Service::Upstart if platform?("ubuntu")
     supports status: true, restart: true, reload: true
     action [:enable, :start]
-    subscribes :restart, "file[#{consul_config_filename}"
+    subscribes :restart, "file[#{consul_config_filename}]"
     subscribes :restart, "link[#{Chef::Consul.active_binary(node)}]"
   end
 when 'runit'
