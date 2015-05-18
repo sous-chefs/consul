@@ -135,6 +135,12 @@ Installs and configures [Consul][1] client, server and UI.
     <td>Value of <i>bind_addr</i></td>
   </tr>
   <tr>
+      <td><tt>['consul']['pid_file']</tt></td>
+      <td>String</td>
+      <td>File path for consul to store its PID</td>
+      <td><tt>/var/run/consul.pid</tt></td>
+    </tr>
+  <tr>
     <td><tt>['consul']['init_style']</tt></td>
     <td>String</td>
     <td>Service init mode for running consul as: init,  runit or systemd</td>
