@@ -76,6 +76,7 @@ else
 end
 
 default['consul']['servers'] = []
+default['consul']['pid_file'] = '/var/run/consul.pid'
 default['consul']['init_style'] = 'init'   # 'init', 'runit', 'systemd'
 
 case node['consul']['init_style']

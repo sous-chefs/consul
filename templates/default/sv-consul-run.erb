@@ -5,4 +5,5 @@ export GOMAXPROCS=<%= node['cpu']['total'] %>
 exec 2>&1
 exec <%= node['runit']['chpst_bin'] %> \
   -u <%= node['consul']['service_user'] %>:<%= node['consul']['service_group'] %> \
-  <%= Chef::Consul.active_binary(node) %> agent -config-dir <%= node['consul']['config_dir'] %>
+  <%= Chef::Consul.active_binary(node) %> agent -config-dir <%= node['consul']['config_dir'] %> \
+  -pid-file <%= node['consul']['pid_file'] %>

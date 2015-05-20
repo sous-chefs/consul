@@ -10,7 +10,7 @@ script
     . <%= node['consul']['etc_config_dir'] %>
   fi
   export GOMAXPROCS=${GOMAXPROCS}
-  CMD="<%= Chef::Consul.active_binary(node) %> agent -config-dir <%= node['consul']['config_dir'] %>"
+  CMD="<%= Chef::Consul.active_binary(node) %> agent -config-dir <%= node['consul']['config_dir'] %> -pid-file <%= node['consul']['pid_file'] %>"
   LOGFILE="/var/log/consul.log"
   exec $CMD >> "$LOGFILE"
 end script

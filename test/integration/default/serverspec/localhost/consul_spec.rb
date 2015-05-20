@@ -18,6 +18,10 @@ describe file('/var/lib/consul') do
   it { should be_directory }
 end
 
+describe file('/var/run/consul.pid') do
+  it { should be_file }
+end
+
 [8300, 8400, 8500, 8600].each do |p|
   describe port(p) do
     it { should be_listening }
