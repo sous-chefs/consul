@@ -429,7 +429,7 @@ the `consul::ui` recipe in your node's `run_list`.
 
 ##### Adding services with checks
 
-    consul_service_def "voice1' do
+    consul_service_def 'voice1' do
       port 5060
       tags ['_sip._udp']
       check(
