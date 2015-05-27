@@ -50,7 +50,7 @@ group "consul service group: #{consul_group}" do
 end
 
 # Create service directories
-consul_directories.each do |dirname|
+consul_directories.uniq.each do |dirname|
   directory dirname do
     owner consul_user
     group consul_group
