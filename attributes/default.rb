@@ -66,6 +66,7 @@ default['consul']['retry_on_join'] = false
 default['consul']['bootstrap_expect'] = 3
 default['consul']['data_dir'] = '/var/lib/consul'
 default['consul']['config_dir'] = '/etc/consul.d'
+default['consul']['logfile'] = '/var/log/consul.log'
 case node['platform_family']
 when 'debian'
   default['consul']['etc_config_dir'] = '/etc/default/consul'

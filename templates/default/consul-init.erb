@@ -24,7 +24,7 @@ CMD="<%= Chef::Consul.active_binary(node) %> agent -config-dir <%= node['consul'
 NAME="consul"
 
 PIDFILE="/var/run/$NAME.pid"
-LOGFILE="/var/log/$NAME.log"
+LOGFILE="<%= @consul_logfile %>"
 
 get_pid() {
     cat "$PIDFILE"

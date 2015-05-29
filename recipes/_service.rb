@@ -210,6 +210,9 @@ when 'init'
   template init_file do
     source init_tmpl
     mode init_mode
+    variables(
+      consul_logfile: node['consul']['logfile']
+    )
     notifies :restart, 'service[consul]', :immediately
   end
 
