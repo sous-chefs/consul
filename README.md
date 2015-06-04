@@ -413,6 +413,11 @@ the `consul::ui` recipe in your node's `run_list`.
       handler "chef-client"
     end
 
+##### Adding services watch
+    consul_services_watch_def 'services-name' do
+      handler "chef-client"
+    end
+
 ##### Adding service watch
     consul_service_watch_def 'service-name' do
 		  passingonly true
