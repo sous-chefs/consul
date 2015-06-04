@@ -63,6 +63,7 @@ default['consul']['checksums']      = {
   '0.5.2_web_ui'       => 'ad883aa52e1c0136ab1492bbcedad1210235f26d59719fb6de3ef6464f1ff3b1',
 }
 default['consul']['source_revision'] = 'master'
+default['consul']['use_packagecloud_repo'] = true
 
 # Service attributes
 default['consul']['service_mode'] = 'bootstrap'
