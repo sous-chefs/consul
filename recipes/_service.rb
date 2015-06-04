@@ -109,7 +109,7 @@ if node['consul']['serve_ui']
   service_config['client_addr'] = node['consul']['client_addr']
 end
 
-additional_options = ['recursor', 'statsd_addr', 'leave_on_terminate', 'disable_remote_exec', 'acl_datacenter', 'acl_token', 'acl_default_policy', 'acl_down_policy', 'acl_master_token']
+additional_options = ['recursor', 'statsd_addr', 'leave_on_terminate', 'rejoin_after_leave', 'disable_remote_exec', 'acl_datacenter', 'acl_token', 'acl_default_policy', 'acl_down_policy', 'acl_master_token']
 
 additional_options.each do |option|
   if node['consul'][option]
