@@ -30,7 +30,7 @@ libarchive_file 'consul.zip' do
   action :extract
 end
 
-directory File.basename(Chef::Consul.active_binary(node)) do
+directory File.dirname(Chef::Consul.active_binary(node)) do
   recursive true
   action :create
 end
