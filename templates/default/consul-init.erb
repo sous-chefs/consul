@@ -24,7 +24,7 @@ CMD="<%= Chef::Consul.active_binary(node) %> agent -config-dir <%= node['consul'
 NAME="consul"
 
 PIDFILE="/var/run/$NAME.pid"
-LOGFILE="/var/log/$NAME.log"
+LOGFILE="<%= @consul_logfile %>"
 
 get_pid() {
     cat "$PIDFILE"
@@ -41,7 +41,7 @@ case "$1" in
     else
         echo "Starting $NAME"
         exec 2> >(while IFS= read -r line; do logger -t consul "$line"; done)
-        "${CMD[@]}" >> "$LOGFILE" &
+        ${CMD[@]} >> "$LOGFILE" &
         echo $! > "$PIDFILE"
         if ! is_running; then
             echo "Unable to start $NAME, see $LOGFILE"

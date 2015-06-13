@@ -1,5 +1,7 @@
 consul-cookbook
 ===============
+
+[![Join the chat at https://gitter.im/johnbellone/consul-cookbook](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/johnbellone/consul-cookbook?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 ![Release](http://img.shields.io/github/release/johnbellone/consul-cookbook.svg)
 [![Build Status](http://img.shields.io/travis/johnbellone/consul-cookbook.svg)][5]
 [![Code Coverage](http://img.shields.io/coveralls/johnbellone/consul-cookbook.svg)][6]
@@ -26,7 +28,7 @@ Installs and configures [Consul][1] client, server and UI.
     <td><tt>['consul']['version']</tt></td>
     <td>String</td>
     <td>Version to install</td>
-    <td><tt>0.4.1</tt></td>
+    <td><tt>0.5.0</tt></td>
   </tr>
   <tr>
     <td><tt>['consul']['base_url']</tt></td>
@@ -345,7 +347,7 @@ Following attributes, if exist in the [encrypted databag][7], override the node 
     <th>Default</th>
   </tr>
   <tr>
-    <td><tt>['consul']['client_address']</tt></td>
+    <td><tt>['consul']['client_addr']</tt></td>
     <td>String</td>
     <td>Address to bind to</td>
     <td><tt>0.0.0.0</tt></td>
@@ -443,6 +445,11 @@ on Windows platform.
       handler "chef-client"
     end
 
+##### Adding services watch
+    consul_services_watch_def 'services-name' do
+      handler "chef-client"
+    end
+
 ##### Adding service watch
     consul_service_watch_def 'service-name' do
 		  passingonly true
@@ -459,7 +466,7 @@ on Windows platform.
 
 ##### Adding services with checks
 
-    consul_service_def "voice1' do
+    consul_service_def 'voice1' do
       port 5060
       tags ['_sip._udp']
       check(
@@ -497,7 +504,7 @@ To bootstrap a consul cluster follow the following steps:
  3.  Apply the consul cookbook to these nodes with `node['consul']['service_mode'] = 'cluster'` (I put this in this in a CONSUL_MASTER role).
  4.  Let these machines converge, once you can run `consul members` and get a list of all of the servers your ready to move on
  5.  Apply the consul cookbook to the rest of your nodes with `node['consul']['service_mode'] = 'client'` (I put this in the environment)
- 6.  Start added services and checks to your cookbooks.
+ 6.  Start adding services and checks to your cookbooks.
  7.  If you want to get values out of consul to power your chef, curl localhost:8500/v1/kv/key/path?raw in your cookbook.
 
 ## Authors

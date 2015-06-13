@@ -66,7 +66,7 @@ end
 
 
 # Create service directories
-consul_directories.each do |dirname|
+consul_directories.uniq.each do |dirname|
   directory dirname do
     if node['platform'] == 'windows'
       rights :full_control, node['consul']['service_user'], :applies_to_children => true
@@ -130,7 +130,7 @@ if node['consul']['serve_ui']
   service_config['client_addr'] = node['consul']['client_addr']
 end
 
-additional_options = ['recursor', 'statsd_addr', 'leave_on_terminate', 'disable_remote_exec', 'acl_datacenter', 'acl_token', 'acl_default_policy', 'acl_down_policy', 'acl_master_token']
+additional_options = ['recursor', 'statsd_addr', 'leave_on_terminate', 'rejoin_after_leave', 'disable_remote_exec', 'acl_datacenter', 'acl_token', 'acl_default_policy', 'acl_down_policy', 'acl_master_token']
 
 additional_options.each do |option|
   if node['consul'][option]
@@ -215,20 +215,25 @@ when 'init'
   if platform?("ubuntu")
     init_file = '/etc/init/consul.conf'
     init_tmpl = 'consul.conf.erb'
+    init_mode = 0644
   else
     init_file = '/etc/init.d/consul'
     init_tmpl = 'consul-init.erb'
+    init_mode = 0755
   end
 
   template node['consul']['etc_config_dir'] do
     source 'consul-sysconfig.erb'
-    mode 0755
+    mode 0644
     notifies :create, "template[#{init_file}]", :immediately
   end
 
   template init_file do
     source init_tmpl
-    mode 0755
+    mode init_mode
+    variables(
+      consul_logfile: node['consul']['logfile']
+    )
     notifies :restart, 'service[consul]', :immediately
   end
 
@@ -236,7 +241,7 @@ when 'init'
     provider Chef::Provider::Service::Upstart if platform?("ubuntu")
     supports status: true, restart: true, reload: true
     action [:enable, :start]
-    subscribes :restart, "file[#{consul_config_filename}"
+    subscribes :restart, "file[#{consul_config_filename}]"
     subscribes :restart, "link[#{Chef::Consul.active_binary(node)}]"
   end
 when 'runit'
@@ -255,7 +260,7 @@ when 'runit'
 when 'systemd'
   template '/etc/systemd/system/consul.service' do
     source 'consul-systemd.erb'
-    mode 0755
+    mode 0644
     notifies :restart, 'service[consul]', :immediately
   end
 

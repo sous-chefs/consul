@@ -14,16 +14,21 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #
+# NOTE: This is only supported for Ubuntu 12.04LTS and 14.04LTS.
 
-case node['consul']['install_method']
-when 'binary'
-  include_recipe 'consul::install_binary'
-when 'source'
-  include_recipe 'consul::install_source'
-when 'windows'
-  include_recipe 'consul::install_windows'
-when 'packages'
-  include_recipe 'consul::install_packages'
-else
-  Chef::Application.fatal!("[consul::default] unknown install method, method=#{node['consul']['install_method']}")
+if node['consul']['use_packagecloud_repo']
+
+  packagecloud_repo "darron/consul" do
+    type "deb"
+  end
+
+  packagecloud_repo "darron/consul-webui" do
+    type "deb"
+  end
+
 end
+
+package 'consul'
+package 'consul-webui'
+
+include_recipe 'consul::_service'

@@ -1,9 +1,31 @@
+# 0.10
+Fixes several bugs, minor enhancements and changes default version of
+Consul to 0.5.2.
+
+* Enhancements
+  - Node attribute for specifying Consul log file. [@darron](https://github.com/darron)
+  - Recipe no longer tries to create directories twice. [@tiwilliam](https://github.com/tiwilliam)
+  - Add packagecloud install method. [@darron](https://github.com/darron)
+  - Add 'rejoin_after_leave' option. [@arodd](https://github.com/arodd)
+  - Add LWRP for services watch. [@hirocaster](https://github.com/hirocaster)
+
+* Bug Fixes
+  - #152 Remove +x permissions on upstart/systemd configs. [@dpkp](https://github.com/dpkp)
+  - #158 Fix sysvinit script by not quoting commands. [@hatchetation](https://github.com/hatchetation)
+  - #172 Adds missing bracket to restart subscription. [@YuukiARIA](https://github.com/YuukiARIA)
+  - #178 Ensures GOMAXPROCS is at least 2. [@tgwizard](https://github.com/tgwizard)
+
+# 0.9.1
+
+* Bug Fixes
+  * Lock to Chef 11 compatible version of libarchive cookbook
+
 # 0.9.0
 
 * Enhancements
   - Adds support for publishing to statsd URL. [@akerekes](https://github.com/akerekes)
-  - Adds support for Arch Linux. ([@ogankoester](https://github.com/logankoester))
-  - Adds systemd init style. [@ogankoester](https://github.com/logankoester)
+  - Adds support for Arch Linux. ([@logankoester](https://github.com/logankoester))
+  - Adds systemd init style. [@logankoester](https://github.com/logankoester)
   - Adds support for Consul HTTP checks. [@gavinheavyside](https://github.com/gavinheavyside)
   - Bump default Consul installed version to 0.5.0
 * Bug Fixes

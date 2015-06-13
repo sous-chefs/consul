@@ -4,7 +4,7 @@ maintainer_email 'jbellone@bloomberg.net'
 license 'Apache v2.0'
 description 'Installs/Configures Consul client, server and UI.'
 long_description 'Installs/Configures Consul client, server and UI.'
-version '0.9.0'
+version '0.10.0'
 
 recipe 'consul', 'Installs and starts consul service.'
 recipe 'consul::install_binary', 'Installs consul service from binary.'
@@ -23,10 +23,11 @@ supports 'windows'
 
 recommends 'chef-provisioning'
 
-depends 'libarchive'
+depends 'libarchive', "~> 0.4.0"
 depends 'golang', '~> 1.4'
 depends 'runit'
 depends 'yum-repoforge'
+depends 'packagecloud'
 
 # for windows
 depends 'windows'
