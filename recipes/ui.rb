@@ -13,28 +13,32 @@
 # limitations under the License.
 #
 
-include_recipe 'libarchive::default'
+if node['platform'] == 'windows'
+  Chef::Log.error "UI Installation not supported for Windows"
+else
+  include_recipe 'libarchive::default'
 
-archive = remote_file Chef::ConsulUI.cached_archive(node) do
-  source Chef::ConsulUI.remote_url(node)
-  checksum Chef::ConsulUI.remote_checksum(node)
-end
+  archive = remote_file Chef::ConsulUI.cached_archive(node) do
+    source Chef::ConsulUI.remote_url(node)
+    checksum Chef::ConsulUI.remote_checksum(node)
+  end
 
-libarchive_file 'consul_ui.zip' do
-  path archive.path
-  extract_to Chef::ConsulUI.install_path(node)
-  extract_options :no_overwrite
+  libarchive_file 'consul_ui.zip' do
+    path archive.path
+    extract_to Chef::ConsulUI.install_path(node)
+    extract_options :no_overwrite
 
-  action :extract
-end
+    action :extract
+  end
 
-# JW TODO: Remove after next major release.
-directory Chef::ConsulUI.active_path(node) do
-  action :delete
-  recursive true
-  not_if "test -L #{Chef::ConsulUI.active_path(node)}"
-end
+  # JW TODO: Remove after next major release.
+  directory Chef::ConsulUI.active_path(node) do
+    action :delete
+    recursive true
+    not_if "test -L #{Chef::ConsulUI.active_path(node)}"
+  end
 
-link Chef::ConsulUI.active_path(node) do
-  to Chef::ConsulUI.latest_dist(node)
+  link Chef::ConsulUI.active_path(node) do
+    to Chef::ConsulUI.latest_dist(node)
+  end
 end

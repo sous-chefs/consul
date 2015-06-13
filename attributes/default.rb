@@ -19,7 +19,9 @@ default['consul']['base_url']       = "https://dl.bintray.com/mitchellh/consul/%
 default['consul']['version']        = '0.5.2'
 default['consul']['install_method'] = 'binary'
 default['consul']['install_dir']    = '/usr/local/bin'
-default['consul']['checksums']      = {
+default['consul']['choco_source']   = "https://chocolatey.org/api/v2/"
+
+default['consul']['checksums'] = {
   '0.3.0_darwin_amd64' => '9dfbc70c01ebbc3e7dba0e4b31baeddbdcbd36ef99f5ac87ca6bbcc7405df405',
   '0.3.0_linux_386'    => '2513496374f8f15bda0da4da33122e93f82ce39f661ee3e668c67a5b7e98fd5f',
   '0.3.0_linux_amd64'  => 'da1337ab3b236bad19b791a54a8df03a8c2a340500a392000c21608696957b15',
@@ -66,7 +68,7 @@ default['consul']['source_revision'] = 'master'
 default['consul']['use_packagecloud_repo'] = true
 
 # Service attributes
-default['consul']['service_mode'] = 'bootstrap'
+default['consul']['service_mode']  = 'bootstrap'
 default['consul']['retry_on_join'] = false
 
 # In the cluster mode, set the default cluster size to 3
@@ -74,7 +76,15 @@ default['consul']['bootstrap_expect'] = 3
 default['consul']['data_dir'] = '/var/lib/consul'
 default['consul']['config_dir'] = '/etc/consul.d'
 default['consul']['logfile'] = '/var/log/consul.log'
+
 case node['platform_family']
+when 'windows'
+  default['consul']['install_method'] = 'windows'
+  default['consul']['init_style']     = 'windows'
+  default['consul']['config_dir']     = "#{ENV['SystemDrive']}\\ProgramData\\consul\\config"
+  default['consul']['data_dir']       = "#{ENV['SystemDrive']}\\ProgramData\\consul\\data"
+  default['consul']['install_dir']    = "#{ChocolateyHelpers.chocolatey_install}\\lib\\consul.#{node['consul']['version']}"
+  default['consul']['etc_config_dir'] = "#{ChocolateyHelpers.chocolatey_install}\\lib\\consul.#{node['consul']['version']}\\tools"
 when 'debian'
   default['consul']['etc_config_dir'] = '/etc/default/consul'
 when 'rhel'
@@ -84,14 +94,17 @@ else
 end
 
 default['consul']['servers'] = []
-default['consul']['init_style'] = 'init'   # 'init', 'runit', 'systemd'
+default['consul']['init_style']     = 'init'   # 'init', 'runit', 'systemd', 'windows'
 
 case node['consul']['init_style']
 when 'runit' || 'systemd'
-  default['consul']['service_user'] = 'consul'
+  default['consul']['service_user']  = 'consul'
   default['consul']['service_group'] = 'consul'
+when 'windows'
+  default['consul']['service_user']  = 'Administrator'
+  default['consul']['service_group'] = 'Administrators'
 else
-  default['consul']['service_user'] = 'root'
+  default['consul']['service_user']  = 'root'
   default['consul']['service_group'] = 'root'
 end
 
@@ -105,28 +118,28 @@ default['consul']['ports'] = {
 }
 
 # Consul DataBag
-default['consul']['data_bag'] = 'consul'
+default['consul']['data_bag']              = 'consul'
 default['consul']['data_bag_encrypt_item'] = 'encrypt'
 
 # Gossip encryption
 default['consul']['encrypt_enabled'] = false
-default['consul']['encrypt'] = nil
+default['consul']['encrypt']         = nil
 # TLS support
 default['consul']['verify_incoming'] = false
 default['consul']['verify_outgoing'] = false
 # Cert in pem format
-default['consul']['ca_cert'] = nil
-default['consul']['ca_path'] = "%{config_dir}/ca.pem"
+default['consul']['ca_cert']   = nil
+default['consul']['ca_path']   = "%{config_dir}/ca.pem"
 default['consul']['cert_file'] = nil
 default['consul']['cert_path'] = "%{config_dir}/cert.pem"
 # Cert in pem format. It can be unique for each host
-default['consul']['key_file'] = nil
+default['consul']['key_file']      = nil
 default['consul']['key_file_path'] = "%{config_dir}/key.pem"
 
 # Optionally bind to a specific interface
-default['consul']['bind_interface'] = nil
+default['consul']['bind_interface']      = nil
 default['consul']['advertise_interface'] = nil
-default['consul']['client_interface'] = nil
+default['consul']['client_interface']    = nil
 
 # UI attributes
 default['consul']['client_addr']  = '0.0.0.0'
