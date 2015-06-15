@@ -46,7 +46,7 @@ describe_recipe 'consul::default' do
     end
 
     it do
-      expect(chef_run).to create_file('/etc/ssl/CA/consul.crt')
+      expect(chef_run).to create_file('/etc/consul.d/ssl/CA/consul.crt')
       .with(content: 'foo')
       .with(owner: 'consul')
       .with(group: 'consul')
@@ -54,7 +54,7 @@ describe_recipe 'consul::default' do
     end
 
     it do
-      expect(chef_run).to create_file('/etc/ssl/certs/consul.crt')
+      expect(chef_run).to create_file('/etc/consul.d/ssl/certs/consul.crt')
       .with(content: 'bar')
       .with(owner: 'consul')
       .with(group: 'consul')
@@ -62,7 +62,7 @@ describe_recipe 'consul::default' do
     end
 
     it do
-      expect(chef_run).to create_file('/etc/ssl/private/consul.key')
+      expect(chef_run).to create_file('/etc/consul.d/ssl/private/consul.key')
       .with(content: 'baz')
       .with(sensitive: true)
       .with(owner: 'consul')
