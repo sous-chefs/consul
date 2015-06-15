@@ -118,7 +118,7 @@ class Chef::Resource::ConsulConfig < Chef::Resource
         file new_resource.key_file do
           sensitive true
           content item['private_key']
-          mode '0644'
+          mode '0640'
           owner new_resource.user
           group new_resource.group
         end

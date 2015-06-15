@@ -1,6 +1,6 @@
 #
 # Cookbook: consul
-# License: Apache 2.0
+# License:: Apache 2.0
 #
 # Copyright 2014, 2015 Bloomberg Finance L.P.
 #
@@ -13,10 +13,10 @@ default['consul']['bag_name'] = 'secrets'
 default['consul']['bag_item'] = 'consul'
 
 default['consul']['config']['data_dir'] = '/var/lib/consul'
-default['consul']['config']['ca_file'] = '/etc/ssl/CA/consul.crt'
-default['consul']['config']['cert_file'] = '/etc/ssl/certs/consul.crt'
+default['consul']['config']['ca_file'] = '/etc/consul/ca.crt'
+default['consul']['config']['cert_file'] = '/etc/consul/consul.crt'
 default['consul']['config']['client_addr']  = '0.0.0.0'
-default['consul']['config']['key_file'] = '/etc/ssl/private/consul.key'
+default['consul']['config']['key_file'] = '/etc/consul/consul.key'
 default['consul']['config']['ports'] = {
   'dns'      => 8600,
   'http'     => 8500,

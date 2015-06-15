@@ -26,11 +26,24 @@ This cookbook provides resource and provider primitives to manage the
 Consul client, server and UI. These primitives are what is used in the
 recipes, and should be used in your own [wrapper cookbooks][2].
 
-### consul_client
 ### consul_config
-### consul_service
-### consul_watch
+```ruby
+consul_config '/etc/consul.json' do
+  user 'consul'
+  group 'consul'
+end
+```
 ### consul_definition
+### consul_service
+```ruby
+consul_service 'consul' do
+  user 'consul'
+  group 'consul'
+  install_method :binary
+  binary_url node['consul']['binary_url']
+end
+```
+### consul_watch
 
 [0]: http://blog.vialstudios.com/the-environment-cookbook-pattern/#theapplicationcookbook
 [1]: http://consul.io
