@@ -19,8 +19,14 @@ suites:
       consul:
         config:
           datacenter: FortMeade
-          bind_interface: eth0
-          advertise_interface: eth0
+          encrypt: CGXC2NsXW4AvuB4h5ODYzQ==
+  - name: runit
+    run_list:
+      - recipe[consul::default]
+    attributes:
+      consul:
+        config:
+          datacenter: FortMeade
           encrypt: CGXC2NsXW4AvuB4h5ODYzQ==
   - name: source
     run_list:
@@ -38,9 +44,7 @@ suites:
           install_method: package
         config:
           datacenter: FortMeade
-          bind_interface: eth0
-          advertise_interface: eth0
           encrypt: CGXC2NsXW4AvuB4h5ODYzQ==
     excludes:
-      - centos-7.0
-      - centos-6.5
+      - centos-7.1
+      - centos-6.4
