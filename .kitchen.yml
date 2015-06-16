@@ -22,7 +22,7 @@ suites:
           encrypt: CGXC2NsXW4AvuB4h5ODYzQ==
   - name: runit
     run_list:
-      - recipe[consul::default]
+      - recipe[consul::runit]
     attributes:
       consul:
         config:

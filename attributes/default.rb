@@ -11,6 +11,7 @@ default['consul']['service_group'] = 'consul'
 default['consul']['bag_name'] = 'secrets'
 default['consul']['bag_item'] = 'consul'
 
+default['consul']['config']['path'] = '/etc/consul.json'
 default['consul']['config']['data_dir'] = '/var/lib/consul'
 default['consul']['config']['ca_file'] = '/etc/consul.d/ssl/CA/ca.crt'
 default['consul']['config']['cert_file'] = '/etc/consul.d/ssl/certs/consul.crt'
@@ -26,7 +27,6 @@ default['consul']['config']['ports'] = {
 }
 
 default['consul']['service']['install_method'] = 'binary'
-default['consul']['service']['config_file'] = '/etc/consul.json'
 default['consul']['service']['config_dir'] = '/etc/consul.d'
 default['consul']['service']['binary_url'] = "https://dl.bintray.com/mitchellh/consul/%{filename}.zip"
 default['consul']['service']['source_url'] = 'https://github.com/hashicorp/consul'

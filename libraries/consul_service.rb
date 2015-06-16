@@ -66,7 +66,7 @@ class Chef::Resource::ConsulService < Chef::Resource
   attribute(:config_dir, kind_of: String, default: '/etc/consul.d')
 
   def default_environment
-    { GOMAXPROCS: [node['cpu']['total'], 2].max, PATH: '/usr/local/bin:/usr/bin:/bin' }
+    { GOMAXPROCS: [node['cpu']['total'], 2].max.to_s, PATH: '/usr/local/bin:/usr/bin:/bin' }
   end
 
   def command
@@ -86,6 +86,7 @@ end
 # Provider for managing the Consul service on an instance.
 # @since 1.0.0
 class Chef::Provider::ConsulService < Chef::Provider
+  include Poise
   provides(:consul_service)
   include PoiseService::ServiceMixin
 
