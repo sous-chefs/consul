@@ -9,6 +9,7 @@ require 'poise_service/service_mixin'
 # Resource for managing the Consul service on an instance.
 # @since 1.0.0
 class Chef::Resource::ConsulService < Chef::Resource
+  include Poise
   provides(:consul_service)
   include PoiseService::ServiceMixin
 
@@ -22,7 +23,7 @@ class Chef::Resource::ConsulService < Chef::Resource
 
   # @!attribute install_method
   # @return [Symbol]
-  attribute(:install_method, default: :binary, equal_to: %i{source binary package})
+  attribute(:install_method, default: 'binary', equal_to: %w{source binary package})
 
   # @!attribute install_path
   # @return [String]
@@ -104,10 +105,10 @@ class Chef::Provider::ConsulService < Chef::Provider
 
       package new_resource.package_name do
         version new_resource.version unless new_resource.version.nil?
-        only_if { new_resource.install_method == :package }
+        only_if { new_resource.install_method == 'package' }
       end
 
-      if new_resource.install_method == :binary
+      if new_resource.install_method == 'binary'
         artifact = libartifact_file "consul-#{new_resource.version}" do
           artifact_name 'consul'
           artifact_version new_resource.version
@@ -121,7 +122,7 @@ class Chef::Provider::ConsulService < Chef::Provider
         end
       end
 
-      if new_resource.install_method == :source
+      if new_resource.install_method == 'source'
         include_recipe 'golang::default'
 
         source_dir = directory ::File.join(new_resource.install_path, 'consul', 'src') do

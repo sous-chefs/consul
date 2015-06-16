@@ -34,9 +34,9 @@ describe_recipe 'consul::default' do
     end
 
     it { expect(chef_run).to include_recipe('chef-vault::default') }
-    it { expect(chef_run).to create_directory('/etc/ssl/certs') }
-    it { expect(chef_run).to create_directory('/etc/ssl/private') }
-    it { expect(chef_run).to create_directory('/etc/ssl/CA') }
+    it { expect(chef_run).to create_directory('/etc/consul.d/ssl/certs') }
+    it { expect(chef_run).to create_directory('/etc/consul.d/ssl/private') }
+    it { expect(chef_run).to create_directory('/etc/consul.d/ssl/CA') }
 
     it do
       expect(chef_run).to create_file('/etc/consul.d/default.json')

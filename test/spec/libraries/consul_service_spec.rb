@@ -22,7 +22,7 @@ describe_recipe 'consul::default' do
     end
   end
 
-  context "with node['consul']['service']['install_method'] = :source" do
+  context "with node['consul']['service']['install_method'] = 'source'" do
     cached(:chef_run) do
       ChefSpec::ServerRunner.new(step_into: %w{consul_service}) do |node, server|
         server.create_data_bag('secrets', {
@@ -33,8 +33,7 @@ describe_recipe 'consul::default' do
           }
         })
 
-        node.set['consul']['service']['install_method'] = :source
-        server.update_node(node)
+        node.set['consul']['service']['install_method'] = 'source'
       end.converge(described_recipe)
     end
 
@@ -48,7 +47,7 @@ describe_recipe 'consul::default' do
     end
   end
 
-  context "with node['consul']['service']['install_method'] = :package" do
+  context "with node['consul']['service']['install_method'] = 'package'" do
     cached(:chef_run) do
       ChefSpec::ServerRunner.new(step_into: %w{consul_service}) do |node, server|
         server.create_data_bag('secrets', {
@@ -59,8 +58,7 @@ describe_recipe 'consul::default' do
           }
         })
 
-        node.set['consul']['service']['install_method'] = :package
-        server.update_node(node)
+        node.set['consul']['service']['install_method'] = 'package'
       end.converge(described_recipe)
     end
 

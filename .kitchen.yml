@@ -17,48 +17,30 @@ suites:
       - recipe[consul::default]
     attributes:
       consul:
-        datacenter: FortMeade
-        bind_interface: eth0
-        advertise_interface: eth0
-        encrypt: CGXC2NsXW4AvuB4h5ODYzQ==
+        config:
+          datacenter: FortMeade
+          bind_interface: eth0
+          advertise_interface: eth0
+          encrypt: CGXC2NsXW4AvuB4h5ODYzQ==
   - name: source
     run_list:
       - recipe[consul::default]
     attributes:
       consul:
-        install_method: source
-  - name: packages
+        service:
+          install_method: source
+  - name: package
     run_list:
       - recipe[consul::default]
     attributes:
       consul:
-        datacenter: FortMeade
-        bind_interface: eth0
-        advertise_interface: eth0
-        encrypt: CGXC2NsXW4AvuB4h5ODYzQ==
-        install_method: packages
+        service:
+          install_method: package
+        config:
+          datacenter: FortMeade
+          bind_interface: eth0
+          advertise_interface: eth0
+          encrypt: CGXC2NsXW4AvuB4h5ODYzQ==
     excludes:
       - centos-7.0
       - centos-6.5
-  - name: runit
-    run_list:
-      - recipe[consul::default]
-    attributes:
-      consul:
-        datacenter: FortMeade
-        init_style: runit
-  - name: ui
-    run_list:
-      - recipe[consul::default]
-      - recipe[consul::ui]
-    attributes:
-      consul:
-        serve_ui: true
-        client_interface: eth0
-  - name: cluster
-    run_list:
-      - recipe[consul::default]
-    attributes:
-      consul:
-        service_mode: cluster
-        bootstrap_expect: 1

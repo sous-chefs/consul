@@ -4,7 +4,6 @@
 #
 # Copyright 2014, 2015 Bloomberg Finance L.P.
 #
-
 default['consul']['service_name'] = 'consul'
 default['consul']['service_user'] = 'consul'
 default['consul']['service_group'] = 'consul'
@@ -26,12 +25,12 @@ default['consul']['config']['ports'] = {
   "server"   => 8300,
 }
 
-default['consul']['service']['install_method'] = :binary
+default['consul']['service']['install_method'] = 'binary'
 default['consul']['service']['config_file'] = '/etc/consul.json'
 default['consul']['service']['config_dir'] = '/etc/consul.d'
+default['consul']['service']['binary_url'] = "https://dl.bintray.com/mitchellh/consul/%{filename}.zip"
+default['consul']['service']['source_url'] = 'https://github.com/hashicorp/consul'
 
-default['consul']['binary_url'] = "https://dl.bintray.com/mitchellh/consul/%{filename}.zip"
-default['consul']['source_url'] = 'https://github.com/hashicorp/consul'
 default['consul']['version'] = '0.5.2'
 default['consul']['checksums'] = {
   '0.5.0_darwin_amd64' => '24d9758c873e9124e0ce266f118078f87ba8d8363ab16c2e59a3cd197b77e964',
