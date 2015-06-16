@@ -256,6 +256,30 @@ Installs and configures [Consul][1] client, server and UI.
     <td>This provides the address of a statsd instance (UDP).</td>
     <td><tt>nil</tt></td>
   </tr>
+  <tr>
+    <td><tt>['consul']['atlas_autojoin']</tt></td>
+    <td>Boolean</td>
+    <td>
+        Determines whether Consul attempts to auto-join the cluster provided by <tt>atlas_cluster</tt> using the value of <tt>atlas_token</tt>
+    </td>
+    <td><tt>false</tt></td>
+  </tr>
+  <tr>
+    <td><tt>['consul']['atlas_cluster']</tt></td>
+    <td>String</td>
+    <td>
+        Name of Atlas cluster to auto-join
+    </td>
+    <td><tt>nil</tt></td>
+  </tr>
+  <tr>
+    <td><tt>['consul']['atlas_token']</tt></td>
+    <td>String</td>
+    <td>
+        API token used for Atlas integration
+    </td>
+    <td><tt>nil</tt></td>
+  </tr>
 </table>
 
 ### Databag Attributes (optional)

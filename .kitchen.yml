@@ -62,3 +62,11 @@ suites:
       consul:
         service_mode: cluster
         bootstrap_expect: 1
+  - name: atlas
+    run_list:
+      - recipe[consul::default]
+    attributes:
+      consul:
+        atlas_autojoin: true
+        atlas_cluster: <%= ENV.fetch('ATLAS_CLUSTER', 'example/cluster') %>
+        atlas_token: <%= ENV.fetch('ATLAS_TOKEN', 'NOT_REAL') %>
