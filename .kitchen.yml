@@ -10,22 +10,14 @@ platforms:
   - name: ubuntu-12.04
   - name: centos-7.1
   - name: centos-6.6
-
+  
 suites:
   - name: default
     run_list:
       - recipe[consul::default]
     attributes:
       consul:
-        config:
-          datacenter: FortMeade
-          encrypt: CGXC2NsXW4AvuB4h5ODYzQ==
-  - name: runit
-    run_list:
-      - recipe[consul::runit]
-    attributes:
-      consul:
-        config:
+        config: &defaut-config
           datacenter: FortMeade
           encrypt: CGXC2NsXW4AvuB4h5ODYzQ==
   - name: source
@@ -33,6 +25,7 @@ suites:
       - recipe[consul::default]
     attributes:
       consul:
+        config: *default-config
         service:
           install_method: source
   - name: package
@@ -42,9 +35,7 @@ suites:
       consul:
         service:
           install_method: package
-        config:
-          datacenter: FortMeade
-          encrypt: CGXC2NsXW4AvuB4h5ODYzQ==
+        config: *default-config
     excludes:
       - centos-7.1
-      - centos-6.4
+      - centos-6.6
