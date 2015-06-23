@@ -248,6 +248,12 @@ when 'runit'
     reload_command "'#{node['runit']['sv_bin']}' hup consul"
   end
 when 'systemd'
+  template node['consul']['etc_config_dir'] do
+    source 'consul-sysconfig.erb'
+    mode 0644
+    notifies :create, "template[/etc/systemd/system/consul.service]", :immediately
+  end
+
   template '/etc/systemd/system/consul.service' do
     source 'consul-systemd.erb'
     mode 0644
