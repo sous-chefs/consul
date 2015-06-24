@@ -94,6 +94,7 @@ else
   default['consul']['service_user'] = 'root'
   default['consul']['service_group'] = 'root'
 end
+default['consul']['system_account'] = false
 
 default['consul']['ports'] = {
   'dns'      => 8600,

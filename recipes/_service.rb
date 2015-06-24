@@ -38,6 +38,7 @@ user "consul service user: #{consul_user}" do
   username consul_user
   home '/dev/null'
   shell '/bin/false'
+  system node['consul']['system_account']
   comment 'consul service user'
 end
 
@@ -46,6 +47,7 @@ group "consul service group: #{consul_group}" do
   not_if { consul_group == 'root' }
   group_name consul_group
   members consul_user
+  system node['consul']['system_account']
   append true
 end
 
@@ -248,6 +250,12 @@ when 'runit'
     reload_command "'#{node['runit']['sv_bin']}' hup consul"
   end
 when 'systemd'
+  template node['consul']['etc_config_dir'] do
+    source 'consul-sysconfig.erb'
+    mode 0644
+    notifies :create, "template[/etc/systemd/system/consul.service]", :immediately
+  end
+
   template '/etc/systemd/system/consul.service' do
     source 'consul-systemd.erb'
     mode 0644
