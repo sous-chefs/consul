@@ -1,6 +1,6 @@
 #
-# Cookbook Name:: consul
-# License:: Apache 2.0
+# Cookbook: consul
+# License: Apache 2.0
 #
 # Copyright 2014, 2015 Bloomberg Finance L.P.
 #
@@ -15,6 +15,7 @@ config = consul_config node['consul']['service_name'] do |r|
   group node['consul']['service_group']
 
   node['consul']['config'].each_pair { |k, v| r.send(k, v) }
+  notifies :reload, "consul_service[#{name}]", :delayed
 end
 
 consul_service node['consul']['service_name'] do |r|
@@ -24,6 +25,4 @@ consul_service node['consul']['service_name'] do |r|
   config_file config.path
 
   node['consul']['service'].each_pair { |k, v| r.send(k, v) }
-  subscribes :reload, "consul_config[#{config.name}]"
-  action [:enable, :start]
 end
