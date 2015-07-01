@@ -10,6 +10,14 @@ Vagrant.configure('2') do |config|
     guest.vm.provision :chef_zero do |chef|
       chef.nodes_path = File.expand_path('../.vagrant/chef/nodes', __FILE__)
       chef.run_list = %w(recipe[consul::default])
+      chef.json = {
+        consul: {
+          config: {
+            bootstrap: true,
+            server: true
+          }
+        }
+      }
     end
   end
 end

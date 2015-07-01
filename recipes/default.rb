@@ -8,6 +8,7 @@ include_recipe 'selinux::permissive'
 
 poise_service_user node['consul']['service_user'] do
   group node['consul']['service_group']
+  action :create
 end
 
 config = consul_config node['consul']['service_name'] do |r|
@@ -15,7 +16,6 @@ config = consul_config node['consul']['service_name'] do |r|
   group node['consul']['service_group']
 
   node['consul']['config'].each_pair { |k, v| r.send(k, v) }
-  notifies :reload, "consul_service[#{name}]", :delayed
 end
 
 consul_service node['consul']['service_name'] do |r|
@@ -25,4 +25,5 @@ consul_service node['consul']['service_name'] do |r|
   config_file config.path
 
   node['consul']['service'].each_pair { |k, v| r.send(k, v) }
+  subscribes :restart, "consul_config[#{config.name}]", :delayed
 end

@@ -12,6 +12,7 @@ class Chef::Resource::ConsulService < Chef::Resource
   include Poise
   provides(:consul_service)
   include PoiseService::ServiceMixin
+  default_action(:enable)
 
   # @!attribute service_name
   # @return [String]
@@ -70,7 +71,7 @@ class Chef::Resource::ConsulService < Chef::Resource
   end
 
   def command
-    "consul agent -config-file=#{config_file} -config-dir=#{config_dir}"
+    "/usr/bin/env consul agent -config-file=#{config_file} -config-dir=#{config_dir}"
   end
 
   def binary_checksum
@@ -106,6 +107,7 @@ class Chef::Provider::ConsulService < Chef::Provider
 
       package new_resource.package_name do
         version new_resource.version unless new_resource.version.nil?
+        action :upgrade
         only_if { new_resource.install_method == 'package' }
       end
 
@@ -116,6 +118,7 @@ class Chef::Provider::ConsulService < Chef::Provider
           install_path new_resource.install_path
           remote_url new_resource.binary_url % { filename: new_resource.binary_filename }
           remote_checksum new_resource.binary_checksum
+          action :create
         end
 
         link '/usr/local/bin/consul' do

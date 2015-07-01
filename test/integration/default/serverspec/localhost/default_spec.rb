@@ -1,8 +1,13 @@
 require 'spec_helper'
 
-describe command('which consul') do
-  its(:exit_status) { should eq 0 }
-  its(:stdout) { should match '/usr/local/bin/consul' }
+describe file('/srv/consul/current/consul') do
+  it { should be_file }
+  it { should be_executable }
+end
+
+describe file('/usr/local/bin/consul') do
+  it { should be_symlink }
+  it { should be_linked_to '/srv/consul/current/consul' }
 end
 
 describe service('consul') do
@@ -16,15 +21,10 @@ end
   end
 end
 
-describe command 'consul members -detailed' do
+describe command('/usr/local/bin/consul members -detailed') do
   its(:exit_status) { should eq 0 }
   its(:stdout) { should match %r{\balive\b} }
   its(:stdout) { should match %r{\brole=consul\b} }
   its(:stdout) { should match %r{\bbootstrap=1\b} }
-end
-
-describe 'config file attributes' do
-  context command 'consul members -detailed' do
-    its(:stdout) { should match %r{\bdc=FortMeade\b}i }
-  end
+  its(:stdout) { should match %r{\bdc=fortmeade\b} }
 end

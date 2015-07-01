@@ -9,7 +9,7 @@ require 'poise'
 class Chef::Resource::ConsulWatch < Chef::Resource
   include Poise(fused: true)
   provides(:consul_watch)
-  actions(:create, :delete)
+  default_action(:create)
 
   # @!attribute watch_name
   # @return [String]

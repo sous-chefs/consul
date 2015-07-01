@@ -9,7 +9,7 @@ require 'poise'
 class Chef::Resource::ConsulDefinition < Chef::Resource
   include Poise(fused: true)
   provides(:consul_definition)
-  actions(:create, :delete)
+  default_action(:create)
 
   # @!attribute path
   # @return [String]

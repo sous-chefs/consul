@@ -5,12 +5,7 @@ describe_recipe 'consul::default' do
     cached(:chef_run) { ChefSpec::ServerRunner.new(step_into: %w{consul_config}).converge(described_recipe) }
 
     it { expect(chef_run).not_to include_recipe('chef-vault::default') }
-    it do
-      expect(chef_run).to create_file('/etc/consul.d/default.json')
-      .with(owner: 'consul')
-      .with(group: 'consul')
-      .with(mode: '0640')
-    end
+    it { expect(chef_run).to create_file('/etc/consul.json').with(owner: 'consul', group: 'consul') }
 
     it 'converges successfully' do
       chef_run
@@ -38,19 +33,13 @@ describe_recipe 'consul::default' do
     it { expect(chef_run).to create_directory('/etc/consul.d/ssl/private') }
     it { expect(chef_run).to create_directory('/etc/consul.d/ssl/CA') }
 
-    it do
-      expect(chef_run).to create_file('/etc/consul.d/default.json')
-      .with(owner: 'consul')
-      .with(group: 'consul')
-      .with(mode: '0640')
-    end
+    it { expect(chef_run).to create_file('/etc/consul.json').with(owner: 'consul', group: 'consul') }
 
     it do
       expect(chef_run).to create_file('/etc/consul.d/ssl/CA/consul.crt')
       .with(content: 'foo')
       .with(owner: 'consul')
       .with(group: 'consul')
-      .with(mode: '0644')
     end
 
     it do
