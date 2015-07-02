@@ -30,5 +30,3 @@ end
 
 package 'consul'
 package 'consul-webui'
-
-include_recipe 'consul::_service'
