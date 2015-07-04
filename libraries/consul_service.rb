@@ -12,7 +12,8 @@ class Chef::Resource::ConsulService < Chef::Resource
   include Poise
   provides(:consul_service)
   include PoiseService::ServiceMixin
-  default_action(:enable)
+  actions(:create)
+  default_action(:create)
 
   # @!attribute service_name
   # @return [String]
@@ -91,20 +92,8 @@ class Chef::Provider::ConsulService < Chef::Provider
   provides(:consul_service)
   include PoiseService::ServiceMixin
 
-  def action_enable
+  def action_create
     notifying_block do
-      directory new_resource.data_dir do
-        recursive true
-        owner new_resource.user
-        group new_resource.group
-        mode '0744'
-      end
-
-      directory new_resource.config_dir do
-        recursive true
-        mode '0644'
-      end
-
       package new_resource.package_name do
         version new_resource.version unless new_resource.version.nil?
         action :upgrade
@@ -118,7 +107,6 @@ class Chef::Provider::ConsulService < Chef::Provider
           install_path new_resource.install_path
           remote_url new_resource.binary_url % { filename: new_resource.binary_filename }
           remote_checksum new_resource.binary_checksum
-          action :create
         end
 
         link '/usr/local/bin/consul' do
@@ -148,6 +136,22 @@ class Chef::Provider::ConsulService < Chef::Provider
         link ::File.join(new_resource.install_path, 'bin', 'consul') do
           to ::File.join(source_dir.path, "consul-#{new_resource.version}", 'consul')
         end
+      end
+    end
+  end
+
+  def action_enable
+    notifying_block do
+      directory new_resource.data_dir do
+        recursive true
+        owner new_resource.user
+        group new_resource.group
+        mode '0744'
+      end
+
+      directory new_resource.config_dir do
+        recursive true
+        mode '0644'
       end
     end
     super
