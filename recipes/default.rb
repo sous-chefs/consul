@@ -25,3 +25,5 @@ when 'packages'
 else
   Chef::Application.fatal!("[consul::default] unknown install method, method=#{node['consul']['install_method']}")
 end
+
+include_recipe 'consul::service'
