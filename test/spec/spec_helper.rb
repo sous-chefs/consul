@@ -2,6 +2,7 @@ require 'chefspec'
 require 'chefspec/berkshelf'
 require 'chefspec/cacher'
 require 'chef-vault'
+require 'poise_boiler/spec_helper'
 
 RSpec.configure do |config|
   config.platform = 'ubuntu'
@@ -9,6 +10,7 @@ RSpec.configure do |config|
 
   config.color = true
   config.alias_example_group_to :describe_recipe, type: :recipe
+  config.alias_example_group_to :describe_resource, type: :resource
 
   config.filter_run :focus
   config.run_all_when_everything_filtered = true
@@ -30,7 +32,9 @@ RSpec.configure do |config|
   end
 end
 
-at_exit { ChefSpec::Coverage.report! }
+RSpec.shared_context 'resource tests', type: :resource do
+
+end
 
 RSpec.shared_context 'recipe tests', type: :recipe do
   before do

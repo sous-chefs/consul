@@ -3,7 +3,7 @@ require 'spec_helper'
 describe_recipe 'consul::default' do
   context 'with default attributes' do
     cached(:chef_run) do
-      ChefSpec::ServerRunner.new(step_into: %w{consul_service}) do |node, server|
+      ChefSpec::ServerRunner.new(step_into: %i{consul_service}) do |node, server|
         server.create_data_bag('secrets', {
           'consul' => {
             'ca_certificate' => 'foo',
@@ -24,7 +24,7 @@ describe_recipe 'consul::default' do
 
   context "with node['consul']['service']['install_method'] = 'source'" do
     cached(:chef_run) do
-      ChefSpec::ServerRunner.new(step_into: %w{consul_service}) do |node, server|
+      ChefSpec::ServerRunner.new(step_into: %i{consul_service}) do |node, server|
         server.create_data_bag('secrets', {
           'consul' => {
             'ca_certificate' => 'foo',
@@ -49,7 +49,7 @@ describe_recipe 'consul::default' do
 
   context "with node['consul']['service']['install_method'] = 'package'" do
     cached(:chef_run) do
-      ChefSpec::ServerRunner.new(step_into: %w{consul_service}) do |node, server|
+      ChefSpec::ServerRunner.new(step_into: %i{consul_service}) do |node, server|
         server.create_data_bag('secrets', {
           'consul' => {
             'ca_certificate' => 'foo',

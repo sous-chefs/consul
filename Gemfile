@@ -1,5 +1,7 @@
 source 'https://rubygems.org'
 gem 'chef-vault', '~> 2.6'
+gem 'poise', '~> 2.0'
+gem 'poise-boiler'
 
 group :lint do
   gem 'rubocop'
@@ -27,6 +29,7 @@ group :integration do
 end
 
 group :development do
+  gem 'awesome_print'
   gem 'guard'
   gem 'guard-kitchen'
   gem 'guard-rspec'

@@ -15,10 +15,6 @@ class Chef::Resource::ConsulService < Chef::Resource
   actions(:create)
   default_action(:create)
 
-  # @!attribute service_name
-  # @return [String]
-  attribute(:service_name, kind_of: String, name_attribute: true)
-
   # @!attribute version
   # @return [String]
   attribute(:version, kind_of: String, required: true)
@@ -96,7 +92,6 @@ class Chef::Provider::ConsulService < Chef::Provider
     notifying_block do
       package new_resource.package_name do
         version new_resource.version unless new_resource.version.nil?
-        action :upgrade
         only_if { new_resource.install_method == 'package' }
       end
 

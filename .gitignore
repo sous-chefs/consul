@@ -52,3 +52,4 @@ vendor
 .kitchen
 .vagrant
 Berksfile.lock
+coverage/

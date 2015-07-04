@@ -1,66 +1,30 @@
-require 'spec_helper'
+require 'poise_boiler/spec_helper'
+require 'poise'
 
-describe_recipe 'consul::default' do
-  context 'with default attributes' do
-    cached(:chef_run) { ChefSpec::ServerRunner.new(step_into: %w{consul_config}).converge(described_recipe) }
+RSpec.configure do |config|
+  config.include Halite::SpecHelper
+end
 
-    it { expect(chef_run).not_to include_recipe('chef-vault::default') }
-    it { expect(chef_run).to create_file('/etc/consul.json').with(owner: 'consul', group: 'consul') }
+require_relative '../../../libraries/consul_config'
 
-    it 'converges successfully' do
-      chef_run
-    end
-  end
+describe Chef::Resource::ConsulConfig do
+  step_into(:consul_config)
 
-  context 'with verify_incoming & verify_outgoing = true' do
-    cached(:chef_run) do
-      ChefSpec::ServerRunner.new(step_into: %w{consul_config}) do |node, server|
-        server.create_data_bag('secrets', {
-          'consul' => {
-            'ca_certificate' => 'foo',
-            'certificate' => 'bar',
-            'private_key' => 'baz'
-          }
-        })
-
-        node.set['consul']['config']['verify_incoming'] = true
-        node.set['consul']['config']['verify_outgoing'] = true
-      end.converge(described_recipe)
+  context 'with defaults' do
+    recipe do
+      consul_config '/etc/consul/default.json' do
+        bag_name 'secrets'
+        bag_item 'vault'
+      end
     end
 
-    it { expect(chef_run).to include_recipe('chef-vault::default') }
-    it { expect(chef_run).to create_directory('/etc/consul.d/ssl/certs') }
-    it { expect(chef_run).to create_directory('/etc/consul.d/ssl/private') }
-    it { expect(chef_run).to create_directory('/etc/consul.d/ssl/CA') }
-
-    it { expect(chef_run).to create_file('/etc/consul.json').with(owner: 'consul', group: 'consul') }
-
-    it do
-      expect(chef_run).to create_file('/etc/consul.d/ssl/CA/consul.crt')
-      .with(content: 'foo')
-      .with(owner: 'consul')
-      .with(group: 'consul')
+    before do
+      recipe = double("Chef::Recipe")
+      allow_any_instance_of(Chef::RunContext).to receive(:include_recipe).and_return([recipe])
     end
 
-    it do
-      expect(chef_run).to create_file('/etc/consul.d/ssl/certs/consul.crt')
-      .with(content: 'bar')
-      .with(owner: 'consul')
-      .with(group: 'consul')
-      .with(mode: '0644')
-    end
-
-    it do
-      expect(chef_run).to create_file('/etc/consul.d/ssl/private/consul.key')
-      .with(content: 'baz')
-      .with(sensitive: true)
-      .with(owner: 'consul')
-      .with(group: 'consul')
-      .with(mode: '0640')
-    end
-
-    it 'converges successfully' do
-      chef_run
-    end
+    it { is_expected.to create_directory('/etc/consul') }
+    it { is_expected.to create_file('/etc/consul/default.json') }
+    it { run_chef }
   end
 end

@@ -6,7 +6,8 @@ describe_recipe 'consul::default' do
   context 'with default attributes' do
     it { expect(chef_run).to include_recipe('selinux::permissive') }
     it { expect(chef_run).to create_poise_service_user('consul').with(group: 'consul') }
-    it { expect(chef_run).to create_consul_config('/etc/consul.json') }
+    it { expect(chef_run).to create_consul_config('consul').with(path: '/etc/consul.json') }
+    it { expect(chef_run).to create_consul_service('consul').with(config_file: '/etc/consul.json') }
     it { expect(chef_run).to enable_consul_service('consul').with(config_file: '/etc/consul.json') }
 
     it 'converges successfully' do

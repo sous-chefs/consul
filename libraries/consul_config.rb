@@ -9,7 +9,6 @@ require 'poise'
 class Chef::Resource::ConsulConfig < Chef::Resource
   include Poise(fused: true)
   provides(:consul_config)
-  default_action(:create)
 
   # @!attribute path
   # @return [String]
@@ -22,6 +21,14 @@ class Chef::Resource::ConsulConfig < Chef::Resource
   # @!attribute group
   # @return [String]
   attribute(:group, kind_of: String, default: 'consul')
+
+  # @!attribute bag_name
+  # @return [String]
+  attribute(:bag_name, kind_of: String, default: 'consul')
+
+  # @!attribute bag_item
+  # @return [String]
+  attribute(:bag_item, kind_of: String, default: 'secrets')
 
   # @see: http://www.consul.io/docs/agent/options.html
   attribute(:acl_datacenter, kind_of: String)
@@ -94,7 +101,7 @@ class Chef::Resource::ConsulConfig < Chef::Resource
           recursive true
         end
 
-        item = chef_vault_item(node['consul']['bag_name'], node['consul']['bag_item'])
+        item = chef_vault_item(new_resource.bag_name, new_resource.bag_item)
         file new_resource.ca_file do
           content item['ca_certificate']
           mode '0644'
@@ -141,6 +148,16 @@ class Chef::Resource::ConsulConfig < Chef::Resource
 
   action(:delete) do
     notifying_block do
+      if new_resource.tls?
+        file new_resource.cert_file do
+          action :delete
+        end
+
+        file new_resource.key_file do
+          action :delete
+        end
+      end
+
       file new_resource.path do
         action :delete
       end
