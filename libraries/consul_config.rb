@@ -115,7 +115,7 @@ class Chef::Resource::ConsulConfig < Chef::Resource
 
         file new_resource.cert_file do
           content item['certificate']
-          mode '0644'
+          mode '0640'
           owner new_resource.user
           group new_resource.group
         end
@@ -141,7 +141,7 @@ class Chef::Resource::ConsulConfig < Chef::Resource
         owner new_resource.user
         group new_resource.group
         content new_resource.to_json
-        mode '0644'
+        mode '0640'
       end
     end
   end
