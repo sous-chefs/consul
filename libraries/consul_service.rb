@@ -61,7 +61,7 @@ class Chef::Resource::ConsulService < Chef::Resource
 
   # @!attribute config_dir
   # @return [String]
-  attribute(:config_dir, kind_of: String, default: '/etc/consul.d')
+  attribute(:config_dir, kind_of: String, default: '/etc/consul')
 
   def default_environment
     { GOMAXPROCS: [node['cpu']['total'], 2].max.to_s, PATH: '/usr/local/bin:/usr/bin:/bin' }

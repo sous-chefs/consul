@@ -15,10 +15,6 @@ class Chef::Resource::ConsulDefinition < Chef::Resource
   # @return [String]
   attribute(:path, kind_of: String, name_attribute: true)
 
-  # @!attribute id
-  # @return [String, NilClass]
-  attribute(:id, kind_of: String)
-
   # @!attribute user
   # @return [String]
   attribute(:user, kind_of: String, default: 'consul')
@@ -28,20 +24,19 @@ class Chef::Resource::ConsulDefinition < Chef::Resource
   attribute(:group, kind_of: String, default: 'consul')
 
   def to_json
-    for_keeps = %i{}
-    config = to_hash.keep_if do |k, v|
-      for_keeps.include?(k.to_sym)
-    end
-    JSON.pretty_generate(config, quirks_mode: true)
   end
 
   action(:create) do
     notifying_block do
+      directory ::File.dirname(new_resource.path) do
+        recursive true
+      end
+
       file new_resource.path do
-        content new_resource.to_json
-        user new_resource.user
+        owner new_resource.user
         group new_resource.group
-        mode '0600'
+        content new_resource.to_json
+        mode '0640'
       end
     end
   end

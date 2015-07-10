@@ -27,14 +27,32 @@ Consul client, server and UI. These primitives are what is used in the
 recipes, and should be used in your own [wrapper cookbooks][2].
 
 ### consul_config
+| Parameter | Type | Description | Default |
+| --------- | ---- | ----------- | ------- |
+| path | String | File system path to write configuration. | name |
+| user | String | System username for configuration ownership. | consul |
+| group | String | System groupname for configuration ownership. | consul |
+| bag_name | String | Name of the chef-vault data bag for TLS configuration. | secrets |
+| bag_item | String | Item of the chef-vault data bag for TLS configuration. | consul |
+
 ```ruby
 consul_config '/etc/consul.json' do
-  user 'consul'
-  group 'consul'
+  user 'jbellone'
+  group 'staff'
 end
 ```
-### consul_definition
 ### consul_service
+| Parameter | Type | Description | Default |
+| --------- | ---- | ----------- | ------- |
+| user | String | System username for configuration ownership. | consul |
+| group | String | System groupname for configuration ownership. | consul |
+| install_method | String | Determines method of installing Consul agent on node. | source, binary, package |
+| install_path | String | Absolute path to where Consul agent is unpacked. | /srv |
+| version | String | The version of Consul agent to install. | nil |
+| config_file | String | Absolute path to the Consul agent's configuration file. | /etc/consul.json |
+| config_dir | String | Absolute path to configuration directory (for definitions, watches). | /etc/consul |
+| data_dir | String | Absolute path to the Consul agent's data directory. | /var/lib/consul |
+
 ```ruby
 consul_service 'consul' do
   user 'consul'
@@ -44,27 +62,32 @@ consul_service 'consul' do
 end
 ```
 ### consul_watch
+| Parameter | Type | Description | Default |
+| --------- | ---- | ----------- | ------- |
+| path | String | File system path to write configuration. | name |
+| user | String | System username for configuration ownership. | consul |
+| group | String | System groupname for configuration ownership. | consul |
+| type | String | Type of the Consul watch to configure. | key, keyprefix, service, event |
+| parameters | Hash | Parameters to configure; depends on type of watch. | {} |
+
 ```ruby
 consul_watch '/etc/consul/foobarbaz.json' do
   type 'key'
   parameters(key: 'foo/bar/baz', handler: '/bin/false')
 end
 ```
-
 ```ruby
 consul_watch '/etc/consul/foobarbaz.json' do
   type 'keyprefix'
   parameters(prefix: 'foo/', handler: '/bin/false')
 end
 ```
-
 ```ruby
 consul_watch '/etc/consul/foobarbaz.json' do
   type 'service'
   parameters(service: 'redis', handler: '/bin/false')
 end
 ```
-
 ```ruby
 consul_watch '/etc/consul/foobarbaz.json' do
   type 'event'
