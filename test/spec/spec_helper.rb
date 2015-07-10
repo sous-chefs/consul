@@ -5,6 +5,8 @@ require 'chef-vault'
 require 'poise_boiler/spec_helper'
 
 RSpec.configure do |config|
+  config.include Halite::SpecHelper
+
   config.platform = 'ubuntu'
   config.version = '14.04'
 

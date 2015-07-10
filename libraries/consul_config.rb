@@ -115,7 +115,7 @@ class Chef::Resource::ConsulConfig < Chef::Resource
 
         file new_resource.cert_file do
           content item['certificate']
-          mode '0640'
+          mode '0644'
           owner new_resource.user
           group new_resource.group
         end

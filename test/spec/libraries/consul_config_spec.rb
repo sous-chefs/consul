@@ -5,26 +5,71 @@ RSpec.configure do |config|
   config.include Halite::SpecHelper
 end
 
+
 require_relative '../../../libraries/consul_config'
 
 describe Chef::Resource::ConsulConfig do
   step_into(:consul_config)
 
-  context 'with defaults' do
-    recipe do
-      consul_config '/etc/consul/default.json' do
-        bag_name 'secrets'
-        bag_item 'vault'
-      end
-    end
+  before do
+    recipe = double('Chef::Recipe')
+    allow_any_instance_of(Chef::RunContext).to receive(:include_recipe).and_return([recipe])
+  end
 
-    before do
-      recipe = double("Chef::Recipe")
-      allow_any_instance_of(Chef::RunContext).to receive(:include_recipe).and_return([recipe])
-    end
+  context 'with defaults' do
+    recipe { consul_config '/etc/consul/default.json' }
 
     it { is_expected.to create_directory('/etc/consul') }
     it { is_expected.to create_file('/etc/consul/default.json') }
+    it { run_chef }
+  end
+
+  context 'with tls enabled' do
+    before do
+      allow_any_instance_of(Chef::DSL::Recipe).to receive(:chef_vault_item).and_return(
+        { 'ca_certificate' => 'foo', 'certificate' => 'bar', 'private_key' => 'baz' }
+      )
+    end
+
+    recipe do
+      consul_config '/etc/consul/default.json' do
+        key_file '/etc/consul/ssl/private/consul.key'
+        ca_file '/etc/consul/ssl/CA/ca.crt'
+        cert_file '/etc/consul/ssl/certs/consul.crt'
+        verify_incoming true
+        verify_outgoing true
+      end
+    end
+
+    it { is_expected.to create_directory('/etc/consul/ssl/CA') }
+    it { is_expected.to create_directory('/etc/consul/ssl/certs') }
+    it { is_expected.to create_directory('/etc/consul/ssl/private') }
+
+    it do
+      is_expected.to create_file('/etc/consul/ssl/CA/ca.crt')
+      .with(content: 'foo')
+      .with(owner: 'consul')
+      .with(group: 'consul')
+      .with(mode: '0644')
+    end
+
+    it do
+      is_expected.to create_file('/etc/consul/ssl/certs/consul.crt')
+      .with(content: 'bar')
+      .with(owner: 'consul')
+      .with(group: 'consul')
+      .with(mode: '0644')
+    end
+
+    it do
+      is_expected.to create_file('/etc/consul/ssl/private/consul.key')
+      .with(content: 'baz')
+      .with(sensitive: true)
+      .with(owner: 'consul')
+      .with(group: 'consul')
+      .with(mode: '0640')
+    end
+
     it { run_chef }
   end
 end
