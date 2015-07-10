@@ -11,34 +11,50 @@ class Chef::Resource::ConsulWatch < Chef::Resource
   provides(:consul_watch)
   default_action(:create)
 
-  # @!attribute watch_name
+  # @!attribute path
   # @return [String]
-  attribute(:watch_name, kind_of: String, name_attribute: true)
+  attribute(:path, kind_of: String, name_attribute: true)
 
-  # @!attribute watch_type
+  # @!attribute user
   # @return [String]
-  attribute(:watch_type, equal_to: %w(checks event key keyprefix service))
+  attribute(:user, kind_of: String, default: 'consul')
 
-  # @!attribute datacenter
+  # @!attribute group
   # @return [String]
-  attribute(:datacenter, kind_of: String)
+  attribute(:group, kind_of: String, default: 'consul')
 
-  # @!attribute handler
+  # @!attribute type
   # @return [String]
-  attribute(:handler, kind_of: String)
+  attribute(:type, equal_to: %w{checks event key keyprefix service})
 
-  # @!attribute token
-  # @return [String]
-  attribute(:token, kind_of: String)
+  # @!attribute parameters
+  # @return [Hash]
+  attribute(:parameters, option_collector: true, default: {})
+
+  def to_json
+    JSON.pretty_generate({ type: type }.merge(parameters), quicks_mode: true)
+  end
 
   action(:create) do
     notifying_block do
-      execute new_resource.command do
-        guard_interpreter :default
+      directory ::File.dirname(new_resource.path) do
+        recursive true
+      end
+
+      file new_resource.path do
+        owner new_resource.user
+        group new_resource.group
+        content new_resource.to_json
+        mode '0640'
       end
     end
   end
 
   action(:delete) do
+    notifying_block do
+      file new_resource.path do
+        action :delete
+      end
+    end
   end
 end

@@ -44,6 +44,33 @@ consul_service 'consul' do
 end
 ```
 ### consul_watch
+```ruby
+consul_watch '/etc/consul/foobarbaz.json' do
+  type 'key'
+  parameters(key: 'foo/bar/baz', handler: '/bin/false')
+end
+```
+
+```ruby
+consul_watch '/etc/consul/foobarbaz.json' do
+  type 'keyprefix'
+  parameters(prefix: 'foo/', handler: '/bin/false')
+end
+```
+
+```ruby
+consul_watch '/etc/consul/foobarbaz.json' do
+  type 'service'
+  parameters(service: 'redis', handler: '/bin/false')
+end
+```
+
+```ruby
+consul_watch '/etc/consul/foobarbaz.json' do
+  type 'event'
+  parameters(event: 'web-deploy', handler: '/bin/false')
+end
+```
 
 [0]: http://blog.vialstudios.com/the-environment-cookbook-pattern/#theapplicationcookbook
 [1]: http://consul.io
