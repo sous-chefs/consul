@@ -5,27 +5,15 @@ RSpec.configure do |config|
   config.include Halite::SpecHelper
 end
 
-
 require_relative '../../../libraries/consul_config'
 
 describe Chef::Resource::ConsulConfig do
   step_into(:consul_config)
 
-  before do
-    recipe = double('Chef::Recipe')
-    allow_any_instance_of(Chef::RunContext).to receive(:include_recipe).and_return([recipe])
-  end
-
-  context 'with defaults' do
-    recipe { consul_config '/etc/consul/default.json' }
-
-    it { is_expected.to create_directory('/etc/consul') }
-    it { is_expected.to create_file('/etc/consul/default.json') }
-    it { run_chef }
-  end
-
-  context 'with tls enabled' do
+  context '#action_create' do
     before do
+      recipe = double('Chef::Recipe')
+      allow_any_instance_of(Chef::RunContext).to receive(:include_recipe).and_return([recipe])
       allow_any_instance_of(Chef::DSL::Recipe).to receive(:chef_vault_item).and_return(
         { 'ca_certificate' => 'foo', 'certificate' => 'bar', 'private_key' => 'baz' }
       )
@@ -70,6 +58,20 @@ describe Chef::Resource::ConsulConfig do
       .with(mode: '0640')
     end
 
+    it { is_expected.to create_directory('/etc/consul') }
+    it { is_expected.to create_file('/etc/consul/default.json') }
+
     it { run_chef }
+  end
+
+  context '#action_delete' do
+    recipe do
+      consul_config '/etc/consul/default.json' do
+        action :delete
+      end
+
+      it { is_expected.to delete_file('/etc/consul/default.json') }
+      it { run_chef }
+    end
   end
 end

@@ -32,8 +32,10 @@ class Chef::Resource::ConsulWatch < Chef::Resource
   attribute(:token, kind_of: String)
 
   action(:create) do
-    execute new_resource.command do
-      guard_interpreter :default
+    notifying_block do
+      execute new_resource.command do
+        guard_interpreter :default
+      end
     end
   end
 

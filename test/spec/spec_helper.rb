@@ -12,7 +12,6 @@ RSpec.configure do |config|
 
   config.color = true
   config.alias_example_group_to :describe_recipe, type: :recipe
-  config.alias_example_group_to :describe_resource, type: :resource
 
   config.filter_run :focus
   config.run_all_when_everything_filtered = true
@@ -32,10 +31,6 @@ RSpec.configure do |config|
     mocks.syntax = :expect
     mocks.verify_partial_doubles = true
   end
-end
-
-RSpec.shared_context 'resource tests', type: :resource do
-
 end
 
 RSpec.shared_context 'recipe tests', type: :recipe do
