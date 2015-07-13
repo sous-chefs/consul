@@ -224,7 +224,8 @@ when 'init'
     source init_tmpl
     mode init_mode
     variables(
-      consul_logfile: node['consul']['logfile']
+      consul_logfile: node['consul']['logfile'],
+      startup_sleep: node['consul']['startup_sleep']
     )
     notifies :restart, 'service[consul]', :immediately
   end

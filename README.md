@@ -280,6 +280,14 @@ Installs and configures [Consul][1] client, server and UI.
     </td>
     <td><tt>nil</tt></td>
   </tr>
+  <tr>
+    <td><tt>['consul']['startup_sleep']</tt></td>
+    <td>Integer</td>
+    <td>
+        Delay to return-of-control when invoked via an init.d script. Protects consul from an early HUP.
+    </td>
+    <td><tt>3</tt></td>
+  </tr>
 </table>
 
 ### Databag Attributes (optional)
