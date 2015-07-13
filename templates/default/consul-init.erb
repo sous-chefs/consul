@@ -48,6 +48,7 @@ case "$1" in
         CONSULPID=$!
         echo $CONSULPID > "$PIDFILE"
         TIMEOUT="$STARTIMEOUT"
+        sleep <%= @startup_sleep %>
         while [ $TIMEOUT -gt 0 ]; do
             if is_running; then
                 break

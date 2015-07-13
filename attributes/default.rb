@@ -138,3 +138,6 @@ default['consul']['extra_params'] = {}
 default['consul']['atlas_autojoin'] = false
 default['consul']['atlas_cluster'] = nil
 default['consul']['atlas_token'] = nil
+
+# Init script startup delay
+default['consul']['startup_sleep'] = 3
