@@ -10,6 +10,13 @@ platforms:
   - name: ubuntu-12.04
   - name: centos-7.0
   - name: centos-6.5
+  <% if ENV['TEST_WINDOWS'] %>
+  - name: windows-2012r2-wrock
+    driver_config:
+      box_url: https://wrock.ca.tier3.io/win2012r2-virtualbox.box
+      customize:
+        usbehci: "off"
+  <% end %>
 
 suites:
   - name: default
@@ -70,3 +77,14 @@ suites:
         atlas_autojoin: true
         atlas_cluster: <%= ENV.fetch('ATLAS_CLUSTER', 'example/cluster') %>
         atlas_token: <%= ENV.fetch('ATLAS_TOKEN', 'NOT_REAL') %>
+  <% if ENV['TEST_WINDOWS'] %>
+  - name: windows
+    includes:
+      - windows-2012r2-wrock
+    run_list:
+      - recipe[consul::default]
+    attributes:
+      consul:
+        install_method: windows
+        service_user: vagrant
+  <% end %>

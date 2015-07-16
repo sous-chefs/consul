@@ -21,30 +21,45 @@ require 'json'
 consul_directories = []
 consul_directories << node['consul']['data_dir']
 consul_directories << node['consul']['config_dir']
-consul_directories << '/var/lib/consul'
 
-# Select service user & group
-if node['consul']['init_style'] == 'runit'
+case node['consul']['init_style']
+when 'runit'
   include_recipe 'runit::default'
   consul_directories << '/var/log/consul'
+when 'windows'
+  # already added, move along
+else
+  consul_directories << '/var/lib/consul'
 end
 
+
+# Select service user & group
 consul_user  = node['consul']['service_user']
 consul_group = node['consul']['service_group']
 
 # Create service user
-user "consul service user: #{consul_user}" do
-  not_if { consul_user == 'root' }
-  username consul_user
-  home '/dev/null'
-  shell '/bin/false'
-  system node['consul']['system_account']
-  comment 'consul service user'
+case node['consul']['init_style']
+when 'windows'
+  user "consul service user: #{consul_user}" do
+    not_if { consul_user == 'Administrator' }
+    username consul_user
+    comment 'consul service user'
+  end
+else
+  user "consul service user: #{consul_user}" do
+    not_if { consul_user == 'root' }
+    username consul_user
+    home '/dev/null'
+    shell '/bin/false'
+    system node['consul']['system_account']
+    comment 'consul service user'
+  end
 end
 
 # Create service group
 group "consul service group: #{consul_group}" do
-  not_if { consul_group == 'root' }
+  not_if { consul_group == 'root' && node['platform'] != 'windows'}
+  not_if { consul_group == 'Administrators' && node['platform'] == 'windows'}
   group_name consul_group
   members consul_user
   system node['consul']['system_account']
@@ -54,8 +69,13 @@ end
 # Create service directories
 consul_directories.uniq.each do |dirname|
   directory dirname do
-    owner consul_user
-    group consul_group
+    if node['platform'] == 'windows'
+      rights :full_control, node['consul']['service_user'], :applies_to_children => true
+      recursive true
+    else
+      user consul_user
+      group consul_group
+    end
     mode 0755
   end
 
@@ -274,5 +294,11 @@ when 'systemd'
     action [:enable, :start]
     subscribes :restart, "file[#{consul_config_filename}]"
     subscribes :restart, "link[#{Chef::Consul.active_binary(node)}]"
+  end
+when 'windows'
+  # Windows service for consul has been create by Chocolatey and
+  # config is managed by the chocolatey package
+  service 'consul' do
+    subscribes :restart, "file[#{consul_config_filename}]"
   end
 end
