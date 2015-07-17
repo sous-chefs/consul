@@ -13,7 +13,10 @@ platforms:
   <% if ENV['TEST_WINDOWS'] %>
   - name: windows-2012r2-wrock
     driver_config:
-      box_url: https://wrock.ca.tier3.io/win2012r2-virtualbox.box
+      network:
+        - ["forwarded_port", {guest: 5985, host: 5985}]
+      gui: true
+      box_url: https://wrock.blob.core.windows.net/vhds/vbox2012r2.box
       customize:
         usbehci: "off"
   <% end %>
