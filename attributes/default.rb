@@ -18,27 +18,8 @@
 default['consul']['base_url']       = "https://dl.bintray.com/mitchellh/consul/%{version}.zip"
 default['consul']['version']        = '0.5.2'
 default['consul']['install_method'] = 'binary'
-#default['consul']['init_style']     = 'init'   # 'init', 'runit', 'systemd', 'windows'
 default['consul']['install_dir']    = '/usr/local/bin'
-#default['consul']['data_dir']       = '/var/lib/consul'
-#default['consul']['config_dir']     = '/etc/consul.d'
 default['consul']['choco_source']   = "https://chocolatey.org/api/v2/"
-
-#case node['platform_family']
-#when 'windows'
-#  default['consul']['install_method'] = 'windows'
-#  default['consul']['init_style']     = 'windows'
-#  default['consul']['config_dir']     = "#{ENV['SystemDrive']}\\ProgramData\\consul\\config"
-#  default['consul']['data_dir']       = "#{ENV['SystemDrive']}\\ProgramData\\consul\\data"
-#  default['consul']['install_dir']    = "#{ChocolateyHelpers.chocolatey_install}\\lib\\consul.#{node['consul']['version']}"
-#  default['consul']['etc_config_dir'] = "#{ChocolateyHelpers.chocolatey_install}\\lib\\consul.#{node['consul']['version']}\\tools"
-#when 'debian'
-#  default['consul']['etc_config_dir'] = '/etc/default/consul'
-#when 'rhel'
-#  default['consul']['etc_config_dir'] = '/etc/sysconfig/consul'
-#else
-#  default['consul']['etc_config_dir'] = '/etc/sysconfig/consul'
-#end
 
 default['consul']['checksums'] = {
   '0.3.0_darwin_amd64' => '9dfbc70c01ebbc3e7dba0e4b31baeddbdcbd36ef99f5ac87ca6bbcc7405df405',
