@@ -17,6 +17,9 @@
 
 default['consul']['base_url']       = "https://dl.bintray.com/mitchellh/consul/%{version}.zip"
 default['consul']['version']        = '0.5.2'
+if node['platform_family'] == 'windows'
+  default['consul']['version']      = '0.5.0'
+end
 default['consul']['install_method'] = 'binary'
 default['consul']['install_dir']    = '/usr/local/bin'
 default['consul']['choco_source']   = "https://chocolatey.org/api/v2/"
