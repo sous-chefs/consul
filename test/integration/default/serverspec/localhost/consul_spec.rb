@@ -33,7 +33,7 @@ end
 
 describe 'config file attributes' do
   context command 'consul members -detailed' do
-    its(:stdout) { should match %r{\bdc=FortMeade\b} }
+    its(:stdout) { should match %r{\bdc=FortMeade\b}i }
   end
 end
 
