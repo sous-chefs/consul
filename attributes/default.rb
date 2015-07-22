@@ -105,6 +105,10 @@ default['consul']['ports'] = {
   "server"   => 8300,
 }
 
+# Ubuntu Upstart Open Files Limit
+default['consul']['files_soft_limit'] = 2048
+default['consul']['files_hard_limit'] = 4096
+
 # Consul DataBag
 default['consul']['data_bag'] = 'consul'
 default['consul']['data_bag_encrypt_item'] = 'encrypt'

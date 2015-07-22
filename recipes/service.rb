@@ -231,7 +231,9 @@ when 'init'
     mode init_mode
     variables(
       consul_logfile: node['consul']['logfile'],
-      startup_sleep: node['consul']['startup_sleep']
+      startup_sleep: node['consul']['startup_sleep'],
+      soft_limit: node['consul']['files_soft_limit'],
+      hard_limit: node['consul']['files_hard_limit']
     )
     notifies :restart, 'service[consul]', :immediately
   end
