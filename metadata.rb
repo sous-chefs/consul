@@ -14,7 +14,7 @@ supports 'ubuntu', '>= 12.04'
 supports 'arch'
 
 depends 'chef-vault'
-depends 'libartifact', '~> 1.2'
+depends 'libartifact', '~> 1.3'
 depends 'golang', '~> 1.4'
 depends 'poise', '~> 2.0'
 depends 'poise-service'
