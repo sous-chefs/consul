@@ -94,6 +94,19 @@ consul_watch '/etc/consul/foobarbaz.json' do
   parameters(event: 'web-deploy', handler: '/bin/false')
 end
 ```
+### consul_definition
+| Parameter | Type | Description | Default |
+| --------- | ---- | ----------- | ------- |
+| path | String | File system path to write configuration. | name |
+| user | String | System username for configuration ownership. | consul |
+| group | String | System groupname for configuration ownership. | consul |
+| type | String | Type of definition | service, check |
+```ruby
+consul_definition '/etc/consul/redis.json' do
+  type 'service'
+  parameters(tags: %w{master}, address: '127.0.0.1', port: 6379)
+end
+```
 
 [0]: http://blog.vialstudios.com/the-environment-cookbook-pattern/#theapplicationcookbook
 [1]: http://consul.io

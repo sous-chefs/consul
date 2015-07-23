@@ -23,7 +23,16 @@ class Chef::Resource::ConsulDefinition < Chef::Resource
   # @return [String]
   attribute(:group, kind_of: String, default: 'consul')
 
+  # @!attribute type
+  # @return [String]
+  attribute(:type, equal_to: %w{check service})
+
+  # @!attribute parameters
+  # @return [Hash]
+  attribute(:parameters, option_collector: true, default: {})
+
   def to_json
+    JSON.pretty_generate(type => parameters, quicks_mode: true)
   end
 
   action(:create) do
