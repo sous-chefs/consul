@@ -1,3 +1,9 @@
+# 0.11
+Minor fixes. (Actually) last release prior to 1.0.0.
+
+* Enhancements
+  - Windows support. [@gdavison](https://github.com/gdavison)
+
 # 0.10.1
 Minor fixes. Last major release prior to 1.0.0.
 
