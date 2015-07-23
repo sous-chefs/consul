@@ -81,9 +81,9 @@ consul_directories.uniq.each do |dirname|
 
   execute "chown -R #{consul_user}:#{consul_group} #{dirname}" do
     not_if { node['platform'] == 'windows' }
-    not_if do
-      Etc.getpwuid(File.stat(dirname).uid).name == consul_user or
-        Etc.getgrgid(File.stat(dirname).gid).name == consul_group
+    only_if do
+      Etc.getpwuid(File.stat(dirname).uid).name != consul_user or
+        Etc.getgrgid(File.stat(dirname).gid).name != consul_group
     end
   end
 end
