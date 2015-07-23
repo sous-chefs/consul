@@ -10,6 +10,7 @@ platforms:
   - name: ubuntu-12.04
   - name: centos-7.1
   - name: centos-6.6
+  - name: windows-2012r2
 
 suites:
   - name: default
@@ -22,6 +23,8 @@ suites:
           server: true
           datacenter: FortMeade
           encrypt: CGXC2NsXW4AvuB4h5ODYzQ==
+    excludes:
+      - windows-2012r2
   - name: source
     run_list:
       - recipe[consul::default]
@@ -30,6 +33,8 @@ suites:
         config: *default-config
         service:
           install_method: source
+    excludes:
+      - windows-2012r2
   - name: package
     run_list:
       - recipe[consul::default]
