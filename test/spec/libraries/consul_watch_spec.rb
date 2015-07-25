@@ -7,7 +7,7 @@ end
 
 require_relative '../../../libraries/consul_watch'
 
-describe Chef::Resource::ConsulWatch do
+describe ConsulCookbook::Resource::ConsulWatch do
   step_into(:consul_watch)
 
   context 'defines key watch' do

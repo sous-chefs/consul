@@ -7,7 +7,7 @@ end
 
 require_relative '../../../libraries/consul_service'
 
-describe Chef::Resource::ConsulService do
+describe ConsulCookbook::Resource::ConsulService do
   step_into(:consul_service)
 
   context '#action_create' do
