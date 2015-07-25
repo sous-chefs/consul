@@ -8,22 +8,11 @@ provisioner:
 platforms:
   - name: ubuntu-14.04
   - name: ubuntu-12.04
-  - name: centos-7.0
-  - name: centos-6.5
-  - name: windows-2012r2
-    driver_config:
-      network:
-        - ["forwarded_port", {guest: 5985, host: 5985}]
-      communicator: winrm
-      gui: true
-      box_url: https://wrock.blob.core.windows.net/vhds/vbox2012r2.box
-      customize:
-        usbehci: "off"
+  - name: centos-7.1
+  - name: centos-6.6
 
 suites:
   - name: default
-    excludes:
-      - windows-2012r2
     run_list:
       - recipe[consul::default]
     attributes:
@@ -33,8 +22,6 @@ suites:
         advertise_interface: eth0
         encrypt: CGXC2NsXW4AvuB4h5ODYzQ==
   - name: source
-    excludes:
-      - windows-2012r2
     run_list:
       - recipe[consul::default]
     attributes:
@@ -53,10 +40,7 @@ suites:
     excludes:
       - centos-7.0
       - centos-6.5
-      - windows-2012r2
   - name: runit
-    excludes:
-      - windows-2012r2
     run_list:
       - recipe[consul::default]
     attributes:
@@ -64,8 +48,6 @@ suites:
         datacenter: FortMeade
         init_style: runit
   - name: ui
-    excludes:
-      - windows-2012r2
     run_list:
       - recipe[consul::default]
       - recipe[consul::ui]
@@ -74,30 +56,9 @@ suites:
         serve_ui: true
         client_interface: eth0
   - name: cluster
-    excludes:
-      - windows-2012r2
     run_list:
       - recipe[consul::default]
     attributes:
       consul:
         service_mode: cluster
         bootstrap_expect: 1
-  - name: atlas
-    excludes:
-      - windows-2012r2
-    run_list:
-      - recipe[consul::default]
-    attributes:
-      consul:
-        atlas_autojoin: true
-        atlas_cluster: <%= ENV.fetch('ATLAS_CLUSTER', 'example/cluster') %>
-        atlas_token: <%= ENV.fetch('ATLAS_TOKEN', 'NOT_REAL') %>
-  - name: windows
-    includes:
-      - windows-2012r2
-    run_list:
-      - recipe[consul::default]
-    attributes:
-      consul:
-        install_method: windows
-        service_user: vagrant

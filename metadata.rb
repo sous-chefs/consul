@@ -1,34 +1,21 @@
 name 'consul'
 maintainer 'John Bellone'
 maintainer_email 'jbellone@bloomberg.net'
-license 'Apache v2.0'
-description 'Installs/Configures Consul client, server and UI.'
-long_description 'Installs/Configures Consul client, server and UI.'
-version '0.11.1'
+license 'Apache 2.0'
+description 'Application cookbook which installs and configures Consul.'
+long_description 'Application cookbook which installs and configures Consul.'
+version '1.0.0'
 
-recipe 'consul', 'Installs and starts consul service.'
-recipe 'consul::install_binary', 'Installs consul service from binary.'
-recipe 'consul::install_source', 'Installs consul service from source.'
-recipe 'consul::ui', 'Installs consul ui service.'
+recipe 'consul::default', 'Installs, configures and starts the Consul service.'
 
-%w(redhat centos).each do |name|
-  supports name, '~> 7.0'
-  supports name, '~> 6.5'
-end
-
-supports 'ubuntu', '= 12.04'
-supports 'ubuntu', '= 14.04'
+supports 'centos', '>= 6.5'
+supports 'redhat', '>= 6.5'
+supports 'ubuntu', '>= 12.04'
 supports 'arch'
-supports 'windows'
 
-recommends 'chef-provisioning'
-
-depends 'libarchive', ">= 0.6.0"
+depends 'chef-vault'
+depends 'libartifact', '~> 1.2'
 depends 'golang', '~> 1.4'
-depends 'runit'
-depends 'yum-repoforge'
-depends 'packagecloud'
-
-# for windows
-depends 'windows'
-depends "chocolatey"
+depends 'poise', '~> 2.0'
+depends 'poise-service'
+depends 'selinux'

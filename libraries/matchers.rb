@@ -1,17 +1,25 @@
 if defined?(ChefSpec)
-  def create_consul_service_def(resource_name)
-    ChefSpec::Matchers::ResourceMatcher.new(:consul_service_def, :create, resource_name)
+  %i{create delete}.each do |action|
+    define_method(:"#{action}_consul_client") do |resource_name|
+      ChefSpec::Matchers::ResourceMatcher.new(:consul_client, action, resource_name)
+    end
+
+    define_method(:"#{action}_consul_config") do |resource_name|
+      ChefSpec::Matchers::ResourceMatcher.new(:consul_config, action, resource_name)
+    end
+
+    define_method(:"#{action}_consul_definition") do |resource_name|
+      ChefSpec::Matchers::ResourceMatcher.new(:consul_definition, action, resource_name)
+    end
+
+    define_method(:"#{action}_consul_watch") do |resource_name|
+      ChefSpec::Matchers::ResourceMatcher.new(:consul_watch, action, resource_name)
+    end
   end
 
-  def delete_consul_service_def(resource_name)
-    ChefSpec::Matchers::ResourceMatcher.new(:consul_service_def, :delete, resource_name)
-  end
-
-  def create_consul_event_watch_def(resource_name)
-    ChefSpec::Matchers::ResourceMatcher.new(:consul_event_watch_def, :create, resource_name)
-  end
-
-  def delete_consul_key_watch_def(resource_name)
-    ChefSpec::Matchers::ResourceMatcher.new(:consul_key_watch_def, :create, resource_name)
+  %i{enable disable stop start restart reload}.each do |action|
+    define_method(:"#{action}_consul_service") do |resource_name|
+      ChefSpec::Matchers::ResourceMatcher.new(:consul_service, action, resource_name)
+    end
   end
 end

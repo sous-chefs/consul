@@ -1,31 +1,33 @@
 #
-# Copyright 2014 John Bellone <jbellone@bloomberg.net>
-# Copyright 2014 Bloomberg Finance L.P.
+# Cookbook Name:: consul
+# License:: Apache 2.0
 #
-# Licensed under the Apache License, Version 2.0 (the "License");
-# you may not use this file except in compliance with the License.
-# You may obtain a copy of the License at
+# Copyright 2014, 2015 Bloomberg Finance L.P.
 #
-#     http://www.apache.org/licenses/LICENSE-2.0
-#
-# Unless required by applicable law or agreed to in writing, software
-# distributed under the License is distributed on an "AS IS" BASIS,
-# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-# See the License for the specific language governing permissions and
-# limitations under the License.
-#
+include_recipe 'selinux::permissive'
 
-case node['consul']['install_method']
-when 'binary'
-  include_recipe 'consul::install_binary'
-when 'source'
-  include_recipe 'consul::install_source'
-when 'packages'
-  include_recipe 'consul::install_packages'
-when 'windows'
-  include_recipe 'consul::install_windows'
-else
-  Chef::Application.fatal!("[consul::default] unknown install method, method=#{node['consul']['install_method']}")
+poise_service_user node['consul']['service_user'] do
+  group node['consul']['service_group']
 end
 
-include_recipe 'consul::service'
+consul_config node['consul']['service']['config_file'] do |resource|
+  user node['consul']['service_user']
+  group node['consul']['service_group']
+
+  node['consul']['config'].each_pair { |k, v| resource.send(k, v) }
+  notifies :restart, "consul_service[#{node['consul']['service_name']}]", :delayed
+end
+
+consul_service node['consul']['service_name'] do
+  user node['consul']['service_user']
+  group node['consul']['service_group']
+  version node['consul']['version']
+  install_method node['consul']['service']['install_method']
+  install_path node['consul']['service']['install_path']
+  config_dir node['consul']['service']['config_dir']
+  config_file node['consul']['service']['config_file']
+
+  package_name node['consul']['package_name']
+  binary_url node['consul']['binary_url']
+  source_url node['consul']['source_url']
+end
