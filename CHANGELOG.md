@@ -1,3 +1,6 @@
+# 0.11.1
+Minor fixes and README updates.
+
 # 0.11
 Minor fixes. (Actually) last release prior to 1.0.0.
 
