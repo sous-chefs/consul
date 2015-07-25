@@ -1,7 +1,3 @@
-source 'https://supermarket.getchef.com'
-
+source 'https://supermarket.chef.io'
+cookbook 'chef-vault', git: 'https://github.com/johnbellone/chef-vault-cookbook'
 metadata
-
-group :test do
-  cookbook "consul_spec", path: "spec/fixtures/cookbooks/consul_spec"
-end
