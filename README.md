@@ -7,19 +7,51 @@ consul-cookbook
 
 [Application cookbook][0] which installs and configures [Consul][1].
 
+This is a hybrid cookbook which provides resources/providers to
+install and configure the [Consul agent][1]. A default recipe exists
+to show off the most common usage - writing out a Consul configuration
+and creating the Consul service - from node attributes. It is important
+to note that this cookbook is essentially a [Library cookbook][3] which
+provides an default example recipe (e.g. application cookbook).
+
+## Platforms
+- CentOS >= 6.4 (RHEL)
+- Ubuntu >= 12.04
+- Windows
+
+## Dependencies
+This cookbook has a few dependencies which are pulled in and required
+when uploaded to a Chef Server. Not all recipes (or resources, for
+that matter) will run unless certain functionality is configured. For
+example, the Golang cookbook default recipe is only included when
+install method is from source.
+
+| Cookbook Name | Description |
+| ------------- | ----------- |
+| Chef Vault | Provides HWRP for managing secrets for TLS certificates/keys. |
+| Golang | Provides recipes for installing Go language for source compliation. |
+| libartifact | Provids HWRP for managing versions of artifacts on disk. |
+| Poise | Provides helpers for writing reusable HWRP code. |
+| Poise Service | Provides helpers for abstracting service lifecycle management. |
+| SELinux | Provides recipes for configuring SELinux subsystem. |
+
 ## Attributes
 This cookbook provides node attributes which can be used to fine tune
 how the recipes install and configure the Consul client, server and
 UI. These values are passed into the resource/providers for
 validation prior to converging.
 
+All of the attribute keys are nested immediately under
+`node['consul']` and thus are accessible like
+`node.default['consul']['version'] = '0.5.1'`.
+
 |   Key   |  Type  |   Description  |  Default  |
 |---------|--------|----------------|-----------|
-| ['consul']['version'] | String | Installation version | 0.5.1 |
-| ['consul']['remote_url'] | String | Remote URL for download. | https://dl.bintray.com/mitchellh/consul |
-| ['consul']['service_name'] | String | Name of the service (operating system) | consul |
-| ['consul']['service_user'] | String | Name of the service user | consul |
-| ['consul']['service_group'] | String | Name of the service group | consul |
+| version | String | Installation version | 0.5.2 |
+| remote_url | String | Remote URL for download. | https://dl.bintray.com/mitchellh/consul |
+| service_name | String | Name of the service (operating system) | consul |
+| service_user | String | Name of the service user | consul |
+| service_group | String | Name of the service group | consul |
 
 ## Resources/Providers
 This cookbook provides resource and provider primitives to manage the
@@ -57,7 +89,7 @@ end
 consul_service 'consul' do
   user 'consul'
   group 'consul'
-  install_method :binary
+  install_method 'binary'
   binary_url node['consul']['binary_url']
 end
 ```
@@ -111,3 +143,4 @@ end
 [0]: http://blog.vialstudios.com/the-environment-cookbook-pattern/#theapplicationcookbook
 [1]: http://consul.io
 [2]: http://blog.vialstudios.com/the-environment-cookbook-pattern#thewrappercookbook
+[3]: http://blog.vialstudios.com/the-environment-cookbook-pattern/#thelibrarycookbook

@@ -8,8 +8,8 @@ version '1.0.0'
 
 recipe 'consul::default', 'Installs, configures and starts the Consul service.'
 
-supports 'centos', '>= 6.5'
-supports 'redhat', '>= 6.5'
+supports 'centos', '>= 6.4'
+supports 'redhat', '>= 6.4'
 supports 'ubuntu', '>= 12.04'
 supports 'arch'
 
