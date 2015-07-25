@@ -134,7 +134,7 @@ Installs and configures [Consul][1] client, server and UI.
     <td><tt>['consul']['domain']</tt></td>
     <td>String</td>
     <td>Domain for service lookup dns queries</td>
-    <td><tt>.consul</tt></td>
+    <td><tt>consul</tt></td>
   </tr>
   <tr>
     <td><tt>['consul']['enable_syslog']</tt></td>
