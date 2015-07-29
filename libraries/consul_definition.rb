@@ -16,7 +16,7 @@ module ConsulCookbook
 
       # @!attribute path
       # @return [String]
-      attribute(:path, kind_of: String, name_attribute: true)
+      attribute(:path, kind_of: String, default: lazy { "/etc/consul/#{name}.json" })
 
       # @!attribute user
       # @return [String]

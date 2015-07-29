@@ -103,27 +103,31 @@ end
 | parameters | Hash | Parameters to configure; depends on type of watch. | {} |
 
 ```ruby
-consul_watch '/etc/consul/foobarbaz.json' do
+consul_watch 'foobarbaz' do
   type 'key'
   parameters(key: 'foo/bar/baz', handler: '/bin/false')
+  notifies :reload, 'consul_service[consul]', :delayed
 end
 ```
 ```ruby
-consul_watch '/etc/consul/foobarbaz.json' do
+consul_watch 'foobarbaz' do
   type 'keyprefix'
   parameters(prefix: 'foo/', handler: '/bin/false')
+  notifies :reload, 'consul_service[consul]', :delayed
 end
 ```
 ```ruby
-consul_watch '/etc/consul/foobarbaz.json' do
+consul_watch 'foobarbaz' do
   type 'service'
   parameters(service: 'redis', handler: '/bin/false')
+  notifies :reload, 'consul_service[consul]', :delayed
 end
 ```
 ```ruby
-consul_watch '/etc/consul/foobarbaz.json' do
+consul_watch 'foobarbaz' do
   type 'event'
   parameters(event: 'web-deploy', handler: '/bin/false')
+  notifies :reload, 'consul_service[consul]', :delayed
 end
 ```
 ### consul_definition
@@ -134,9 +138,15 @@ end
 | group | String | System groupname for configuration ownership. | consul |
 | type | String | Type of definition | service, check |
 ```ruby
-consul_definition '/etc/consul/redis.json' do
+consul_definition 'redis' do
   type 'service'
   parameters(tags: %w{master}, address: '127.0.0.1', port: 6379)
+end
+```
+### consul_execute
+```ruby
+consul_execute 'uptime' do
+  options(service: 'web')
 end
 ```
 
