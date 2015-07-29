@@ -6,6 +6,16 @@
 #
 include_recipe 'selinux::permissive'
 
+if node['firewall']['allow_consul']
+  include_recipe 'firewall::default'
+
+  firewall_rule 'consul' do
+    protocol :tcp
+    port node['consul']['config']['ports'].values
+    action :allow
+  end
+end
+
 poise_service_user node['consul']['service_user'] do
   group node['consul']['service_group']
   action :create
