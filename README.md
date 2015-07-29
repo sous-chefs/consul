@@ -140,7 +140,8 @@ end
 ```ruby
 consul_definition 'redis' do
   type 'service'
-  parameters(tags: %w{master}, address: '127.0.0.1', port: 6379)
+  parameters(tags: %w{master}, address: '127.0.0.1', port: 6379, interval: '30s')
+  notifies :reload, 'consul_service[consul]', :delayed
 end
 ```
 ### consul_execute
