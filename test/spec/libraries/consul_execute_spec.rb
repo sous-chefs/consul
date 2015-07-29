@@ -13,18 +13,18 @@ describe ConsulCookbook::Resource::ConsulExecute do
   context 'with verbose=true' do
     recipe do
       consul_execute 'uptime' do
-        options(verbose: true)
+        options(verbose: true, service: 'web')
       end
     end
-    it { is_expected.to run_execute('/usr/bin/env consul exec -verbose uptime') }
+    it { is_expected.to run_execute('/usr/bin/env consul exec -verbose -service=web uptime') }
   end
 
   context 'with verbose=false' do
     recipe do
       consul_execute 'uptime' do
-        options(verbose: false)
+        options(verbose: false, service: 'web')
       end
     end
-    it { is_expected.to run_execute('/usr/bin/env consul exec uptime') }
+    it { is_expected.to run_execute('/usr/bin/env consul exec -service=web uptime') }
   end
 end
