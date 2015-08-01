@@ -1,4 +1,4 @@
-require 'poise_boiler/spec_helper'
+require 'spec_helper'
 require_relative '../../../libraries/consul_watch'
 
 describe ConsulCookbook::Resource::ConsulWatch do

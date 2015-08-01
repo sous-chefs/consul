@@ -1,4 +1,4 @@
-require 'poise_boiler/spec_helper'
+require 'spec_helper'
 require_relative '../../../libraries/consul_service'
 
 describe ConsulCookbook::Resource::ConsulService do
