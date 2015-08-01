@@ -1,10 +1,4 @@
 require 'poise_boiler/spec_helper'
-require 'poise'
-
-RSpec.configure do |config|
-  config.include Halite::SpecHelper
-end
-
 require_relative '../../../libraries/consul_config'
 
 describe ConsulCookbook::Resource::ConsulConfig do
@@ -14,9 +8,7 @@ describe ConsulCookbook::Resource::ConsulConfig do
     before do
       recipe = double('Chef::Recipe')
       allow_any_instance_of(Chef::RunContext).to receive(:include_recipe).and_return([recipe])
-      allow_any_instance_of(Chef::DSL::Recipe).to receive(:chef_vault_item).and_return(
-        { 'ca_certificate' => 'foo', 'certificate' => 'bar', 'private_key' => 'baz' }
-      )
+      allow_any_instance_of(Chef::Provider).to receive(:chef_vault_item) { { 'ca_certificate' => 'foo', 'certificate' => 'bar', 'private_key' => 'baz' }  }
     end
 
     recipe do
