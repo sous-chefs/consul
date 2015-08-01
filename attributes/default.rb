@@ -23,12 +23,12 @@ default['consul']['config']['ports'] = {
   'rpc'      => 8400,
   'serf_lan' => 8301,
   'serf_wan' => 8302,
-  "server"   => 8300,
+  'server'   => 8300
 }
 
 default['consul']['service']['install_method'] = 'binary'
 default['consul']['service']['config_dir'] = '/etc/consul'
-default['consul']['service']['binary_url'] = "https://dl.bintray.com/mitchellh/consul/%{filename}.zip"
+default['consul']['service']['binary_url'] = "https://dl.bintray.com/mitchellh/consul/%{filename}.zip" # rubocop:disable Style/StringLiterals
 default['consul']['service']['source_url'] = 'https://github.com/hashicorp/consul'
 
 default['consul']['version'] = '0.5.2'
@@ -49,5 +49,5 @@ default['consul']['checksums'] = {
   '0.5.2_linux_386'    => '29306ce398109f954ceeea3af79878be4fb0d949f8af3a27c95ccef2101e8f60',
   '0.5.2_linux_amd64'  => '171cf4074bfca3b1e46112105738985783f19c47f4408377241b868affa9d445',
   '0.5.2_windows_386'  => '2e866812de16f1a6138a0fd1eebc76143f1314826e3b52597a55ac510ae94be6',
-  '0.5.2_web_ui'       => 'ad883aa52e1c0136ab1492bbcedad1210235f26d59719fb6de3ef6464f1ff3b1',
+  '0.5.2_web_ui'       => 'ad883aa52e1c0136ab1492bbcedad1210235f26d59719fb6de3ef6464f1ff3b1'
 }

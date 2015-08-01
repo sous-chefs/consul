@@ -21,8 +21,8 @@ module ConsulCookbook
 
       action(:run) do
         options = new_resource.options.map do |k, v|
-          next if v.kind_of?(NilClass) or v.kind_of?(FalseClass)
-          if v.kind_of?(TrueClass)
+          next if v.is_a?(NilClass) || v.is_a?(FalseClass)
+          if v.is_a?(TrueClass)
             "-#{k}"
           else
             ["-#{k}", v].join('=')
