@@ -1,5 +1,7 @@
 # 1.0.0
 
+# 0.11
+
 # 0.10
 Fixes several bugs, minor enhancements and changes default version of
 Consul to 0.5.2.

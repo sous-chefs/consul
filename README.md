@@ -7,136 +7,69 @@ consul-cookbook
 
 [Application cookbook][0] which installs and configures [Consul][1].
 
-This is a hybrid cookbook which provides resources/providers to
-install and configure the [Consul agent][1]. A default recipe exists
-to show off the most common usage - writing out a Consul configuration
-and creating the Consul service - from node attributes. It is important
-to note that this cookbook is essentially a [Library cookbook][3] which
-provides an default example recipe (e.g. application cookbook).
+Consul is a tool for discovering and configuring services within your
+infrastructure. This is an application cookbook which takes a
+simplified approach to configuring and installing
+Consul. Additionally, it provides Chef primitives for more advanced
+configuration.
 
-## Platforms
-- CentOS >= 6.4 (RHEL)
-- Ubuntu >= 12.04
+## Basic Usage
+For most infrastructure we suggest first starting with the default
+recipe. This installs and configures Consul from the latest supported
+release. It is also what is used to certify platform support through
+the use of our integration tests.
+
+This cookbook provides node attributes which are used to fine tune
+the default recipe which installs and configures Consul. These values
+are passed directly into the Chef resource/providers which are exposed
+for more advanced configuration.
+
+Out of the box the following platforms are certified to work and are
+tested using our [Test Kitchen][8] configuration. Additional platforms
+_may_ work, but your mileage may vary.
+- CentOS (RHEL) 6.6, 7.1
+- Ubuntu 12.04, 14.04
 - Windows
 
-## Dependencies
-This cookbook has a few dependencies which are pulled in and required
-when uploaded to a Chef Server. Not all recipes (or resources, for
-that matter) will run unless certain functionality is configured. For
-example, the Golang cookbook default recipe is only included when
-install method is from source.
+## Advanced Usage
+As explained above this cookbook provides Chef primitives in the form
+of resource/provider to further manage the install and configuration
+of Consul. These primitives are what is used in the default recipe,
+and should be used in your own [wrapper cookbooks][2] for more
+advanced configurations.
 
-| Cookbook Name | Description |
-| ------------- | ----------- |
-| Chef Vault | Provides HWRP for managing secrets for TLS certificates/keys. |
-| Golang | Provides recipes for installing Go language for source compliation. |
-| libartifact | Provids HWRP for managing versions of artifacts on disk. |
-| Poise | Provides helpers for writing reusable HWRP code. |
-| Poise Service | Provides helpers for abstracting service lifecycle management. |
-| SELinux | Provides recipes for configuring SELinux subsystem. |
+### Configuration
+It is very important to understand that each resource/provider has
+defaults for some properties. Any changes to a resource's default
+properties may need to be also changed in other resources. The best
+example is the Consul configuration directory.
 
-## Attributes
-This cookbook provides node attributes which can be used to fine tune
-how the recipes install and configure the Consul client, server and
-UI. These values are passed into the resource/providers for
-validation prior to converging.
+In the example below we're going to change the configuration file from
+the default (/etc/consul.json) to one that may be on a special volume.
+It is obvious that we need to change the path where `consul_config`
+writes its file to, but it is less obvious that this needs to be
+passed into `consul_service`.
 
-All of the attribute keys are nested immediately under
-`node['consul']` and thus are accessible like
-`node.default['consul']['version'] = '0.5.1'`.
-
-|   Key   |  Type  |   Description  |  Default  |
-|---------|--------|----------------|-----------|
-| version | String | Installation version | 0.5.2 |
-| remote_url | String | Remote URL for download. | https://dl.bintray.com/mitchellh/consul |
-| service_name | String | Name of the service (operating system) | consul |
-| service_user | String | Name of the service user | consul |
-| service_group | String | Name of the service group | consul |
-
-## Resources/Providers
-This cookbook provides resource and provider primitives to manage the
-Consul client, server and UI. These primitives are what is used in the
-recipes, and should be used in your own [wrapper cookbooks][2].
-
-### consul_config
-| Parameter | Type | Description | Default |
-| --------- | ---- | ----------- | ------- |
-| path | String | File system path to write configuration. | name |
-| user | String | System username for configuration ownership. | consul |
-| group | String | System groupname for configuration ownership. | consul |
-| bag_name | String | Name of the chef-vault data bag for TLS configuration. | secrets |
-| bag_item | String | Item of the chef-vault data bag for TLS configuration. | consul |
-
+Inside of a recipe in your [wrapper cookbook][2] you'll want to do
+something like the following block of code. It uses the validated
+input from the configuration resource and passes it into the service
+resource. This ensures that we're using the _same data_.
 ```ruby
-consul_config '/etc/consul.json' do
-  user 'jbellone'
-  group 'staff'
-end
-```
-### consul_service
-| Parameter | Type | Description | Default |
-| --------- | ---- | ----------- | ------- |
-| user | String | System username for configuration ownership. | consul |
-| group | String | System groupname for configuration ownership. | consul |
-| install_method | String | Determines method of installing Consul agent on node. | source, binary, package |
-| install_path | String | Absolute path to where Consul agent is unpacked. | /srv |
-| version | String | The version of Consul agent to install. | nil |
-| config_file | String | Absolute path to the Consul agent's configuration file. | /etc/consul.json |
-| config_dir | String | Absolute path to configuration directory (for definitions, watches). | /etc/consul |
-| data_dir | String | Absolute path to the Consul agent's data directory. | /var/lib/consul |
-
-```ruby
+config = consul_config '/data/consul/default.json'
 consul_service 'consul' do
-  user 'consul'
-  group 'consul'
-  install_method 'binary'
-  binary_url node['consul']['binary_url']
+  config_file config.path
 end
 ```
-### consul_watch
-| Parameter | Type | Description | Default |
-| --------- | ---- | ----------- | ------- |
-| path | String | File system path to write configuration. | name |
-| user | String | System username for configuration ownership. | consul |
-| group | String | System groupname for configuration ownership. | consul |
-| type | String | Type of the Consul watch to configure. | key, keyprefix, service, event |
-| parameters | Hash | Parameters to configure; depends on type of watch. | {} |
+### Watches/Definitions
+In order to provide an idempotent implementation of Consul
+watches and definitions. We write these out as
+a separate configuration file in the JSON file format. The provider
+for both of these resources are identical in functionality.
 
-```ruby
-consul_watch 'foobarbaz' do
-  type 'key'
-  parameters(key: 'foo/bar/baz', handler: '/bin/false')
-  notifies :reload, 'consul_service[consul]', :delayed
-end
-```
-```ruby
-consul_watch 'foobarbaz' do
-  type 'keyprefix'
-  parameters(prefix: 'foo/', handler: '/bin/false')
-  notifies :reload, 'consul_service[consul]', :delayed
-end
-```
-```ruby
-consul_watch 'foobarbaz' do
-  type 'service'
-  parameters(service: 'redis', handler: '/bin/false')
-  notifies :reload, 'consul_service[consul]', :delayed
-end
-```
-```ruby
-consul_watch 'foobarbaz' do
-  type 'event'
-  parameters(event: 'web-deploy', handler: '/bin/false')
-  notifies :reload, 'consul_service[consul]', :delayed
-end
-```
-### consul_definition
-| Parameter | Type | Description | Default |
-| --------- | ---- | ----------- | ------- |
-| path | String | File system path to write configuration. | name |
-| user | String | System username for configuration ownership. | consul |
-| group | String | System groupname for configuration ownership. | consul |
-| type | String | Type of definition | service, check |
+Below is an example of writing a [Consul service definition][11] for
+the master instance of Redis. We pass in several parameters and tell
+the resource to notify the proper instance of the Consul service to
+reload.
 ```ruby
 consul_definition 'redis' do
   type 'service'
@@ -144,14 +77,61 @@ consul_definition 'redis' do
   notifies :reload, 'consul_service[consul]', :delayed
 end
 ```
-### consul_execute
+
+A [check definition][12] can easily be added as well. You simply have
+to change the type and pass in the correct parameters. The definition
+below checks memory utilization using a script on a ten second interval.
 ```ruby
-consul_execute 'uptime' do
-  options(service: 'web')
+consul_definition 'mem-util' do
+  type 'check'
+  parameters(script: '/usr/local/bin/check_mem.py', interval: '10s')
+  notifies :reload, 'consul_service[consul]', :delayed
 end
 ```
+
+Finally, a [watch][9] is created below to tell the agent to monitor to
+see if an application has been deployed. Once that application is
+deployed a script is run locally. This can be used, for example, as a
+lazy way to clear a HTTP disk cache.
+```ruby
+consul_watch 'app-deploy' do
+  type 'event'
+  parameters(handler: '/usr/local/bin/clear-disk-cache.sh')
+  notifies :reload, 'consul_service[consul]', :delayed
+end
+```
+
+A keen eye would notice that we are _delaying the reload of the Consul
+service instance_. The reason we do this is to minimize the number of
+times we need to tell Consul to actually reload configurations. If
+there are several definitions this may save a little time off your
+Chef run.
+
+## Execute
+The command-line agent provides a mechanism to facilitate remote
+execution. For example, this can be used to run the `uptime` command
+across your fleet of nodes which are hosting a particular API service.
+```ruby
+consul_execute 'uptime' do
+  options(service: 'api')
+end
+```
+
+All of the [options available on the command-line][12] can be passed
+into the resource. This could potentially be a *very dangerous*
+operation. You should absolutely understand what you are doing. By the
+nature of this command it is _impossible_ for it to be idempotent.
 
 [0]: http://blog.vialstudios.com/the-environment-cookbook-pattern/#theapplicationcookbook
 [1]: http://consul.io
 [2]: http://blog.vialstudios.com/the-environment-cookbook-pattern#thewrappercookbook
-[3]: http://blog.vialstudios.com/the-environment-cookbook-pattern/#thelibrarycookbook
+[3]: http://blog.vialstudios.com/the-environment-cookbook-pattern#thelibrarycookbook
+[4]: https://github.com/johnbellone/libartifact-cookbook
+[5]: https://github.com/poise/poise
+[6]: https://github.com/poise/poise-service
+[7]: https://github.com/skottler/selinux
+[8]: https://github.com/test-kitchen/test-kitchen
+[9]: https://consul.io/docs/agent/watches.html
+[10]: https://consul.io/docs/agent/services.html
+[11]: https://consul.io/docs/agent/checks.html
+[12]: https://consul.io/docs/commands/exec.html

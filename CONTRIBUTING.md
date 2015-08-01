@@ -1,7 +1,4 @@
 # How To Contribute
-
-## Contributing
-
 1. Fork the repository on Github
 2. Create a named feature branch (i.e. `add-new-recipe`)
 3. Write you change
