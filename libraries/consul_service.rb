@@ -145,12 +145,12 @@ module ConsulCookbook
             recursive true
             owner new_resource.user
             group new_resource.group
-            mode '0744'
+            mode '0755'
           end
 
           directory new_resource.config_dir do
             recursive true
-            mode '0644'
+            mode '0755'
           end
         end
         super
