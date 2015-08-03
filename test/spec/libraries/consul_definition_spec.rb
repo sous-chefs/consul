@@ -23,8 +23,7 @@ describe ConsulCookbook::Resource::ConsulDefinition do
           port: 6379,
           interval: '10s',
           name: 'redis'
-        },
-        quicks_mode: true
+        }
       ))
     end
   end
@@ -46,8 +45,7 @@ describe ConsulCookbook::Resource::ConsulDefinition do
           http: 'http://localhost:5000/health',
           ttl: '30s',
           name: 'web-api',
-        },
-        quicks_mode: true
+        }
       ))
     end
   end

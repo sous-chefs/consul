@@ -20,8 +20,7 @@ describe ConsulCookbook::Resource::ConsulWatch do
           type: 'key',
           key: 'foo/bar/baz',
           handler: '/bin/false'
-        },
-        quicks_mode: true
+        }
       ))
     end
   end
