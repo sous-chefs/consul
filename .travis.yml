@@ -2,9 +2,9 @@
 language: ruby
 notifications:
   slack: blpsi:eHp3Czg42iGzaTgG8sAFeD9v
-script: 
+script:
   - bin/rubocop
-  - bin/foodcritic
+  - bin/foodcritic .
   - bin/rspec
 rvm:
   - 2.1
