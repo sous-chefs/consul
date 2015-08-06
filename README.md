@@ -31,6 +31,25 @@ _may_ work, but your mileage may vary.
 - Ubuntu 12.04, 14.04
 - Windows
 
+### Client
+Out of the box the default recipe installs and configures the Consul
+agent to run as a service in _client mode_. The intent here is that
+your infrastructure already has a [quorum of servers][13]. In order
+to configure Consul to connect to your cluster you would supply an
+array of addresses for the Consul agent to join. This would be done
+in your [wrapper cookbook][2]:
+```ruby
+node.default['consul']['config']['start_join'] = %w{c1.internal.corporate.com c2.internal.corporate.com c3.internal.corporate.com}
+```
+
+### Server
+This cookbook is designed to allow for the flexibility to bootstrap a
+new cluster. The best way to do this is through the use of a
+[wrapper cookbook][2] which tunes specific node attributes for a
+production server deployment.
+
+The [Consul cluster cookbook][14] is provided as an example.
+
 ## Advanced Usage
 As explained above this cookbook provides Chef primitives in the form
 of resource/provider to further manage the install and configuration
@@ -107,7 +126,7 @@ times we need to tell Consul to actually reload configurations. If
 there are several definitions this may save a little time off your
 Chef run.
 
-## Execute
+### Execute
 The command-line agent provides a mechanism to facilitate remote
 execution. For example, this can be used to run the `uptime` command
 across your fleet of nodes which are hosting a particular API service.
@@ -135,3 +154,5 @@ nature of this command it is _impossible_ for it to be idempotent.
 [10]: https://consul.io/docs/agent/services.html
 [11]: https://consul.io/docs/agent/checks.html
 [12]: https://consul.io/docs/commands/exec.html
+[13]:
+[14]: https://github.com/johnbellone/consul-cluster-cookbook
