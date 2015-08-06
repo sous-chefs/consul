@@ -99,6 +99,14 @@ module ConsulCookbook
             only_if { new_resource.install_method == 'package' }
           end
 
+          if node['platform'] == 'windows'
+            include_recipe 'chocolatey::default'
+
+            chocolatey new_resource.package_name do
+              version new_resource.version
+            end
+          end
+
           if new_resource.install_method == 'binary'
             artifact = libartifact_file "consul-#{new_resource.version}" do
               artifact_name 'consul'
