@@ -14,8 +14,6 @@ module ConsulCookbook
       include Poise
       provides(:consul_service)
       include PoiseService::ServiceMixin
-      actions(:create)
-      default_action(:create)
 
       # @!attribute version
       # @return [String]
@@ -92,7 +90,7 @@ module ConsulCookbook
       provides(:consul_service)
       include PoiseService::ServiceMixin
 
-      def action_create
+      def action_enable
         notifying_block do
           package new_resource.package_name do
             version new_resource.version unless new_resource.version.nil?
@@ -144,11 +142,7 @@ module ConsulCookbook
               to ::File.join(source_dir.path, "consul-#{new_resource.version}", 'consul')
             end
           end
-        end
-      end
 
-      def action_enable
-        notifying_block do
           directory new_resource.data_dir do
             recursive true
             owner new_resource.user

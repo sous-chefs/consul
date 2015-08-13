@@ -36,5 +36,5 @@ consul_service node['consul']['service_name'] do |r|
 
   node['consul']['service'].each_pair { |k, v| r.send(k, v) }
   subscribes :restart, "consul_config[#{config.name}]", :delayed
-  action [:create, :enable]
+  action [:enable, :start]
 end
