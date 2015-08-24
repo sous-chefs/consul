@@ -28,7 +28,7 @@ module ConsulCookbook
 
       # @!attribute type
       # @return [String]
-      attribute(:type, equal_to: %w{checks event key keyprefix service})
+      attribute(:type, equal_to: %w{checks event key keyprefix nodes service services})
 
       # @!attribute parameters
       # @return [Hash]
