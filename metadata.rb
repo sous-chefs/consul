@@ -16,7 +16,7 @@ supports 'windows'
 
 depends 'chef-vault'
 depends 'chocolatey'
-depends 'golang', '~> 1.4'
+depends 'golang'
 depends 'firewall', '~> 1.6'
 depends 'libartifact', '~> 1.3'
 depends 'poise', '~> 2.2'
