@@ -19,7 +19,7 @@ module ConsulCookbook
 
       # @!attribute owner
       # @return [String]
-      attribute(:user, kind_of: String, default: 'consul')
+      attribute(:owner, kind_of: String, default: 'consul')
 
       # @!attribute group
       # @return [String]
@@ -32,6 +32,10 @@ module ConsulCookbook
       # @!attribute bag_item
       # @return [String]
       attribute(:bag_item, kind_of: String, default: 'secrets')
+
+      # @!attribute options
+      # @return [Hash]
+      attribute(:options, option_collector: true)
 
       # @see: http://www.consul.io/docs/agent/options.html
       attribute(:acl_datacenter, kind_of: String)
@@ -65,7 +69,7 @@ module ConsulCookbook
       attribute(:node_name, kind_of: String)
       attribute(:ports, kind_of: [Hash, Mash])
       attribute(:protocol, kind_of: String)
-      attribute(:recurser, kind_of: String)
+      attribute(:recursor, kind_of: String)
       attribute(:retry_interval, kind_of: Integer)
       attribute(:server, equal_to: [true, false], default: true)
       attribute(:server_name, kind_of: String)
@@ -87,7 +91,7 @@ module ConsulCookbook
         for_keeps << %i{ca_file cert_file key_file} if tls?
         config = to_hash.keep_if do |k, _|
           for_keeps.include?(k.to_sym)
-        end
+        end.merge(options)
         JSON.pretty_generate(config, quirks_mode: true)
       end
 
@@ -108,7 +112,7 @@ module ConsulCookbook
             file new_resource.ca_file do
               content item['ca_certificate']
               mode '0644'
-              owner new_resource.user
+              owner new_resource.owner
               group new_resource.group
             end
 
@@ -119,7 +123,7 @@ module ConsulCookbook
             file new_resource.cert_file do
               content item['certificate']
               mode '0644'
-              owner new_resource.user
+              owner new_resource.owner
               group new_resource.group
             end
 
@@ -131,7 +135,7 @@ module ConsulCookbook
               sensitive true
               content item['private_key']
               mode '0640'
-              owner new_resource.user
+              owner new_resource.owner
               group new_resource.group
             end
           end
@@ -141,7 +145,7 @@ module ConsulCookbook
           end
 
           file new_resource.path do
-            owner new_resource.user
+            owner new_resource.owner
             group new_resource.group
             content new_resource.to_json
             mode '0640'

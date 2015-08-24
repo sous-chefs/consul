@@ -3,14 +3,31 @@ require_relative '../../../libraries/consul_config'
 
 describe ConsulCookbook::Resource::ConsulConfig do
   step_into(:consul_config)
+  before do
+    recipe = double('Chef::Recipe')
+    allow_any_instance_of(Chef::RunContext).to receive(:include_recipe).and_return([recipe])
+    allow_any_instance_of(Chef::Provider).to receive(:chef_vault_item) { { 'ca_certificate' => 'foo', 'certificate' => 'bar', 'private_key' => 'baz' }  }
+  end
 
-  context '#action_create' do
-    before do
-      recipe = double('Chef::Recipe')
-      allow_any_instance_of(Chef::RunContext).to receive(:include_recipe).and_return([recipe])
-      allow_any_instance_of(Chef::Provider).to receive(:chef_vault_item) { { 'ca_certificate' => 'foo', 'certificate' => 'bar', 'private_key' => 'baz' }  }
+  context 'sets options directly' do
+    recipe do
+      consul_config '/etc/consul/default.json' do
+        options do
+          recurser 'foo'
+        end
+      end
     end
 
+    it { is_expected.to render_file('/etc/consul/default.json').with_content(<<-EOH.chomp) }
+{
+  "verify_incoming": false,
+  "verify_outgoing": false,
+  "recurser": "foo"
+}
+EOH
+  end
+
+  context 'manages certificates' do
     recipe do
       consul_config '/etc/consul/default.json' do
         key_file '/etc/consul/ssl/private/consul.key'
@@ -52,18 +69,15 @@ describe ConsulCookbook::Resource::ConsulConfig do
 
     it { is_expected.to create_directory('/etc/consul') }
     it { is_expected.to create_file('/etc/consul/default.json') }
-
-    it { run_chef }
   end
 
-  context '#action_delete' do
+  context 'deletes configuration' do
     recipe do
       consul_config '/etc/consul/default.json' do
         action :delete
       end
 
       it { is_expected.to delete_file('/etc/consul/default.json') }
-      it { run_chef }
     end
   end
 end

@@ -22,7 +22,7 @@ poise_service_user node['consul']['service_user'] do
 end
 
 config = consul_config node['consul']['service_name'] do |r|
-  user node['consul']['service_user']
+  owner node['consul']['service_user']
   group node['consul']['service_group']
 
   node['consul']['config'].each_pair { |k, v| r.send(k, v) }
@@ -36,5 +36,4 @@ consul_service node['consul']['service_name'] do |r|
 
   node['consul']['service'].each_pair { |k, v| r.send(k, v) }
   subscribes :restart, "consul_config[#{config.name}]", :delayed
-  action [:enable, :start]
 end
