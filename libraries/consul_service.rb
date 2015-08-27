@@ -27,7 +27,7 @@ module ConsulCookbook
       # @return [String]
       attribute(:install_path, kind_of: String, default: '/srv')
 
-      # @!attribute config_filename
+      # @!attribute config_file
       # @return [String]
       attribute(:config_file, kind_of: String, default: '/etc/consul.json')
 
@@ -160,7 +160,7 @@ module ConsulCookbook
 
       def action_disable
         notifying_block do
-          file new_resource.filename do
+          file new_resource.config_file do
             action :delete
           end
 
