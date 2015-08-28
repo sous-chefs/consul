@@ -163,14 +163,6 @@ module ConsulCookbook
           file new_resource.config_file do
             action :delete
           end
-
-          directory new_resource.config_dir do
-            action :delete
-          end
-
-          directory new_resource.data_dir do
-            action :delete
-          end
         end
         super
       end
