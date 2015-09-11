@@ -6,7 +6,7 @@ describe ConsulCookbook::Resource::ConsulConfig do
   before do
     recipe = double('Chef::Recipe')
     allow_any_instance_of(Chef::RunContext).to receive(:include_recipe).and_return([recipe])
-    allow_any_instance_of(Chef::Provider).to receive(:chef_vault_item) { { 'ca_certificate' => 'foo', 'certificate' => 'bar', 'private_key' => 'baz' }  }
+    allow_any_instance_of(Chef::Provider).to receive(:chef_vault_item) { { 'ca_certificate' => 'foo', 'certificate' => 'bar', 'private_key' => 'baz' } }
   end
 
   context 'sets options directly' do
@@ -44,27 +44,27 @@ EOH
 
     it do
       is_expected.to create_file('/etc/consul/ssl/CA/ca.crt')
-      .with(content: 'foo')
-      .with(owner: 'consul')
-      .with(group: 'consul')
-      .with(mode: '0644')
+        .with(content: 'foo')
+        .with(owner: 'consul')
+        .with(group: 'consul')
+        .with(mode: '0644')
     end
 
     it do
       is_expected.to create_file('/etc/consul/ssl/certs/consul.crt')
-      .with(content: 'bar')
-      .with(owner: 'consul')
-      .with(group: 'consul')
-      .with(mode: '0644')
+        .with(content: 'bar')
+        .with(owner: 'consul')
+        .with(group: 'consul')
+        .with(mode: '0644')
     end
 
     it do
       is_expected.to create_file('/etc/consul/ssl/private/consul.key')
-      .with(content: 'baz')
-      .with(sensitive: true)
-      .with(owner: 'consul')
-      .with(group: 'consul')
-      .with(mode: '0640')
+        .with(content: 'baz')
+        .with(sensitive: true)
+        .with(owner: 'consul')
+        .with(group: 'consul')
+        .with(mode: '0640')
     end
 
     it { is_expected.to create_directory('/etc/consul') }

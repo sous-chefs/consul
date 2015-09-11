@@ -14,14 +14,12 @@ describe ConsulCookbook::Resource::ConsulWatch do
     it { is_expected.to create_directory('/etc/consul') }
     it do
       is_expected.to create_file('/etc/consul/foo.json')
-      .with(user: 'consul', group: 'consul', mode: '0640')
-      .with(content: JSON.pretty_generate(
-        {
+        .with(user: 'consul', group: 'consul', mode: '0640')
+        .with(content: JSON.pretty_generate(
           type: 'key',
           key: 'foo/bar/baz',
           handler: '/bin/false'
-        }
-      ))
+        ))
     end
   end
 end
