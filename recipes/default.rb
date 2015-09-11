@@ -4,6 +4,7 @@
 #
 # Copyright 2014, 2015 Bloomberg Finance L.P.
 #
+
 include_recipe 'selinux::disabled'
 
 if node['firewall']['allow_consul']
