@@ -18,7 +18,6 @@ end
 
 poise_service_user node['consul']['service_user'] do
   group node['consul']['service_group']
-  action :create
 end
 
 config = consul_config node['consul']['service_name'] do |r|

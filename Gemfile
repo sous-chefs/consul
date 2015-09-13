@@ -1,12 +1,12 @@
 source 'https://rubygems.org'
 gem 'chef-vault', '~> 2.6'
-gem 'poise', '~> 2.0'
+gem 'poise', '~> 2.2'
 gem 'poise-service', '~> 1.0'
 gem 'poise-boiler'
 
 group :lint do
   gem 'rubocop'
-  gem 'foodcritic', git: 'https://github.com/acrmp/foodcritic'
+  gem 'foodcritic'
 end
 
 group :kitchen_common do
@@ -32,8 +32,6 @@ end
 
 group :development do
   gem 'awesome_print'
-  gem 'guard'
-  gem 'guard-kitchen'
   gem 'guard-rspec'
   gem 'guard-rubocop'
   gem 'guard-foodcritic'

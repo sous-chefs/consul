@@ -8,9 +8,9 @@ guard 'rubocop' do
   watch('metadata.rb')
 end
 
-guard :rspec, :cmd => 'chef exec /opt/chefdk/embedded/bin/rspec', all_on_start: false, notification: false do
+guard :rspec, cmd: 'bin/rspec', all_on_start: false, notification: false do
   watch(%r{^(recipes|libraries|providers|resources)/(.+)\.rb$}) do |m|
     "test/spec/#{m[0]}/#{m[1]}_spec.rb"
   end
-  watch('test/spec/spec_helper.rb')      { 'test/spec' }
+  watch('test/spec/spec_helper.rb') { 'test/spec' }
 end
