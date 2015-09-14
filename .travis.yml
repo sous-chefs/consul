@@ -1,14 +1,15 @@
 ---
 language: ruby
+sudo: false
 notifications:
   slack: bloomberg-rnd:eHp3Czg42iGzaTgG8sAFeD9v
 script: bundle exec rake travis
+cache: bundler
 rvm:
   - 2.1
   - 2.2
 branches:
   only:
     - master
-builder_args: --without kitchen_vagrant
 matrix:
   fast_finish: true
