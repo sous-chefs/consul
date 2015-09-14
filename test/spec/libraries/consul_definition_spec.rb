@@ -3,6 +3,7 @@ require_relative '../../../libraries/consul_definition'
 
 describe ConsulCookbook::Resource::ConsulDefinition do
   step_into(:consul_definition)
+  let(:chefspec_options) { {platform: 'ubuntu', version: '14.04'} }
 
   context 'service definition' do
     recipe do

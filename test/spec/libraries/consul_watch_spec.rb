@@ -3,6 +3,8 @@ require_relative '../../../libraries/consul_watch'
 
 describe ConsulCookbook::Resource::ConsulWatch do
   step_into(:consul_watch)
+  let(:chefspec_options) { {platform: 'ubuntu', version: '14.04'} }
+
   context 'key watch' do
     recipe do
       consul_watch 'foo' do

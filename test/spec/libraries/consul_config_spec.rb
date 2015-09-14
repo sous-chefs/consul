@@ -3,6 +3,8 @@ require_relative '../../../libraries/consul_config'
 
 describe ConsulCookbook::Resource::ConsulConfig do
   step_into(:consul_config)
+  let(:chefspec_options) { {platform: 'ubuntu', version: '14.04'} }
+
   before do
     recipe = double('Chef::Recipe')
     allow_any_instance_of(Chef::RunContext).to receive(:include_recipe).and_return([recipe])

@@ -3,6 +3,8 @@ require_relative '../../../libraries/consul_execute'
 
 describe ConsulCookbook::Resource::ConsulExecute do
   step_into(:consul_execute)
+  let(:chefspec_options) { {platform: 'ubuntu', version: '14.04'} }
+
   context 'without options' do
     recipe do
       consul_execute 'uptime'
