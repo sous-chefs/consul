@@ -43,6 +43,7 @@ AllCops:
     - 'Guardfile'
     - 'test/**/*'
     - 'bin/*'
+    - 'vendor/**/*'
 
 Style/GuardClause:
   Enabled: false
