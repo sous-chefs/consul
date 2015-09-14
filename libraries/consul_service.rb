@@ -127,6 +127,9 @@ module ConsulCookbook
 
             source_dir = directory ::File.join(new_resource.install_path, 'consul', 'src') do
               recursive true
+              owner new_resource.user
+              group new_resource.group
+              mode '0755'
             end
 
             git ::File.join(source_dir.path, "consul-#{new_resource.version}") do
@@ -139,23 +142,25 @@ module ConsulCookbook
               action :install
             end
 
-            directory ::File.join(new_resource.install_path, 'bin')
+            directory ::File.join(new_resource.install_path, 'bin') do
+              recursive true
+              owner new_resource.user
+              group new_resource.group
+              mode '0755'
+            end
 
             link ::File.join(new_resource.install_path, 'bin', 'consul') do
               to ::File.join(source_dir.path, "consul-#{new_resource.version}", 'consul')
             end
           end
 
-          directory new_resource.data_dir do
-            recursive true
-            owner new_resource.user
-            group new_resource.group
-            mode '0755'
-          end
-
-          directory new_resource.config_dir do
-            recursive true
-            mode '0755'
+          [new_resource.data_dir, new_resource.config_dir].each do |dirname|
+            directory dirname do
+              recursive true
+              owner new_resource.user
+              group new_resource.group
+              mode '0755'
+            end
           end
         end
         super
