@@ -26,7 +26,7 @@ module ConsulCookbook
 
       # @!attribute binary_url
       # @return [String]
-      attribute(:binary_url, kind_of: String, default: "https://dl.bintray.com/mitchellh/consul/%{filename}.zip")
+      attribute(:binary_url, kind_of: String, default: 'https://dl.bintray.com/mitchellh/consul/%{filename}.zip')
 
       # @!attribute source_url
       # @return [String]
@@ -43,7 +43,6 @@ module ConsulCookbook
       def binary_filename
         [version, 'web_ui'].join('_')
       end
-
     end
   end
 
@@ -55,7 +54,7 @@ module ConsulCookbook
 
       def action_install
         notifying_block do
-          artifact = libartifact_file "#{new_resource.name}-#{new_resource.version}" do
+          libartifact_file "#{new_resource.name}-#{new_resource.version}" do
             artifact_name new_resource.name
             artifact_version new_resource.version
             owner new_resource.owner
@@ -69,7 +68,7 @@ module ConsulCookbook
 
       def action_uninstall
         notifying_block do
-          artifact = libartifact_file "#{new_resource.name}-#{new_resource.version}" do
+          libartifact_file "#{new_resource.name}-#{new_resource.version}" do
             action :delete
             artifact_name new_resource.name
             artifact_version new_resource.version
