@@ -164,9 +164,11 @@ It does not change agent's configuration by itself.
 ```ruby
 consul_config 'consul' do
   ...
-  ui_dir '/opt/consul-ui/current/dist'
+  ui_dir '/srv/consul-ui/current/dist'
 end
 ```
+
+This is optional, because consul UI can be hosted by any web server.
 
 
 [0]: http://blog.vialstudios.com/the-environment-cookbook-pattern/#theapplicationcookbook
