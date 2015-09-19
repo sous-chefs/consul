@@ -15,16 +15,16 @@ describe ConsulCookbook::Resource::ConsulConfig do
     recipe do
       consul_config '/etc/consul/default.json' do
         options do
-          recurser 'foo'
+          recursor 'foo'
         end
       end
     end
 
     it { is_expected.to render_file('/etc/consul/default.json').with_content(<<-EOH.chomp) }
 {
+  "recursor": "foo",
   "verify_incoming": false,
-  "verify_outgoing": false,
-  "recurser": "foo"
+  "verify_outgoing": false
 }
 EOH
   end
