@@ -94,7 +94,7 @@ module ConsulCookbook
         config = to_hash.keep_if do |k, _|
           for_keeps.include?(k.to_sym)
         end.merge(options)
-        JSON.pretty_generate(config, quirks_mode: true)
+        JSON.pretty_generate(Hash[config.sort], quirks_mode: true)
       end
 
       def tls?
