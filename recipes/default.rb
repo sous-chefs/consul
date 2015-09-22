@@ -12,7 +12,8 @@ if node['firewall']['allow_consul']
   firewall_rule 'consul' do
     protocol :tcp
     port node['consul']['config']['ports'].values
-    action :allow
+    action :create
+    command :allow
   end
 end
 
