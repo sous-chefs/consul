@@ -19,9 +19,13 @@ describe ConsulCookbook::Resource::ConsulWatch do
       .with(user: 'consul', group: 'consul', mode: '0640')
       .with(content: JSON.pretty_generate(
         {
-          type: 'key',
-          key: 'foo/bar/baz',
-          handler: '/bin/false'
+          watches: [
+            {
+              type: 'key',
+              key: 'foo/bar/baz',
+              handler: '/bin/false'
+            }
+          ]
         }
       ))
     end
