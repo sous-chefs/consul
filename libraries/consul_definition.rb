@@ -35,7 +35,9 @@ module ConsulCookbook
       attribute(:parameters, option_collector: true, default: {})
 
       def to_json
-        JSON.pretty_generate(type => parameters.merge(name: name))
+        final_parameters = parameters
+        final_parameters = final_parameters.merge(name: name) if final_parameters[:name].nil?
+        JSON.pretty_generate(type => final_parameters)
       end
 
       action(:create) do
