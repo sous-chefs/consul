@@ -29,6 +29,30 @@ describe ConsulCookbook::Resource::ConsulDefinition do
     end
   end
 
+  context 'service definition with explicit name' do
+    recipe do
+      consul_definition 'redis' do
+        type 'service'
+        parameters(name: 'myredis', tags: %w{master}, address: '127.0.0.1', port: 6379, interval: '10s')
+      end
+    end
+
+    it { is_expected.to create_directory('/etc/consul') }
+    it do
+      is_expected.to create_file('/etc/consul/redis.json')
+      .with(user: 'consul', group: 'consul', mode: '0640')
+      .with(content: JSON.pretty_generate(
+        service: {
+          name: 'myredis',
+          tags: ['master'],
+          address: '127.0.0.1',
+          port: 6379,
+          interval: '10s'
+        }
+      ))
+    end
+  end
+
   context 'check definition' do
     recipe do
       consul_definition 'web-api' do
