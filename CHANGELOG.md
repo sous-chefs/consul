@@ -4,6 +4,11 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 
+## [1.3.1]
+### Bug Fixes
+- Fixes constraints on cookbooks for builds.
+- Modifies chef-vault cookbook entry to use upstream.
+
 ## [1.3.0]
 ### Enhancements
     - Travis builds now use new container infrastructure.
@@ -20,7 +25,7 @@ This project adheres to [Semantic Versioning](http://semver.org/).
     - #222: Fixes syntax for Consul watch resource configuration. [@wk8](https://github.com/wk8)
     - #223: Skips SELinux recipe on non-Linux platforms. [@kamaradclimber](https://github.com/kamaradclimber)
     - #227: Fixes definition resource to be able to override name. [@tomzo](https://github.com/tomzo)
-
+`
 ## [0.10.0]
 ### Enhancements
     - Node attribute for specifying Consul log file. [@darron](https://github.com/darron)
@@ -83,7 +88,8 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 ### Bug Fixes
     - Reloading the Consul service when using runit init style.
 
-[Unreleased]: https://github.com/johnbellone/consul-cookbook/compare/v1.3.0...HEAD
+[Unreleased]: https://github.com/johnbellone/consul-cookbook/compare/v1.3.2...HEAD
+[1.3.1]: https://github.com/johnbellone/consul-cookbook/compare/v1.3.1...HEAD
 [1.3.0]: https://github.com/johnbellone/consul-cookbook/compare/v1.3.0...HEAD
 [0.10.0]: https://github.com/johnbellone/consul-cookbook/compare/v0.10.0...HEAD
 [0.9.1]: https://github.com/johnbellone/consul-cookbook/compare/v0.9.1...HEAD
