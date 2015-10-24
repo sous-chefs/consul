@@ -42,11 +42,5 @@ consul_service node['consul']['service_name'] do |r|
   config_file config.path
 
   node['consul']['service'].each_pair { |k, v| r.send(k, v) }
-  subscribes :restart, "consul_config[#{config.name}]", :delayed unless node['consul']['install_only']
-end
-
-if node['consul']['install_only']
-  consul_service node['consul']['service_name'] do
-    action :disable
-  end
+  subscribes :restart, "consul_config[#{config.name}]", :delayed
 end
