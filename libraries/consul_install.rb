@@ -19,6 +19,10 @@ module ConsulCookbook
       # @return [String]
       attribute(:version, kind_of: String, required: true)
 
+      # @!attribute install_method
+      # @return [Symbol]
+      attribute(:install_method, equal_to: %w{source binary package}, name_attribute: true, required: true)
+
       # @!attribute install_path
       # @return [String]
       attribute(:install_path, kind_of: String, default: '/srv')
@@ -30,6 +34,10 @@ module ConsulCookbook
       # @!attribute group
       # @return [String]
       attribute(:group, kind_of: String, default: 'consul')
+
+      # @!attribute package_name
+      # @return [String]
+      attribute(:package_name, kind_of: String, default: 'consul')
 
       # @!attribute binary_url
       # @return [String]
@@ -63,6 +71,12 @@ module ConsulCookbook
 
       def action_install
         notifying_block do
+          package new_resource.package_name do
+            version new_resource.version unless new_resource.version.nil?
+            only_if { new_resource.install_method == 'package' }
+          end
+
+          if new_resource.install_method == 'binary'
             artifact = libartifact_file "consul-#{new_resource.version}" do
               artifact_name 'consul'
               artifact_version new_resource.version
@@ -74,6 +88,7 @@ module ConsulCookbook
             link '/usr/local/bin/consul' do
               to ::File.join(artifact.current_path, 'consul')
             end
+          end
 
           [new_resource.data_dir, new_resource.config_dir].each do |dirname|
             directory dirname do
@@ -88,13 +103,20 @@ module ConsulCookbook
 
       def action_uninstall
         notifying_block do
+          package new_resource.package_name do
+            action :remove
+            only_if { new_resource.install_method == 'package' }
+          end
+
           link '/usr/local/bin/consul' do
             action :delete
+            only_if { new_resource.install_method == 'binary' }
           end
 
           directory "#{new_resource.install_path}/consul" do
             recursive true
             action :delete
+            only_if { new_resource.install_method == 'binary' }
           end
         end
       end

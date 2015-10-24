@@ -23,6 +23,9 @@ describe ConsulCookbook::Resource::ConsulInstall do
     end
 
     it { is_expected.to create_link('/usr/local/bin/consul').with(to: '/srv/consul/current/consul') }
+
+    # Don't install via other methods
+    it { is_expected.to_not install_package('consul') }
   end
 
   context 'for a binary delete' do
@@ -31,5 +34,33 @@ describe ConsulCookbook::Resource::ConsulInstall do
 
     it { is_expected.to delete_directory('/srv/consul') }
     it { is_expected.to delete_link('/usr/local/bin/consul') }
+
+    # Don't uninstall via other methods
+    it { is_expected.to_not remove_package('consul') }
+  end
+
+  context 'for a package install' do
+    let(:node_attributes) { { normal_attributes: { install_method: 'package' } } }
+    recipe 'consul_spec::consul_install'
+
+    it { is_expected.to create_directory('/etc/consul') }
+    it { is_expected.to create_directory('/var/lib/consul') }
+
+    it { is_expected.to install_package('consul').with(version: '0.5.2') }
+
+    # Don't install via other methods
+    it { is_expected.to_not create_libartifact_file('consul-0.5.2') }
+    it { is_expected.to_not create_link('/usr/local/bin/consul') }
+  end
+
+  context "for a package uninstall" do
+    let(:node_attributes) { { normal_attributes: {install_method: 'package', consul_install_action: :uninstall} } }
+    recipe 'consul_spec::consul_install'
+
+    it { is_expected.to remove_package('consul') }
+
+    # Don't uninstall via other methods
+    it { is_expected.to_not delete_directory('/srv/consul') }
+    it { is_expected.to_not delete_link('/usr/local/bin/consul') }
   end
 end
