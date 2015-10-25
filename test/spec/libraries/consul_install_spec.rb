@@ -3,7 +3,6 @@ require_relative '../../../libraries/consul_install'
 
 describe ConsulCookbook::Resource::ConsulInstall do
   step_into(:consul_install)
-  let(:provider) { ConsulCookbook::Provider::ConsulInstall }
   let(:node_attributes) { Hash.new }
   let(:platform_chefspec_options) { {platform: 'ubuntu', version: '14.04'} }
   let(:chefspec_options) { node_attributes.merge platform_chefspec_options }
