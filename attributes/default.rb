@@ -31,6 +31,11 @@ default['consul']['service']['config_dir'] = '/etc/consul'
 default['consul']['service']['binary_url'] = "https://dl.bintray.com/mitchellh/consul/%{filename}.zip" # rubocop:disable Style/StringLiterals
 default['consul']['service']['source_url'] = 'https://github.com/hashicorp/consul'
 
+default['consul']['install']['install_method'] = 'binary'
+default['consul']['install']['config_dir'] = '/etc/consul'
+default['consul']['install']['binary_url'] = "https://dl.bintray.com/mitchellh/consul/%{filename}.zip" # rubocop:disable Style/StringLiterals
+default['consul']['install']['source_url'] = 'https://github.com/hashicorp/consul'
+
 default['consul']['version'] = '0.5.2'
 default['consul']['checksums'] = {
   '0.5.0_darwin_amd64' => '24d9758c873e9124e0ce266f118078f87ba8d8363ab16c2e59a3cd197b77e964',
