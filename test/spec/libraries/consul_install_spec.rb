@@ -69,6 +69,14 @@ describe ConsulCookbook::Resource::ConsulInstall do
     it { is_expected.to_not create_directory('/srv/bin') }
     it { is_expected.to_not install_golang_package('github.com/hashicorp/consul') }
     it { is_expected.to_not create_link('/srv/bin/consul') }
+
+    context "on windows" do
+      let(:platform_chefspec_options) { {platform: 'windows', version: '2012r2'} }
+      recipe 'consul_spec::consul_install'
+
+      it { is_expected.to install_chocolatey('consul').with(version: '0.5.2') }
+      it { is_expected.to_not install_package('consul') }
+    end
   end
 
   context "for a package uninstall" do
@@ -80,6 +88,14 @@ describe ConsulCookbook::Resource::ConsulInstall do
     # Don't uninstall via other methods
     it { is_expected.to_not delete_directory('/srv/consul') }
     it { is_expected.to_not delete_link('/usr/local/bin/consul') }
+
+    context "on windows" do
+      let(:platform_chefspec_options) { {platform: 'windows', version: '2012r2'} }
+      recipe 'consul_spec::consul_install'
+
+      it { is_expected.to remove_chocolatey('consul') }
+      it { is_expected.to_not remove_package('consul') }
+    end
   end
 
   context "for a source install" do

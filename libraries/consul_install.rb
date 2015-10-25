@@ -75,9 +75,18 @@ module ConsulCookbook
 
       def action_install
         notifying_block do
-          package new_resource.package_name do
-            version new_resource.version unless new_resource.version.nil?
-            only_if { new_resource.install_method == 'package' }
+          if new_resource.install_method == 'package'
+            if node['platform'] == 'windows'
+              include_recipe 'chocolatey::default'
+
+              chocolatey new_resource.package_name do
+                version new_resource.version
+              end
+            else
+              package new_resource.package_name do
+                version new_resource.version unless new_resource.version.nil?
+              end
+            end
           end
 
           if new_resource.install_method == 'binary'
@@ -139,9 +148,16 @@ module ConsulCookbook
 
       def action_uninstall
         notifying_block do
-          package new_resource.package_name do
-            action :remove
-            only_if { new_resource.install_method == 'package' }
+          if new_resource.install_method == 'package'
+            package new_resource.package_name do
+              action :remove
+              not_if { node[:platform] == 'windows' }
+            end
+
+            chocolatey new_resource.package_name do
+              action :remove
+              only_if { node[:platform] == 'windows' }
+            end
           end
 
           link '/usr/local/bin/consul' do
