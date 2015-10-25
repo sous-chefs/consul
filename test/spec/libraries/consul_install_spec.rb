@@ -3,9 +3,15 @@ require_relative '../../../libraries/consul_install'
 
 describe ConsulCookbook::Resource::ConsulInstall do
   step_into(:consul_install)
+  let(:provider) { ConsulCookbook::Provider::ConsulInstall }
   let(:node_attributes) { Hash.new }
-  let(:default_chefspec_options) { {platform: 'ubuntu', version: '14.04'} }
-  let(:chefspec_options) { node_attributes.merge default_chefspec_options }
+  let(:platform_chefspec_options) { {platform: 'ubuntu', version: '14.04'} }
+  let(:chefspec_options) { node_attributes.merge platform_chefspec_options }
+
+  before do
+    recipe_double = double("Chef::Recipe")
+    allow_any_instance_of(Chef::RunContext).to receive(:include_recipe).and_return([recipe_double])
+  end
 
   context 'for a binary install' do
     let(:node_attributes) { { normal_attributes: { install_method: 'binary' } } }
@@ -26,6 +32,12 @@ describe ConsulCookbook::Resource::ConsulInstall do
 
     # Don't install via other methods
     it { is_expected.to_not install_package('consul') }
+
+    it { is_expected.to_not create_directory('/srv/consul/src') }
+    it { is_expected.to_not checkout_git('/srv/consul/src/consul-0.5.2') }
+    it { is_expected.to_not create_directory('/srv/bin') }
+    it { is_expected.to_not install_golang_package('github.com/hashicorp/consul') }
+    it { is_expected.to_not create_link('/srv/bin/consul') }
   end
 
   context 'for a binary delete' do
@@ -51,6 +63,12 @@ describe ConsulCookbook::Resource::ConsulInstall do
     # Don't install via other methods
     it { is_expected.to_not create_libartifact_file('consul-0.5.2') }
     it { is_expected.to_not create_link('/usr/local/bin/consul') }
+
+    it { is_expected.to_not create_directory('/srv/consul/src') }
+    it { is_expected.to_not checkout_git('/srv/consul/src/consul-0.5.2') }
+    it { is_expected.to_not create_directory('/srv/bin') }
+    it { is_expected.to_not install_golang_package('github.com/hashicorp/consul') }
+    it { is_expected.to_not create_link('/srv/bin/consul') }
   end
 
   context "for a package uninstall" do
@@ -61,6 +79,61 @@ describe ConsulCookbook::Resource::ConsulInstall do
 
     # Don't uninstall via other methods
     it { is_expected.to_not delete_directory('/srv/consul') }
+    it { is_expected.to_not delete_link('/usr/local/bin/consul') }
+  end
+
+  context "for a source install" do
+    let(:git_url) { "foogit.com/cousul" }
+    let(:node_attributes) { { normal_attributes: { install_method: 'source', consul_source: git_url } } }
+    recipe 'consul_spec::consul_install'
+
+    it { is_expected.to create_directory('/etc/consul') }
+    it { is_expected.to create_directory('/var/lib/consul') }
+
+    it {
+      is_expected.to create_directory('/srv/consul/src')
+      .with(recursive: true)
+      .with(owner: 'consul')
+      .with(group: 'consul')
+      .with(mode: '0755')
+    }
+
+    it {
+      is_expected.to checkout_git('/srv/consul/src/consul-0.5.2')
+      .with(repository: git_url)
+      .with(reference: '0.5.2')
+    }
+
+    it { is_expected.to install_golang_package('github.com/hashicorp/consul') }
+
+    it {
+      is_expected.to create_directory('/srv/bin')
+      .with(recursive: true)
+      .with(owner: 'consul')
+      .with(group: 'consul')
+      .with(mode: '0755')
+    }
+
+    it {
+      is_expected.to create_link('/srv/bin/consul')
+      .with(to: '/srv/consul/src/consul-0.5.2/consul')
+    }
+
+    # Don't install via other methods
+    it { is_expected.to_not create_libartifact_file('consul-0.5.2') }
+    it { is_expected.to_not create_link('/usr/local/bin/consul') }
+
+    it { is_expected.to_not install_package('consul') }
+  end
+
+  context "for a source uninstall" do
+    let(:node_attributes) { { normal_attributes: { install_method: 'source', consul_install_action: :uninstall } } }
+    recipe 'consul_spec::consul_install'
+
+    it { is_expected.to delete_directory('/srv/consul') }
+
+    # Don't uninstall via other methods
+    it { is_expected.to_not remove_package('consul') }
     it { is_expected.to_not delete_link('/usr/local/bin/consul') }
   end
 end

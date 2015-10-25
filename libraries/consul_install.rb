@@ -43,6 +43,10 @@ module ConsulCookbook
       # @return [String]
       attribute(:binary_url, kind_of: String)
 
+      # @!attribute source_url
+      # @return [String]
+      attribute(:source_url, kind_of: String)
+
       # @!attribute data_dir
       # @return [String]
       attribute(:data_dir, kind_of: String, default: '/var/lib/consul')
@@ -90,6 +94,38 @@ module ConsulCookbook
             end
           end
 
+          if new_resource.install_method == 'source'
+            include_recipe 'golang::default'
+
+            source_dir = directory ::File.join(new_resource.install_path, 'consul', 'src') do
+              recursive true
+              owner new_resource.user
+              group new_resource.group
+              mode '0755'
+            end
+
+            git ::File.join(source_dir.path, "consul-#{new_resource.version}") do
+              repository new_resource.source_url
+              reference new_resource.version
+              action :checkout
+            end
+
+            golang_package 'github.com/hashicorp/consul' do
+              action :install
+            end
+
+            directory ::File.join(new_resource.install_path, 'bin') do
+              recursive true
+              owner new_resource.user
+              group new_resource.group
+              mode '0755'
+            end
+
+            link ::File.join(new_resource.install_path, 'bin', 'consul') do
+              to ::File.join(source_dir.path, "consul-#{new_resource.version}", 'consul')
+            end
+          end
+
           [new_resource.data_dir, new_resource.config_dir].each do |dirname|
             directory dirname do
               recursive true
@@ -116,7 +152,7 @@ module ConsulCookbook
           directory "#{new_resource.install_path}/consul" do
             recursive true
             action :delete
-            only_if { new_resource.install_method == 'binary' }
+            only_if { %w[binary source].include? new_resource.install_method }
           end
         end
       end
