@@ -26,11 +26,6 @@ default['consul']['config']['ports'] = {
   'server'   => 8300
 }
 
-default['consul']['service']['install_method'] = 'binary'
-default['consul']['service']['config_dir'] = '/etc/consul'
-default['consul']['service']['binary_url'] = "https://dl.bintray.com/mitchellh/consul/%{filename}.zip" # rubocop:disable Style/StringLiterals
-default['consul']['service']['source_url'] = 'https://github.com/hashicorp/consul'
-
 default['consul']['install']['install_method'] = 'binary'
 default['consul']['install']['config_dir'] = '/etc/consul'
 default['consul']['install']['binary_url'] = "https://dl.bintray.com/mitchellh/consul/%{filename}.zip" # rubocop:disable Style/StringLiterals
