@@ -92,6 +92,8 @@ module ConsulCookbook
       def to_json
         for_keeps = %i{acl_datacenter acl_default_policy acl_down_policy acl_master_token acl_token acl_ttl addresses advertise_addr advertise_addr_wan bind_addr bootstrap bootstrap_expect check_update_interval client_addr data_dir datacenter disable_anonymous_signature disable_remote_exec disable_update_check dns_config domain enable_debug enable_syslog encrypt leave_on_terminate log_level node_name ports protocol recursor recursors retry_interval server server_name skip_leave_on_interrupt start_join start_join_wan statsd_addr statsite_addr syslog_facility ui_dir verify_incoming verify_outgoing verify_server_hostname watches}
         for_keeps << %i{ca_file cert_file key_file} if tls?
+        for_keeps = for_keeps.flatten
+
         config = to_hash.keep_if do |k, _|
           for_keeps.include?(k.to_sym)
         end.merge(options)
