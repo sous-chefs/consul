@@ -85,7 +85,7 @@ watches and definitions. We write these out as
 a separate configuration file in the JSON file format. The provider
 for both of these resources are identical in functionality.
 
-Below is an example of writing a [Consul service definition][11] for
+Below is an example of writing a [Consul service definition][10] for
 the master instance of Redis. We pass in several parameters and tell
 the resource to notify the proper instance of the Consul service to
 reload.
@@ -97,7 +97,7 @@ consul_definition 'redis' do
 end
 ```
 
-A [check definition][12] can easily be added as well. You simply have
+A [check definition][11] can easily be added as well. You simply have
 to change the type and pass in the correct parameters. The definition
 below checks memory utilization using a script on a ten second interval.
 ```ruby
@@ -184,5 +184,5 @@ This is optional, because consul UI can be hosted by any web server.
 [10]: https://consul.io/docs/agent/services.html
 [11]: https://consul.io/docs/agent/checks.html
 [12]: https://consul.io/docs/commands/exec.html
-[13]:
+[13]:https://en.wikipedia.org/wiki/Quorum_(distributed_computing)
 [14]: https://github.com/johnbellone/consul-cluster-cookbook
