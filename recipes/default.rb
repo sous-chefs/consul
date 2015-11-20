@@ -35,12 +35,20 @@ config = consul_config node['consul']['service_name'] do |r|
   node['consul']['config'].each_pair { |k, v| r.send(k, v) }
 end
 
-consul_service node['consul']['service_name'] do |r|
+install = consul_install node['consul']['install']['install_method'] do |r|
   user node['consul']['service_user']
   group node['consul']['service_group']
   version node['consul']['version']
+
+  node['consul']['install'].each_pair { |k, v| r.send(k, v) }
+end
+
+consul_service node['consul']['service_name'] do |r|
+  user node['consul']['service_user']
+  group node['consul']['service_group']
+  config_dir install.config_dir
   config_file config.path
 
-  node['consul']['service'].each_pair { |k, v| r.send(k, v) }
+  node['consul'].fetch('service', {}).each_pair { |k, v| r.send(k, v) }
   subscribes :restart, "consul_config[#{config.name}]", :delayed
 end
