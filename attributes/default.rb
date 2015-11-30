@@ -51,3 +51,9 @@ default['consul']['checksums'] = {
   '0.5.2_windows_386'  => '2e866812de16f1a6138a0fd1eebc76143f1314826e3b52597a55ac510ae94be6',
   '0.5.2_web_ui'       => 'ad883aa52e1c0136ab1492bbcedad1210235f26d59719fb6de3ef6464f1ff3b1'
 }
+
+###
+# selinux
+###
+
+default['selinux']['state'] = 'permissive'

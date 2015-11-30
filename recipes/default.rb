@@ -4,7 +4,7 @@
 #
 # Copyright 2014, 2015 Bloomberg Finance L.P.
 #
-include_recipe 'selinux::disabled' if node['os'] == 'linux'
+include_recipe 'selinux::default' if node['os'] == 'linux'
 
 if node['firewall']['allow_consul']
   include_recipe 'firewall::default'
