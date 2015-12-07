@@ -26,7 +26,7 @@ module ConsulCookbook
 
       # @!attribute binary_url
       # @return [String]
-      attribute(:binary_url, kind_of: String, default: 'https://dl.bintray.com/mitchellh/consul/%{filename}.zip')
+      attribute(:binary_url, kind_of: String, default: 'https://releases.hashicorp.com/consul/%{version}/%{filename}.zip')
 
       # @!attribute source_url
       # @return [String]
@@ -60,7 +60,7 @@ module ConsulCookbook
             owner new_resource.owner
             group new_resource.group
             install_path new_resource.install_path
-            remote_url new_resource.binary_url % { filename: new_resource.binary_filename }
+            remote_url new_resource.binary_url % { version: new_resource.version, filename: new_resource.binary_filename }
             remote_checksum new_resource.binary_checksum
           end
         end
