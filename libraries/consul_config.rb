@@ -149,6 +149,7 @@ module ConsulCookbook
             owner new_resource.owner
             group new_resource.group
             mode '0755'
+            not_if { ::File.dirname(new_resource.path) == '/etc' }
           end
 
           file new_resource.path do
