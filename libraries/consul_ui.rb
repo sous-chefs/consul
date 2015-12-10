@@ -41,7 +41,7 @@ module ConsulCookbook
       end
 
       def binary_filename
-        [version, 'web_ui'].join('_')
+        ['consul', version, 'web_ui'].join('_')
       end
     end
   end
