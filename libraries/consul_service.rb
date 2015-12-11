@@ -80,7 +80,7 @@ module ConsulCookbook
 
       def binary_filename
         arch = node['kernel']['machine'] =~ /x86_64/ ? 'amd64' : '386'
-        [version, node['os'], arch].join('_')
+        ['consul', version, node['os'], arch].join('_')
       end
     end
   end
