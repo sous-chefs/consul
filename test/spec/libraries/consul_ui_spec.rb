@@ -9,7 +9,7 @@ describe ConsulCookbook::Resource::ConsulUI do
 
     it do is_expected.to create_libartifact_file('myconsul-ui-0.5.1')
       .with(owner: 'myconsul',group: 'myconsul',
-            remote_url: "https://releases.hashicorp.com/consul/0.5.1/0.5.1_web_ui.zip",
+            remote_url: "https://releases.hashicorp.com/consul/0.5.1/consul_0.5.1_web_ui.zip",
             install_path: '/opt')
     end
   end
