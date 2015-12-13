@@ -8,4 +8,5 @@ end
 
 group :integration do
   cookbook 'consul_spec', path: 'test/cookbooks/consul_spec'
+  cookbook 'apt'
 end

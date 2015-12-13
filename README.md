@@ -126,6 +126,39 @@ times we need to tell Consul to actually reload configurations. If
 there are several definitions this may save a little time off your
 Chef run.
 
+### ACLs
+The `consul_acl` resource allows management of [Consul ACL rules][15]. Supported
+actions are `:create` and `:delete`. The `:create` action will update/insert
+as necessary.
+
+The `consul_acl` resource requires the [Diplomat Ruby API][16] gem to be
+installed and available to Chef before using the resource. This can be
+accomplished by including `consul::client_gem` recipe in your run list.
+
+In order to make the resource idempotent and only notify when necessary, the
+`id` field is always required (defaults to the name of the resource).
+If `type` is not provided, it will default to "client". The `acl_name`
+and `rules` attributes are also optional; if not included they will be empty
+in the resulting ACL.
+
+The example below will create a client ACL token with an `ID` of the given UUID,
+`Name` of "AwesomeApp Token", and `Rules` of the given string.
+```ruby
+consul_acl '49f06aa9-782f-465a-becf-44f0aaefd335' do
+  acl_name 'AwesomeApp Token'
+  type 'client'
+  rules <<-EOS.gsub(/^\s{4}/, '')
+    key "" {
+      policy = "read"
+    }
+    service "" {
+      policy = "write"
+    }
+  EOS
+  auth_token node['consul']['config']['acl_master_token']
+end
+```
+
 ### Execute
 The command-line agent provides a mechanism to facilitate remote
 execution. For example, this can be used to run the `uptime` command
@@ -143,7 +176,7 @@ nature of this command it is _impossible_ for it to be idempotent.
 
 ### UI
 
-`consul_ui` resource can be used to download and extract the 
+`consul_ui` resource can be used to download and extract the
 [consul web UI](https://www.consul.io/intro/getting-started/ui.html).
 It can be done with a block like this:
 
@@ -158,7 +191,7 @@ end
 Assuming consul version `0.5.2` above block would create `/srv/consul-ui/0.5.2`
 and symlink `/srv/consul-ui/current`.
 
-It does not change agent's configuration by itself. 
+It does not change agent's configuration by itself.
 `consul_config` resource should be modified explicitly in order to host the web page.
 
 ```ruby
@@ -186,3 +219,5 @@ This is optional, because consul UI can be hosted by any web server.
 [12]: https://consul.io/docs/commands/exec.html
 [13]:https://en.wikipedia.org/wiki/Quorum_(distributed_computing)
 [14]: https://github.com/johnbellone/consul-cluster-cookbook
+[15]: https://www.consul.io/docs/internals/acl.html
+[16]: https://github.com/WeAreFarmGeek/diplomat
