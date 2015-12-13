@@ -5,11 +5,6 @@
 # Copyright 2014, 2015 Bloomberg Finance L.P.
 #
 
-if node['os'] == 'linux'
-  node.default['selinux']['state'] = 'permissive'
-  include_recipe 'selinux::default'
-end
-
 if node['firewall']['allow_consul']
   include_recipe 'firewall::default'
 
