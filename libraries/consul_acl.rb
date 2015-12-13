@@ -42,13 +42,13 @@ module ConsulCookbook
         begin
           require 'diplomat'
         rescue LoadError
-          fail 'The diplomat gem is required for the consul_acl resource; ' \
-               'include recipe[consul::client_gem] to install.'
+          raise RunTimeError, 'The diplomat gem is required; ' \
+                              'include recipe[consul::client_gem] to install.'
         end
         Diplomat.configure do |config|
           config.url = url
           config.acl_token = auth_token
-          config.options = { request: {timeout: 10 } }
+          config.options = { request: { timeout: 10 } }
         end
       end
 
