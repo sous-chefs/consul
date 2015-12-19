@@ -26,7 +26,7 @@ module ConsulCookbook
 
       # @!attribute binary_url
       # @return [String]
-      attribute(:binary_url, kind_of: String, default: 'https://releases.hashicorp.com/consul/%{version}/consul_%{filename}.zip')
+      attribute(:binary_url, kind_of: String, default: 'https://releases.hashicorp.com/consul/%{version}/%{filename}.zip')
 
       # @!attribute source_url
       # @return [String]
