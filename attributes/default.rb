@@ -26,6 +26,8 @@ default['consul']['config']['ports'] = {
   'server'   => 8300
 }
 
+default['consul']['diplomat_version'] = nil
+
 default['consul']['service']['install_method'] = 'binary'
 default['consul']['service']['config_dir'] = '/etc/consul'
 default['consul']['service']['binary_url'] = "https://releases.hashicorp.com/consul/%{version}/%{filename}.zip" # rubocop:disable Style/StringLiterals

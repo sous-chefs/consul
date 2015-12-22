@@ -46,3 +46,17 @@ suites:
     excludes:
       - centos-7.1
       - centos-6.6
+  - name: acl
+    run_list:
+      - recipe[consul::default]
+      - recipe[consul::client_gem]
+      - recipe[consul_spec::acl]
+    attributes:
+      consul:
+        config:
+          bootstrap: true
+          server: true
+          datacenter: fortmeade
+          acl_master_token: doublesecret
+          acl_datacenter: fortmeade
+          acl_default_policy: deny
