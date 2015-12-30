@@ -15,7 +15,7 @@ supports 'arch'
 supports 'windows'
 
 depends 'chef-vault', '~> 1.3'
-depends 'chocolatey'
+depends 'nssm'
 depends 'golang'
 depends 'firewall', '~> 2.0'
 depends 'libartifact', '~> 1.3'

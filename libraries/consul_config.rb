@@ -5,12 +5,14 @@
 # Copyright 2014-2016, Bloomberg Finance L.P.
 #
 require 'poise'
+require_relative 'helpers'
 
 module ConsulCookbook
   module Resource
     # @since 1.0.0
     class ConsulConfig < Chef::Resource
       include Poise(fused: true)
+      include ConsulCookbook::Helpers
       provides(:consul_config)
 
       # @!attribute path
@@ -114,49 +116,61 @@ module ConsulCookbook
             [new_resource.ca_file, new_resource.cert_file, new_resource.key_file].each do |filename|
               directory ::File.dirname(filename) do
                 recursive true
-                owner new_resource.owner
-                group new_resource.group
-                mode '0755'
+                if node['os'].eql? 'linux'
+                  owner new_resource.owner
+                  group new_resource.group
+                  mode '0755'
+                end
               end
             end
 
             item = chef_vault_item(new_resource.bag_name, new_resource.bag_item)
             file new_resource.ca_file do
               content item['ca_certificate']
-              mode '0644'
-              owner new_resource.owner
-              group new_resource.group
+              if node['os'].eql? 'linux'
+                owner new_resource.owner
+                group new_resource.group
+                mode '0644'
+              end
             end
 
             file new_resource.cert_file do
               content item['certificate']
-              mode '0644'
-              owner new_resource.owner
-              group new_resource.group
+              if node['os'].eql? 'linux'
+                owner new_resource.owner
+                group new_resource.group
+                mode '0644'
+              end
             end
 
             file new_resource.key_file do
               sensitive true
               content item['private_key']
-              mode '0640'
-              owner new_resource.owner
-              group new_resource.group
+              if node['os'].eql? 'linux'
+                owner new_resource.owner
+                group new_resource.group
+                mode '0640'
+              end
             end
           end
 
           directory ::File.dirname(new_resource.path) do
             recursive true
-            owner new_resource.owner
-            group new_resource.group
-            mode '0755'
+            if node['os'].eql? 'linux'
+              owner new_resource.owner
+              group new_resource.group
+              mode '0755'
+            end
             not_if { ::File.dirname(new_resource.path) == '/etc' }
           end
 
           file new_resource.path do
-            owner new_resource.owner
-            group new_resource.group
+            if node['os'].eql? 'linux'
+              owner new_resource.owner
+              group new_resource.group
+              mode '0640'
+            end
             content new_resource.to_json
-            mode '0640'
           end
         end
       end

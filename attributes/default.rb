@@ -4,18 +4,23 @@
 #
 # Copyright 2014-2016, Bloomberg Finance L.P.
 #
+::Chef::Node.send(:include, ConsulCookbook::Helpers)
+
+# Only used on Linux
 default['consul']['service_name'] = 'consul'
 default['consul']['service_user'] = 'consul'
 default['consul']['service_group'] = 'consul'
 
-default['consul']['config']['path'] = '/etc/consul.json'
 default['consul']['config']['bag_name'] = 'secrets'
 default['consul']['config']['bag_item'] = 'consul'
-default['consul']['config']['data_dir'] = '/var/lib/consul'
-default['consul']['config']['ca_file'] = '/etc/consul/ssl/CA/ca.crt'
-default['consul']['config']['cert_file'] = '/etc/consul/ssl/certs/consul.crt'
+
+default['consul']['config']['path'] = join_path prefix_path, 'consul.json'
+default['consul']['config']['data_dir'] = join_path prefix_path, 'data'
+default['consul']['config']['ca_file'] = join_path prefix_path, 'ssl', 'CA', 'ca.crt'
+default['consul']['config']['cert_file'] = join_path prefix_path, 'ssl', 'certs', 'consul.crt'
+default['consul']['config']['key_file'] = join_path prefix_path, 'ssl', 'private', 'consul.key'
+
 default['consul']['config']['client_addr'] = '0.0.0.0'
-default['consul']['config']['key_file'] = '/etc/consul/ssl/private/consul.key'
 default['consul']['config']['ports'] = {
   'dns'      => 8600,
   'http'     => 8500,
@@ -27,8 +32,10 @@ default['consul']['config']['ports'] = {
 
 default['consul']['diplomat_version'] = nil
 
+default['consul']['service']['config_dir'] = join_path prefix_path, 'conf.d'
+default['consul']['service']['data_dir'] = join_path prefix_path, 'data'
+
 default['consul']['service']['install_method'] = 'binary'
-default['consul']['service']['config_dir'] = '/etc/consul'
 default['consul']['service']['binary_url'] = "https://releases.hashicorp.com/consul/%{version}/%{filename}.zip" # rubocop:disable Style/StringLiterals
 
 default['consul']['service']['source_url'] = 'https://github.com/hashicorp/consul'
