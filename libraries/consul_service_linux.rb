@@ -35,19 +35,19 @@ module ConsulCookbook
             end
 
             link '/usr/local/bin/consul' do
-              to ::File.join(artifact.current_path, 'consul')
+              to join_path(artifact.current_path, 'consul')
             end
           when 'source'
             include_recipe 'golang::default'
 
-            source_dir = directory ::File.join(new_resource.install_path, 'consul', 'src') do
+            source_dir = directory join_path(new_resource.install_path, 'consul', 'src') do
               recursive true
               owner new_resource.user
               group new_resource.group
               mode '0755'
             end
 
-            git ::File.join(source_dir.path, "consul-#{new_resource.version}") do
+            git join_path(source_dir.path, "consul-#{new_resource.version}") do
               repository new_resource.source_url
               reference new_resource.version
               action :checkout
@@ -57,15 +57,15 @@ module ConsulCookbook
               action :install
             end
 
-            directory ::File.join(new_resource.install_path, 'bin') do
+            directory join_path(new_resource.install_path, 'bin') do
               recursive true
               owner new_resource.user
               group new_resource.group
               mode '0755'
             end
 
-            link ::File.join(new_resource.install_path, 'bin', 'consul') do
-              to ::File.join(source_dir.path, "consul-#{new_resource.version}", 'consul')
+            link join_path(new_resource.install_path, 'bin', 'consul') do
+              to join_path(source_dir.path, "consul-#{new_resource.version}", 'consul')
             end
           end
 

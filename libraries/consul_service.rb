@@ -28,7 +28,7 @@ module ConsulCookbook
 
       # @!attribute install_path
       # @return [String]
-      attribute(:install_path, kind_of: String, default: lazy { windows? ? "#{program_files}\\consul" : '/srv' })
+      attribute(:install_path, kind_of: String, default: lazy { windows? ? prefix_path : '/srv' })
 
       # @!attribute config_file
       # @return [String]
