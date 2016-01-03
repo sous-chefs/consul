@@ -1,3 +1,9 @@
+#
+# Cookbook: consul
+# License: Apache 2.0
+#
+# Copyright 2014-2015, Bloomberg Finance L.P.
+#
 require 'poise'
 
 module ConsulCookbook
