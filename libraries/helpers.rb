@@ -6,7 +6,7 @@
 #
 
 module ConsulCookbook
-  module Helpers
+  module Helpers # rubocop:disable Metrics/ModuleLength
     include Chef::Mixin::ShellOut
 
     extend self
@@ -36,8 +36,12 @@ module ConsulCookbook
       join_path('C:', 'Program Files') + (arch_64? ? '' : ' x(86)')
     end
 
-    def prefix_path
+    def config_prefix_path
       windows? ? join_path(program_files, 'consul') : join_path('/etc', 'consul')
+    end
+
+    def data_prefix_path
+      windows? ? join_path(program_files, 'consul') : join_path('/var/lib', 'consul')
     end
 
     def command(config_file, config_dir)
@@ -76,6 +80,67 @@ module ConsulCookbook
         'GOMAXPROCS' => [node['cpu']['total'], 2].max.to_s,
         'PATH' => '/usr/local/bin:/usr/bin:/bin'
       }
+    end
+
+    def nssm_params
+      %w{Application
+         AppParameters
+         AppDirectory
+         AppExit
+         AppAffinity
+         AppEnvironment
+         AppEnvironmentExtra
+         AppNoConsole
+         AppPriority
+         AppRestartDelay
+         AppStdin
+         AppStdinShareMode
+         AppStdinCreationDisposition
+         AppStdinFlagsAndAttributes
+         AppStdout
+         AppStdoutShareMode
+         AppStdoutCreationDisposition
+         AppStdoutFlagsAndAttributes
+         AppStderr
+         AppStderrShareMode
+         AppStderrCreationDisposition
+         AppStderrFlagsAndAttributes
+         AppStopMethodSkip
+         AppStopMethodConsole
+         AppStopMethodWindow
+         AppStopMethodThreads
+         AppThrottle
+         AppRotateFiles
+         AppRotateOnline
+         AppRotateSeconds
+         AppRotateBytes
+         AppRotateBytesHigh
+         DependOnGroup
+         DependOnService
+         Description
+         DisplayName
+         ImagePath
+         ObjectName
+         Name
+         Start
+         Type}
+    end
+
+    def nssm_service_installed?
+      exit_code = shell_out!(%{"#{nssm_exe}" status consul}, returns: [0, 3]).exitstatus
+      exit_code == 0 ? true : false
+    end
+
+    # Returns a hash of mismatched params
+    def check_nssm_params
+      # nssm can only get certain values
+      params = node['consul']['service']['nssm_params'].select { |k, _v| nssm_params.include? k.to_s }
+      params.each.each_with_object({}) do |(k, v), mismatch|
+        # shell_out! returns values with null bytes, need to delete them before we evaluate
+        unless shell_out!(%{"#{nssm_exe}" get consul #{k}}, returns: [0]).stdout.delete("\0").strip.eql? v.to_s
+          mismatch[k] = v
+        end
+      end
     end
   end
 end

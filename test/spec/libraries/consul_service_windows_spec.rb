@@ -14,6 +14,7 @@ describe ConsulCookbook::Resource::ConsulService do
       allow(shellout).to receive(:error!)
       allow(shellout).to receive(:stderr)
       allow(shellout).to receive(:run_command)
+      allow(shellout).to receive(:exitstatus)
       allow(shellout).to receive(:stdout).and_return("Consul v0.6.0\nConsul Protocol: 3 (Understands back to: 1)\n")
     end
 

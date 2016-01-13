@@ -14,11 +14,11 @@ default['consul']['service_group'] = 'consul'
 default['consul']['config']['bag_name'] = 'secrets'
 default['consul']['config']['bag_item'] = 'consul'
 
-default['consul']['config']['path'] = join_path prefix_path, 'consul.json'
-default['consul']['config']['data_dir'] = join_path prefix_path, 'data'
-default['consul']['config']['ca_file'] = join_path prefix_path, 'ssl', 'CA', 'ca.crt'
-default['consul']['config']['cert_file'] = join_path prefix_path, 'ssl', 'certs', 'consul.crt'
-default['consul']['config']['key_file'] = join_path prefix_path, 'ssl', 'private', 'consul.key'
+default['consul']['config']['path'] = join_path config_prefix_path, 'consul.json'
+default['consul']['config']['data_dir'] = join_path data_prefix_path, 'data'
+default['consul']['config']['ca_file'] = join_path config_prefix_path, 'ssl', 'CA', 'ca.crt'
+default['consul']['config']['cert_file'] = join_path config_prefix_path, 'ssl', 'certs', 'consul.crt'
+default['consul']['config']['key_file'] = join_path config_prefix_path, 'ssl', 'private', 'consul.key'
 
 default['consul']['config']['client_addr'] = '0.0.0.0'
 default['consul']['config']['ports'] = {
@@ -32,8 +32,8 @@ default['consul']['config']['ports'] = {
 
 default['consul']['diplomat_version'] = nil
 
-default['consul']['service']['config_dir'] = join_path prefix_path, 'conf.d'
-default['consul']['service']['data_dir'] = join_path prefix_path, 'data'
+default['consul']['service']['config_dir'] = join_path config_prefix_path, 'conf.d'
+default['consul']['service']['data_dir'] = join_path data_prefix_path, 'data'
 
 default['consul']['service']['install_method'] = 'binary'
 default['consul']['service']['binary_url'] = "https://releases.hashicorp.com/consul/%{version}/%{filename}.zip" # rubocop:disable Style/StringLiterals
@@ -41,6 +41,16 @@ default['consul']['service']['binary_url'] = "https://releases.hashicorp.com/con
 default['consul']['service']['source_url'] = 'https://github.com/hashicorp/consul'
 
 default['consul']['version'] = '0.6.2'
+
+# Windows only
+default['consul']['service']['nssm_params'] = {
+  'AppDirectory'     => join_path(data_prefix_path, 'data'),
+  'AppStdout'        => join_path(config_prefix_path, 'stdout.log'),
+  'AppStderr'        => join_path(config_prefix_path, 'error.log'),
+  'AppRotateSeconds' => 86_400,
+  'AppRotateFiles'   => 1
+}
+
 default['consul']['checksums'] = {
   'consul_0.5.0_darwin_amd64'  => '24d9758c873e9124e0ce266f118078f87ba8d8363ab16c2e59a3cd197b77e964',
   'consul_0.5.0_linux_386'     => '4b6147c30596a30361d4753d409f8a1af9518f54f5ed473a4c4ac973738ac0fd',

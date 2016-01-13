@@ -28,7 +28,7 @@ module ConsulCookbook
 
       # @!attribute install_path
       # @return [String]
-      attribute(:install_path, kind_of: String, default: lazy { windows? ? prefix_path : '/srv' })
+      attribute(:install_path, kind_of: String, default: lazy { windows? ? config_prefix_path : '/srv' })
 
       # @!attribute config_file
       # @return [String]
@@ -65,6 +65,10 @@ module ConsulCookbook
       # @!attribute config_dir
       # @return [String]
       attribute(:config_dir, kind_of: String, default: lazy { node['consul']['config']['config_dir'] })
+
+      # @!attribute nssm_params
+      # @return [String]
+      attribute(:nssm_params, kind_of: Hash, default: lazy { node['consul']['service']['nssm_params'] })
     end
   end
 end

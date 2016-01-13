@@ -31,7 +31,10 @@ module ConsulCookbook
             Chef::Application.fatal!('The Consul Service provider for Windows only supports the binary install_method at this time')
           end
 
-          [new_resource.data_dir, new_resource.config_dir].each do |dirname|
+          %W{#{new_resource.data_dir}
+             #{new_resource.config_dir}
+             #{::File.dirname(new_resource.nssm_params['AppStdout'])}
+             #{::File.dirname(new_resource.nssm_params['AppStderr'])}}.uniq.each do |dirname|
             directory dirname do
               recursive true
               # owner new_resource.user
@@ -43,14 +46,25 @@ module ConsulCookbook
           nssm 'consul' do
             action :install
             program join_path(new_resource.install_path, 'consul.exe')
-            params(
-              AppDirectory: new_resource.data_dir,
-              AppStdout: join_path(new_resource.install_path, 'stdout.log'),
-              AppStderr: join_path(new_resource.install_path, 'error.log'),
-              AppRotateSeconds: 86_400,
-              AppRotateFiles: 1
-            )
+            params new_resource.nssm_params
             args command(new_resource.config_file, new_resource.config_dir)
+          end
+
+          if nssm_service_installed?
+            # The nssm resource does not check param values after they've been set
+            mismatch_params = check_nssm_params
+            unless mismatch_params.empty?
+              mismatch_params.each do |k, v|
+                batch "Set nssm parameter - #{k}" do
+                  code "#{nssm_exe} set consul #{k} #{v}"
+                  notifies :run, 'batch[Trigger consul restart]', :delayed
+                end
+              end
+              batch 'Trigger consul restart' do
+                action :nothing
+                code "#{nssm_exe} restart consul"
+              end
+            end
           end
         end
       end
