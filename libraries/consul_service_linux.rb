@@ -91,7 +91,7 @@ module ConsulCookbook
       end
 
       def service_options(service)
-        service.command(new_resource.command new_resource.config_file, new_resource.config_dir)
+        service.command(new_resource.command(new_resource.config_file, new_resource.config_dir))
         service.directory(new_resource.data_dir)
         service.user(new_resource.user)
         service.environment(new_resource.environment)

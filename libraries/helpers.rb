@@ -58,7 +58,7 @@ module ConsulCookbook
     end
 
     def binary_checksum(item)
-      node['consul']['checksums'].fetch(binary_filename item)
+      node['consul']['checksums'].fetch(binary_filename(item))
     end
 
     def binary_filename(item)
@@ -127,7 +127,9 @@ module ConsulCookbook
     end
 
     def nssm_service_installed?
-      exit_code = shell_out!(%{"#{nssm_exe}" status consul}, returns: [0, 3]).exitstatus
+      # 1 is command not found
+      # 3 is service not found
+      exit_code = shell_out!(%{"#{nssm_exe}" status consul}, returns: [0, 1, 3]).exitstatus
       exit_code == 0 ? true : false
     end
 

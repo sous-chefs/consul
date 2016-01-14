@@ -47,8 +47,9 @@ default['consul']['service']['nssm_params'] = {
   'AppDirectory'     => join_path(data_prefix_path, 'data'),
   'AppStdout'        => join_path(config_prefix_path, 'stdout.log'),
   'AppStderr'        => join_path(config_prefix_path, 'error.log'),
-  'AppRotateSeconds' => 86_400,
-  'AppRotateFiles'   => 1
+  'AppRotateFiles'   => 1,
+  'AppRotateOnline'  => 1,
+  'AppRotateBytes'   => 20_000_000
 }
 
 default['consul']['checksums'] = {
