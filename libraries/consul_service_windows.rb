@@ -65,6 +65,14 @@ module ConsulCookbook
                 code "#{nssm_exe} restart consul"
               end
             end
+            # Check if the service is running, but don't bother if we're already
+            # changing some nssm parameters
+            unless nssm_service_running? && mismatch_params.empty?
+              batch 'Trigger consul restart' do
+                action :run
+                code "#{nssm_exe} restart consul"
+              end
+            end
           end
         end
       end
