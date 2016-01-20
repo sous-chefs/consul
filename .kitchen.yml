@@ -9,7 +9,7 @@ platforms:
   - name: ubuntu-14.04
   - name: ubuntu-12.04
   - name: centos-7.1
-  - name: centos-6.6
+  - name: centos-6.7
   - name: windows-2012r2
 
 suites:
@@ -45,7 +45,7 @@ suites:
           install_method: package
     excludes:
       - centos-7.1
-      - centos-6.6
+      - centos-6.7
   - name: acl
     run_list:
       - recipe[consul::default]
