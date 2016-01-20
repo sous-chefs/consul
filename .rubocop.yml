@@ -42,3 +42,5 @@ Style/GuardClause:
   Enabled: false
 Style/PercentLiteralDelimiters:
   Enabled: false
+Style/ModuleFunction:
+  Enabled: false

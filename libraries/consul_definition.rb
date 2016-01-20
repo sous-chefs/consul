@@ -11,12 +11,13 @@ module ConsulCookbook
     # @since 1.0.0
     class ConsulDefinition < Chef::Resource
       include Poise(fused: true)
+      include ConsulCookbook::Helpers
       provides(:consul_definition)
       default_action(:create)
 
       # @!attribute path
       # @return [String]
-      attribute(:path, kind_of: String, default: lazy { "/etc/consul/#{name}.json" })
+      attribute(:path, kind_of: String, default: lazy { join_path config_prefix_path, "#{name}.json" })
 
       # @!attribute user
       # @return [String]
@@ -44,16 +45,20 @@ module ConsulCookbook
         notifying_block do
           directory ::File.dirname(new_resource.path) do
             recursive true
-            owner new_resource.user
-            group new_resource.group
-            mode '0755'
+            if node['os'].eql? 'linux'
+              owner new_resource.user
+              group new_resource.group
+              mode '0755'
+            end
           end
 
           file new_resource.path do
-            owner new_resource.user
-            group new_resource.group
             content new_resource.to_json
-            mode '0640'
+            if node['os'].eql? 'linux'
+              owner new_resource.user
+              group new_resource.group
+              mode '0640'
+            end
           end
         end
       end
