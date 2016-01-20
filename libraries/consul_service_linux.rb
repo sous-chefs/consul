@@ -96,6 +96,7 @@ module ConsulCookbook
         service.user(new_resource.user)
         service.environment(new_resource.environment)
         service.restart_on_update(true)
+        service.options(:systemd, template: 'consul:systemd.service.erb')
       end
     end
   end

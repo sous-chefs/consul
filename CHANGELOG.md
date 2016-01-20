@@ -3,7 +3,10 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## Unreleased
+### Enhancements
 - [PR#259][PR259] Add windows support. [@Ginja](https://github.com/Ginja)
+### Bug Fixes
+- [PR#226][PR226] Fix systemd unit starting before network.
 
 ## 1.3.1
 ### Bug Fixes
@@ -92,6 +95,7 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 [PR259]: https://github.com/johnbellone/consul-cookbook/pull/259
 [PR228]: https://github.com/johnbellone/consul-cookbook/pull/228
 [PR227]: https://github.com/johnbellone/consul-cookbook/pull/227
+[PR226]: https://github.com/johnbellone/consul-cookbook/pull/226
 [PR224]: https://github.com/johnbellone/consul-cookbook/pull/224
 [PR223]: https://github.com/johnbellone/consul-cookbook/pull/223
 [PR222]: https://github.com/johnbellone/consul-cookbook/pull/222
