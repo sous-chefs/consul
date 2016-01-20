@@ -7,6 +7,7 @@
 require 'poise'
 require_relative 'helpers'
 
+
 module ConsulCookbook
   module Provider
     # Provider for managing the Consul service on a Windows instance.
@@ -14,7 +15,7 @@ module ConsulCookbook
     class ConsulServiceWindows < Chef::Provider
       include Poise
       include Chef::Mixin::ShellOut
-      provides :consul_service, os: %w(windows)
+      provides(:consul_service, os: %w{windows})
       include ConsulCookbook::Helpers
 
       def action_enable
