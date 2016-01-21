@@ -31,10 +31,13 @@ module ConsulCookbook
             Chef::Application.fatal!('The Consul Service provider for Windows only supports the binary install_method at this time')
           end
 
-          %W{#{new_resource.data_dir}
-             #{new_resource.config_dir}
-             #{::File.dirname(new_resource.nssm_params['AppStdout'])}
-             #{::File.dirname(new_resource.nssm_params['AppStderr'])}}.uniq.each do |dirname|
+          directories = %W{#{new_resource.data_dir}
+                           #{new_resource.config_dir}
+                           #{::File.dirname(new_resource.nssm_params['AppStdout'])}
+                           #{::File.dirname(new_resource.nssm_params['AppStderr'])}}.uniq.compact
+
+          # ::File.dirname '' == '.'
+          directories.delete_if { |i| i.eql? '.' }.each do |dirname|
             directory dirname do
               recursive true
               # owner new_resource.user
@@ -46,7 +49,8 @@ module ConsulCookbook
           nssm 'consul' do
             action :install
             program join_path(new_resource.install_path, 'consul.exe')
-            params new_resource.nssm_params
+            # Don't try and set empty parameters
+            params new_resource.nssm_params.select { |_k, v| v != '' }
             args command(new_resource.config_file, new_resource.config_dir)
           end
 
@@ -55,8 +59,9 @@ module ConsulCookbook
             mismatch_params = check_nssm_params
             unless mismatch_params.empty?
               mismatch_params.each do |k, v|
+                action = v.eql?('') ? "reset consul #{k}" : "set consul #{k} #{v}"
                 batch "Set nssm parameter - #{k}" do
-                  code "#{nssm_exe} set consul #{k} #{v}"
+                  code "#{nssm_exe} #{action}"
                   notifies :run, 'batch[Trigger consul restart]', :delayed
                 end
               end
@@ -85,6 +90,13 @@ module ConsulCookbook
 
       def action_disable
         notifying_block do
+          # nssm resource doesn't stop the service before it removes it
+          batch 'Stop consul' do
+            action :run
+            code "#{nssm_exe} stop consul"
+            only_if { nssm_service_installed? && nssm_service_running? }
+          end
+
           nssm 'consul' do
             action :remove
           end
