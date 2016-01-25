@@ -133,8 +133,8 @@ module ConsulCookbook
       exit_code == 0 ? true : false
     end
 
-    def nssm_service_running?
-      shell_out!(%{"#{nssm_exe}" status consul}, returns: [0]).stdout.delete("\0").strip.eql? 'SERVICE_RUNNING'
+    def nssm_service_status?(expected_status)
+      expected_status.include? shell_out!(%{"#{nssm_exe}" status consul}, returns: [0]).stdout.delete("\0").strip
     end
 
     # Returns a hash of mismatched params

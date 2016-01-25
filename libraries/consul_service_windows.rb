@@ -72,7 +72,7 @@ module ConsulCookbook
             end
             # Check if the service is running, but don't bother if we're already
             # changing some nssm parameters
-            unless nssm_service_running? && mismatch_params.empty?
+            unless nssm_service_status?(%w{SERVICE_RUNNING}) && mismatch_params.empty?
               batch 'Trigger consul restart' do
                 action :run
                 code "#{nssm_exe} restart consul"
@@ -94,7 +94,7 @@ module ConsulCookbook
           batch 'Stop consul' do
             action :run
             code "#{nssm_exe} stop consul"
-            only_if { nssm_service_installed? && nssm_service_running? }
+            only_if { nssm_service_installed? && nssm_service_status?(%w{SERVICE_RUNNING SERVICE_PAUSED}) }
           end
 
           nssm 'consul' do
