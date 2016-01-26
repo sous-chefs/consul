@@ -40,7 +40,7 @@ default['consul']['service']['binary_url'] = "https://releases.hashicorp.com/con
 
 default['consul']['service']['source_url'] = 'https://github.com/hashicorp/consul'
 
-default['consul']['version'] = '0.6.2'
+default['consul']['version'] = '0.6.3'
 
 # Windows only
 default['consul']['service']['nssm_params'] = {
@@ -106,5 +106,18 @@ default['consul']['checksums'] = {
   'consul_0.6.2_solaris_amd64' => 'f5655f0b173e5d51c5b92327d1fc7f24ac0939897a1966da09146e4eb75af9d1',
   'consul_0.6.2_windows_386'   => 'f072d89c098dde143897e653d5adaf23125b58062344ef4be4029d635f959654',
   'consul_0.6.2_windows_amd64' => 'df3234fb7def7138b7cb8c73fe7c05942ec1e485925701a7b38fc7e2396a212f',
-  'consul_0.6.2_web_ui'        => 'f144377b8078df5a3f05918d167a52123089fc47b12fc978e6fb375ae93afc90'
+  'consul_0.6.2_web_ui'        => 'f144377b8078df5a3f05918d167a52123089fc47b12fc978e6fb375ae93afc90',
+
+  'consul_0.6.3_darwin_386'    => '7fb30756504cd9559c9b23e5d0d8d73a847ee62ed85d39955b5906c2f59a5bc1',
+  'consul_0.6.3_darwin_amd64'  => '6dff4ffc61d66aacd627a176737b8725624718a9e68cc81460a3df9b241c7932',
+  'consul_0.6.3_freebsd_386'   => '4a1aa8f570852eb238b7406172c097f5b32f41a3f01186111e576faa7506248c',
+  'consul_0.6.3_freebsd_amd64' => '8bdf2da41e6118af18af9aba0a127d4abb3453a20a9064e1bd1206f5c11ac2c8',
+  'consul_0.6.3_freebsd_arm'   => '5452d29f1cf0720c4ae0e0ec1cc5e44b0068a0340a6b61ab5ec245fa0f3447ad',
+  'consul_0.6.3_linux_386'     => '2afb65383ab913344daaa9af827c1e8576c7cae16e93798048122929b6e4cc92',
+  'consul_0.6.3_linux_amd64'   => 'b0532c61fec4a4f6d130c893fd8954ec007a6ad93effbe283a39224ed237e250',
+  'consul_0.6.3_linux_arm'     => 'c5fd5278be2757d2468bc7e263af15bc9a9e80fc5108fec658755804ea9bca56',
+  'consul_0.6.3_solaris_amd64' => 'e6a286ff17a2345b8800732850eadb858b3dba9486355e1164a774ccec2f0e98',
+  'consul_0.6.3_windows_386'   => '55733a730c5055d0ed1dc2656b2b6a27b21c7c361a907919cfae90aab2dff870',
+  'consul_0.6.3_windows_amd64' => '04cd1fdc9cd3a27ffc64e312e40142db7af0d240608f8080ec6d238294b20652',
+  'consul_0.6.3_web_ui'        => '93bbb300cacfe8de90fb3bd5ede7d37ae6ce014898edc520b9c96a676b2bbb72'
 }
