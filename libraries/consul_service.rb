@@ -7,7 +7,6 @@
 require 'poise_service/service_mixin'
 require_relative 'helpers'
 
-
 module ConsulCookbook
   module Resource
     # A resource for managing the Consul service.
