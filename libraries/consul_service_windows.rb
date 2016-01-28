@@ -52,6 +52,7 @@ module ConsulCookbook
             # Don't try and set empty parameters
             params new_resource.nssm_params.select { |_k, v| v != '' }
             args command(new_resource.config_file, new_resource.config_dir)
+            not_if { nssm_service_installed? }
           end
 
           if nssm_service_installed?
