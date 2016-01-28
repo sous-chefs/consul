@@ -48,7 +48,7 @@ module ConsulCookbook
       if windows?
         %{agent -config-file="""#{config_file}""" -config-dir="""#{config_dir}"""}
       else
-        "/usr/bin/env consul agent -config-file=#{config_file} -config-dir=#{config_dir}"
+        "consul agent -config-file=#{config_file} -config-dir=#{config_dir}"
       end
     end
 

@@ -161,6 +161,7 @@ module ConsulCookbook
         service.environment(new_resource.environment)
         service.restart_on_update(true)
         service.options(:systemd, template: 'consul:systemd.service.erb')
+        service.options(:sysvinit, template: 'consul:sysvinit.service.erb')
       end
     end
   end
