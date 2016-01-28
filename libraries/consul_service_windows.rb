@@ -7,7 +7,6 @@
 require 'poise'
 require_relative 'helpers'
 
-
 module ConsulCookbook
   module Provider
     # Provider for managing the Consul service on a Windows instance.
