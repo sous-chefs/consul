@@ -161,6 +161,10 @@ module ConsulCookbook
         service.restart_on_update(true)
         service.options(:systemd, template: 'consul:systemd.service.erb')
         service.options(:sysvinit, template: 'consul:sysvinit.service.erb')
+
+        if node.platform_family?('rhel') && node.platform_version.to_i == 6
+          service.provider(:sysvinit)
+        end
       end
     end
   end
