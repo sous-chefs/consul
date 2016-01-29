@@ -1,5 +1,6 @@
 ---
 language: ruby
+cache: bundler
 sudo: false
 notifications:
   slack: bloomberg-rnd:eHp3Czg42iGzaTgG8sAFeD9v
