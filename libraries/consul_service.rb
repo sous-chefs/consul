@@ -81,7 +81,6 @@ module ConsulCookbook
       include ConsulCookbook::Helpers
 
       def action_enable
-        new_resource.notifies(:reload, new_resource, :delayed)
         notifying_block do
           case new_resource.install_method
           when 'package'
