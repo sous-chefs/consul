@@ -33,8 +33,6 @@ default['consul']['config']['ports'] = {
 default['consul']['diplomat_version'] = nil
 
 default['consul']['service']['config_dir'] = join_path config_prefix_path, 'conf.d'
-default['consul']['service']['data_dir'] = join_path data_prefix_path, 'data'
-
 default['consul']['service']['install_method'] = 'binary'
 default['consul']['service']['binary_url'] = "https://releases.hashicorp.com/consul/%{version}/%{filename}.zip" # rubocop:disable Style/StringLiterals
 
