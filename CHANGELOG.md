@@ -2,11 +2,20 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
-## Unreleased
+## 1.4
 ### Enhancements
+This release includes general improvements to the build process and
+adds newer versions of EL6 and EL7 to the build matrix. Additionally,
+the following enhancements:
 - [PR#259][PR259] Add windows support. [@Ginja](https://github.com/Ginja)
+- [PR#266][PR266] Add custom template for sysvinit. [@legal90](https://github.com/legal90)
+- [PR#264][PR264] Bump default version to Consul 0.6.3.
+- [PR#267][PR267] Add parameters for retry join configuration.
 ### Bug Fixes
 - [PR#226][PR226] Fix systemd unit starting before network.
+- [PR#235][PR235] Fix EL6 service not starting at boot.
+- [PR#269][PR269] Fix duplicate data directory attributes.
+- [PR#270][PR270] Fix regression of absolute path for systemd unit.
 
 ## 1.3.1
 ### Bug Fixes
@@ -92,7 +101,13 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 ### Bug Fixes
 - Reloading the Consul service when using runit init style.
 
+[PR270]: https://github.com/johnbellone/consul-cookbook/pull/270
+[PR269]: https://github.com/johnbellone/consul-cookbook/pull/269
+[PR267]: https://github.com/johnbellone/consul-cookbook/pull/267
+[PR266]: https://github.com/johnbellone/consul-cookbook/pull/266
+[PR264]: https://github.com/johnbellone/consul-cookbook/pull/264
 [PR259]: https://github.com/johnbellone/consul-cookbook/pull/259
+[PR235]: https://github.com/johnbellone/consul-cookbook/pull/235
 [PR228]: https://github.com/johnbellone/consul-cookbook/pull/228
 [PR227]: https://github.com/johnbellone/consul-cookbook/pull/227
 [PR226]: https://github.com/johnbellone/consul-cookbook/pull/226
