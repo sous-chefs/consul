@@ -11,6 +11,7 @@ the following enhancements:
 - [PR#266][PR266] Add custom template for sysvinit. [@legal90](https://github.com/legal90)
 - [PR#264][PR264] Bump default version to Consul 0.6.3.
 - [PR#267][PR267] Add parameters for retry join configuration.
+
 ### Bug Fixes
 - [PR#226][PR226] Fix systemd unit starting before network.
 - [PR#235][PR235] Fix EL6 service not starting at boot.
