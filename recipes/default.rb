@@ -28,11 +28,9 @@ if node['firewall']['allow_consul']
   end
 end
 
-# NSSM will run Consul as the SYSTEM account
-if node['os'].eql? 'linux'
-  poise_service_user node['consul']['service_user'] do
-    group node['consul']['service_group']
-  end
+poise_service_user node['consul']['service_user'] do
+  group node['consul']['service_group']
+  not_if { platform?('windows') }
 end
 
 config = consul_config node['consul']['service_name'] do |r|
