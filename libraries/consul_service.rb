@@ -59,7 +59,7 @@ module ConsulCookbook
 
       # @!attribute data_dir
       # @return [String]
-      attribute(:data_dir, kind_of: String, default: lazy { node['consul']['service']['data_dir'] })
+      attribute(:data_dir, kind_of: String, default: lazy { node['consul']['config']['data_dir'] })
 
       # @!attribute config_dir
       # @return [String]
