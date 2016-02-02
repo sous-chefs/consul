@@ -4,6 +4,13 @@ require_relative '../../../libraries/consul_definition'
 describe ConsulCookbook::Resource::ConsulDefinition do
   step_into(:consul_definition)
   let(:chefspec_options) { {platform: 'ubuntu', version: '14.04'} }
+  before do
+    default_attributes['consul'] = {
+      'service' => {
+        'config_dir' => '/etc/consul/conf.d'
+        }
+      }
+  end
 
   context 'service definition' do
     recipe do
@@ -13,9 +20,9 @@ describe ConsulCookbook::Resource::ConsulDefinition do
       end
     end
 
-    it { is_expected.to create_directory('/etc/consul') }
+    it { is_expected.to create_directory('/etc/consul/conf.d') }
     it do
-      is_expected.to create_file('/etc/consul/redis.json')
+      is_expected.to create_file('/etc/consul/conf.d/redis.json')
       .with(user: 'consul', group: 'consul', mode: '0640')
       .with(content: JSON.pretty_generate(
         service: {
@@ -37,9 +44,9 @@ describe ConsulCookbook::Resource::ConsulDefinition do
       end
     end
 
-    it { is_expected.to create_directory('/etc/consul') }
+    it { is_expected.to create_directory('/etc/consul/conf.d') }
     it do
-      is_expected.to create_file('/etc/consul/redis.json')
+      is_expected.to create_file('/etc/consul/conf.d/redis.json')
       .with(user: 'consul', group: 'consul', mode: '0640')
       .with(content: JSON.pretty_generate(
         service: {
@@ -61,9 +68,9 @@ describe ConsulCookbook::Resource::ConsulDefinition do
       end
     end
 
-    it { is_expected.to create_directory('/etc/consul') }
+    it { is_expected.to create_directory('/etc/consul/conf.d') }
     it do
-      is_expected.to create_file('/etc/consul/web-api.json')
+      is_expected.to create_file('/etc/consul/conf.d/web-api.json')
       .with(user: 'consul', group: 'consul', mode: '0640')
       .with(content: JSON.pretty_generate(
         check: {

@@ -17,7 +17,7 @@ module ConsulCookbook
 
       # @!attribute path
       # @return [String]
-      attribute(:path, kind_of: String, default: lazy { join_path config_prefix_path, "#{name}.json" })
+      attribute(:path, kind_of: String, default: lazy { join_path node['consul']['service']['config_dir'], "#{name}.json" })
 
       # @!attribute user
       # @return [String]
