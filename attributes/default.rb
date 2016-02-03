@@ -15,7 +15,7 @@ default['consul']['config']['bag_name'] = 'secrets'
 default['consul']['config']['bag_item'] = 'consul'
 
 default['consul']['config']['path'] = join_path config_prefix_path, 'consul.json'
-default['consul']['config']['data_dir'] = join_path data_prefix_path, 'data'
+default['consul']['config']['data_dir'] = data_prefix_path
 default['consul']['config']['ca_file'] = join_path config_prefix_path, 'ssl', 'CA', 'ca.crt'
 default['consul']['config']['cert_file'] = join_path config_prefix_path, 'ssl', 'certs', 'consul.crt'
 default['consul']['config']['key_file'] = join_path config_prefix_path, 'ssl', 'private', 'consul.key'
@@ -33,6 +33,8 @@ default['consul']['config']['ports'] = {
 default['consul']['diplomat_version'] = nil
 
 default['consul']['service']['config_dir'] = join_path config_prefix_path, 'conf.d'
+
+default['consul']['service']['install_path'] = windows? ? config_prefix_path : '/srv'
 default['consul']['service']['install_method'] = 'binary'
 default['consul']['service']['binary_url'] = "https://releases.hashicorp.com/consul/%{version}/%{filename}.zip" # rubocop:disable Style/StringLiterals
 

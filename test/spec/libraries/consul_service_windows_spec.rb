@@ -21,7 +21,7 @@ describe ConsulCookbook::Resource::ConsulService do
     recipe 'consul::default'
 
     it { expect(chef_run).to create_directory('C:\Program Files\consul\conf.d') }
-    it { is_expected.to create_directory('C:\Program Files\consul\data') }
+    it { is_expected.to create_directory('C:\Program Files\consul') }
     it { expect(chef_run).to install_nssm('consul').with(
       program: 'C:\Program Files\consul\consul.exe',
       args: 'agent -config-file="""C:\Program Files\consul\consul.json""" -config-dir="""C:\Program Files\consul\conf.d"""'

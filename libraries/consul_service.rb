@@ -27,7 +27,7 @@ module ConsulCookbook
 
       # @!attribute install_path
       # @return [String]
-      attribute(:install_path, kind_of: String, default: lazy { windows? ? config_prefix_path : '/srv' })
+      attribute(:install_path, kind_of: String, default: lazy { node['consul']['service']['install_path'] })
 
       # @!attribute config_file
       # @return [String]
@@ -81,7 +81,6 @@ module ConsulCookbook
       include ConsulCookbook::Helpers
 
       def action_enable
-        new_resource.notifies(:reload, new_resource, :delayed)
         notifying_block do
           case new_resource.install_method
           when 'package'
