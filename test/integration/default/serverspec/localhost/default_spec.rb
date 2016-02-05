@@ -10,6 +10,16 @@ describe file('/usr/local/bin/consul') do
   it { should be_linked_to '/srv/consul/current/consul' }
 end
 
+describe group('consul') do
+  it { should exist  }
+end
+
+describe user('consul') do
+  it { should exist }
+  it { should belong_to_group('consul') }
+  it { should have_login_shell('/bin/bash') }
+end
+
 describe service('consul') do
   it { should be_enabled }
   it { should be_running }
