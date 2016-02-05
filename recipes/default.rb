@@ -36,11 +36,6 @@ unless platform?('windows')
   end
 end
 
-poise_service_user node['consul']['service_user'] do
-  group node['consul']['service_group']
-  not_if { platform?('windows') }
-end
-
 config = consul_config node['consul']['service_name'] do |r|
   unless platform?('windows')
     owner node['consul']['service_user']
