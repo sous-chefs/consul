@@ -40,8 +40,8 @@ module ConsulCookbook
       windows? ? join_path(program_files, 'consul') : join_path('/etc', 'consul')
     end
 
-    def data_prefix_path
-      windows? ? join_path(program_files, 'consul') : join_path('/var/lib', 'consul')
+    def data_path
+      windows? ? join_path(program_files, 'consul', 'data') : join_path('/var/lib', 'consul')
     end
 
     def command(config_file, config_dir)

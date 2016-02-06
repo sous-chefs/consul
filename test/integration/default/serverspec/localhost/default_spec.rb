@@ -38,3 +38,31 @@ describe command('/usr/local/bin/consul members -detailed') do
   its(:stdout) { should match %r{\bbootstrap=1\b} }
   its(:stdout) { should match %r{\bdc=fortmeade\b} }
 end
+
+config_file = '/etc/consul/consul.json'
+config_dir  = '/etc/consul/conf.d'
+data_dir    = '/var/lib/consul'
+
+describe file(config_file) do
+  it { should be_file }
+  it { should be_owned_by     'consul' }
+  it { should be_grouped_into 'consul' }
+  
+  it { should be_mode 640 }
+end
+
+describe file(config_dir) do
+  it { should be_directory }
+  it { should be_owned_by     'consul' }
+  it { should be_grouped_into 'consul' }
+  
+  it { should be_mode 755 }
+end
+
+describe file(data_dir) do
+  it { should be_directory }
+  it { should be_owned_by     'consul' }
+  it { should be_grouped_into 'consul' }
+  
+  it { should be_mode 755 }
+end
