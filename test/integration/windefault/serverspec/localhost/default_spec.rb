@@ -9,7 +9,7 @@ describe service('consul') do
   it { should be_running }
 end
 
-[8301, 8400, 8500, 8600].each do |p|
+[8300, 8400, 8500, 8600].each do |p|
   describe port(p) do
     it { should be_listening }
   end
@@ -29,24 +29,12 @@ data_dir    = 'C:\Program Files\consul\data'
 
 describe file(config_file) do
   it { should be_file }
-#  it { should be_owned_by     'consul' }
-#  it { should be_grouped_into 'consul' }
-  
-#  it { should be_mode 640 }
 end
 
 describe file(config_dir) do
   it { should be_directory }
-#  it { should be_owned_by     'consul' }
-#  it { should be_grouped_into 'consul' }
-  
-#  it { should be_mode 755 }
 end
 
 describe file(data_dir) do
   it { should be_directory }
-#  it { should be_owned_by     'consul' }
-#  it { should be_grouped_into 'consul' }
-  
-#  it { should be_mode 755 }
 end
