@@ -37,8 +37,11 @@ group :development do
   gem 'guard-foodcritic'
   gem 'rake'
   gem 'stove'
+  gem 'travis'
 end
 
 group :doc do
   gem 'yard'
 end
+
+gem 'codeclimate-test-reporter', group: :test, require: nil
