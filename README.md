@@ -27,9 +27,10 @@ for more advanced configuration.
 Out of the box the following platforms are certified to work and are
 tested using our [Test Kitchen][8] configuration. Additional platforms
 _may_ work, but your mileage may vary.
-- CentOS (RHEL) 6.6, 7.1
+
+- CentOS (RHEL) 5.11, 6.7, 7.2
 - Ubuntu 12.04, 14.04
-- Windows
+- Windows 2012
 
 ### Client
 Out of the box the default recipe installs and configures the Consul
