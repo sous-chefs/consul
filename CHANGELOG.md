@@ -2,6 +2,11 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+## 1.4.2
+### Bug Fixes
+- [PR#274][PR274] Fix start issues with EL5.
+- [PR#273][PR273] Fix data directory attribute for Windows.
+
 ## 1.4.1
 ### Bug Fixes
 - [PR#271][PR271] Fix service user not having /bin/bash shell.
@@ -106,6 +111,8 @@ the following enhancements:
 ### Bug Fixes
 - Reloading the Consul service when using runit init style.
 
+[PR274]: https://github.com/johnbellone/consul-cookbook/pull/274
+[PR273]: https://github.com/johnbellone/consul-cookbook/pull/273
 [PR271]: https://github.com/johnbellone/consul-cookbook/pull/271
 [PR270]: https://github.com/johnbellone/consul-cookbook/pull/270
 [PR269]: https://github.com/johnbellone/consul-cookbook/pull/269
