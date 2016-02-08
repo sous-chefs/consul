@@ -4,7 +4,6 @@
 #
 # Copyright 2014-2016, Bloomberg Finance L.P.
 #
-::Chef::Node.send(:include, ConsulCookbook::Helpers)
 
 # Only used on Linux
 default['consul']['service_name'] = 'consul'

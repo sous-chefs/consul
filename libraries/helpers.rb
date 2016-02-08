@@ -150,3 +150,5 @@ module ConsulCookbook
     end
   end
 end
+
+Chef::Node.send(:include, ConsulCookbook::Helpers)
