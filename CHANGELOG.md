@@ -3,6 +3,9 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## 1.4.2
+### Enhancements
+- [PR#275][PR275] Add integration tests for Windows.
+
 ### Bug Fixes
 - [PR#274][PR274] Fix start issues with EL5.
 - [PR#273][PR273] Fix data directory attribute for Windows.
@@ -32,13 +35,14 @@ the following enhancements:
 - Fixes constraints on cookbooks for builds.
 - Modifies chef-vault cookbook entry to use upstream.
 
-## 1.3.0
+## 1.3
 ### Enhancements
 - Travis builds now use new container infrastructure.
 - [PR#215][PR259] Add new resource for managing Consul UI service.
 - [PR#219][PR219] Adds support to configuration for recursor. [@fumimaron9](https://github.com/fumimaron9)
 - [PR#224][PR224] Adds support to configuration resource for Join WAN. [@justintime](https://github.com/justintime)
 - [PR#228][PR228] Default recipe now opens up UDP firewall rules. [@twmb](https://github.com/twmb)
+
 ### Bug Fixes
 - [PR#210][PR210] Adds all types of Consul watches. [@scalp42](https://github.com/scalp42)
 - [PR#211][PR211] Service resource disable action deletes configuration. [@scalp42](https://github.com/scalp42)
@@ -94,6 +98,7 @@ the following enhancements:
 ### Enhancements
 - Upgrading from one version to another of Consul is now supported.
 - Restarts after upgrade.
+
 ### Bug Fixes
 - Partial convergeances will now gracefully recover on the next chef run.
 - Upstart will now respawn Consul on crash.
@@ -108,9 +113,11 @@ the following enhancements:
 - Bumps support for golang cookbook to 1.4.
 - Adds `consul/retry_on_join` attribute.
 - Adds consul_service_watch LWRP.
+
 ### Bug Fixes
 - Reloading the Consul service when using runit init style.
 
+[PR275]: https://github.com/johnbellone/consul-cookbook/pull/275
 [PR274]: https://github.com/johnbellone/consul-cookbook/pull/274
 [PR273]: https://github.com/johnbellone/consul-cookbook/pull/273
 [PR271]: https://github.com/johnbellone/consul-cookbook/pull/271
