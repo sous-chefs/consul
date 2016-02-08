@@ -2,6 +2,10 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+## 1.4.3
+### Bug Fixes
+- [PR#272][PR272] Fix custom ACL resource Diplomat gem parameters.
+
 ## 1.4.2
 ### Enhancements
 - [PR#275][PR275] Add integration tests for Windows.
@@ -120,6 +124,7 @@ the following enhancements:
 [PR275]: https://github.com/johnbellone/consul-cookbook/pull/275
 [PR274]: https://github.com/johnbellone/consul-cookbook/pull/274
 [PR273]: https://github.com/johnbellone/consul-cookbook/pull/273
+[PR272]: https://github.com/johnbellone/consul-cookbook/pull/272
 [PR271]: https://github.com/johnbellone/consul-cookbook/pull/271
 [PR270]: https://github.com/johnbellone/consul-cookbook/pull/270
 [PR269]: https://github.com/johnbellone/consul-cookbook/pull/269
