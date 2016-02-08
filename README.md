@@ -2,6 +2,7 @@ consul-cookbook
 ===============
 [![Build Status](https://img.shields.io/travis/johnbellone/consul-cookbook.svg)](https://travis-ci.org/johnbellone/consul-cookbook)
 [![Code Quality](https://img.shields.io/codeclimate/github/johnbellone/consul-cookbook.svg)](https://codeclimate.com/github/johnbellone/consul-cookbook)
+[![Test Coverage](https://codeclimate.com/github/johnbellone/consul-cookbook/badges/coverage.svg)](https://codeclimate.com/github/johnbellone/consul-cookbook/coverage)
 [![Cookbook Version](https://img.shields.io/cookbook/v/consul.svg)](https://supermarket.chef.io/cookbooks/consul)
 [![License](https://img.shields.io/badge/license-Apache_2-blue.svg)](https://www.apache.org/licenses/LICENSE-2.0)
 
