@@ -11,7 +11,7 @@ end
 
 group :unit, :integration do
   gem 'chefspec'
-  gem 'chef-dk'
+  gem 'berkshelf'
   gem 'serverspec'
 end
 
