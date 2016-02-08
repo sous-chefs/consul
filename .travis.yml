@@ -3,7 +3,7 @@ language: ruby
 cache: bundler
 sudo: false
 notifications:
-  slack: bloomberg-rnd:eHp3Czg42iGzaTgG8sAFeD9v
+  slack: bloomberg-rnd:BvYmxrV9xj902XWTRNrkLNkR
 script: bundle exec rake travis
 rvm:
   - 2.2
