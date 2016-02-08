@@ -66,6 +66,7 @@ suites:
       - windows-2012r2
       - centos-7.2
       - centos-6.7
+      - centos-5.11
   - name: windefault
     includes:
       - windows-2012r2
