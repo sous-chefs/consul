@@ -85,7 +85,7 @@ module ConsulCookbook
 
       def up_to_date?
         old_acl = Diplomat::Acl.info(new_resource.to_acl['ID'], nil, :return)
-        return false if old_acl.nil?
+        return false if old_acl.nil? || old_acl.empty?
         old_acl.first.select! { |k, _v| %w(ID Type Name Rules).include?(k) }
         old_acl.first == new_resource.to_acl
       end
