@@ -4,7 +4,7 @@ maintainer_email 'jbellone@bloomberg.net'
 license 'Apache 2.0'
 description 'Application cookbook which installs and configures Consul.'
 long_description 'Application cookbook which installs and configures Consul.'
-version '1.5.0'
+version '2.0.0'
 
 recipe 'consul::default', 'Installs and configures the Consul service.'
 recipe 'consul::web_ui', 'Installs and configures the Consul Web UI.'

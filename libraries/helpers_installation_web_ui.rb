@@ -7,7 +7,7 @@
 
 module ConsulCookbook
   module Helpers
-    # @since 1.5
+    # @since 2.0
     module InstallationWebUi # rubocop:disable Metrics/ModuleLength
       extend self
 
