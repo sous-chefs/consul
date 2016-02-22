@@ -11,6 +11,8 @@ recipe 'consul::default', 'Installs, configures and starts the Consul service.'
 supports 'centos', '>= 6.4'
 supports 'redhat', '>= 6.4'
 supports 'ubuntu', '>= 12.04'
+supports 'solaris2'
+supports 'freebsd'
 supports 'arch'
 supports 'windows'
 
