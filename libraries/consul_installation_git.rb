@@ -14,7 +14,7 @@ module ConsulCookbook
     # @action remove
     # @provides consul_installation
     # @provides consul_installation_git
-    # @since 1.5
+    # @since 2.0
     class ConsulInstallationGit < Chef::Resource
       include Poise(fused: true)
       provides(:consul_installation_git)

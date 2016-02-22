@@ -14,7 +14,7 @@ module ConsulCookbook
     # @action remove
     # @provides consul_installation
     # @provides consul_installation_binary
-    # @since 1.5
+    # @since 2.0
     class ConsulInstallationBinary < Chef::Resource
       include Poise(fused: true)
       include Helpers::InstallationBinary

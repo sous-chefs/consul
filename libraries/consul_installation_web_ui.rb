@@ -13,7 +13,7 @@ module ConsulCookbook
     # @action create
     # @action remove
     # @provides consul_installation_web_ui
-    # @since 1.5
+    # @since 2.0
     class ConsulInstallationWebUi < Chef::Resource
       include Poise(fused: true)
       include Helpers::InstallationWebUi
