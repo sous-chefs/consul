@@ -47,6 +47,18 @@ config = consul_config node['consul']['service_name'] do |r|
   node['consul']['config'].each_pair { |k, v| r.send(k, v) }
 end
 
+case node['consul']['install_method']
+when 'binary'
+  consul_installation_binary 'install consul from binary' do
+  end
+when 'package'
+  consul_installation_package 'install consul from package' do
+  end
+when 'git'
+  consul_installation_git 'install consul from git' do
+  end
+end
+
 consul_service node['consul']['service_name'] do |r|
   unless platform?('windows')
     user node['consul']['service_user']
