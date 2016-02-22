@@ -41,27 +41,32 @@ unless windows?
   end
 end
 
-config = consul_config node['consul']['service_name'] do |r|
+service_name = node['consul']['service_name']
+config = consul_config service_name do |r|
   unless windows?
     owner node['consul']['service_user']
     group node['consul']['service_group']
   end
   node['consul']['config'].each_pair { |k, v| r.send(k, v) }
+  notifies :restart, "consul_service[#{service_name}]", :delayed
 end
 
 case node['consul']['install_method']
 when 'binary'
   consul_installation_binary 'install consul from binary' do
+    notifies :restart, "consul_service[#{service_name}]", :delayed
   end
 when 'package'
   consul_installation_package 'install consul from package' do
+    notifies :restart, "consul_service[#{service_name}]", :delayed
   end
 when 'git'
   consul_installation_git 'install consul from git' do
+    notifies :restart, "consul_service[#{service_name}]", :delayed
   end
 end
 
-consul_service node['consul']['service_name'] do |r|
+consul_service service_name do |r|
   unless windows?
     user node['consul']['service_user']
     group node['consul']['service_group']
@@ -69,5 +74,4 @@ consul_service node['consul']['service_name'] do |r|
   version node['consul']['version']
   config_file config.path
   node['consul']['service'].each_pair { |k, v| r.send(k, v) }
-  subscribes :restart, "consul_config[#{config.name}]", :delayed
 end
