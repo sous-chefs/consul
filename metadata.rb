@@ -6,7 +6,9 @@ description 'Application cookbook which installs and configures Consul.'
 long_description 'Application cookbook which installs and configures Consul.'
 version '1.5.0'
 
-recipe 'consul::default', 'Installs, configures and starts the Consul service.'
+recipe 'consul::default', 'Installs and configures the Consul service.'
+recipe 'consul::web_ui', 'Installs and configures the Consul Web UI.'
+recipe 'consul::client_gem', 'Installs the Consul Ruby client as a gem.'
 
 supports 'centos', '>= 6.4'
 supports 'redhat', '>= 6.4'

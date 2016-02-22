@@ -5,10 +5,10 @@
 # Copyright 2014-2016, Bloomberg Finance L.P.
 #
 
-# Only used on Linux
 default['consul']['service_name'] = 'consul'
 default['consul']['service_user'] = 'consul'
 default['consul']['service_group'] = 'consul'
+default['consul']['install_method'] = 'binary'
 
 default['consul']['config']['bag_name'] = 'secrets'
 default['consul']['config']['bag_item'] = 'consul'
@@ -33,8 +33,6 @@ default['consul']['diplomat_version'] = nil
 
 default['consul']['service']['config_dir'] = join_path config_prefix_path, 'conf.d'
 
-default['consul']['service']['install_path'] = windows? ? config_prefix_path : '/srv'
-default['consul']['service']['install_method'] = 'binary'
 default['consul']['service']['binary_url'] = "https://releases.hashicorp.com/consul/%{version}/%{filename}.zip" # rubocop:disable Style/StringLiterals
 
 default['consul']['service']['source_url'] = 'https://github.com/hashicorp/consul'
