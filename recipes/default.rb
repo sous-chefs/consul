@@ -4,7 +4,9 @@
 #
 # Copyright 2014-2016, Bloomberg Finance L.P.
 #
-if platform_family?('rhel')
+include_recipe 'chef-sugar::default'
+
+if rhel?
   include_recipe 'yum-epel::default' if node['platform_version'].to_i == 5
 end
 
@@ -31,7 +33,7 @@ if node['firewall']['allow_consul']
   end
 end
 
-unless platform?('windows')
+unless windows?
   group node['consul']['service_group']
   user node['consul']['service_user'] do
     shell '/bin/bash'
@@ -40,7 +42,7 @@ unless platform?('windows')
 end
 
 config = consul_config node['consul']['service_name'] do |r|
-  unless platform?('windows')
+  unless windows?
     owner node['consul']['service_user']
     group node['consul']['service_group']
   end
@@ -60,7 +62,7 @@ when 'git'
 end
 
 consul_service node['consul']['service_name'] do |r|
-  unless platform?('windows')
+  unless windows?
     user node['consul']['service_user']
     group node['consul']['service_group']
   end
