@@ -75,13 +75,6 @@ module ConsulCookbook
       "#{node['nssm']['install_location']}\\nssm.exe"
     end
 
-    def default_environment
-      {
-        'GOMAXPROCS' => [node['cpu']['total'], 2].max.to_s,
-        'PATH' => '/usr/local/bin:/usr/bin:/bin'
-      }
-    end
-
     def nssm_params
       %w{Application
          AppParameters
