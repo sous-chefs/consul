@@ -4,13 +4,15 @@ maintainer_email 'jbellone@bloomberg.net'
 license 'Apache 2.0'
 description 'Application cookbook which installs and configures Consul.'
 long_description 'Application cookbook which installs and configures Consul.'
-version '1.4.3'
+version '1.5.0'
 
 recipe 'consul::default', 'Installs, configures and starts the Consul service.'
 
 supports 'centos', '>= 6.4'
 supports 'redhat', '>= 6.4'
 supports 'ubuntu', '>= 12.04'
+supports 'solaris2'
+supports 'freebsd'
 supports 'arch'
 supports 'windows'
 
