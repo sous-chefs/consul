@@ -110,6 +110,24 @@ consul_definition 'mem-util' do
 end
 ```
 
+A service definition with an integrated check can also be created. You will have to define a regular service and then add a check as a an additional parameter. The definition below checks if the vault service is healthy on a 10 second interval and 5 second timeout.
+```ruby
+consul_definition 'vault' do
+  type 'service'
+  parameters(
+    port:  8200,
+    address: '127.0.0.1',
+    tags: 'vault, http',
+    check: {
+      interval: '10s',
+      timeout: '5s',
+      http: 'http://127.0.0.1:8200/v1/sys/health'
+    }
+  )
+  notifies :reload, 'consul_service[consul]', :delayed
+end
+```
+
 Finally, a [watch][9] is created below to tell the agent to monitor to
 see if an application has been deployed. Once that application is
 deployed a script is run locally. This can be used, for example, as a
