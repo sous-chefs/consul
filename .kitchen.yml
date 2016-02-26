@@ -80,3 +80,17 @@ suites:
           nssm_params:
             AppStdout: C:\foo\bar\out.log
             AppStderr: C:\foo\bar\err.log
+  # - name: atlas
+  #   excludes:
+  #     - windows-2012r2
+  #   run_list:
+  #     - recipe[consul::default]
+  #   attributes:
+  #     consul:
+  #       config:
+  #         bootstrap: true
+  #         server: true
+  #         datacenter: fortmeade
+  #         atlas_join: true
+  #         atlas_infrastructure: <%= ENV.fetch('ATLAS_INFRASTRUCTURE', 'example/cluster') %>
+  #         atlas_token: <%= ENV.fetch('ATLAS_TOKEN', 'NOT_REAL') %>
