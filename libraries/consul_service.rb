@@ -18,30 +18,21 @@ module ConsulCookbook
       include PoiseService::ServiceMixin
       include ConsulCookbook::Helpers
 
-      # @!attribute version
-      # @return [String]
-      attribute(:version, kind_of: String, required: true)
       # @!attribute config_file
       # @return [String]
       attribute(:config_file, kind_of: String, default: lazy { node['consul']['config']['path'] })
       # @!attribute user
+      # The service user the Consul process runs as.
       # @return [String]
       attribute(:user, kind_of: String, default: 'consul')
       # @!attribute group
+      # The service group the Consul process runs as.
       # @return [String]
       attribute(:group, kind_of: String, default: 'consul')
       # @!attribute environment
+      # The environment that the Consul process starts with.
       # @return [String]
       attribute(:environment, kind_of: Hash, default: lazy { default_environment })
-      # @!attribute package_name
-      # @return [String]
-      attribute(:package_name, kind_of: String, default: 'consul')
-      # @!attribute binary_url
-      # @return [String]
-      attribute(:binary_url, kind_of: String)
-      # @!attribute source_url
-      # @return [String]
-      attribute(:source_url, kind_of: String)
       # @!attribute data_dir
       # @return [String]
       attribute(:data_dir, kind_of: String, default: lazy { node['consul']['config']['data_dir'] })
@@ -51,6 +42,14 @@ module ConsulCookbook
       # @!attribute nssm_params
       # @return [String]
       attribute(:nssm_params, kind_of: Hash, default: lazy { node['consul']['service']['nssm_params'] })
+      # @!attribute consul_binary
+      # The location of the Consul executable.
+      # @return [String]
+      attribute(:consul_binary, kind_of: String, default: '/usr/local/bin/consul')
+
+      def command
+        "#{consul_binary} agent -config-file=#{config_file} -config-dir=#{config_dir}"
+      end
 
       def default_environment
         {
@@ -63,7 +62,7 @@ module ConsulCookbook
 
   module Provider
     # A provider for managing the Consul service.
-    # @since 1.0.0
+    # @since 1.0
     class ConsulService < Chef::Provider
       include Poise
       provides(:consul_service)
@@ -72,29 +71,18 @@ module ConsulCookbook
 
       def action_enable
         notifying_block do
-          [new_resource.data_dir, new_resource.config_dir].each do |dirname|
-            directory dirname do
-              recursive true
-              owner new_resource.user
-              group new_resource.group
-              mode '0755'
-            end
-          end
-        end
-        super
-      end
-
-      def action_disable
-        notifying_block do
-          file new_resource.config_file do
-            action :delete
+          directory [new_resource.data_dir, new_resource.config_dir] do
+            recursive true
+            owner new_resource.user
+            group new_resource.group
+            mode '0755'
           end
         end
         super
       end
 
       def service_options(service)
-        service.command(new_resource.command(new_resource.config_file, new_resource.config_dir))
+        service.command(new_resource.command)
         service.directory(new_resource.data_dir)
         service.user(new_resource.user)
         service.environment(new_resource.environment)

@@ -3,47 +3,60 @@
 # License: Apache 2.0
 #
 # Copyright 2014-2016, Bloomberg Finance L.P.
+#
 require 'poise'
 
 module ConsulCookbook
-  module Resource
-    # A `consul_installation_package` resource.
+  module Provider
+    # A `consul_installation` provider which installs Consul from
+    # package source.
     # @action create
     # @action remove
     # @provides consul_installation
-    # @provides consul_installation_package
+    # @example
+    #   consul_installation '0.5.0' do
+    #     provider 'package'
+    #   end
     # @since 2.0
-    class ConsulInstallationPackage < Chef::Resource
-      include Poise(fused: true)
-      provides(:consul_installation_package)
+    class ConsulInstallationPackage < Chef::Provider
+      include Poise(inversion: :consul_installation)
+      provides(:package)
+      inversion_attribute 'consul'
 
-      # @!attribute package_version
-      # @return [String]
-      attribute(:package_version, kind_of: String, name_attribute: true)
-      # @!attribute package_name
-      # @return [String]
-      attribute(:package_name, kind_of: String, default: 'consul')
-      # @!attribute package_source
-      # @return [String]
-      attribute(:package_source, kind_of: String)
+      # Set the default inversion options.
+      # @return [Hash]
+      # @api private
+      def self.default_inversion_options(node, new_resource)
+        super.merge(
+          version: new_resource.version,
+          package_name: 'consul'
+        )
+      end
 
-      action(:create) do
+      def action_create
         notifying_block do
-          package new_resource.package_name do
-            version new_resource.package_version if new_resource.package_version
-            source new_resource.package_source if new_resource.package_source
+          package options[:package_name] do
+            source options[:package_source]
+            checksum options[:package_checksum]
+            version options[:version]
             action :upgrade
           end
         end
       end
 
-      action(:remove) do
+      def action_remove
         notifying_block do
-          package new_resource.package_name do
-            version new_resource.package_version if new_resource.package_version
-            action :remove
+          package options[:package_name] do
+            source options[:package_source]
+            checksum options[:package_checksum]
+            version options[:version]
+            action :uninstall
           end
         end
+      end
+
+      def consul_binary
+        options.fetch(:consul_binary, '/usr/local/bin/consul')
       end
     end
   end
