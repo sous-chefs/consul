@@ -51,19 +51,11 @@ config = consul_config service_name do |r|
   notifies :restart, "consul_service[#{service_name}]", :delayed
 end
 
-case node['consul']['install_method']
-when 'binary'
-  consul_installation_binary 'install consul from binary' do
-    notifies :restart, "consul_service[#{service_name}]", :delayed
+install = consul_installation node['consul']['version'] do |r|
+  if node['consul']['installation']
+    node['consul']['installation'].each_pair { |k, v| r.send(k, v) }
   end
-when 'package'
-  consul_installation_package 'install consul from package' do
-    notifies :restart, "consul_service[#{service_name}]", :delayed
-  end
-when 'git'
-  consul_installation_git 'install consul from git' do
-    notifies :restart, "consul_service[#{service_name}]", :delayed
-  end
+  notifies :restart, "consul_service[#{service_name}]", :delayed
 end
 
 consul_service service_name do |r|
