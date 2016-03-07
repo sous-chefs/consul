@@ -59,11 +59,15 @@ install = consul_installation node['consul']['version'] do |r|
 end
 
 consul_service service_name do |r|
+  version node['consul']['version']
+  config_file config.path
+  consul_binary install.consul_binary
+
   unless windows?
     user node['consul']['service_user']
     group node['consul']['service_group']
   end
-  version node['consul']['version']
-  config_file config.path
-  node['consul']['service'].each_pair { |k, v| r.send(k, v) }
+  if node['consul']['service']
+    node['consul']['service'].each_pair { |k, v| r.send(k, v) }
+  end
 end

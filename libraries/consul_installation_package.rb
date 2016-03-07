@@ -26,9 +26,9 @@ module ConsulCookbook
       # Set the default inversion options.
       # @return [Hash]
       # @api private
-      def self.default_inversion_options(node, new_resource)
+      def self.default_inversion_options(node, resource)
         super.merge(
-          version: new_resource.version,
+          version: resource.version,
           package_name: 'consul'
         )
       end

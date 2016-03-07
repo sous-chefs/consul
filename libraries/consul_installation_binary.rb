@@ -32,8 +32,8 @@ module ConsulCookbook
       def self.default_inversion_options(node, resource)
         archive_basename = binary_basename(node, resource)
         super.merge(
-          version: new_resource.version,
-          archive_url: default_archive_url % { version: new_resource.version, basename: archive_basename },
+          version: resource.version,
+          archive_url: default_archive_url % { version: resource.version, basename: archive_basename },
           archive_basename: archive_basename,
           archive_checksum: binary_checksum(node, resource),
           extract_to: '/opt/consul'

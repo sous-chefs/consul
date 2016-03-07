@@ -18,6 +18,7 @@ supports 'freebsd'
 supports 'arch'
 supports 'windows'
 
+depends 'build-essential'
 depends 'chef-sugar'
 depends 'chef-vault', '~> 1.3'
 depends 'nssm'

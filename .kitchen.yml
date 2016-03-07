@@ -16,6 +16,8 @@ platforms:
 suites:
   - name: default
     run_list:
+      - recipe[apt::default]
+      - recipe[yum::default]
       - recipe[consul::default]
     attributes:
       consul:
@@ -26,28 +28,18 @@ suites:
           encrypt: CGXC2NsXW4AvuB4h5ODYzQ==
     excludes:
       - windows-2012r2
-  - name: source
+  - name: git
     run_list:
+      - recipe[apt::default]
+      - recipe[yum::default]
       - recipe[consul::default]
     attributes:
       consul:
         config: *default-config
-        service:
-          install_method: source
+        installation:
+          provider: git
     excludes:
       - windows-2012r2
-  - name: package
-    run_list:
-      - recipe[consul::default]
-    attributes:
-      consul:
-        config: *default-config
-        service:
-          install_method: package
-    excludes:
-      - centos-7.2
-      - centos-6.7
-      - centos-5.11
   - name: acl
     run_list:
       - recipe[consul::default]
