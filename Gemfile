@@ -17,6 +17,7 @@ end
 
 group :development do
   gem 'awesome_print'
+  gem 'github_changelog_generator'
   gem 'guard'
   gem 'guard-kitchen'
   gem 'guard-rspec'
