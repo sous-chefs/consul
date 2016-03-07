@@ -117,7 +117,7 @@ consul_definition 'vault' do
   parameters(
     port:  8200,
     address: '127.0.0.1',
-    tags: 'vault, http',
+    tags: ['vault', 'http'],
     check: {
       interval: '10s',
       timeout: '5s',
