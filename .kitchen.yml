@@ -40,6 +40,18 @@ suites:
           provider: git
     excludes:
       - windows-2012r2
+  - name: webui
+    run_list:
+      - recipe[apt::default]
+      - recipe[yum::default]
+      - recipe[consul::default]
+    attributes:
+      consul:
+        config: *default-config
+        installation:
+          provider: webui
+    excludes:
+      - windows-2012r2
   - name: acl
     run_list:
       - recipe[consul::default]
