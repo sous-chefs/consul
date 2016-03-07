@@ -33,10 +33,6 @@ default['consul']['diplomat_version'] = nil
 
 default['consul']['service']['config_dir'] = join_path config_prefix_path, 'conf.d'
 
-default['consul']['service']['binary_url'] = "https://releases.hashicorp.com/consul/%{version}/%{filename}.zip" # rubocop:disable Style/StringLiterals
-
-default['consul']['service']['source_url'] = 'https://github.com/hashicorp/consul'
-
 default['consul']['version'] = '0.6.3'
 
 # Windows only

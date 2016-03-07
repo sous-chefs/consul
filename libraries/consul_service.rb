@@ -67,15 +67,16 @@ module ConsulCookbook
       include Poise
       provides(:consul_service)
       include PoiseService::ServiceMixin
-      include ConsulCookbook::Helpers
 
       def action_enable
         notifying_block do
-          directory [new_resource.data_dir, new_resource.config_dir] do
-            recursive true
-            owner new_resource.user
-            group new_resource.group
-            mode '0755'
+          [new_resource.data_dir, new_resource.config_dir].each do |dirname|
+            directory dirname do
+              recursive true
+              owner new_resource.user
+              group new_resource.group
+              mode '0755'
+            end
           end
         end
         super
