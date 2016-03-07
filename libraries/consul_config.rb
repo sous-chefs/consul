@@ -108,50 +108,6 @@ module ConsulCookbook
 
       action(:create) do
         notifying_block do
-          if new_resource.tls?
-            include_recipe 'chef-vault::default'
-
-            [new_resource.ca_file, new_resource.cert_file, new_resource.key_file].each do |filename|
-              directory ::File.dirname(filename) do
-                recursive true
-                if node['os'].eql? 'linux'
-                  owner new_resource.owner
-                  group new_resource.group
-                  mode '0755'
-                end
-              end
-            end
-
-            item = chef_vault_item(new_resource.bag_name, new_resource.bag_item)
-            file new_resource.ca_file do
-              content item['ca_certificate']
-              if node['os'].eql? 'linux'
-                owner new_resource.owner
-                group new_resource.group
-                mode '0644'
-              end
-            end
-
-            file new_resource.cert_file do
-              content item['certificate']
-              if node['os'].eql? 'linux'
-                owner new_resource.owner
-                group new_resource.group
-                mode '0644'
-              end
-            end
-
-            file new_resource.key_file do
-              sensitive true
-              content item['private_key']
-              if node['os'].eql? 'linux'
-                owner new_resource.owner
-                group new_resource.group
-                mode '0640'
-              end
-            end
-          end
-
           directory ::File.dirname(new_resource.path) do
             recursive true
             if node['os'].eql? 'linux'
@@ -175,16 +131,6 @@ module ConsulCookbook
 
       action(:delete) do
         notifying_block do
-          if new_resource.tls?
-            file new_resource.cert_file do
-              action :delete
-            end
-
-            file new_resource.key_file do
-              action :delete
-            end
-          end
-
           file new_resource.path do
             action :delete
           end
