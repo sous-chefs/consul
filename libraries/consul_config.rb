@@ -9,7 +9,7 @@ require_relative 'helpers'
 
 module ConsulCookbook
   module Resource
-    # @since 1.0.0
+    # @since 1.0
     class ConsulConfig < Chef::Resource
       include Poise(fused: true)
       include ConsulCookbook::Helpers
@@ -18,23 +18,18 @@ module ConsulCookbook
       # @!attribute path
       # @return [String]
       attribute(:path, kind_of: String, name_attribute: true)
-
       # @!attribute owner
       # @return [String]
       attribute(:owner, kind_of: String, default: 'consul')
-
       # @!attribute group
       # @return [String]
       attribute(:group, kind_of: String, default: 'consul')
-
       # @!attribute bag_name
       # @return [String]
       attribute(:bag_name, kind_of: String, default: 'secrets')
-
       # @!attribute bag_item
       # @return [String]
       attribute(:bag_item, kind_of: String, default: 'consul')
-
       # @!attribute options
       # @return [Hash]
       attribute(:options, option_collector: true)
