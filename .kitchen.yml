@@ -7,11 +7,26 @@ provisioner:
 
 platforms:
   - name: ubuntu-14.04
+    run_list:
+      - recipe[apt::default]
   - name: ubuntu-12.04
+    run_list:
+      - recipe[apt::default]
   - name: centos-7.2
+    run_list:
+      - recipe[yum::default]
   - name: centos-6.7
+    run_list:
+      - recipe[yum::default]
   - name: centos-5.11
+    run_list:
+      - recipe[yum::default]
+  - name: freebsd-10.2
+    run_list:
+      - recipe[freebsd::default]
   - name: windows-2012r2
+    run_list:
+      - recipe[windows::default]
 
 suites:
   - name: default
@@ -24,30 +39,27 @@ suites:
           server: true
           datacenter: FortMeade
           encrypt: CGXC2NsXW4AvuB4h5ODYzQ==
-    excludes:
-      - windows-2012r2
-  - name: source
+  - name: git
     run_list:
       - recipe[consul::default]
     attributes:
       consul:
         config: *default-config
-        service:
-          install_method: source
+        installation:
+          provider: git
     excludes:
       - windows-2012r2
-  - name: package
+  - name: webui
     run_list:
       - recipe[consul::default]
     attributes:
       consul:
-        config: *default-config
-        service:
-          install_method: package
-    excludes:
-      - centos-7.2
-      - centos-6.7
-      - centos-5.11
+        config:
+          bootstrap: true
+          server: true
+          ui: true
+          datacenter: FortMeade
+          encrypt: CGXC2NsXW4AvuB4h5ODYzQ==
   - name: acl
     run_list:
       - recipe[consul::default]
@@ -67,30 +79,3 @@ suites:
       - centos-7.2
       - centos-6.7
       - centos-5.11
-  - name: windefault
-    includes:
-      - windows-2012r2
-    run_list:
-      - recipe[consul::default]
-    attributes:
-      consul:
-        service_user: vagrant
-        config: *default-config
-        service:
-          nssm_params:
-            AppStdout: C:\foo\bar\out.log
-            AppStderr: C:\foo\bar\err.log
-  # - name: atlas
-  #   excludes:
-  #     - windows-2012r2
-  #   run_list:
-  #     - recipe[consul::default]
-  #   attributes:
-  #     consul:
-  #       config:
-  #         bootstrap: true
-  #         server: true
-  #         datacenter: fortmeade
-  #         atlas_join: true
-  #         atlas_infrastructure: <%= ENV.fetch('ATLAS_INFRASTRUCTURE', 'example/cluster') %>
-  #         atlas_token: <%= ENV.fetch('ATLAS_TOKEN', 'NOT_REAL') %>
