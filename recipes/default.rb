@@ -52,14 +52,13 @@ config = consul_config service_name do |r|
     group node['consul']['service_group']
   end
   node['consul']['config'].each_pair { |k, v| r.send(k, v) }
-  notifies :restart, "consul_service[#{service_name}]", :delayed
+  notifies :reload, "consul_service[#{service_name}]", :delayed
 end
 
 install = consul_installation node['consul']['version'] do |r|
   if node['consul']['installation']
     node['consul']['installation'].each_pair { |k, v| r.send(k, v) }
   end
-  notifies :restart, "consul_service[#{service_name}]", :delayed
 end
 
 consul_service service_name do |r|
