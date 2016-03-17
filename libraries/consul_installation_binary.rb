@@ -47,33 +47,15 @@ module ConsulCookbook
         }
 
         notifying_block do
-          archive = remote_file options[:archive_basename] do
-            path ::File.join(Chef::Config[:file_cache_path], name)
-            source archive_url
-            checksum options[:archive_checksum]
-          end
-
           directory ::File.join(options[:extract_to], new_resource.version) do
             recursive true
           end
 
-          windows_zipfile options[:archive_basename] do
+          zipfile options[:archive_basename] do
             path ::File.join(options[:extract_to], new_resource.version)
-            source archive.path
-            only_if { node.platform?('windows') }
+            source archive_url
+            checksum options[:archive_checksum]
             not_if { ::File.exist?(consul_program) }
-          end
-
-          unless node.platform?('windows')
-            include_recipe 'libarchive::default'
-            libarchive_file options[:archive_basename] do
-              path archive.path
-              mode options[:extract_mode]
-              owner options[:extract_owner]
-              group options[:extract_group]
-              extract_to ::File.join(options[:extract_to], new_resource.version)
-              extract_options options[:extract_options]
-            end
           end
         end
       end

@@ -24,9 +24,9 @@ depends 'chef-vault', '~> 1.3'
 depends 'nssm'
 depends 'golang'
 depends 'firewall', '~> 2.0'
-depends 'libartifact', '~> 1.3'
 depends 'poise', '~> 2.2'
 depends 'poise-service', '~> 1.0'
+depends 'rubyzip', '~> 1.0'
 depends 'yum-epel'
 
 source_url 'https://github.com/johnbellone/consul-cookbook' if respond_to?(:source_url)
