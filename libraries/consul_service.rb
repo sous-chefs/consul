@@ -42,13 +42,13 @@ module ConsulCookbook
       # @!attribute nssm_params
       # @return [String]
       attribute(:nssm_params, kind_of: Hash, default: lazy { node['consul']['service']['nssm_params'] })
-      # @!attribute consul_binary
+      # @!attribute program
       # The location of the Consul executable.
       # @return [String]
       attribute(:program, kind_of: String, default: '/usr/local/bin/consul')
 
       def command
-        "#{consul_binary} agent -config-file=#{config_file} -config-dir=#{config_dir}"
+        "#{program} agent -config-file=#{config_file} -config-dir=#{config_dir}"
       end
 
       def default_environment
