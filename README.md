@@ -26,7 +26,8 @@ are passed directly into the Chef resource/providers which are exposed
 for more advanced configuration.
 
 Out of the box the following platforms are certified to work and are
-tested using our [Test Kitchen][8] configuration. Additional platforms
+tested using our [Test Kitchen][8
+] configuration. Additional platforms
 _may_ work, but your mileage may vary.
 
 - CentOS (RHEL) 5.11, 6.7, 7.2
