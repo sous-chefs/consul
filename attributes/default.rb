@@ -9,9 +9,6 @@ default['consul']['service_name'] = 'consul'
 default['consul']['service_user'] = 'consul'
 default['consul']['service_group'] = 'consul'
 
-default['consul']['config']['bag_name'] = 'secrets'
-default['consul']['config']['bag_item'] = 'consul'
-
 default['consul']['config']['path'] = join_path config_prefix_path, 'consul.json'
 default['consul']['config']['data_dir'] = data_path
 default['consul']['config']['ca_file'] = join_path config_prefix_path, 'ssl', 'CA', 'ca.crt'

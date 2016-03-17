@@ -24,12 +24,6 @@ module ConsulCookbook
       # @!attribute group
       # @return [String]
       attribute(:group, kind_of: String, default: 'consul')
-      # @!attribute bag_name
-      # @return [String]
-      attribute(:bag_name, kind_of: String, default: 'secrets')
-      # @!attribute bag_item
-      # @return [String]
-      attribute(:bag_item, kind_of: String, default: 'consul')
       # @!attribute options
       # @return [Hash]
       attribute(:options, option_collector: true)
