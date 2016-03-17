@@ -23,8 +23,8 @@ module ConsulCookbook
       # @return [String]
       attribute(:version, kind_of: String, name_attribute: true)
 
-      def consul_binary
-        @consul_binary ||= provider_for_action(:consul_binary).consul_binary
+      def consul_program
+        @program ||= provider_for_action(:consul_program).consul_program
       end
     end
   end

@@ -45,7 +45,7 @@ module ConsulCookbook
       # @!attribute consul_binary
       # The location of the Consul executable.
       # @return [String]
-      attribute(:consul_binary, kind_of: String, default: '/usr/local/bin/consul')
+      attribute(:program, kind_of: String, default: '/usr/local/bin/consul')
 
       def command
         "#{consul_binary} agent -config-file=#{config_file} -config-dir=#{config_dir}"

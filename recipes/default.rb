@@ -61,7 +61,7 @@ end
 consul_service service_name do |r|
   version node['consul']['version']
   config_file config.path
-  consul_binary install.consul_binary
+  program install.consul_program
 
   unless windows?
     user node['consul']['service_user']

@@ -55,8 +55,8 @@ module ConsulCookbook
         end
       end
 
-      def consul_binary
-        options.fetch(:consul_binary, '/usr/local/bin/consul')
+      def consul_program
+        options.fetch(:consul_program, '/usr/local/bin/consul')
       end
     end
   end

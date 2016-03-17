@@ -19,44 +19,25 @@ module ConsulCookbook
 
       def action_enable
         notifying_block do
-          case new_resource.install_method
-          when 'binary'
-            windows_zipfile "consul-#{new_resource.version}" do
-              action :unzip
-              path new_resource.install_path
-              source new_resource.binary_url % { version: new_resource.version, filename: new_resource.binary_filename('binary') }
-              not_if { correct_version?(join_path(new_resource.install_path, 'consul.exe'), new_resource.version) }
-            end
-          else
-            Chef::Application.fatal!('The Consul Service provider for Windows only supports the binary install_method at this time')
-          end
-
           directories = %W{#{new_resource.data_dir}
                            #{new_resource.config_dir}
                            #{::File.dirname(new_resource.nssm_params['AppStdout'])}
                            #{::File.dirname(new_resource.nssm_params['AppStderr'])}}.uniq.compact
-
-          # ::File.dirname '' == '.'
           directories.delete_if { |i| i.eql? '.' }.each do |dirname|
             directory dirname do
               recursive true
-              # owner new_resource.user
-              # group new_resource.group
-              # mode '0755'
             end
           end
 
           nssm 'consul' do
             action :install
-            program join_path(new_resource.install_path, 'consul.exe')
-            # Don't try and set empty parameters
+            program new_resource.program
             params new_resource.nssm_params.select { |_k, v| v != '' }
             args command(new_resource.config_file, new_resource.config_dir)
             not_if { nssm_service_installed? }
           end
 
           if nssm_service_installed?
-            # The nssm resource does not check param values after they've been set
             mismatch_params = check_nssm_params
             unless mismatch_params.empty?
               mismatch_params.each do |k, v|

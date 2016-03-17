@@ -21,7 +21,7 @@ module ConsulCookbook
     class ConsulInstallationWebui < Chef::Provider
       include Poise(inversion: :consul_installation)
       provides(:webui)
-      inversion_attribute 'consul'
+      inversion_attribute('consul')
 
       # Set the default inversion options.
       # @return [Hash]
@@ -76,7 +76,7 @@ module ConsulCookbook
         end
       end
 
-      def consul_binary
+      def consul_program
         ::File.join(options[:extract_to], new_resource.version, 'consul')
       end
 

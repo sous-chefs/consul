@@ -71,7 +71,7 @@ suites:
       - centos-7.2
       - centos-6.7
       - centos-5.11
-  - name: windefault
+  - name: zip
     includes:
       - windows-2012r2
     run_list:

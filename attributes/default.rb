@@ -8,7 +8,6 @@
 default['consul']['service_name'] = 'consul'
 default['consul']['service_user'] = 'consul'
 default['consul']['service_group'] = 'consul'
-default['consul']['install_method'] = 'binary'
 
 default['consul']['config']['bag_name'] = 'secrets'
 default['consul']['config']['bag_item'] = 'consul'

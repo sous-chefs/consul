@@ -21,7 +21,7 @@ module ConsulCookbook
     class ConsulInstallationGit < Chef::Provider
       include Poise(inversion: :consul_installation)
       provides(:git)
-      inversion_attribute 'consul'
+      inversion_attribute('consul')
 
       # Set the default inversion options.
       # @return [Hash]
@@ -63,7 +63,7 @@ module ConsulCookbook
         end
       end
 
-      def consul_binary
+      def consul_program
         ::File.join(options[:git_path], 'bin', 'consul')
       end
     end

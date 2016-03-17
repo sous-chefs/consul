@@ -19,7 +19,7 @@ module ConsulCookbook
     class ConsulInstallationBinary < Chef::Provider
       include Poise(inversion: :consul_installation)
       provides(:binary)
-      inversion_attribute 'consul'
+      inversion_attribute('consul')
 
       # @api private
       def self.provides_auto?(_node, _resource)
@@ -47,8 +47,6 @@ module ConsulCookbook
         }
 
         notifying_block do
-          include_recipe 'libarchive::default'
-
           archive = remote_file options[:archive_basename] do
             path ::File.join(Chef::Config[:file_cache_path], name)
             source archive_url
@@ -59,13 +57,23 @@ module ConsulCookbook
             recursive true
           end
 
-          libarchive_file options[:archive_basename] do
-            path archive.path
-            mode options[:extract_mode]
-            owner options[:extract_owner]
-            group options[:extract_group]
-            extract_to ::File.join(options[:extract_to], new_resource.version)
-            extract_options options[:extract_options]
+          windows_zipfile options[:archive_basename] do
+            path ::File.join(options[:extract_to], new_resource.version)
+            source archive.path
+            only_if { node.platform?('windows') }
+            not_if { ::File.exist?(consul_program) }
+          end
+
+          unless node.platform?('windows')
+            include_recipe 'libarchive::default'
+            libarchive_file options[:archive_basename] do
+              path archive.path
+              mode options[:extract_mode]
+              owner options[:extract_owner]
+              group options[:extract_group]
+              extract_to ::File.join(options[:extract_to], new_resource.version)
+              extract_options options[:extract_options]
+            end
           end
         end
       end
@@ -79,8 +87,10 @@ module ConsulCookbook
         end
       end
 
-      def consul_binary
-        ::File.join(options[:extract_to], new_resource.version, 'consul')
+      def consul_program
+        @program ||= ::File.join(options[:extract_to], new_resource.version, 'consul')
+        return @program unless node.platform?('windows')
+        @program + '.exe'
       end
 
       def self.default_archive_url
