@@ -31,7 +31,9 @@ _may_ work, but your mileage may vary.
 
 - CentOS (RHEL) 5.11, 6.7, 7.2
 - Ubuntu 12.04, 14.04
-- Windows 2012
+- Windows 2012r2
+- Debian 7.9, 8.2
+- FreeBSD 10.2
 
 ### Client
 Out of the box the default recipe installs and configures the Consul
@@ -193,36 +195,6 @@ All of the [options available on the command-line][12] can be passed
 into the resource. This could potentially be a *very dangerous*
 operation. You should absolutely understand what you are doing. By the
 nature of this command it is _impossible_ for it to be idempotent.
-
-### UI
-
-`consul_ui` resource can be used to download and extract the
-[consul web UI](https://www.consul.io/intro/getting-started/ui.html).
-It can be done with a block like this:
-
-```ruby
-consul_ui 'consul-ui' do
-  owner node['consul']['service_user']
-  group node['consul']['service_group']
-  version node['consul']['version']
-end
-```
-
-Assuming consul version `0.5.2` above block would create `/srv/consul-ui/0.5.2`
-and symlink `/srv/consul-ui/current`.
-
-It does not change agent's configuration by itself.
-`consul_config` resource should be modified explicitly in order to host the web page.
-
-```ruby
-consul_config 'consul' do
-  ...
-  ui_dir '/srv/consul-ui/current/dist'
-end
-```
-
-This is optional, because consul UI can be hosted by any web server.
-
 
 [0]: http://blog.vialstudios.com/the-environment-cookbook-pattern/#theapplicationcookbook
 [1]: http://consul.io
