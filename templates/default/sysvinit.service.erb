@@ -18,6 +18,7 @@ prog="<%= File.basename(@daemon) %>"
 user="<%= @user %>"
 exec="<%= @daemon %>"
 pidfile="<%= @pid_file %>"
+logfile="/var/log/$prog.log"
 lockfile="/var/lock/subsys/$prog"
 
 <%- @environment.each do |key, val| -%>
@@ -61,7 +62,7 @@ _start() {
     daemon \
          --pidfile=$pidfile \
          --user=$user \
-         " { $exec <%= @daemon_options %> &> /dev/null & } ; echo \$! >| $pidfile "
+         " { $exec <%= @daemon_options %> &> $logfile & } ; echo \$! >| $pidfile "
      RETVAL=$?
      echo
      [ $RETVAL -eq 0 ] && touch $lockfile
