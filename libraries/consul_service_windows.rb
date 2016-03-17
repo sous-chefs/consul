@@ -64,6 +64,10 @@ module ConsulCookbook
         end
       end
 
+      def action_reload
+        Chef::Log.info 'The service provider for Consul on Windows does not support reload!'
+      end
+
       def action_restart
         batch 'Restart consul' do
           code "#{nssm_exe} restart consul"
