@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe file('/opt/consul/0.6.3/consul') do
+describe file('/opt/consul/0.6.4/consul') do
   it { should be_file }
   it { should be_executable }
 end
@@ -26,7 +26,7 @@ end
   end
 end
 
-describe command('/opt/consul/0.6.3/consul members -detailed') do
+describe command('/opt/consul/0.6.4/consul members -detailed') do
   its(:exit_status) { should eq 0 }
   its(:stdout) { should match %r{\balive\b} }
   its(:stdout) { should match %r{\brole=consul\b} }

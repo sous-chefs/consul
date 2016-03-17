@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe file('C:\opt\consul\0.6.3\consul.exe') do
+describe file('C:\opt\consul\0.6.4\consul.exe') do
   it { should be_file }
 end
 
@@ -15,7 +15,7 @@ end
   end
 end
 
-describe command('& "C:\opt\consul\0.6.3\consul.exe" members -detailed') do
+describe command('& "C:\opt\consul\0.6.4\consul.exe" members -detailed') do
   its(:exit_status) { should eq 0 }
   its(:stdout) { should match %r{\balive\b} }
   its(:stdout) { should match %r{\brole=consul\b} }
