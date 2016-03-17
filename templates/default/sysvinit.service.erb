@@ -30,10 +30,12 @@ export PATH="${PATH:+$PATH:}/usr/sbin:/sbin"
 . /lib/lsb/init-functions
 
 _start() {
+  touch $logfile
+  chown $user $logfile
   start-stop-daemon --start --quiet --background \
       --pidfile $pidfile<% unless @pid_file_external %> --make-pidfile<% end %> \
       --chuid $user --chdir "<%= @directory %>" \
-      --exec $exec -- <%= @daemon_options %>
+      --startas /bin/bash -- -c "exec $exec <%= @daemon_options %> >$logfile 2>&1"
 }
 
 _stop() {

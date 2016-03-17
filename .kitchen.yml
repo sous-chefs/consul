@@ -12,6 +12,12 @@ platforms:
   - name: ubuntu-12.04
     run_list:
       - recipe[apt::default]
+  - name: debian-8.2
+    run_list:
+      - recipe[apt::default]
+  - name: debian-7.9
+    run_list:
+      - recipe[apt::default]
   - name: centos-7.2
     run_list:
       - recipe[yum::default]
