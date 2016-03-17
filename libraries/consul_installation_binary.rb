@@ -81,15 +81,16 @@ module ConsulCookbook
 
       def self.binary_basename(node, resource)
         case node['kernel']['machine']
-        when 'x86_64' then ['consul', resource.version, node['os'], 'amd64'].join('_')
+        when 'x86_64', 'amd64' then ['consul', resource.version, node['os'], 'amd64'].join('_')
         when 'i386' then ['consul', resource.version, node['os'], '386'].join('_')
         else ['consul', resource.version, node['os'], node['kernel']['machine']].join('_')
         end.concat('.zip')
       end
 
       def self.binary_checksum(node, resource)
-        case [node['os'], node['kernel']['machine']].join('-')
-        when 'darwin-x86_64'
+        tag = node['kernel']['machine'] =~ /x86_64/ ? 'amd64' : node['kernel']['machine']
+        case [node['os'], tag].join('-')
+        when 'darwin-amd64'
           case resource.version
           when '0.5.0' then '24d9758c873e9124e0ce266f118078f87ba8d8363ab16c2e59a3cd197b77e964'
           when '0.5.1' then '161f2a8803e31550bd92a00e95a3a517aa949714c19d3124c46e56cfdc97b088'
@@ -108,13 +109,13 @@ module ConsulCookbook
           when '0.6.3' then '7fb30756504cd9559c9b23e5d0d8d73a847ee62ed85d39955b5906c2f59a5bc1'
           when '0.6.4' then '4cd39e968ca6bed0888f831a2fc438ffe0b48dab863c822e777f5b5219bacf5c'
           end
-        when 'solaris-x86_64'
+        when 'solaris-amd64'
           case resource.version
           when '0.6.2' then 'f5655f0b173e5d51c5b92327d1fc7f24ac0939897a1966da09146e4eb75af9d1'
           when '0.6.3' then 'e6a286ff17a2345b8800732850eadb858b3dba9486355e1164a774ccec2f0e98'
           when '0.6.4' then 'c26a64310f83c3ba388c78d5b89d640d961ae9eabe221c244bfffcfa753966bd'
           end
-        when 'windows-x86_64'
+        when 'windows-amd64'
           case resource.version
           when '0.6.0' then '182beea0d8d346a9bfd70679621a5542aeeeea1f35be81fa3d3aeec2479bac3d'
           when '0.6.1' then '2be6b0f0fdebff00aea202e9846131af570676f52e2936728cbf29ffbb02f57f'
@@ -133,7 +134,7 @@ module ConsulCookbook
           when '0.6.3' then '55733a730c5055d0ed1dc2656b2b6a27b21c7c361a907919cfae90aab2dff870'
           when '0.6.4' then '6555f0fff6c3f9ea310c94a73365d9892afc255efb47c85041ad1c0ede854b87'
           end
-        when 'linux-x86_64'
+        when 'linux-amd64'
           case resource.version
           when '0.5.0' then '161f2a8803e31550bd92a00e95a3a517aa949714c19d3124c46e56cfdc97b088'
           when '0.5.1' then '967ad75865b950698833eaf26415ba48d8a22befb5d4e8c77630ad70f251b100'
@@ -163,7 +164,7 @@ module ConsulCookbook
           when '0.6.3' then 'c5fd5278be2757d2468bc7e263af15bc9a9e80fc5108fec658755804ea9bca56'
           when '0.6.4' then '81200fc8b7965dfc6048c336925211eaf2c7247be5d050946a5dd4d53ec9817e'
           end
-        when 'freebsd-x86_64'
+        when 'freebsd-amd64'
           case resource.version
           when '0.6.0' then 'd7be5c95b971f48ccbd2c53c342dced9a3d0a5bc58f57b4f2e75672d96929923'
           when '0.6.1' then '04688dfabedf6ded7f3d548110c7d9ffc8d6d3a091062593e421702bc42b465d'
