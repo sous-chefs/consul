@@ -33,17 +33,7 @@ if node['firewall']['allow_consul']
   end
 end
 
-unless windows?
-  group node['consul']['service_group'] do
-    system true
-  end
-
-  user node['consul']['service_user'] do
-    shell '/bin/bash'
-    group node['consul']['service_group']
-    system true
-  end
-end
+include_recipe 'consul::user'
 
 service_name = node['consul']['service_name']
 config = consul_config service_name do |r|
