@@ -82,7 +82,7 @@ module ConsulCookbook
       attribute(:statsite_addr, kind_of: String)
       attribute(:syslog_facility, kind_of: String)
       attribute(:ui, equal_to: [true, false], default: false)
-      attribute(:ui_dir, kind_of: String)
+      attribute(:ui_dir, kind_of: String, default: lazy { '/var/lib/consul/ui' })
       attribute(:verify_incoming, equal_to: [true, false], default: false)
       attribute(:verify_outgoing, equal_to: [true, false], default: false)
       attribute(:verify_server_hostname, equal_to: [true, false], default: false)

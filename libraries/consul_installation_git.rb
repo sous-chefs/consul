@@ -63,6 +63,10 @@ module ConsulCookbook
         end
       end
 
+      def consul_install_path
+        options[:git_path]
+      end
+
       def consul_program
         ::File.join(options[:git_path], 'bin', 'consul')
       end
