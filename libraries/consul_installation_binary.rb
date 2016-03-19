@@ -5,6 +5,7 @@
 # Copyright 2014-2016, Bloomberg Finance L.P.
 #
 require 'poise'
+require_relative './helpers'
 
 module ConsulCookbook
   module Provider
@@ -18,6 +19,7 @@ module ConsulCookbook
     # @since 2.0
     class ConsulInstallationBinary < Chef::Provider
       include Poise(inversion: :consul_installation)
+      include ::ConsulCookbook::Helpers
       provides(:binary)
       inversion_attribute('consul')
 
@@ -31,12 +33,13 @@ module ConsulCookbook
       # @api private
       def self.default_inversion_options(node, resource)
         archive_basename = binary_basename(node, resource)
+        extract_to = node.windows? ? node.config_prefix_path : '/opt/consul'
         super.merge(
           version: resource.version,
           archive_url: default_archive_url % { version: resource.version, basename: archive_basename },
           archive_basename: archive_basename,
           archive_checksum: binary_checksum(node, resource),
-          extract_to: '/opt/consul'
+          extract_to: extract_to
         )
       end
 
@@ -47,12 +50,12 @@ module ConsulCookbook
         }
 
         notifying_block do
-          directory ::File.join(options[:extract_to], new_resource.version) do
+          directory join_path(options[:extract_to], new_resource.version) do
             recursive true
           end
 
           zipfile options[:archive_basename] do
-            path ::File.join(options[:extract_to], new_resource.version)
+            path join_path(options[:extract_to], new_resource.version)
             source archive_url
             checksum options[:archive_checksum]
             not_if { ::File.exist?(consul_program) }
@@ -62,7 +65,7 @@ module ConsulCookbook
 
       def action_remove
         notifying_block do
-          directory ::File.join(options[:extract_to], new_resource.version) do
+          directory join_path(options[:extract_to], new_resource.version) do
             recursive true
             action :delete
           end
@@ -70,9 +73,8 @@ module ConsulCookbook
       end
 
       def consul_program
-        @program ||= ::File.join(options[:extract_to], new_resource.version, 'consul')
-        return @program unless node.platform?('windows')
-        @program + '.exe'
+        @program ||= join_path(options[:extract_to], new_resource.version, 'consul')
+        windows? ? @program + '.exe' : @program
       end
 
       def self.default_archive_url
