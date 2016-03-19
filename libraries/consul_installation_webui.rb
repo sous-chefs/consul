@@ -79,7 +79,7 @@ module ConsulCookbook
         "https://releases.hashicorp.com/consul/%{version}/%{basename}" # rubocop:disable Style/StringLiterals
       end
 
-      def self.binary_basename(node, resource)
+      def self.binary_basename(_node, resource)
         ['consul', resource.version, 'web_ui'].join('_').concat('.zip')
       end
 

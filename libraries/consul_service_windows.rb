@@ -49,14 +49,14 @@ module ConsulCookbook
               end
               powershell_script 'Trigger consul restart' do
                 action :nothing
-                code "restart-service consul"
+                code 'restart-service consul'
               end
             end
             # Check if the service is running, but don't bother if we're already
             # changing some nssm parameters
             unless nssm_service_status?(%w{SERVICE_RUNNING}) && mismatch_params.empty?
               powershell_script 'Trigger consul restart' do
-                code "restart-service consul"
+                code 'restart-service consul'
               end
             end
           end
@@ -69,7 +69,7 @@ module ConsulCookbook
 
       def action_restart
         powershell_script 'Restart consul' do
-          code "restart-service consul"
+          code 'restart-service consul'
         end
       end
 
@@ -78,7 +78,7 @@ module ConsulCookbook
           # nssm resource doesn't stop the service before it removes it
           powershell_script 'Stop consul' do
             action :run
-            code "stop-service consul"
+            code 'stop-service consul'
             only_if { nssm_service_installed? && nssm_service_status?(%w{SERVICE_RUNNING SERVICE_PAUSED}) }
           end
 

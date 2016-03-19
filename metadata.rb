@@ -19,7 +19,6 @@ supports 'windows'
 
 depends 'build-essential'
 depends 'chef-sugar'
-depends 'chef-vault', '~> 1.3'
 depends 'nssm'
 depends 'golang'
 depends 'firewall', '~> 2.0'
