@@ -9,6 +9,7 @@ group :lint do
 end
 
 group :unit, :integration do
+  gem 'chef-sugar'
   gem 'chefspec'
   gem 'berkshelf'
   gem 'serverspec'
@@ -16,7 +17,7 @@ end
 
 group :development do
   gem 'awesome_print'
-  gem 'github_changelog_generator'
+#  gem 'github_changelog_generator'
   gem 'rake'
   gem 'stove'
 end
