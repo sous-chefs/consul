@@ -57,8 +57,8 @@ _start() {
     [ -x $exec ] || exit 5
 
     umask 077
-    touch $pidfile
-    chown $user $pidfile
+    touch $pidfile $logfile
+    chown $user $pidfile $logfile
 
     echo -n $"Starting <%= @name %>: "
     daemon \
