@@ -84,6 +84,7 @@ module ConsulCookbook
       attribute(:syslog_facility, kind_of: String)
       attribute(:ui, equal_to: [true, false], default: false)
       attribute(:ui_dir, kind_of: String, default: '/var/lib/consul/ui')
+      attribute(:unix_sockets, kind_of: [Hash, Mash])
       attribute(:verify_incoming, equal_to: [true, false], default: false)
       attribute(:verify_outgoing, equal_to: [true, false], default: false)
       attribute(:verify_server_hostname, equal_to: [true, false], default: false)
@@ -92,7 +93,7 @@ module ConsulCookbook
       # Transforms the resource into a JSON format which matches the
       # Consul service's configuration format.
       def to_json
-        for_keeps = %i{acl_datacenter acl_default_policy acl_down_policy acl_master_token acl_token acl_ttl addresses advertise_addr advertise_addr_wan atlas_acl_token atlas_infrastructure atlas_join atlas_token atlas_endpoint bind_addr bootstrap bootstrap_expect check_update_interval client_addr data_dir datacenter disable_anonymous_signature disable_remote_exec disable_update_check dns_config domain enable_debug enable_syslog encrypt leave_on_terminate log_level node_name ports protocol recursor recursors retry_interval retry_interval_wan retry_join retry_join_wan rejoin_after_leave server server_name skip_leave_on_interrupt start_join start_join_wan statsd_addr statsite_addr syslog_facility ui ui_dir verify_incoming verify_outgoing verify_server_hostname watches dev_mode}
+        for_keeps = %i{acl_datacenter acl_default_policy acl_down_policy acl_master_token acl_token acl_ttl addresses advertise_addr advertise_addr_wan atlas_acl_token atlas_infrastructure atlas_join atlas_token atlas_endpoint bind_addr bootstrap bootstrap_expect check_update_interval client_addr data_dir datacenter disable_anonymous_signature disable_remote_exec disable_update_check dns_config domain enable_debug enable_syslog encrypt leave_on_terminate log_level node_name ports protocol recursor recursors retry_interval retry_interval_wan retry_join retry_join_wan rejoin_after_leave server server_name skip_leave_on_interrupt start_join start_join_wan statsd_addr statsite_addr syslog_facility ui ui_dir verify_incoming verify_outgoing verify_server_hostname watches dev_mode unix_sockets}
         for_keeps << %i{ca_file cert_file key_file} if tls?
         for_keeps = for_keeps.flatten
 
