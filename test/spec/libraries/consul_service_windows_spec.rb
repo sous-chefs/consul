@@ -8,7 +8,7 @@ describe ConsulCookbook::Resource::ConsulService do
 
   context 'with default properties' do
     before do
-      Mixlib::ShellOut.stub(:new).and_return(shellout)
+      allow(Mixlib::ShellOut).to receive(:new).and_return(shellout)
       allow(shellout).to receive(:live_stream)
       allow(shellout).to receive(:live_stream=)
       allow(shellout).to receive(:error!)
@@ -23,7 +23,7 @@ describe ConsulCookbook::Resource::ConsulService do
     it { expect(chef_run).to create_directory('C:\Program Files\consul\conf.d') }
     it { is_expected.to create_directory('C:\Program Files\consul\data') }
     it { expect(chef_run).to install_nssm('consul').with(
-      program: 'C:\Program Files\consul\consul.exe',
+      program: 'C:\Program Files\consul\0.6.4\consul.exe',
       args: 'agent -config-file="""C:\Program Files\consul\consul.json""" -config-dir="""C:\Program Files\consul\conf.d"""'
     )}
   end
