@@ -47,6 +47,8 @@ module ConsulCookbook
             recursive true
           end
 
+          directory '/var/lib/consul'
+
           zipfile options[:archive_basename] do
             path ::File.join(options[:extract_to], new_resource.version)
             source archive_url
