@@ -1,17 +1,11 @@
 ---
 language: ruby
-cache: bundler
+#cache: bundler
 sudo: false
 notifications:
   slack: bloomberg-rnd:BvYmxrV9xj902XWTRNrkLNkR
 before_script:
-  - bundle update
-addons:
-  apt:
-    sources:
-      - chef-stable-precise
-    packages:
-      - chefdk
+  - bundle update berkshelf
 script: bundle exec rake travis
 rvm:
   - 2.2
