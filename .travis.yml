@@ -6,6 +6,12 @@ notifications:
   slack: bloomberg-rnd:BvYmxrV9xj902XWTRNrkLNkR
 before_script:
   - bundle update
+addons:
+  apt:
+    sources:
+      - chef-stable-precise
+    packages:
+      - chefdk
 script: bundle exec rake travis
 rvm:
   - 2.2
