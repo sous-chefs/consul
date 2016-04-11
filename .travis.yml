@@ -4,6 +4,8 @@ cache: bundler
 sudo: false
 notifications:
   slack: bloomberg-rnd:BvYmxrV9xj902XWTRNrkLNkR
+before_script:
+  - bundle update
 script: bundle exec rake travis
 rvm:
   - 2.2
