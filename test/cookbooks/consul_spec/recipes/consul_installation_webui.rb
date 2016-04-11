@@ -1,3 +1,4 @@
-consul_installation '0.6.4' do
+
+consul_installation node['consul']['version'] do
   provider :webui
 end
