@@ -25,3 +25,9 @@ end
 group :doc do
   gem 'yard'
 end
+
+group :faraday do
+  # Referencing https://github.com/nomad/shenzhen/issues/96 to fix build issue regarding
+  # the faraday gem
+  gem 'faraday', '~> 8.0'
+end
