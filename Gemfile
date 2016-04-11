@@ -1,7 +1,7 @@
 source 'https://rubygems.org'
 gem 'poise', '~> 2.2'
 gem 'poise-service', '~> 1.0'
-gem 'poise-boiler'
+gem 'poise-boiler', '~> 1.7.0'
 
 group :lint do
   gem 'rubocop'
@@ -29,5 +29,5 @@ end
 # Referencing https://github.com/nomad/shenzhen/issues/96 to
 # fix build issue regarding the faraday gem
 group :faraday do
-  gem 'faraday', '~> 0.9.0'
+  gem 'faraday', '~> 0.8.0'
 end
