@@ -1,5 +1,6 @@
 require 'spec_helper'
 require_relative '../../../libraries/consul_service'
+require_relative '../../../libraries/consul_service_windows'
 
 describe ConsulCookbook::Resource::ConsulService do
   step_into(:consul_service)
@@ -16,6 +17,10 @@ describe ConsulCookbook::Resource::ConsulService do
       allow(shellout).to receive(:run_command)
       allow(shellout).to receive(:exitstatus)
       allow(shellout).to receive(:stdout).and_return("Consul v0.6.0\nConsul Protocol: 3 (Understands back to: 1)\n")
+
+      # Stub admin_user method since we are testing a Windows host via Linux
+      # Fixed in https://github.com/poise/poise/commit/2f42850c82e295af279d060155bcd5c7ebb31d6a but not released yet
+      allow(Poise::Utils::Win32).to receive(:admin_user).and_return('Administrator')
     end
 
     recipe 'consul::default'
