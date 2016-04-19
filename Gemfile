@@ -11,7 +11,7 @@ end
 group :unit, :integration do
   gem 'chef-sugar'
   gem 'chefspec'
-  gem 'berkshelf'
+  gem 'berkshelf', '~> 4.0'
   gem 'test-kitchen'
   gem 'serverspec'
 end
