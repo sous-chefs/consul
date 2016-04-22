@@ -33,7 +33,7 @@ module ConsulCookbook
       # @api private
       def self.default_inversion_options(node, resource)
         archive_basename = binary_basename(node, resource)
-        extract_to = node.windows? ? node.config_prefix_path : '/opt/consul'
+        extract_to = windows? ? node.config_prefix_path : '/opt/consul'
         super.merge(
           version: resource.version,
           archive_url: default_archive_url % { version: resource.version, basename: archive_basename },
