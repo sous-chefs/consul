@@ -25,3 +25,4 @@ end
 group :doc do
   gem 'yard'
 end
+
