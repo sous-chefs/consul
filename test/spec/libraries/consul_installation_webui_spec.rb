@@ -15,6 +15,12 @@ describe ConsulCookbook::Provider::ConsulInstallationWebui do
         recursive: true
       )
     end
+    
+    it do is_expected.to create_directory('/var/lib/consul')
+      .with(
+        recursive: true
+      )
+    end
 
     it do is_expected.to unzip_zipfile('consul_0.6.4_web_ui.zip')
       .with(
