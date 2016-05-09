@@ -55,7 +55,7 @@ module ConsulCookbook
             if node['os'].eql? 'linux'
               owner new_resource.user
               group new_resource.group
-              mode '0755'
+              mode '0640'
             end
           end
         end
