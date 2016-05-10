@@ -43,16 +43,20 @@ module ConsulCookbook
         notifying_block do
           directory ::File.dirname(new_resource.path) do
             recursive true
-            owner new_resource.user
-            group new_resource.group
-            mode '0755'
+            unless windows?
+              owner new_resource.user
+              group new_resource.group
+              mode '0755'
+            end
           end
 
           file new_resource.path do
-            owner new_resource.user
-            group new_resource.group
             content new_resource.to_json
-            mode '0640'
+            unless windows?
+              owner new_resource.user
+              group new_resource.group
+              mode '0640'
+            end
           end
         end
       end
