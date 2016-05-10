@@ -111,7 +111,7 @@ module ConsulCookbook
         notifying_block do
           directory ::File.dirname(new_resource.path) do
             recursive true
-            unless Chef::Platform.windows?
+            unless windows?
               owner new_resource.owner
               group new_resource.group
               mode '0755'
@@ -120,7 +120,7 @@ module ConsulCookbook
           end
 
           file new_resource.path do
-            unless Chef::Platform.windows?
+            unless windows?
               owner new_resource.owner
               group new_resource.group
               mode '0640'
