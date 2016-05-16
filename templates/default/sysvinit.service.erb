@@ -35,7 +35,7 @@ _start() {
   start-stop-daemon --start --quiet --background \
       --pidfile $pidfile<% unless @pid_file_external %> --make-pidfile<% end %> \
       --chuid $user --chdir "<%= @directory %>" \
-      --startas /bin/bash -- -c "exec $exec <%= @daemon_options %> >$logfile 2>&1"
+      --startas /bin/bash -- -c "exec $exec <%= @daemon_options %> >> $logfile 2>&1"
 }
 
 _stop() {
@@ -64,7 +64,7 @@ _start() {
     daemon \
          --pidfile=$pidfile \
          --user=$user \
-         " { $exec <%= @daemon_options %> &> $logfile & } ; echo \$! >| $pidfile "
+         " { $exec <%= @daemon_options %> &>> $logfile & } ; echo \$! >| $pidfile "
      RETVAL=$?
      echo
      [ $RETVAL -eq 0 ] && touch $lockfile
