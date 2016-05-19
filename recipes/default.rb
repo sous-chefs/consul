@@ -55,13 +55,6 @@ config = consul_config service_name do |r|
   notifies :reload, "consul_service[#{service_name}]", :delayed
 end
 
-consul_installation "Consul WebUI: #{node['consul']['version']}" do
-  provider :webui
-  version node['consul']['version']
-  options symlink_to: config.ui_dir if config.ui_dir
-  only_if { config.ui == true }
-end
-
 install = consul_installation node['consul']['version'] do |r|
   if node['consul']['installation']
     node['consul']['installation'].each_pair { |k, v| r.send(k, v) }
