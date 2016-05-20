@@ -42,3 +42,7 @@ default['consul']['service']['nssm_params'] = {
   'AppRotateOnline'  => 1,
   'AppRotateBytes'   => 20_000_000
 }
+
+# Linux only
+default['consul']['service']['options']['systemd']['template'] = 'consul:systemd.service.erb'
+default['consul']['service']['options']['sysvinit']['template'] = 'consul:sysvinit.service.erb'

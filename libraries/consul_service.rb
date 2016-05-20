@@ -46,6 +46,10 @@ module ConsulCookbook
       # The location of the Consul executable.
       # @return [String]
       attribute(:program, kind_of: String, default: '/usr/local/bin/consul')
+      # @!attribute options
+      # Options passed to the underlying poise service.
+      # @return [Hash]
+      attribute(:options, kind_of: Hash, default: lazy { node['consul']['service']['options'] })
 
       def command
         "#{program} agent -config-file=#{config_file} -config-dir=#{config_dir}"
@@ -89,6 +93,9 @@ module ConsulCookbook
         service.options(:systemd, template: 'consul:systemd.service.erb')
         service.options(:sysvinit, template: 'consul:sysvinit.service.erb')
         service.options(:upstart, template: 'consul:upstart.service.erb', executable: new_resource.program)
+        new_resource.options.each do |key, value|
+          service.options(key.to_sym, value)
+        end
 
         if node.platform_family?('rhel') && node.platform_version.to_i == 6
           service.provider(:sysvinit)
