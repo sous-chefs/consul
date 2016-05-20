@@ -33,6 +33,8 @@ default['consul']['service']['config_dir'] = join_path config_prefix_path, 'conf
 
 default['consul']['version'] = '0.6.4'
 
+default['consul']['service']['restart_on_update'] = node.platform?('windows')
+
 # Windows only
 default['consul']['service']['nssm_params'] = {
   'AppDirectory'     => data_path,
