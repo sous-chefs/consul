@@ -1,6 +1,9 @@
 require 'spec_helper'
 
-describe file('/opt/consul/0.6.4/consul') do
+consul_version = '0.6.4'
+consul_executable = "/opt/consul/#{consul_version}/consul"
+
+describe file(consul_executable) do
   it { should be_file }
   it { should be_executable }
 end
@@ -60,4 +63,16 @@ describe file(data_dir) do
   it { should be_grouped_into 'consul' }
 
   it { should be_mode 755 }
+end
+
+if os[:family] == 'ubuntu'
+  describe file('/etc/init/consul.conf' ) do
+    its(:content) do
+      should include(<<-EOT)
+post-start script
+  while ! #{consul_executable} info ; sleep 1; done
+end script
+      EOT
+    end
+  end
 end
