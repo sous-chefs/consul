@@ -15,6 +15,7 @@ describe ConsulCookbook::Resource::ConsulConfig do
       consul_config '/etc/consul/default.json' do
         options do
           recursor 'foo'
+          translate_wan_addrs true
         end
       end
     end
@@ -22,6 +23,7 @@ describe ConsulCookbook::Resource::ConsulConfig do
     it { is_expected.to render_file('/etc/consul/default.json').with_content(<<-EOH.chomp) }
 {
   "recursor": "foo",
+  "translate_wan_addrs": true,
   "verify_incoming": false,
   "verify_outgoing": false
 }
