@@ -51,7 +51,7 @@ module ConsulCookbook
               mode '0755'
               # Prevent clobbering permissions on the directory since the intent
               # in this context is to set the permissions of the definition file
-              not_if { Dir.exist? self.path }
+              not_if { Dir.exist? path }
             end
           end
 
