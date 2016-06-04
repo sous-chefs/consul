@@ -70,13 +70,11 @@ module ConsulCookbook
 
       def action_enable
         notifying_block do
-          [new_resource.data_dir, new_resource.config_dir].each do |dirname|
-            directory dirname do
-              recursive true
-              owner new_resource.user
-              group new_resource.group
-              mode '0755'
-            end
+          directory new_resource.data_dir do
+            recursive true
+            owner new_resource.user
+            group new_resource.group
+            mode '0750'
           end
         end
         super

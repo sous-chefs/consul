@@ -8,7 +8,17 @@ describe ConsulCookbook::Resource::ConsulConfig do
   before do
     recipe = double('Chef::Recipe')
     allow_any_instance_of(Chef::RunContext).to receive(:include_recipe).and_return([recipe])
+    default_attributes['consul'] = {
+      'service' => {
+        'config_dir' => '/etc/consul/conf.d'
+       },
+      'config' => {
+        'owner' => 'root',
+        'group' => 'consul'
+       }
+      }
   end
+
 
   context 'sets options directly' do
     recipe do
@@ -20,14 +30,23 @@ describe ConsulCookbook::Resource::ConsulConfig do
       end
     end
 
-    it { is_expected.to render_file('/etc/consul/default.json').with_content(<<-EOH.chomp) }
-{
-  "recursor": "foo",
-  "translate_wan_addrs": true,
-  "verify_incoming": false,
-  "verify_outgoing": false
-}
-EOH
+    it do
+      is_expected.to create_directory('/etc/consul/conf.d')
+      .with(user: 'root', group: 'consul', mode: '0755')
+    end
+
+    it do
+      is_expected.to create_file('/etc/consul/default.json')
+      .with(user: 'root', group: 'consul', mode: '0640')
+      .with(content: <<-EOH.chomp.gsub(/^        /,''))
+        {
+          "recursor": "foo",
+          "translate_wan_addrs": true,
+          "verify_incoming": false,
+          "verify_outgoing": false
+        }
+        EOH
+    end
   end
 
   context 'deletes configuration' do

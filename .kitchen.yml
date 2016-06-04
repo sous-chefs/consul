@@ -41,6 +41,8 @@ suites:
     attributes:
       consul:
         config: &default-config
+          owner: root
+          group: consul
           bootstrap: true
           server: true
           datacenter: FortMeade

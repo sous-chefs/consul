@@ -20,10 +20,13 @@ module ConsulCookbook
       attribute(:path, kind_of: String, name_attribute: true)
       # @!attribute owner
       # @return [String]
-      attribute(:owner, kind_of: String, default: 'consul')
+      attribute(:owner, kind_of: String, default: lazy { node['consul']['config']['owner'] })
       # @!attribute group
       # @return [String]
-      attribute(:group, kind_of: String, default: 'consul')
+      attribute(:group, kind_of: String, default: lazy { node['consul']['config']['group'] })
+      # @!attribute config_dir
+      # @return [String]
+      attribute(:config_dir, kind_of: String, default: lazy { node['consul']['service']['config_dir'] })
       # @!attribute options
       # @return [Hash]
       attribute(:options, option_collector: true)
@@ -110,14 +113,16 @@ module ConsulCookbook
 
       action(:create) do
         notifying_block do
-          directory ::File.dirname(new_resource.path) do
-            recursive true
-            unless node.platform?('windows')
-              owner new_resource.owner
-              group new_resource.group
-              mode '0755'
+          [::File.dirname(new_resource.path), new_resource.config_dir].each do |dir|
+            directory dir do
+              recursive true
+              unless node.platform?('windows')
+                owner new_resource.owner
+                group new_resource.group
+                mode '0755'
+              end
+              not_if { dir == '/etc' }
             end
-            not_if { ::File.dirname(new_resource.path) == '/etc' }
           end
 
           file new_resource.path do
