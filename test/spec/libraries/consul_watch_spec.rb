@@ -8,7 +8,11 @@ describe ConsulCookbook::Resource::ConsulWatch do
     default_attributes['consul'] = {
       'service' => {
         'config_dir' => '/etc/consul/conf.d'
-        }
+        },
+      'config' => {
+        'owner' => 'root',
+        'group' => 'consul'
+       }
       }
   end
 
@@ -23,7 +27,7 @@ describe ConsulCookbook::Resource::ConsulWatch do
     it { is_expected.to create_directory('/etc/consul/conf.d') }
     it do
       is_expected.to create_file('/etc/consul/conf.d/foo.json')
-      .with(user: 'consul', group: 'consul', mode: '0640')
+      .with(user: 'root', group: 'consul', mode: '0640')
       .with(content: JSON.pretty_generate(
         {
           watches: [

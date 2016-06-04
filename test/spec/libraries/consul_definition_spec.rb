@@ -8,7 +8,11 @@ describe ConsulCookbook::Resource::ConsulDefinition do
     default_attributes['consul'] = {
       'service' => {
         'config_dir' => '/etc/consul/conf.d'
-        }
+        },
+      'config' => {
+        'owner' => 'root',
+        'group' => 'consul'
+       }
       }
   end
 
@@ -23,7 +27,7 @@ describe ConsulCookbook::Resource::ConsulDefinition do
     it { is_expected.to create_directory('/etc/consul/conf.d') }
     it do
       is_expected.to create_file('/etc/consul/conf.d/redis.json')
-      .with(user: 'consul', group: 'consul', mode: '0640')
+      .with(user: 'root', group: 'consul', mode: '0640')
       .with(content: JSON.pretty_generate(
         service: {
           tags: ['master'],
@@ -47,7 +51,7 @@ describe ConsulCookbook::Resource::ConsulDefinition do
     it { is_expected.to create_directory('/etc/consul/conf.d') }
     it do
       is_expected.to create_file('/etc/consul/conf.d/redis.json')
-      .with(user: 'consul', group: 'consul', mode: '0640')
+      .with(user: 'root', group: 'consul', mode: '0640')
       .with(content: JSON.pretty_generate(
         service: {
           name: 'myredis',
@@ -71,7 +75,7 @@ describe ConsulCookbook::Resource::ConsulDefinition do
     it { is_expected.to create_directory('/etc/consul/conf.d') }
     it do
       is_expected.to create_file('/etc/consul/conf.d/web-api.json')
-      .with(user: 'consul', group: 'consul', mode: '0640')
+      .with(user: 'root', group: 'consul', mode: '0640')
       .with(content: JSON.pretty_generate(
         check: {
           http: 'http://localhost:5000/health',

@@ -37,7 +37,7 @@ platforms:
 suites:
   - name: default
     run_list:
-      - recipe[consul::default]
+      - recipe[consul_spec::default]
     attributes:
       consul:
         config: &default-config
@@ -49,7 +49,7 @@ suites:
           encrypt: CGXC2NsXW4AvuB4h5ODYzQ==
   - name: git
     run_list:
-      - recipe[consul::default]
+      - recipe[consul_spec::default]
     attributes:
       consul:
         config: *default-config
@@ -59,7 +59,7 @@ suites:
       - windows-2012r2
   - name: webui
     run_list:
-      - recipe[consul::default]
+      - recipe[consul_spec::default]
     attributes:
       consul:
         config:
@@ -70,8 +70,6 @@ suites:
           encrypt: CGXC2NsXW4AvuB4h5ODYzQ==
   - name: acl
     run_list:
-      - recipe[consul::default]
-      - recipe[consul::client_gem]
       - recipe[consul_spec::acl]
     attributes:
       consul:

@@ -1,3 +1,6 @@
+include_recipe 'consul_spec::default'
+include_recipe 'consul::client_gem'
+
 package 'curl'
 
 consul_acl 'anonymous' do
