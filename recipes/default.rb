@@ -39,7 +39,7 @@ unless windows?
   end
 
   user node['consul']['service_user'] do
-    shell '/bin/bash'
+    shell '/sbin/nologin'
     group node['consul']['service_group']
     system true
   end
