@@ -84,6 +84,22 @@ consul_service 'consul' do
   config_file config.path
 end
 ```
+
+### Security
+The default recipe makes the Consul configuration writable by the consul service user to avoid breaking existing implementations. You can make this more secure by setting the `node['consul']['config']` attribute to `root`, or set the `owner` property of `consul_config` explicitly:
+
+```ruby
+# attributes file
+default['consul']['config']['owner'] = 'root'
+```
+or
+```ruby
+# recipe file
+consul_config '/etc/consul/consul.json' do
+  owner 'root'
+end
+```
+
 ### Watches/Definitions
 In order to provide an idempotent implementation of Consul
 watches and definitions. We write these out as
