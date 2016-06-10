@@ -16,7 +16,7 @@ module ConsulCookbook
       default_action(:run)
 
       attribute(:command, kind_of: String, name_attribute: true)
-      attribute(:environment, kind_of: String, default: { 'PATH' => '/usr/local/bin:/usr/bin:/bin' })
+      attribute(:environment, kind_of: Hash, default: { 'PATH' => '/usr/local/bin:/usr/bin:/bin' })
       attribute(:options, option_collector: true, default: {})
 
       action(:run) do

@@ -38,7 +38,7 @@ module ConsulCookbook
       attribute(:data_dir, kind_of: String, default: lazy { node['consul']['config']['data_dir'] })
       # @!attribute config_dir
       # @return [String]
-      attribute(:config_dir, kind_of: String, default: lazy { node['consul']['config']['config_dir'] })
+      attribute(:config_dir, kind_of: String, default: lazy { node['consul']['service']['config_dir'] })
       # @!attribute nssm_params
       # @return [String]
       attribute(:nssm_params, kind_of: Hash, default: lazy { node['consul']['service']['nssm_params'] })
