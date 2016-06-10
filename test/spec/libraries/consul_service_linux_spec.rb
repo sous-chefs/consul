@@ -8,7 +8,6 @@ describe ConsulCookbook::Resource::ConsulService do
   context 'with default properties' do
     recipe 'consul::default'
 
-    it { expect(chef_run).to create_directory('/etc/consul/conf.d') }
     it { is_expected.to create_directory('/var/lib/consul') }
   end
 end

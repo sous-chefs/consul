@@ -12,7 +12,7 @@ group :unit, :integration do
   gem 'chef-sugar'
   gem 'chefspec'
   gem 'berkshelf', '~> 4.0'
-  gem 'test-kitchen'
+  gem 'test-kitchen', '~> 1.7.3' # 1.8 requires kitchen.yml changes to support policyfile
   gem 'serverspec'
 end
 

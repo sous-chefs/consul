@@ -48,10 +48,6 @@ end
 
 service_name = node['consul']['service_name']
 config = consul_config service_name do |r|
-  unless windows?
-    owner node['consul']['service_user']
-    group node['consul']['service_group']
-  end
   node['consul']['config'].each_pair { |k, v| r.send(k, v) }
   notifies :reload, "consul_service[#{service_name}]", :delayed
 end

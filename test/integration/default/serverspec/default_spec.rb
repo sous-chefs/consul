@@ -41,21 +41,30 @@ describe command('/opt/consul/0.6.4/consul members -detailed') do
   its(:stdout) { should match %r{\bdc=fortmeade\b} }
 end
 
+config_dir  = '/etc/consul'
 config_file = '/etc/consul/consul.json'
-config_dir  = '/etc/consul/conf.d'
+confd_dir   = '/etc/consul/conf.d'
 data_dir    = '/var/lib/consul'
+
+describe file(config_dir) do
+  it { should be_directory }
+  it { should be_owned_by     'root' }
+  it { should be_grouped_into 'consul' }
+
+  it { should be_mode 755 }
+end
 
 describe file(config_file) do
   it { should be_file }
-  it { should be_owned_by     'consul' }
+  it { should be_owned_by     'root' }
   it { should be_grouped_into 'consul' }
 
   it { should be_mode 640 }
 end
 
-describe file(config_dir) do
+describe file(confd_dir) do
   it { should be_directory }
-  it { should be_owned_by     'consul' }
+  it { should be_owned_by     'root' }
   it { should be_grouped_into 'consul' }
 
   it { should be_mode 755 }
@@ -66,7 +75,7 @@ describe file(data_dir) do
   it { should be_owned_by     'consul' }
   it { should be_grouped_into 'consul' }
 
-  it { should be_mode 755 }
+  it { should be_mode 750 }
 end
 
 if os[:family] == 'ubuntu'
