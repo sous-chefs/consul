@@ -15,7 +15,11 @@ end
 describe user('consul') do
   it { should exist }
   it { should belong_to_group('consul') }
-  it { should have_login_shell('/bin/bash') }
+end
+
+describe command("su - consul -c 'echo successfully logged in'") do
+  its(:stdout)      { should_not match /successfully logged in/ }
+  its(:exit_status) { should_not eq 0 }
 end
 
 describe service('consul') do
