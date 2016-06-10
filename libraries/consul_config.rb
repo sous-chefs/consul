@@ -20,10 +20,10 @@ module ConsulCookbook
       attribute(:path, kind_of: String, name_attribute: true)
       # @!attribute owner
       # @return [String]
-      attribute(:owner, kind_of: String, default: lazy { node['consul']['config']['owner'] })
+      attribute(:owner, kind_of: String, default: 'consul')
       # @!attribute group
       # @return [String]
-      attribute(:group, kind_of: String, default: lazy { node['consul']['config']['group'] })
+      attribute(:group, kind_of: String, default: 'consul')
       # @!attribute config_dir
       # @return [String]
       attribute(:config_dir, kind_of: String, default: lazy { node['consul']['service']['config_dir'] })

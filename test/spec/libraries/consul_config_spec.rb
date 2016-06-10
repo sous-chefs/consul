@@ -11,10 +11,6 @@ describe ConsulCookbook::Resource::ConsulConfig do
     default_attributes['consul'] = {
       'service' => {
         'config_dir' => '/etc/consul/conf.d'
-       },
-      'config' => {
-        'owner' => 'root',
-        'group' => 'consul'
        }
       }
   end
@@ -23,6 +19,7 @@ describe ConsulCookbook::Resource::ConsulConfig do
   context 'sets options directly' do
     recipe do
       consul_config '/etc/consul/default.json' do
+        owner 'root'
         options do
           recursor 'foo'
           translate_wan_addrs true
