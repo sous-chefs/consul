@@ -21,11 +21,11 @@ module ConsulCookbook
 
       # @!attribute user
       # @return [String]
-      attribute(:user, kind_of: String, default: lazy { node['consul']['config']['owner'] })
+      attribute(:user, kind_of: String, default: 'consul')
 
       # @!attribute group
       # @return [String]
-      attribute(:group, kind_of: String, default: lazy { node['consul']['config']['group'] })
+      attribute(:group, kind_of: String, default: 'consul')
 
       # @!attribute type
       # @return [String]

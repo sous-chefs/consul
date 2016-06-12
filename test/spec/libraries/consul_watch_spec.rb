@@ -8,11 +8,7 @@ describe ConsulCookbook::Resource::ConsulWatch do
     default_attributes['consul'] = {
       'service' => {
         'config_dir' => '/etc/consul/conf.d'
-        },
-      'config' => {
-        'owner' => 'root',
-        'group' => 'consul'
-       }
+        }
       }
   end
 
@@ -20,6 +16,7 @@ describe ConsulCookbook::Resource::ConsulWatch do
     recipe do
       consul_watch 'foo' do
         type 'key'
+        user 'root'
         parameters(key: 'foo/bar/baz', handler: '/bin/false')
       end
     end

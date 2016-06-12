@@ -13,6 +13,7 @@ end
 
 consul_watch 'consul_watch_check' do
   type 'event'
+  user 'root'
   parameters(handler: "/consul_watch_handler.rb")
   notifies :reload, 'consul_service[consul]', :delayed
 end
