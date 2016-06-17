@@ -64,12 +64,20 @@ module ConsulCookbook
       end
 
       def action_reload
-        Chef::Log.info 'The service provider for Consul on Windows does not support reload!'
+        notifying_block do
+          execute 'Reload consul' do
+            command 'consul.exe reload'
+            cwd ::File.dirname(new_resource.program)
+            action :run
+          end
+        end
       end
 
       def action_restart
-        powershell_script 'Restart consul' do
-          code 'restart-service consul'
+        notifying_block do
+          powershell_script 'Restart consul' do
+            code 'restart-service consul'
+          end
         end
       end
 
