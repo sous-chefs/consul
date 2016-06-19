@@ -49,6 +49,9 @@ module ConsulCookbook
               owner new_resource.user
               group new_resource.group
               mode '0755'
+              # Prevent clobbering permissions on the directory since the intent
+              # in this context is to set the permissions of the definition file
+              not_if { Dir.exist? path }
             end
           end
 
