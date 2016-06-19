@@ -48,5 +48,5 @@ pre-stop script
 end script
 <%- end -%>
 post-start script
-  while ! <%= @options[:executable] %> info ; sleep 1; done
+  while ! <%= @options[:executable] %> info ; do sleep 1; done
 end script
