@@ -39,7 +39,7 @@ unless windows?
   end
 
   user node['consul']['service_user'] do
-    shell '/sbin/nologin'
+    shell %w( /sbin/nologin /usr/sbin/nologin /bin/false ).select { |f| ::File.exist?(f) }.first
     group node['consul']['service_group']
     system true
     not_if { node['consul']['service_user'] == 'root' }
