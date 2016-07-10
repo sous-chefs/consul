@@ -1,14 +1,21 @@
 ---
 language: ruby
 cache: bundler
-sudo: false
+sudo: required
+dist: trusty
+language: generic
+services:
+  - docker
+env:
+  global:
+    KITCHEN_LOCAL_YAML: .kitchen.docker.yml
 notifications:
   slack: bloomberg-rnd:BvYmxrV9xj902XWTRNrkLNkR
-script: bundle exec rake travis
-rvm:
-  - 2.2
-branches:
-  only:
-    - master
-matrix:
-  fast_finish: true
+install:
+  - curl https://chef.io/chef/install.sh | sudo bash -s -- -P chefdk
+  - chef gem install kitchen-docker
+script:
+  - bundle exec rake travis
+  - docker version
+  - kitchen --version
+  - kitchen test -d always
