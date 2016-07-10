@@ -15,6 +15,7 @@ install:
   - curl https://chef.io/chef/install.sh | sudo bash -s -- -P chefdk
   - chef gem install kitchen-docker
 script:
+  - bundle exec rake travis
   - docker version
   - kitchen --version
   - kitchen test -d always
