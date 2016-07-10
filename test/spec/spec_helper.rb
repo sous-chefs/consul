@@ -1,5 +1,5 @@
 require 'chefspec'
-require 'chefspec/berkshelf'
+require 'chefspec/policyfile'
 require 'poise_boiler/spec_helper'
 require_relative '../../libraries/helpers'
 

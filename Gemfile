@@ -2,23 +2,22 @@ source 'https://rubygems.org'
 gem 'poise', '~> 2.2'
 gem 'poise-service', '~> 1.0'
 gem 'poise-boiler'
+gem 'chef-sugar'
 
 group :lint do
+  gem 'cookstyle'
   gem 'rubocop'
   gem 'foodcritic'
 end
 
 group :unit, :integration do
-  gem 'chef-sugar'
+  gem 'chef-dk'
   gem 'chefspec'
-  gem 'berkshelf', '~> 4.0'
-  gem 'test-kitchen', '~> 1.7.3' # 1.8 requires kitchen.yml changes to support policyfile
   gem 'serverspec'
 end
 
 group :development do
   gem 'awesome_print'
-  gem 'rake'
   gem 'stove'
 end
 
