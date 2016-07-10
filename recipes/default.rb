@@ -33,17 +33,10 @@ if node['firewall']['allow_consul']
   end
 end
 
-unless windows?
-  group node['consul']['service_group'] do
-    system true
-  end
-
-  user node['consul']['service_user'] do
-    shell '/sbin/nologin'
-    group node['consul']['service_group']
-    system true
-    not_if { node['consul']['service_user'] == 'root' }
-  end
+poise_service_user node['consul']['service_user'] do
+  group node['consul']['service_group']
+  not_if { windows? }
+  not_if { node['consul']['service_user'] == 'root' }
 end
 
 service_name = node['consul']['service_name']
