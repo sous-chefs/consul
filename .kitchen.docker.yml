@@ -7,19 +7,13 @@ provisioner:
   name: chef_zero
 
 platforms:
-  - name: ubuntu-16.04
-    named_run_list: ubuntu
-  - name: ubuntu-14.04
-    named_run_list: ubuntu
-  - name: ubuntu-12.04
-    named_run_list: ubuntu
   - name: centos-7.2
-    named_run_list: redhat
-  - name: centos-6.7
-    named_run_list: redhat
-  - name: centos-5.11
-    named_run_list: redhat
-
+    named_run_list: centos
+    driver:
+      platform: rhel
+      run_command: /usr/lib/systemd/systemd
+      provision_command:
+        - /bin/yum install -y initscripts net-tools wget
 suites:
   - name: default
     provisioner:
