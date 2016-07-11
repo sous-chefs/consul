@@ -6,38 +6,31 @@ provisioner:
   name: chef_zero
 
 platforms:
+  - name: ubuntu-16.04
+    named_run_list: debian
   - name: ubuntu-14.04
-    run_list:
-      - recipe[apt::default]
+    named_run_list: debian
   - name: ubuntu-12.04
-    run_list:
-      - recipe[apt::default]
-  - name: debian-8.2
-    run_list:
-      - recipe[apt::default]
-  - name: debian-7.9
-    run_list:
-      - recipe[apt::default]
+    named_run_list: debian
   - name: centos-7.2
-    run_list:
-      - recipe[yum::default]
+    named_run_list: rhel
   - name: centos-6.7
-    run_list:
-      - recipe[yum::default]
+    named_run_list: rhel
   - name: centos-5.11
-    run_list:
-      - recipe[yum::default]
+    named_run_list: rhel
+  - name: debian-8.2
+    named_run_list: debian
+  - name: debian-7.9
+    named_run_list: debian
   - name: freebsd-10.2
-    run_list:
-      - recipe[freebsd::default]
+    named_run_list: freebsd
   - name: windows-2012r2
-    run_list:
-      - recipe[windows::default]
+    named_run_list: windows
 
 suites:
   - name: default
-    run_list:
-      - recipe[consul_spec::default]
+    provisioner:
+      policyfile: test/fixtures/policies/default.rb
     attributes:
       consul:
         config: &default-config
@@ -48,8 +41,8 @@ suites:
           datacenter: FortMeade
           encrypt: CGXC2NsXW4AvuB4h5ODYzQ==
   - name: git
-    run_list:
-      - recipe[consul_spec::default]
+    provisioner:
+      policyfile: test/fixtures/policies/default.rb
     attributes:
       consul:
         config: *default-config
@@ -58,8 +51,8 @@ suites:
     excludes:
       - windows-2012r2
   - name: webui
-    run_list:
-      - recipe[consul_spec::default]
+    provisioner:
+      policyfile: test/fixtures/policies/default.rb
     attributes:
       consul:
         config:
@@ -69,8 +62,8 @@ suites:
           datacenter: FortMeade
           encrypt: CGXC2NsXW4AvuB4h5ODYzQ==
   - name: acl
-    run_list:
-      - recipe[consul_spec::acl]
+    provisioner:
+      policyfile: test/fixtures/policies/acl.rb
     attributes:
       consul:
         config:

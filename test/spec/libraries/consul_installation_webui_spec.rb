@@ -8,14 +8,18 @@ describe ConsulCookbook::Provider::ConsulInstallationWebui do
   let(:chefspec_options) { {platform: 'ubuntu', version: '14.04'} }
 
   context 'webui installation' do
-    recipe 'consul_spec::consul_installation_webui'
+    recipe do
+      consul_installation '0.6.4' do
+        provider :webui
+      end
+    end
 
     it do is_expected.to create_directory('/opt/consul-webui/0.6.4')
       .with(
         recursive: true
       )
     end
-    
+
     it do is_expected.to create_directory('/var/lib/consul')
       .with(
         recursive: true

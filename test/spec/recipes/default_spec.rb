@@ -6,7 +6,7 @@ describe "consul::default" do
 
   context "with default service_user" do
     it 'creates the user without a login shell' do
-      expect(chef_run).to create_user('consul').with(shell: '/sbin/nologin')
+      expect(chef_run).to create_poise_service_user('consul')
     end
   end
 
@@ -17,7 +17,7 @@ describe "consul::default" do
     end
 
     it 'does not try to create the root user' do
-      expect(chef_run).to_not create_user('root')
+      expect(chef_run).to_not create_poise_service_user('root')
     end
   end
 end
