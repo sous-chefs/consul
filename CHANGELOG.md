@@ -35,6 +35,7 @@
 
 - sysvinit.service.erb has the consul service log to /dev/null [\#284](https://github.com/johnbellone/consul-cookbook/issues/284)
 - Refactor the population of TLS files to wrapper cookbooks? [\#247](https://github.com/johnbellone/consul-cookbook/issues/247)
+- Removed consul_ui resource as Consul 0.6.1+ config option "ui" enables a built-in Web UI [\#301](https://github.com/johnbellone/consul-cookbook/issues/301)
 
 **Fixed bugs:**
 
