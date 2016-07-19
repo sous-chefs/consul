@@ -1,12 +1,10 @@
 ---
 AllCops:
   Exclude:
-    - 'Guardfile'
     - 'Rakefile'
     - 'Vagrantfile'
     - 'Policyfile.rb'
     - 'Berksfile'
-    - 'Thorfile'
     - 'Gemfile'
     - 'metadata.rb'
     - 'test/**/*'
@@ -43,4 +41,8 @@ Style/GuardClause:
 Style/PercentLiteralDelimiters:
   Enabled: false
 Style/ModuleFunction:
+  Enabled: false
+Style/AlignHash:
+  Enabled: false
+Style/SpaceInsideHashLiteralBraces:
   Enabled: false

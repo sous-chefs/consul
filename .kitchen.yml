@@ -13,11 +13,11 @@ platforms:
   - name: ubuntu-12.04
     named_run_list: debian
   - name: centos-7.2
-    named_run_list: rhel
+    named_run_list: centos
   - name: centos-6.7
-    named_run_list: rhel
+    named_run_list: centos
   - name: centos-5.11
-    named_run_list: rhel
+    named_run_list: centos
   - name: debian-8.2
     named_run_list: debian
   - name: debian-7.9
