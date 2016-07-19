@@ -26,7 +26,7 @@ platforms:
       platform: rhel
       pid_one_command: /sbin/init
       intermediate_instructions:
-        - RUN yum -y install which initscripts
+        - RUN yum -y install which initscripts sudo
   - name: ubuntu-16.04
     named_run_list: debian
     driver:
@@ -34,6 +34,7 @@ platforms:
       pid_one_command: /bin/systemd
       intermediate_instructions:
         - RUN /usr/bin/apt-get update -y
+        - RUN /usr/bin/apt-get install sudo -y
   - name: ubuntu-14.04
     named_run_list: debian
     driver:
