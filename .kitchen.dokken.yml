@@ -18,8 +18,7 @@ platforms:
       platform: rhel
       pid_one_command: /usr/lib/systemd/systemd
       intermediate_instructions:
-        - RUN yum clean all
-        - RUN yum -y install net-tools lsof
+        - RUN yum -y install lsof which systemd-sysv initscripts
   - name: centos-6
     named_run_list: centos
     driver:
@@ -32,10 +31,9 @@ platforms:
     named_run_list: debian
     driver:
       image: ubuntu:16.04
-      pid_one_command: /usr/lib/systemd/systemd
+      pid_one_command: /bin/systemd
       intermediate_instructions:
         - RUN /usr/bin/apt-get update
-        - RUN /usr/bin/apt-get install apt-transport-https net-tools -y
   - name: ubuntu-14.04
     named_run_list: debian
     driver:
@@ -43,7 +41,6 @@ platforms:
       pid_one_command: /sbin/init
       intermediate_instructions:
         - RUN /usr/bin/apt-get update
-        - RUN /usr/bin/apt-get install apt-transport-https net-tools -y
 
 suites:
   - name: default
