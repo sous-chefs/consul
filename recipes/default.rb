@@ -34,6 +34,7 @@ if node['firewall']['allow_consul']
 end
 
 poise_service_user node['consul']['service_user'] do
+  shell '/bin/bash'
   group node['consul']['service_group']
   not_if { windows? }
   not_if { node['consul']['service_user'] == 'root' }
