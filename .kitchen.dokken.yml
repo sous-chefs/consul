@@ -10,6 +10,9 @@ transport:
 provisioner:
   name: dokken
 
+verifier:
+  name: serverspec
+
 platforms:
   - name: centos-7
     named_run_list: centos
