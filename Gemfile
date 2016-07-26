@@ -13,6 +13,7 @@ end
 group :unit, :integration do
   gem 'chef-dk'
   gem 'chefspec'
+  gem 'rubyzip'
   gem 'serverspec'
 end
 
