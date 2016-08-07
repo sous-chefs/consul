@@ -78,18 +78,6 @@ describe file(data_dir) do
   it { should be_mode 750 }
 end
 
-if os[:family] == 'ubuntu'
-  describe file('/etc/init/consul.conf' ) do
-    its(:content) do
-      should include(<<-EOT)
-post-start script
-  while ! #{consul_executable} info ; sleep 1; done
-end script
-      EOT
-    end
-  end
-end
-
 describe file("#{confd_dir}/consul_definition_check.json") do
   it { should be_file }
   it { should be_owned_by     'root' }
