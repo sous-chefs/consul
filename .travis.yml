@@ -1,14 +1,47 @@
 ---
-language: ruby
+sudo: required
+dist: trusty
+language: generic
 cache: bundler
-sudo: false
+addons:
+  apt:
+    sources:
+      - chef-current-trusty
+    packages:
+      - chefdk
+services: docker
+env:
+  matrix:
+    - INSTANCE=default-centos-7
+    - INSTANCE=default-centos-6
+    - INSTANCE=default-ubuntu-1604
+    - INSTANCE=default-ubuntu-1404
+    - INSTANCE=default-ubuntu-1204
+    - INSTANCE=default-debian-8
+    - INSTANCE=default-debian-7
+before_script:
+  # https://github.com/zuazo/kitchen-in-travis-native/issues/1#issuecomment-142230889
+  - sudo iptables -L DOCKER || ( echo "DOCKER iptables chain missing" ; sudo iptables -N DOCKER )
+  - eval "$(/opt/chefdk/bin/chef shell-init bash)"
+  - /opt/chefdk/embedded/bin/chef gem install kitchen-dokken
+  - /opt/chefdk/embedded/bin/chef gem install kitchen-verifier-serverspec
+  - /opt/chefdk/embedded/bin/chef --version
+  - /opt/chefdk/embedded/bin/cookstyle --version
+  - /opt/chefdk/embedded/bin/foodcritic --version
+script: KITCHEN_LOCAL_YAML=.kitchen.dokken.yml kitchen verify ${INSTANCE}
+after_script:
+  - docker images
+  - docker ps -a
+  - cat .kitchen/logs/kitchen.log
+matrix:
+  include:
+  - script: /opt/chefdk/embedded/bin/cookstyle
+    env:  COOKSTYLE=1
+  - script: /opt/chefdk/embedded/bin/foodcritic . --exclude spec -f any
+    env:  FOODCRITIC=1
+  - script:
+      - bundle install
+      - /opt/chefdk/embedded/bin/rspec --color --default-path test/spec
+    env:  CHEFSPEC=1
 notifications:
   slack: bloomberg-rnd:BvYmxrV9xj902XWTRNrkLNkR
-script: bundle exec rake travis
-rvm:
-  - 2.2
-branches:
-  only:
-    - master
-matrix:
-  fast_finish: true

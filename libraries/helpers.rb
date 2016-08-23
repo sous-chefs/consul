@@ -6,7 +6,7 @@
 #
 
 module ConsulCookbook
-  module Helpers # rubocop:disable Metrics/ModuleLength
+  module Helpers
     include Chef::Mixin::ShellOut
 
     extend self

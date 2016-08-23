@@ -8,6 +8,8 @@ describe ConsulCookbook::Provider::ConsulInstallationWebui do
   let(:chefspec_options) { {platform: 'ubuntu', version: '14.04'} }
 
   context 'webui installation' do
+    pending('replace with poise-archive')
+
     recipe do
       consul_installation '0.6.4' do
         provider :webui
