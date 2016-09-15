@@ -1,3 +1,3 @@
-consul_installation '0.6.4' do
+consul_installation '0.7.0' do
   provider :webui
 end
