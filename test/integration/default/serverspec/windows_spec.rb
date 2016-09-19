@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 if windows?
-  consul_version = '0.6.4'
+  consul_version = '0.7.0'
   consul_executable = "C:\\Program Files\\consul\\#{consul_version}\\consul.exe"
 
   describe file(consul_executable) do

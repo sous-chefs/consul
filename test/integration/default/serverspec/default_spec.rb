@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 unless windows?
-  consul_version = '0.6.4'
+  consul_version = '0.7.0'
   consul_executable = "/opt/consul/#{consul_version}/consul"
 
   describe file(consul_executable) do
@@ -34,7 +34,7 @@ unless windows?
     end
   end
 
-  describe command('/opt/consul/0.6.4/consul members -detailed') do
+  describe command("#{consul_executable} members -detailed") do
     its(:exit_status) { should eq 0 }
     its(:stdout) { should match %r{\balive\b} }
     its(:stdout) { should match %r{\brole=consul\b} }
