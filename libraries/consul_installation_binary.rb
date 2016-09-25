@@ -51,6 +51,7 @@ module ConsulCookbook
 
         notifying_block do
           directory join_path(options[:extract_to], new_resource.version) do
+            mode '0755'
             recursive true
           end
 
