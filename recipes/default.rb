@@ -33,13 +33,15 @@ if node['firewall']['allow_consul']
   end
 end
 
+service_name = node['consul']['service_name']
 poise_service_user node['consul']['service_user'] do
   group node['consul']['service_group']
+  shell node['consul']['service_shell'] unless node['consul']['service_shell'].nil?
   not_if { windows? }
   not_if { node['consul']['service_user'] == 'root' }
+  notifies :restart, "consul_service[#{service_name}]", :delayed
 end
 
-service_name = node['consul']['service_name']
 config = consul_config service_name do |r|
   node['consul']['config'].each_pair { |k, v| r.send(k, v) }
   notifies :reload, "consul_service[#{service_name}]", :delayed
