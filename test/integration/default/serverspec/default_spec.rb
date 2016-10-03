@@ -59,6 +59,10 @@ unless windows?
     it { should be_grouped_into 'consul' }
     it { should be_mode 755 }
   end
+
+  describe file('/usr/local/bin/consul') do
+    it { should be_symlink }
+  end
 end
 
 if windows?
