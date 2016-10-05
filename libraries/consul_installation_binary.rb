@@ -53,6 +53,10 @@ module ConsulCookbook
             source_properties checksum: options[:archive_checksum]
             not_if { ::File.exist?(consul_program) }
           end
+
+          link '/usr/local/bin/consul' do
+            to ::File.join(options[:extract_to], new_resource.version, 'consul')
+          end
         end
       end
 
