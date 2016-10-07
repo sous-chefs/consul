@@ -57,6 +57,7 @@ module ConsulCookbook
 
           link '/usr/local/bin/consul' do
             to ::File.join(options[:extract_to], new_resource.version, 'consul')
+            not_if { windows? }
           end
         end
       end
