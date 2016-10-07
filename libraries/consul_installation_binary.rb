@@ -51,6 +51,7 @@ module ConsulCookbook
           poise_archive url do
             destination join_path(options[:extract_to], new_resource.version)
             source_properties checksum: options[:archive_checksum]
+            strip_components 0
             not_if { ::File.exist?(consul_program) }
           end
 
