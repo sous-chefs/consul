@@ -68,6 +68,7 @@ module ConsulCookbook
       attribute(:leave_on_terminate, equal_to: [true, false], default: false)
       attribute(:log_level, equal_to: %w(INFO DEBUG WARN), default: 'INFO')
       attribute(:node_name, kind_of: String)
+      attribute(:performance, kind_of: [Hash, Mash])
       attribute(:ports, kind_of: [Hash, Mash])
       attribute(:protocol, kind_of: String)
       attribute(:recursor, kind_of: String)
@@ -79,6 +80,7 @@ module ConsulCookbook
       attribute(:rejoin_after_leave, equal_to: [true, false], default: true)
       attribute(:server, equal_to: [true, false], default: true)
       attribute(:server_name, kind_of: String)
+      attribute(:session_ttl_min, kind_of: String)      
       attribute(:skip_leave_on_interrupt, equal_to: [true, false], default: false)
       attribute(:start_join, kind_of: Array)
       attribute(:start_join_wan, kind_of: Array)
@@ -99,7 +101,7 @@ module ConsulCookbook
       # Transforms the resource into a JSON format which matches the
       # Consul service's configuration format.
       def to_json
-        for_keeps = %i{acl_datacenter acl_default_policy acl_down_policy acl_master_token acl_token acl_ttl addresses advertise_addr advertise_addr_wan atlas_acl_token atlas_infrastructure atlas_join atlas_token atlas_endpoint bind_addr bootstrap bootstrap_expect check_update_interval client_addr data_dir datacenter disable_anonymous_signature disable_remote_exec disable_update_check dns_config domain enable_debug enable_syslog encrypt leave_on_terminate log_level node_name ports protocol recursor recursors retry_interval retry_interval_wan retry_join retry_join_wan rejoin_after_leave server server_name skip_leave_on_interrupt start_join start_join_wan statsd_addr statsite_addr statsite_prefix telemetry syslog_facility translate_wan_addrs ui ui_dir verify_incoming verify_outgoing verify_server_hostname watches dev_mode unix_sockets}
+        for_keeps = %i{acl_datacenter acl_default_policy acl_down_policy acl_master_token acl_token acl_ttl addresses advertise_addr advertise_addr_wan atlas_acl_token atlas_infrastructure atlas_join atlas_token atlas_endpoint bind_addr bootstrap bootstrap_expect check_update_interval client_addr data_dir datacenter disable_anonymous_signature disable_remote_exec disable_update_check dns_config domain enable_debug enable_syslog encrypt leave_on_terminate log_level node_name performance ports protocol recursor recursors retry_interval retry_interval_wan retry_join retry_join_wan rejoin_after_leave server server_name session_ttl_min skip_leave_on_interrupt start_join start_join_wan statsd_addr statsite_addr statsite_prefix telemetry syslog_facility translate_wan_addrs ui ui_dir verify_incoming verify_outgoing verify_server_hostname watches dev_mode unix_sockets}
         for_keeps << %i{ca_file cert_file key_file} if tls?
         for_keeps = for_keeps.flatten
 
