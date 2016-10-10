@@ -80,7 +80,7 @@ module ConsulCookbook
       attribute(:rejoin_after_leave, equal_to: [true, false], default: true)
       attribute(:server, equal_to: [true, false], default: true)
       attribute(:server_name, kind_of: String)
-      attribute(:session_ttl_min, kind_of: String)      
+      attribute(:session_ttl_min, kind_of: String)
       attribute(:skip_leave_on_interrupt, equal_to: [true, false], default: false)
       attribute(:start_join, kind_of: Array)
       attribute(:start_join_wan, kind_of: Array)
