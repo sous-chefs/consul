@@ -36,6 +36,7 @@ module ConsulCookbook
       attribute(:acl_default_policy, kind_of: String)
       attribute(:acl_down_policy, kind_of: String)
       attribute(:acl_master_token, kind_of: String)
+      attribute(:acl_replication_token, kind_of: String)
       attribute(:acl_token, kind_of: String)
       attribute(:acl_ttl, kind_of: String)
       attribute(:addresses, kind_of: [Hash, Mash])
@@ -57,6 +58,7 @@ module ConsulCookbook
       attribute(:datacenter, kind_of: String)
       attribute(:dev_mode, equal_to: [true, false], default: false)
       attribute(:disable_anonymous_signature, equal_to: [true, false], default: false)
+      attribute(:disable_compression, equal_to: [true, false], default: false)
       attribute(:disable_remote_exec, equal_to: [true, false], default: false)
       attribute(:disable_update_check, equal_to: [true, false], default: false)
       attribute(:dns_config, kind_of: [Hash, Mash])
@@ -68,9 +70,13 @@ module ConsulCookbook
       attribute(:leave_on_terminate, equal_to: [true, false], default: false)
       attribute(:log_level, equal_to: %w(INFO DEBUG WARN), default: 'INFO')
       attribute(:node_name, kind_of: String)
+      attribute(:performance, kind_of: [Hash, Mash])
       attribute(:ports, kind_of: [Hash, Mash])
       attribute(:protocol, kind_of: String)
+      attribute(:reconnect_timeout, kind_of: String)
+      attribute(:reconnect_timeout_wan, kind_of: String)
       attribute(:recursor, kind_of: String)
+      attribute(:recursor_timeout, kind_of: String)
       attribute(:recursors, kind_of: Array)
       attribute(:retry_interval, kind_of: String)
       attribute(:retry_interval_wan, kind_of: String)
@@ -79,6 +85,7 @@ module ConsulCookbook
       attribute(:rejoin_after_leave, equal_to: [true, false], default: true)
       attribute(:server, equal_to: [true, false], default: true)
       attribute(:server_name, kind_of: String)
+      attribute(:session_ttl_min, kind_of: String)
       attribute(:skip_leave_on_interrupt, equal_to: [true, false], default: false)
       attribute(:start_join, kind_of: Array)
       attribute(:start_join_wan, kind_of: Array)
@@ -88,6 +95,7 @@ module ConsulCookbook
       attribute(:telemetry, kind_of: [Hash, Mash])
       attribute(:syslog_facility, kind_of: String)
       attribute(:translate_wan_addrs, equal_to: [true, false], default: false)
+      attribute(:udp_answer_limit, kind_of: Integer, default: 3)
       attribute(:ui, equal_to: [true, false], default: false)
       attribute(:ui_dir, kind_of: String, default: '/var/lib/consul/ui')
       attribute(:unix_sockets, kind_of: [Hash, Mash])
@@ -99,7 +107,7 @@ module ConsulCookbook
       # Transforms the resource into a JSON format which matches the
       # Consul service's configuration format.
       def to_json
-        for_keeps = %i{acl_datacenter acl_default_policy acl_down_policy acl_master_token acl_token acl_ttl addresses advertise_addr advertise_addr_wan atlas_acl_token atlas_infrastructure atlas_join atlas_token atlas_endpoint bind_addr bootstrap bootstrap_expect check_update_interval client_addr data_dir datacenter disable_anonymous_signature disable_remote_exec disable_update_check dns_config domain enable_debug enable_syslog encrypt leave_on_terminate log_level node_name ports protocol recursor recursors retry_interval retry_interval_wan retry_join retry_join_wan rejoin_after_leave server server_name skip_leave_on_interrupt start_join start_join_wan statsd_addr statsite_addr statsite_prefix telemetry syslog_facility translate_wan_addrs ui ui_dir verify_incoming verify_outgoing verify_server_hostname watches dev_mode unix_sockets}
+        for_keeps = %i{acl_datacenter acl_default_policy acl_down_policy acl_master_token acl_replication_token acl_token acl_ttl addresses advertise_addr advertise_addr_wan atlas_acl_token atlas_infrastructure atlas_join atlas_token atlas_endpoint bind_addr bootstrap bootstrap_expect check_update_interval client_addr data_dir datacenter disable_anonymous_signature disable_compression disable_remote_exec disable_update_check dns_config domain enable_debug enable_syslog encrypt leave_on_terminate log_level node_name performance ports protocol reconnect_timeout reconnect_timeout_wan recursor recursor_timeout recursors retry_interval retry_interval_wan retry_join retry_join_wan rejoin_after_leave server server_name session_ttl_min skip_leave_on_interrupt start_join start_join_wan statsd_addr statsite_addr statsite_prefix telemetry syslog_facility translate_wan_addrs udp_answer_limit ui ui_dir verify_incoming verify_outgoing verify_server_hostname watches dev_mode unix_sockets}
         for_keeps << %i{ca_file cert_file key_file} if tls?
         for_keeps = for_keeps.flatten
 
