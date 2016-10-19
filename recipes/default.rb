@@ -39,6 +39,7 @@ poise_service_user node['consul']['service_user'] do
   shell node['consul']['service_shell'] unless node['consul']['service_shell'].nil?
   not_if { windows? }
   not_if { node['consul']['service_user'] == 'root' }
+  not_if { node['consul']['create_service_user'] == false }
   notifies :restart, "consul_service[#{service_name}]", :delayed
 end
 
