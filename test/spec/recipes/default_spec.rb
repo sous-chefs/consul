@@ -20,4 +20,15 @@ describe "consul::default" do
       expect(chef_run).to_not create_poise_service_user('root')
     end
   end
+
+  context "with create_service_user disabled" do
+    before do
+      default_attributes['consul'] ||= {}
+      default_attributes['consul']['create_service_user'] = false
+    end
+
+    it 'does not try to create the user' do
+      expect(chef_run).to_not create_poise_service_user('consul')
+    end
+  end
 end
