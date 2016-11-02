@@ -97,7 +97,7 @@ module ConsulCookbook
       attribute(:translate_wan_addrs, equal_to: [true, false], default: false)
       attribute(:udp_answer_limit, kind_of: Integer, default: 3)
       attribute(:ui, equal_to: [true, false], default: false)
-      attribute(:ui_dir, kind_of: String, default: '/var/lib/consul/ui')
+      attribute(:ui_dir, kind_of: String)
       attribute(:unix_sockets, kind_of: [Hash, Mash])
       attribute(:verify_incoming, equal_to: [true, false], default: false)
       attribute(:verify_outgoing, equal_to: [true, false], default: false)
