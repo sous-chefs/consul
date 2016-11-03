@@ -30,6 +30,8 @@ describe ConsulCookbook::Provider::ConsulInstallationWebui do
 
     it do is_expected.to unzip_zipfile('consul_0.7.0_web_ui.zip')
       .with(
+        checksum: '42212089c228a73a0881a5835079c8df58a4f31b5060a3b4ffd4c2497abe3aa8',
+        path: '/opt/consul-webui/0.7.0',
         source: 'https://releases.hashicorp.com/consul/0.7.0/consul_0.7.0_web_ui.zip'
       )
     end
