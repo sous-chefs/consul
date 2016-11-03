@@ -6,10 +6,8 @@ describe ConsulCookbook::Resource::ConsulDefinition do
   let(:chefspec_options) { {platform: 'ubuntu', version: '14.04'} }
   before do
     default_attributes['consul'] = {
-      'config' => {
-        'owner' => 'consul',
-        'group' => 'consul'
-      },
+      'service_user' => 'consul',
+      'service_group' => 'consul',
       'service' => {
         'config_dir' => '/etc/consul/conf.d'
         }
@@ -69,10 +67,8 @@ describe ConsulCookbook::Resource::ConsulDefinition do
   context 'service definition with owner and group from node config' do
     before do
       default_attributes['consul'] = {
-        'config' => {
-          'owner' => 'root',
-          'group' => 'root'
-        },
+        'service_user' => 'root',
+        'service_group' => 'root',
         'service' => {
           'config_dir' => '/etc/consul/conf.d'
           }
