@@ -5,6 +5,7 @@
 # Copyright 2014-2016, Bloomberg Finance L.P.
 #
 require 'poise'
+require_relative 'helpers'
 
 module ConsulCookbook
   module Provider
@@ -18,6 +19,7 @@ module ConsulCookbook
     # @since 2.0
     class ConsulInstallationWebui < Chef::Provider
       include Poise(inversion: :consul_installation)
+      include ::ConsulCookbook::Helpers
       provides(:webui)
       inversion_attribute('consul')
 
@@ -25,11 +27,10 @@ module ConsulCookbook
       # @return [Hash]
       # @api private
       def self.default_inversion_options(node, resource)
-        archive_basename = binary_basename(node, resource)
         super.merge(
           version: resource.version,
-          archive_url: default_archive_url % { version: resource.version, basename: archive_basename },
-          archive_basename: archive_basename,
+          archive_url: 'https://releases.hashicorp.com/consul/%{version}/%{basename}',
+          archive_basename: binary_basename(node, resource),
           archive_checksum: binary_checksum(node, resource),
           extract_to: '/opt/consul-webui',
           symlink_to: '/var/lib/consul/ui'
@@ -37,13 +38,8 @@ module ConsulCookbook
       end
 
       def action_create
-        archive_url = options[:archive_url] % {
-          version: options[:version],
-          basename: options[:archive_basename]
-        }
-
         notifying_block do
-          directory ::File.join(options[:extract_to], new_resource.version) do
+          directory join_path(options[:extract_to], new_resource.version) do
             recursive true
           end
 
@@ -51,24 +47,23 @@ module ConsulCookbook
             recursive true
           end
 
-          zipfile options[:archive_basename] do
-            path ::File.join(options[:extract_to], new_resource.version)
-            source archive_url
-            checksum options[:archive_checksum]
-            not_if { ::File.exist?(::File.join(path, 'index.html')) }
-            notifies :create, "link[#{options[:symlink_to]}]", :immediately
+          url = options[:archive_url] % { version: options[:version], basename: options[:archive_basename] }
+          poise_archive url do
+            destination join_path(options[:extract_to], new_resource.version)
+            source_properties checksum: options[:archive_checksum]
+            strip_components 0
+            not_if { ::File.exist?(join_path(options[:extract_to], new_resource.version, 'index.html')) }
           end
 
           link options[:symlink_to] do
-            to ::File.join(options[:extract_to], new_resource.version)
-            action :nothing
+            to join_path(options[:extract_to], new_resource.version)
           end
         end
       end
 
       def action_remove
         notifying_block do
-          directory ::File.join(options[:extract_to], new_resource.version) do
+          directory join_path(options[:extract_to], new_resource.version) do
             recursive true
             action :delete
           end
@@ -77,10 +72,6 @@ module ConsulCookbook
 
       def consul_program
         nil
-      end
-
-      def self.default_archive_url
-        "https://releases.hashicorp.com/consul/%{version}/%{basename}" # rubocop:disable Style/StringLiterals
       end
 
       def self.binary_basename(_node, resource)
