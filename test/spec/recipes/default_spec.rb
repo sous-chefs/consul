@@ -10,6 +10,20 @@ describe "consul::default" do
     end
   end
 
+  context "with johnny5 service_user" do
+    before do
+      default_attributes['consul'] ||= {}
+      default_attributes['consul']['service_user'] = 'johnny5'
+    end
+
+    it 'creates the requested user' do
+      expect(chef_run).to create_poise_service_user('johnny5')
+    end
+    it 'does not try to create the default user' do
+      expect(chef_run).to_not create_poise_service_user('consul')
+    end
+  end
+
   context "with root service_user" do
     before do
       default_attributes['consul'] ||= {}
@@ -18,6 +32,9 @@ describe "consul::default" do
 
     it 'does not try to create the root user' do
       expect(chef_run).to_not create_poise_service_user('root')
+    end
+    it 'does not try to create the default user' do
+      expect(chef_run).to_not create_poise_service_user('consul')
     end
   end
 
