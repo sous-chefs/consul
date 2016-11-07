@@ -50,7 +50,7 @@ describe "consul::default" do
   end
   
   context 'on Windows' do
-    let(:platform) { { :platform => 'windows', :version => '2012r2' } }
+    let(:platform) { { :platform => 'windows', :version => '2012R2' } }
     
     it 'does not try to create the user' do
       expect(chef_run).to_not create_poise_service_user('consul')
