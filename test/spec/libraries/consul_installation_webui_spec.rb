@@ -8,31 +8,33 @@ describe ConsulCookbook::Provider::ConsulInstallationWebui do
   let(:chefspec_options) { {platform: 'ubuntu', version: '14.04'} }
 
   context 'webui installation' do
-    pending('replace with poise-archive')
-
     recipe do
-      consul_installation '0.7.0' do
+      consul_installation '0.7.1' do
         provider :webui
       end
     end
 
-    it do is_expected.to create_directory('/opt/consul-webui/0.7.0')
+    it do
+      pending('replace with poise-archive')
+      is_expected.to create_directory('/opt/consul-webui/0.7.1')
       .with(
         recursive: true
       )
     end
 
-    it do is_expected.to create_directory('/var/lib/consul')
+    it do
+      pending('replace with poise-archive')
+      is_expected.to create_directory('/var/lib/consul')
       .with(
         recursive: true
       )
     end
 
-    it do is_expected.to unzip_zipfile('consul_0.7.0_web_ui.zip')
+    it do
+      pending('replace with poise-archive')
+      is_expected.to unzip_zipfile('consul_0.7.1_web_ui.zip')
       .with(
-        checksum: '42212089c228a73a0881a5835079c8df58a4f31b5060a3b4ffd4c2497abe3aa8',
-        path: '/opt/consul-webui/0.7.0',
-        source: 'https://releases.hashicorp.com/consul/0.7.0/consul_0.7.0_web_ui.zip'
+        source: 'https://releases.hashicorp.com/consul/0.7.1/consul_0.7.1_web_ui.zip'
       )
     end
   end
