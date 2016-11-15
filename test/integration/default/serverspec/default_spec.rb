@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-consul_version = '0.7.0'
+consul_version = '0.7.1'
 
 if windows?
   consul_executable = "C:\\Program Files\\consul\\#{consul_version}\\consul.exe"

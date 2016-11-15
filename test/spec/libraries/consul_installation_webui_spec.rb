@@ -9,14 +9,14 @@ describe ConsulCookbook::Provider::ConsulInstallationWebui do
 
   context 'webui installation' do
     recipe do
-      consul_installation '0.7.0' do
+      consul_installation '0.7.1' do
         provider :webui
       end
     end
 
     it do
       pending('replace with poise-archive')
-      is_expected.to create_directory('/opt/consul-webui/0.7.0')
+      is_expected.to create_directory('/opt/consul-webui/0.7.1')
       .with(
         recursive: true
       )
@@ -32,9 +32,9 @@ describe ConsulCookbook::Provider::ConsulInstallationWebui do
 
     it do
       pending('replace with poise-archive')
-      is_expected.to unzip_zipfile('consul_0.7.0_web_ui.zip')
+      is_expected.to unzip_zipfile('consul_0.7.1_web_ui.zip')
       .with(
-        source: 'https://releases.hashicorp.com/consul/0.7.0/consul_0.7.0_web_ui.zip'
+        source: 'https://releases.hashicorp.com/consul/0.7.1/consul_0.7.1_web_ui.zip'
       )
     end
   end
