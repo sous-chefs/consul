@@ -38,6 +38,7 @@ describe ConsulCookbook::Resource::ConsulConfig do
       .with(content: <<-EOH.chomp.gsub(/^        /,''))
         {
           "recursor": "foo",
+          "server": true,
           "translate_wan_addrs": true,
           "verify_incoming": false,
           "verify_outgoing": false
