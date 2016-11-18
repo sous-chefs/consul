@@ -142,6 +142,7 @@ module ConsulCookbook
               mode '0640'
             end
             content new_resource.to_json
+            sensitive true
           end
         end
       end
