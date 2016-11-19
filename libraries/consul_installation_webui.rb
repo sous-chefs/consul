@@ -51,10 +51,11 @@ module ConsulCookbook
             recursive true
           end
 
-          zipfile options[:archive_basename] do
-            path ::File.join(options[:extract_to], new_resource.version)
-            source archive_url
-            checksum options[:archive_checksum]
+          poise_archive archive_url do
+            destination ::File.join(options[:extract_to], new_resource.version)
+            source_properties(
+              checksum: options[:archive_checksum]
+            )
             not_if { ::File.exist?(::File.join(path, 'index.html')) }
             notifies :create, "link[#{options[:symlink_to]}]", :immediately
           end
