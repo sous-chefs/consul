@@ -98,6 +98,7 @@ module ConsulCookbook
         when '0.6.3' then '93bbb300cacfe8de90fb3bd5ede7d37ae6ce014898edc520b9c96a676b2bbb72'
         when '0.6.4' then '5f8841b51e0e3e2eb1f1dc66a47310ae42b0448e77df14c83bb49e0e0d5fa4b7'
         when '0.7.0' then '42212089c228a73a0881a5835079c8df58a4f31b5060a3b4ffd4c2497abe3aa8'
+        when '0.7.1' then '1b793c60e1af24cc470421d0411e13748f451b51d8a6ed5fcabc8d00bfb84264'
         end
       end
     end
