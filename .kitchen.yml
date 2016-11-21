@@ -47,6 +47,14 @@ suites:
           server: true
           datacenter: FortMeade
           encrypt: CGXC2NsXW4AvuB4h5ODYzQ==
+  - name: client
+    provisioner:
+      policyfile: test/fixtures/policies/client.rb
+    attributes:
+      consul:
+        config:
+          server: false
+          bootstrap_expect: 1
   - name: git
     provisioner:
       policyfile: test/fixtures/policies/default.rb
