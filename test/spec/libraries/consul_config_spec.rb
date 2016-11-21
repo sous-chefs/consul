@@ -9,6 +9,8 @@ describe ConsulCookbook::Resource::ConsulConfig do
     recipe = double('Chef::Recipe')
     allow_any_instance_of(Chef::RunContext).to receive(:include_recipe).and_return([recipe])
     default_attributes['consul'] = {
+      'service_user' => 'consul',
+      'service_group' => 'consul',
       'service' => {
         'config_dir' => '/etc/consul/conf.d'
        }
