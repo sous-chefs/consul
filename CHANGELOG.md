@@ -1,15 +1,118 @@
 # Change Log
 
-## [v2.1.1](https://github.com/johnbellone/consul-cookbook/tree/v2.1.1)
+## [2.3.0](https://github.com/johnbellone/consul-cookbook/tree/v2.3.0)
 
-[Full Changelog](https://github.com/johnbellone/consul-cookbook/compare/v2.1.0...v2.1.1)
+[Full Changelog](https://github.com/johnbellone/consul-cookbook/compare/v2.2.0...v2.3.0)
+
+**Fixed bugs:**
+
+- When ui\_dir is set in windows, ui does not work.  Separate UI download/extraction seems to not be required for current version of consul on Windows. [\#339](https://github.com/johnbellone/consul-cookbook/issues/339)
 
 **Closed issues:**
 
+- Update to consul.json does not trigger service restart [\#381](https://github.com/johnbellone/consul-cookbook/issues/381)
+- Move from zipfile to poise-archive broke webui provider [\#377](https://github.com/johnbellone/consul-cookbook/issues/377)
+- Latest Configuration Changes - New version release? [\#375](https://github.com/johnbellone/consul-cookbook/issues/375)
+- Sensitive data in Chef logs [\#370](https://github.com/johnbellone/consul-cookbook/issues/370)
+- What happened with the consul data bag? [\#369](https://github.com/johnbellone/consul-cookbook/issues/369)
+- Changelog doesn't mention v2.2.0, 2.1.3 or 2.1.1 [\#366](https://github.com/johnbellone/consul-cookbook/issues/366)
+- Four failing RSpec tests in master branch [\#365](https://github.com/johnbellone/consul-cookbook/issues/365)
+- Add support for Supervisord [\#363](https://github.com/johnbellone/consul-cookbook/issues/363)
+- ARM not properly supported [\#354](https://github.com/johnbellone/consul-cookbook/issues/354)
+- There is no longer a symlink to consul in /usr/local/bin [\#351](https://github.com/johnbellone/consul-cookbook/issues/351)
+- Cut a new release of this cookbook? [\#347](https://github.com/johnbellone/consul-cookbook/issues/347)
+- Installation archive URL should be configurable [\#342](https://github.com/johnbellone/consul-cookbook/issues/342)
+- consul acl resource is not defaulting to configured consul url  and port [\#338](https://github.com/johnbellone/consul-cookbook/issues/338)
+- Question: How can a wrapper cookbook specify additional systemd options [\#314](https://github.com/johnbellone/consul-cookbook/issues/314)
+
+**Merged pull requests:**
+
+- Remove redundant cookbook dependencies [\#387](https://github.com/johnbellone/consul-cookbook/pull/387) ([legal90](https://github.com/legal90))
+- Enable passwordless sudo for tests [\#386](https://github.com/johnbellone/consul-cookbook/pull/386) ([legal90](https://github.com/legal90))
+- Fit kitchen test failures [\#385](https://github.com/johnbellone/consul-cookbook/pull/385) ([gdavison](https://github.com/gdavison))
+- Update Rakefile and TravisCI config [\#384](https://github.com/johnbellone/consul-cookbook/pull/384) ([legal90](https://github.com/legal90))
+- Add "rb-readline" to Gemfile, fix TravisCI build [\#382](https://github.com/johnbellone/consul-cookbook/pull/382) ([legal90](https://github.com/legal90))
+- Add the following parameters in consul config supported in version 0.… [\#380](https://github.com/johnbellone/consul-cookbook/pull/380) ([iliasbertsimas](https://github.com/iliasbertsimas))
+- Move webui installation to poise-archive [\#378](https://github.com/johnbellone/consul-cookbook/pull/378) ([tanner-bruce](https://github.com/tanner-bruce))
+- Don't log the config file data because it can contain tokens and other unsafe things. [\#376](https://github.com/johnbellone/consul-cookbook/pull/376) ([coderanger](https://github.com/coderanger))
+- Add support for Consul 0.7.1 [\#374](https://github.com/johnbellone/consul-cookbook/pull/374) ([legal90](https://github.com/legal90))
+- Fixed service user specs [\#368](https://github.com/johnbellone/consul-cookbook/pull/368) ([gdavison](https://github.com/gdavison))
+- Filter out bootstrap and bootstrap\_expect parameters in client configs [\#364](https://github.com/johnbellone/consul-cookbook/pull/364) ([gdavison](https://github.com/gdavison))
+- Allow disabling create\_service\_user [\#361](https://github.com/johnbellone/consul-cookbook/pull/361) ([pdf](https://github.com/pdf))
+- Remove default value for `ui\_dir` [\#360](https://github.com/johnbellone/consul-cookbook/pull/360) ([pdf](https://github.com/pdf))
+- Added missing attributes [\#359](https://github.com/johnbellone/consul-cookbook/pull/359) ([matelukas](https://github.com/matelukas))
+- Avoid creating broken link on windows [\#357](https://github.com/johnbellone/consul-cookbook/pull/357) ([kamaradclimber](https://github.com/kamaradclimber))
+- Proper use of poise\_archive [\#356](https://github.com/johnbellone/consul-cookbook/pull/356) ([kamaradclimber](https://github.com/kamaradclimber))
+- Fix installation on arm machines [\#353](https://github.com/johnbellone/consul-cookbook/pull/353) ([rollbrettler](https://github.com/rollbrettler))
+- symlink /usr/local/bin/consul to the install location [\#352](https://github.com/johnbellone/consul-cookbook/pull/352) ([willejs](https://github.com/willejs))
+- WIP: Update cookbook to use poise-archive for unzipping. [\#348](https://github.com/johnbellone/consul-cookbook/pull/348) ([johnbellone](https://github.com/johnbellone))
+
+## [v2.2.0](https://github.com/johnbellone/consul-cookbook/tree/v2.2.0) (2016-09-27)
+[Full Changelog](https://github.com/johnbellone/consul-cookbook/compare/v2.1.3...v2.2.0)
+
+**Implemented enhancements:**
+
+- translate\_wan\_addrs config option not implemented [\#317](https://github.com/johnbellone/consul-cookbook/issues/317)
+
+**Closed issues:**
+
+- Consul 0.7 is out! [\#343](https://github.com/johnbellone/consul-cookbook/issues/343)
+- Restart service instead reload as only few configurations are reloadble. [\#341](https://github.com/johnbellone/consul-cookbook/issues/341)
+- consul\_service reload on Windows fails [\#334](https://github.com/johnbellone/consul-cookbook/issues/334)
+- Service restart on Windows does nothing [\#333](https://github.com/johnbellone/consul-cookbook/issues/333)
+- Package custom matchers for testing using ChefSpec [\#329](https://github.com/johnbellone/consul-cookbook/issues/329)
+- Restrict config write access [\#322](https://github.com/johnbellone/consul-cookbook/issues/322)
+- Delay upstart `started` event until Consul is ready [\#318](https://github.com/johnbellone/consul-cookbook/issues/318)
+
+**Merged pull requests:**
+
+- resolve problems with machines with default umask of 077 [\#350](https://github.com/johnbellone/consul-cookbook/pull/350) ([alisade](https://github.com/alisade))
+- Allow specification of shell for the consul user [\#349](https://github.com/johnbellone/consul-cookbook/pull/349) ([jirkafajfr](https://github.com/jirkafajfr))
+- Added integration tests for Windows [\#346](https://github.com/johnbellone/consul-cookbook/pull/346) ([gdavison](https://github.com/gdavison))
+- consul 0.7.0 version updates [\#344](https://github.com/johnbellone/consul-cookbook/pull/344) ([vijaybandari](https://github.com/vijaybandari))
+- Added session\_ttl\_min configuration attribute [\#340](https://github.com/johnbellone/consul-cookbook/pull/340) ([matelukas](https://github.com/matelukas))
+- Add travis and docker integration tests. [\#337](https://github.com/johnbellone/consul-cookbook/pull/337) ([johnbellone](https://github.com/johnbellone))
+- Minor fix to update changelog  [\#336](https://github.com/johnbellone/consul-cookbook/pull/336) ([iennae](https://github.com/iennae))
+- Start consul service on runlevel 2 in sysvinit [\#332](https://github.com/johnbellone/consul-cookbook/pull/332) ([ZbigniewZabost-zanox](https://github.com/ZbigniewZabost-zanox))
+- missing do in while loop upstart.service.erb line 51 [\#331](https://github.com/johnbellone/consul-cookbook/pull/331) ([mattp262](https://github.com/mattp262))
+- Support of consul config reload on windows platform [\#330](https://github.com/johnbellone/consul-cookbook/pull/330) ([jirkafajfr](https://github.com/jirkafajfr))
+- Use nologin for service user [\#327](https://github.com/johnbellone/consul-cookbook/pull/327) ([kingpong](https://github.com/kingpong))
+- Updated readme with security paragraph [\#326](https://github.com/johnbellone/consul-cookbook/pull/326) ([kingpong](https://github.com/kingpong))
+- Misc bugfixes [\#325](https://github.com/johnbellone/consul-cookbook/pull/325) ([kingpong](https://github.com/kingpong))
+- More permissions [\#324](https://github.com/johnbellone/consul-cookbook/pull/324) ([kingpong](https://github.com/kingpong))
+- Prevent consul from writing its own config [\#323](https://github.com/johnbellone/consul-cookbook/pull/323) ([kingpong](https://github.com/kingpong))
+- added statsite\_prefix and newly introduced \(in 0.6.4\) nested object t… [\#321](https://github.com/johnbellone/consul-cookbook/pull/321) ([MichaelKueller](https://github.com/MichaelKueller))
+- Added post-start script to upstart config to delay service started event until consul ready to serve requests [\#320](https://github.com/johnbellone/consul-cookbook/pull/320) ([gdavison](https://github.com/gdavison))
+- implement translate\_wan\_addrs in consul\_config [\#319](https://github.com/johnbellone/consul-cookbook/pull/319) ([jschnare](https://github.com/jschnare))
+- Do not install a dedicated web UI by default [\#315](https://github.com/johnbellone/consul-cookbook/pull/315) ([legal90](https://github.com/legal90))
+
+## [v2.1.3](https://github.com/johnbellone/consul-cookbook/tree/v2.1.3) (2016-05-18)
+[Full Changelog](https://github.com/johnbellone/consul-cookbook/compare/v2.1.2...v2.1.3)
+
+## [v2.1.2](https://github.com/johnbellone/consul-cookbook/tree/v2.1.2) (2016-05-18)
+[Full Changelog](https://github.com/johnbellone/consul-cookbook/compare/v2.1.1...v2.1.2)
+
+## [v2.1.1](https://github.com/johnbellone/consul-cookbook/tree/v2.1.1) (2016-05-16)
+[Full Changelog](https://github.com/johnbellone/consul-cookbook/compare/v2.1.0...v2.1.1)
+
+**Implemented enhancements:**
+
+- Finding the Consul executable [\#311](https://github.com/johnbellone/consul-cookbook/issues/311)
+- Convert integration tests to use InSpec [\#303](https://github.com/johnbellone/consul-cookbook/issues/303)
+
+**Closed issues:**
+
+- Consul service should restart instead of reload [\#307](https://github.com/johnbellone/consul-cookbook/issues/307)
 - Documentation for Data Bag Setup [\#238](https://github.com/johnbellone/consul-cookbook/issues/238)
 
 **Merged pull requests:**
 
+- Consul Watch: Ignore owner/group on windows machines  [\#313](https://github.com/johnbellone/consul-cookbook/pull/313) ([jirkafajfr](https://github.com/jirkafajfr))
+- Web UI installation fails when using default recipe [\#312](https://github.com/johnbellone/consul-cookbook/pull/312) ([gdavison](https://github.com/gdavison))
+- consul\_installation: Fix binary base url for Linux x86 [\#310](https://github.com/johnbellone/consul-cookbook/pull/310) ([legal90](https://github.com/legal90))
+- Prevent "consul" service to be restarted on update [\#309](https://github.com/johnbellone/consul-cookbook/pull/309) ([legal90](https://github.com/legal90))
+- Fix consul logging for sysvinit provider [\#308](https://github.com/johnbellone/consul-cookbook/pull/308) ([legal90](https://github.com/legal90))
+- Fix webui installation spec test [\#305](https://github.com/johnbellone/consul-cookbook/pull/305) ([shortdudey123](https://github.com/shortdudey123))
 - Fix log file permissions on RHEL-like systems [\#304](https://github.com/johnbellone/consul-cookbook/pull/304) ([legal90](https://github.com/legal90))
 - Add missing unix\_sockets config [\#302](https://github.com/johnbellone/consul-cookbook/pull/302) ([spheromak](https://github.com/spheromak))
 - Fixed Windows installation issue [\#300](https://github.com/johnbellone/consul-cookbook/pull/300) ([Ginja](https://github.com/Ginja))
@@ -35,7 +138,6 @@
 
 - sysvinit.service.erb has the consul service log to /dev/null [\#284](https://github.com/johnbellone/consul-cookbook/issues/284)
 - Refactor the population of TLS files to wrapper cookbooks? [\#247](https://github.com/johnbellone/consul-cookbook/issues/247)
-- Removed consul_ui resource as Consul 0.6.1+ config option "ui" enables a built-in Web UI [\#301](https://github.com/johnbellone/consul-cookbook/issues/301)
 
 **Fixed bugs:**
 
@@ -253,7 +355,7 @@
 - A couple test fixes [\#195](https://github.com/johnbellone/consul-cookbook/pull/195) ([gdavison](https://github.com/gdavison))
 
 ## [v0.10.1](https://github.com/johnbellone/consul-cookbook/tree/v0.10.1) (2015-07-10)
-[Full Changelog](https://github.com/johnbellone/consul-cookbook/compare/v0.10...v0.10.1)
+[Full Changelog](https://github.com/johnbellone/consul-cookbook/compare/v0.10.0...v0.10.1)
 
 **Implemented enhancements:**
 
@@ -285,11 +387,11 @@
 - Adding GOMAXPROCS support for systemd. [\#188](https://github.com/johnbellone/consul-cookbook/pull/188) ([joshgarnett](https://github.com/joshgarnett))
 - Refactor start and stop timeouts in consul-init [\#161](https://github.com/johnbellone/consul-cookbook/pull/161) ([jon918](https://github.com/jon918))
 
-## [v0.10](https://github.com/johnbellone/consul-cookbook/tree/v0.10) (2015-06-04)
-[Full Changelog](https://github.com/johnbellone/consul-cookbook/compare/v0.10.0...v0.10)
-
 ## [v0.10.0](https://github.com/johnbellone/consul-cookbook/tree/v0.10.0) (2015-06-04)
-[Full Changelog](https://github.com/johnbellone/consul-cookbook/compare/v0.9.1...v0.10.0)
+[Full Changelog](https://github.com/johnbellone/consul-cookbook/compare/v0.10...v0.10.0)
+
+## [v0.10](https://github.com/johnbellone/consul-cookbook/tree/v0.10) (2015-06-04)
+[Full Changelog](https://github.com/johnbellone/consul-cookbook/compare/v0.9.1...v0.10)
 
 **Implemented enhancements:**
 
