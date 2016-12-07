@@ -45,7 +45,7 @@ matrix:
     env:  FOODCRITIC=1
   - script:
       - bundle install
-      - /opt/chefdk/embedded/bin/rspec --color --default-path test/spec
+      - bundle exec rspec --color --default-path test/spec
     env:  CHEFSPEC=1
 notifications:
   slack: bloomberg-rnd:BvYmxrV9xj902XWTRNrkLNkR

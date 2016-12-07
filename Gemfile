@@ -15,6 +15,7 @@ group :unit, :integration do
   gem 'chefspec'
   gem 'rubyzip'
   gem 'serverspec'
+  gem 'rb-readline'
 end
 
 group :development do
