@@ -1,8 +1,6 @@
 require 'spec_helper'
 require 'json'
 
-consul_version = '0.7.0'
-
 if windows?
   consul_executable = "C:\\Program Files\\consul\\#{consul_version}\\consul.exe"
   consul_command    = "& '#{consul_executable}'"
