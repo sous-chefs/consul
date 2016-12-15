@@ -6,10 +6,6 @@
 #
 include_recipe 'chef-sugar::default'
 
-if rhel?
-  include_recipe 'yum-epel::default' if node['platform_version'].to_i == 5
-end
-
 node.default['nssm']['install_location'] = '%WINDIR%'
 
 if node['firewall']['allow_consul']
