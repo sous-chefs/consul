@@ -5,13 +5,13 @@ gem 'poise-boiler'
 gem 'chef-sugar'
 
 group :lint do
-  gem 'cookstyle'
+  gem 'cookstyle', '~> 1.0'
   gem 'rubocop'
   gem 'foodcritic'
 end
 
 group :unit, :integration do
-  gem 'chef-dk'
+  gem 'chef-dk', '~> 1.0'
   gem 'chefspec'
   gem 'rubyzip'
   gem 'serverspec'

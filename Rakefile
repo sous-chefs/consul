@@ -1,39 +1,56 @@
 #!/usr/bin/env rake
 
-require 'bundler/setup'
-require 'rspec/core/rake_task'
-require 'rubocop/rake_task'
-require 'foodcritic'
-require 'kitchen'
-
+# Style tests. cookstyle (rubocop) and Foodcritic
 namespace :style do
-  desc 'Run Ruby style checks'
-  RuboCop::RakeTask.new(:ruby)
+  begin
+    require 'cookstyle'
+    require 'rubocop/rake_task'
 
-  desc 'Run Chef style checks'
-  FoodCritic::Rake::LintTask.new(:chef)
+    desc 'Run Ruby style checks'
+    RuboCop::RakeTask.new(:ruby)
+  rescue LoadError => e
+    puts ">>> Gem load error: #{e}, omitting #{task.name}" unless ENV['CI']
+  end
+
+  begin
+    require 'foodcritic'
+
+    desc 'Run Chef style checks'
+    FoodCritic::Rake::LintTask.new(:chef) do |t|
+      t.options = {
+        fail_tags: ['any'],
+        progress: true
+      }
+    end
+  rescue LoadError
+    puts ">>> Gem load error: #{e}, omitting #{task.name}" unless ENV['CI']
+  end
 end
 
 desc 'Run all style checks'
 task style: ['style:chef', 'style:ruby']
 
-desc 'Run ChefSpec unit tests'
-RSpec::Core::RakeTask.new(:unit) do |t|
-  t.pattern = 'test/spec/**{,/*/**}/*_spec.rb'
+# ChefSpec
+begin
+  desc 'Run ChefSpec examples'
+  require 'rspec/core/rake_task'
+  RSpec::Core::RakeTask.new(:spec) do |t|
+    t.pattern = 'test/spec/**{,/*/**}/*_spec.rb'
+  end
+rescue LoadError => e
+  puts ">>> Gem load error: #{e}, omitting #{task.name}" unless ENV['CI']
 end
 
 # Integration tests. Kitchen.ci
-desc 'Run Test Kitchen with Vagrant'
-task :vagrant do
-  Kitchen.logger = Kitchen.default_file_logger
-  Kitchen::Config.new.instances.each do |instance|
-    instance.test(:always)
+namespace :integration do
+  begin
+    desc 'Run kitchen integration tests'
+    require 'kitchen/rake_tasks'
+    Kitchen::RakeTasks.new
+  rescue StandardError => e
+    puts ">>> Gem load error: #{e}, omitting #{task.name}" unless ENV['CI']
   end
 end
 
-desc 'Run style & unit tests on Travis'
-task travis: %w(style unit)
-
 # Default
-desc 'Run style, unit, and Vagrant-based integration tests'
-task default: %w(style unit vagrant)
+task default: %w(style spec)
