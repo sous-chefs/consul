@@ -18,7 +18,6 @@ supports 'arch'
 supports 'windows'
 
 depends 'build-essential'
-depends 'chef-sugar'
 depends 'nssm'
 depends 'golang'
 depends 'firewall', '~> 2.0'
