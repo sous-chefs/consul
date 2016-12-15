@@ -15,7 +15,6 @@ describe ConsulCookbook::Provider::ConsulInstallationWebui do
     end
 
     it do
-      pending('replace with poise-archive')
       is_expected.to create_directory('/opt/consul-webui/0.7.1')
       .with(
         recursive: true
@@ -23,7 +22,6 @@ describe ConsulCookbook::Provider::ConsulInstallationWebui do
     end
 
     it do
-      pending('replace with poise-archive')
       is_expected.to create_directory('/var/lib/consul')
       .with(
         recursive: true
@@ -31,10 +29,9 @@ describe ConsulCookbook::Provider::ConsulInstallationWebui do
     end
 
     it do
-      pending('replace with poise-archive')
-      is_expected.to unzip_zipfile('consul_0.7.1_web_ui.zip')
-      .with(
-        source: 'https://releases.hashicorp.com/consul/0.7.1/consul_0.7.1_web_ui.zip'
+      is_expected.to unpack_poise_archive('https://releases.hashicorp.com/consul/0.7.1/consul_0.7.1_web_ui.zip').with(
+        destination: '/opt/consul-webui/0.7.1',
+        merged_source_properties: {'checksum' => '1b793c60e1af24cc470421d0411e13748f451b51d8a6ed5fcabc8d00bfb84264' }
       )
     end
   end
