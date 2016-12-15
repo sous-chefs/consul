@@ -123,7 +123,7 @@ module ConsulCookbook
       # 1 is command not found
       # 3 is service not found
       exit_code = shell_out!(%{"#{nssm_exe}" status consul}, returns: [0, 1, 3]).exitstatus
-      exit_code == 0 ? true : false
+      exit_code.zero? ? true : false
     end
 
     def nssm_service_status?(expected_status)

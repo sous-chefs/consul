@@ -39,7 +39,7 @@ module ConsulCookbook
       def action_create
         archive_url = options[:archive_url] % {
           version: options[:version],
-          basename: options[:archive_basename]
+          basename: options[:archive_basename],
         }
 
         notifying_block do
