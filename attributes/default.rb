@@ -25,7 +25,7 @@ default['consul']['config']['ports'] = {
   'rpc'      => 8400,
   'serf_lan' => 8301,
   'serf_wan' => 8302,
-  'server'   => 8300
+  'server'   => 8300,
 }
 
 default['consul']['diplomat_version'] = nil
@@ -41,5 +41,5 @@ default['consul']['service']['nssm_params'] = {
   'AppStderr'        => join_path(config_prefix_path, 'error.log'),
   'AppRotateFiles'   => 1,
   'AppRotateOnline'  => 1,
-  'AppRotateBytes'   => 20_000_000
+  'AppRotateBytes'   => 20_000_000,
 }
