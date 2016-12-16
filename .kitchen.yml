@@ -49,7 +49,7 @@ suites:
           encrypt: CGXC2NsXW4AvuB4h5ODYzQ==
   - name: client
     provisioner:
-      policyfile: test/fixtures/policies/client.rb
+      policyfile: test/fixtures/policies/default.rb
     attributes:
       consul:
         config:
@@ -78,7 +78,7 @@ suites:
           encrypt: CGXC2NsXW4AvuB4h5ODYzQ==
   - name: acl
     provisioner:
-      policyfile: test/fixtures/policies/acl.rb
+      policyfile: test/fixtures/policies/default.rb
     attributes:
       consul:
         config:
