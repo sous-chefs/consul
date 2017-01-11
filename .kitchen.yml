@@ -54,15 +54,6 @@ suites:
           provider: git
     excludes:
       - windows-2012r2
-  - name: webui
-    attributes:
-      consul:
-        config:
-          bootstrap: true
-          server: true
-          ui: true
-          datacenter: FortMeade
-          encrypt: CGXC2NsXW4AvuB4h5ODYzQ==
   - name: windows
     attributes:
       consul:
