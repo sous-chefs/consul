@@ -176,8 +176,8 @@ module ConsulCookbook
           watches
         )
 
-        for_keeps << %i{bootstrap bootstrap_expect} if server
-        for_keeps << %i{ca_file cert_file key_file} if tls?
+        for_keeps << %i(bootstrap bootstrap_expect) if server
+        for_keeps << %i(ca_file cert_file key_file) if tls?
         for_keeps = for_keeps.flatten
 
         config = to_hash.keep_if do |k, _|

@@ -29,7 +29,7 @@ module ConsulCookbook
 
       # @!attribute type
       # @return [String]
-      attribute(:type, equal_to: %w{check service checks services})
+      attribute(:type, equal_to: %w(check service checks services))
 
       # @!attribute parameters
       # @return [Hash]

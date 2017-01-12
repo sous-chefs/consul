@@ -33,7 +33,7 @@ module ConsulCookbook
 
       # @!attribute type
       # @return [String]
-      attribute(:type, equal_to: %w{client management}, default: 'client')
+      attribute(:type, equal_to: %w(client management), default: 'client')
 
       # @!attribute rules
       # @return [String]

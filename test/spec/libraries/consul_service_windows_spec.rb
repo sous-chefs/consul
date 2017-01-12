@@ -4,7 +4,7 @@ require_relative '../../../libraries/consul_service_windows'
 
 describe ConsulCookbook::Resource::ConsulService do
   step_into(:consul_service)
-  let(:chefspec_options) { { platform: 'windows', version: '2012R2'} }
+  let(:chefspec_options) { { platform: 'windows', version: '2012R2' } }
   let(:shellout) { double('shellout') }
 
   context 'with default properties' do
@@ -25,21 +25,22 @@ describe ConsulCookbook::Resource::ConsulService do
 
     recipe 'consul::default'
 
-    it {
+    it do
       skip('Add poise inversion system to consul_service otherwise windows tests will not pass')
       is_expected.to create_directory('C:\Program Files\consul\conf.d')
-    }
+    end
 
-    it {
+    it do
       skip('Add poise inversion system to consul_service otherwise windows tests will not pass')
       is_expected.to create_directory('C:\Program Files\consul\data')
-    }
+    end
 
-    it {
+    it do
       skip('Add poise inversion system to consul_service otherwise windows tests will not pass')
       expect(chef_run).to install_nssm('consul').with(
-      program: 'C:\Program Files\consul\0.7.1\consul.exe',
-      args: 'agent -config-file="""C:\Program Files\consul\consul.json""" -config-dir="""C:\Program Files\consul\conf.d"""'
-    )}
+        program: 'C:\Program Files\consul\0.7.1\consul.exe',
+        args: 'agent -config-file="""C:\Program Files\consul\consul.json""" -config-dir="""C:\Program Files\consul\conf.d"""'
+      )
+    end
   end
 end

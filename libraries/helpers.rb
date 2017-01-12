@@ -46,7 +46,7 @@ module ConsulCookbook
 
     def command(config_file, config_dir)
       if windows?
-        %{agent -config-file="""#{config_file}""" -config-dir="""#{config_dir}"""}
+        %(agent -config-file="""#{config_file}""" -config-dir="""#{config_dir}""")
       else
         "/usr/local/bin/consul agent -config-file=#{config_file} -config-dir=#{config_dir}"
       end
@@ -57,7 +57,7 @@ module ConsulCookbook
     end
 
     def nssm_params
-      %w{Application
+      %w(Application
          AppParameters
          AppDirectory
          AppExit
@@ -97,18 +97,18 @@ module ConsulCookbook
          ObjectName
          Name
          Start
-         Type}
+         Type)
     end
 
     def nssm_service_installed?
       # 1 is command not found
       # 3 is service not found
-      exit_code = shell_out!(%{"#{nssm_exe}" status consul}, returns: [0, 1, 3]).exitstatus
+      exit_code = shell_out!(%("#{nssm_exe}" status consul), returns: [0, 1, 3]).exitstatus
       exit_code.zero?
     end
 
     def nssm_service_status?(expected_status)
-      expected_status.include? shell_out!(%{"#{nssm_exe}" status consul}, returns: [0]).stdout.delete("\0").strip
+      expected_status.include? shell_out!(%("#{nssm_exe}" status consul), returns: [0]).stdout.delete("\0").strip
     end
 
     # Returns a hash of mismatched params
@@ -117,7 +117,7 @@ module ConsulCookbook
       params = node['consul']['service']['nssm_params'].select { |k, _v| nssm_params.include? k.to_s }
       params.each.each_with_object({}) do |(k, v), mismatch|
         # shell_out! returns values with null bytes, need to delete them before we evaluate
-        unless shell_out!(%{"#{nssm_exe}" get consul #{k}}, returns: [0]).stdout.delete("\0").strip.eql? v.to_s
+        unless shell_out!(%("#{nssm_exe}" get consul #{k}), returns: [0]).stdout.delete("\0").strip.eql? v.to_s
           mismatch[k] = v
         end
       end

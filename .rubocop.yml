@@ -1,3 +1,5 @@
 ---
 Style/GuardClause:
   Enabled: false
+Style/ModuleFunction:
+  Enabled: false
