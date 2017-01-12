@@ -23,14 +23,14 @@ env:
     - INSTANCE=default-ubuntu-1204
     - INSTANCE=default-debian-8
     - INSTANCE=default-debian-7
-    - INSTANCE=archive-centos-7
-    - INSTANCE=archive-centos-6
-    - INSTANCE=archive-ubuntu-1604
-    - INSTANCE=archive-ubuntu-1404
+
 before_script:
   # https://github.com/zuazo/kitchen-in-travis-native/issues/1#issuecomment-142230889
   - sudo iptables -L DOCKER || ( echo "DOCKER iptables chain missing" ; sudo iptables -N DOCKER )
   - eval "$(/opt/chefdk/bin/chef shell-init bash)"
+  - /opt/chefdk/embedded/bin/chef --version
+  - /opt/chefdk/embedded/bin/cookstyle --version
+  - /opt/chefdk/embedded/bin/foodcritic --version
 
 script: KITCHEN_LOCAL_YAML=.kitchen.dokken.yml kitchen verify ${INSTANCE}
 
@@ -41,11 +41,6 @@ after_script:
 
 matrix:
   include:
-    - before_script:
-      - eval "$(/opt/chefdk/bin/chef shell-init bash)"
-      - /opt/chefdk/embedded/bin/chef --version
-      - /opt/chefdk/embedded/bin/cookstyle --version
-      - /opt/chefdk/embedded/bin/foodcritic --version
     - script:
       - bundle install
       - bundle exec rake

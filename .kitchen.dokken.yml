@@ -99,14 +99,6 @@ suites:
           server: true
           datacenter: FortMeade
           encrypt: CGXC2NsXW4AvuB4h5ODYzQ==
-  - name: archive
-    provisioner:
-      policyfile: test/fixtures/policies/default.rb
-    attributes:
-      consul:
-        provider: binary
-        options:
-          version: 0.7.1
   - name: webui
     provisioner:
       policyfile: test/fixtures/policies/default.rb
