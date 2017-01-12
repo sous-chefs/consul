@@ -49,7 +49,6 @@ install = consul_installation node['consul']['version'] do |r|
 end
 
 consul_service service_name do |r|
-  version node['consul']['version']
   config_file config.path
   program install.consul_program
 
