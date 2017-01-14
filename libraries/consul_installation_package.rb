@@ -48,7 +48,7 @@ module ConsulCookbook
           package options[:package_name] do
             source options[:package_source]
             version options[:version]
-            action :uninstall
+            action :remove
           end
         end
       end
