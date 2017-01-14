@@ -23,6 +23,10 @@ module ConsulCookbook
       provides(:package)
       inversion_attribute 'consul'
 
+      # The built-in resource "package" has it's own attribute named "options",
+      # so we should use an alias to access Poise inversion options.
+      alias res_options options
+
       # Set the default inversion options.
       # @return [Hash]
       # @api private
@@ -35,9 +39,9 @@ module ConsulCookbook
 
       def action_create
         notifying_block do
-          package options[:package_name] do
-            source options[:package_source]
-            version options[:version]
+          package res_options[:package_name] do
+            source res_options[:package_source]
+            version res_options[:version]
             action :upgrade
           end
         end
@@ -45,9 +49,9 @@ module ConsulCookbook
 
       def action_remove
         notifying_block do
-          package options[:package_name] do
-            source options[:package_source]
-            version options[:version]
+          package res_options[:package_name] do
+            source res_options[:package_source]
+            version res_options[:version]
             action :remove
           end
         end
