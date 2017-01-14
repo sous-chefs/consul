@@ -37,7 +37,6 @@ module ConsulCookbook
         notifying_block do
           package options[:package_name] do
             source options[:package_source]
-            checksum options[:package_checksum]
             version options[:version]
             action :upgrade
           end
@@ -48,7 +47,6 @@ module ConsulCookbook
         notifying_block do
           package options[:package_name] do
             source options[:package_source]
-            checksum options[:package_checksum]
             version options[:version]
             action :uninstall
           end
