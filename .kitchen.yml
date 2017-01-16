@@ -4,31 +4,23 @@ driver:
 
 provisioner:
   name: chef_zero
+  policyfile: test/fixtures/policies/default.rb
 
 verifier:
   name: inspec
 
 platforms:
   - name: ubuntu-16.04
-    named_run_list: debian
   - name: ubuntu-14.04
-    named_run_list: debian
   - name: ubuntu-12.04
-    named_run_list: debian
   - name: centos-7.2
-    named_run_list: centos
   - name: centos-6.7
-    named_run_list: centos
   - name: centos-5.11
-    named_run_list: centos
   - name: debian-8.2
-    named_run_list: debian
   - name: debian-7.9
-    named_run_list: debian
   - name: freebsd-10.2
     named_run_list: freebsd
   - name: windows-2012r2
-    named_run_list: windows
     driver_config:
       network:
         - ["forwarded_port", {guest: 3389, host: 3389}]
@@ -39,8 +31,6 @@ platforms:
 
 suites:
   - name: default
-    provisioner:
-      policyfile: test/fixtures/policies/default.rb
     attributes:
       consul:
         config: &default-config
@@ -62,8 +52,6 @@ suites:
           server: false
           bootstrap_expect: 1
   - name: git
-    provisioner:
-      policyfile: test/fixtures/policies/default.rb
     attributes:
       consul:
         config: *default-config
@@ -72,8 +60,6 @@ suites:
     excludes:
       - windows-2012r2
   - name: webui
-    provisioner:
-      policyfile: test/fixtures/policies/default.rb
     attributes:
       consul:
         config:
