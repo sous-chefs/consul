@@ -43,10 +43,14 @@ suites:
         config: &default-config
           owner: root
           group: consul
+          ui: true
           bootstrap: true
           server: true
           datacenter: FortMeade
           encrypt: CGXC2NsXW4AvuB4h5ODYzQ==
+          acl_master_token: doublesecret
+          acl_datacenter: FortMeade
+          acl_default_policy: deny
   - name: client
     provisioner:
       policyfile: test/fixtures/policies/default.rb
@@ -76,20 +80,3 @@ suites:
           ui: true
           datacenter: FortMeade
           encrypt: CGXC2NsXW4AvuB4h5ODYzQ==
-  - name: acl
-    provisioner:
-      policyfile: test/fixtures/policies/default.rb
-    attributes:
-      consul:
-        config:
-          bootstrap: true
-          server: true
-          datacenter: fortmeade
-          acl_master_token: doublesecret
-          acl_datacenter: fortmeade
-          acl_default_policy: deny
-    excludes:
-      - windows-2012r2
-      - centos-7.2
-      - centos-6.7
-      - centos-5.11

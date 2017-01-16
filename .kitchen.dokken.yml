@@ -99,6 +99,9 @@ suites:
           server: true
           datacenter: FortMeade
           encrypt: CGXC2NsXW4AvuB4h5ODYzQ==
+          acl_master_token: doublesecret
+          acl_datacenter: FortMeade
+          acl_default_policy: deny
   - name: webui
     provisioner:
       policyfile: test/fixtures/policies/default.rb

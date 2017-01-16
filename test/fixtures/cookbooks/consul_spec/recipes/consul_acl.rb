@@ -1,4 +1,3 @@
-include_recipe 'consul_spec::default'
 include_recipe 'consul::client_gem'
 
 package 'curl'
@@ -45,5 +44,3 @@ consul_acl 'reader_token' do
   EOS
   auth_token node['consul']['config']['acl_master_token']
 end
-
-
