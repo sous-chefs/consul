@@ -5,7 +5,7 @@ describe command('curl -s "http://localhost:8500/v1/acl/info/anonymous"') do
   its(:stdout) { should match('"ID":"anonymous"') }
   its(:stdout) { should match('"Name":"Anonymous Token"') }
   its(:stdout) { should match('"Type":"client"') }
-  its(:stdout) { should match('"Rules":""') }
+  its(:stdout) { should include '"Rules":""' }
 end
 
 describe file('/tmp/anonymous-notified') do
@@ -26,5 +26,5 @@ describe command('curl -s "http://localhost:8500/v1/acl/info/reader_token"') do
   its(:stdout) { should match('"ID":"reader_token"') }
   its(:stdout) { should match('"Name":""') }
   its(:stdout) { should match('"Type":"client"') }
-  its(:stdout) { should match /\"Rules\":\"dummyrule_line1\\ndummyrule_line2\\n\"/ }
+  its(:stdout) { should include '"Rules":"key \"dummykey\"' }
 end

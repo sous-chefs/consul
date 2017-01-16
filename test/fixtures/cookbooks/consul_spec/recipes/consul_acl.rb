@@ -39,8 +39,12 @@ end
 consul_acl 'reader_token' do
   type 'client'
   rules <<-EOS.gsub(/^\s{4}/, '')
-    dummyrule_line1
-    dummyrule_line2
+    key "dummykey" {
+      policy = "read"
+    }
+    service "dummyservice" {
+      policy = "write"
+    }
   EOS
   auth_token node['consul']['config']['acl_master_token']
 end

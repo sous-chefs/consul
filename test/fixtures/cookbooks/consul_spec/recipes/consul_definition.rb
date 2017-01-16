@@ -2,8 +2,7 @@
 # The ruby interpreter is guaranteed to exist since it's currently running.
 file "/consul_definition_check.rb" do
   content (<<-EOF).gsub(/^ */, '')
-    #!#{RbConfig.ruby}
-    exit 0
+    /bin/sh -c 'echo "Consul check script invoked"'
   EOF
   unless node.platform?('windows')
     owner 'root'
