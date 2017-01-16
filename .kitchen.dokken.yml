@@ -8,7 +8,7 @@ transport:
 provisioner:
   name: dokken
 verifier:
-  root_path: /opt/verifier
+  name: inspec
 platforms:
   - name: centos-7
     named_run_list: centos

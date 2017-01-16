@@ -1,5 +1,3 @@
-require 'spec_helper'
-
 describe command('curl -s "http://localhost:8500/v1/acl/info/anonymous"') do
   its(:exit_status) { should eq 0 }
   its(:stdout) { should match('"ID":"anonymous"') }

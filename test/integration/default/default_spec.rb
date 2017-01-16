@@ -1,4 +1,4 @@
-require 'spec_helper'
+require_relative '../spec_helper'
 
 if windows?
   consul_executable = "C:\\Program Files\\consul\\#{consul_version}\\consul.exe"
@@ -15,12 +15,12 @@ end
 
 unless windows?
   describe group('consul') do
-    it { should exist  }
+    it { should exist }
   end
 
   describe user('consul') do
     it { should exist }
-    it { should belong_to_group('consul') }
+    its('group') { should eq 'consul' }
   end
 
   describe command("su - consul -c 'echo successfully logged in'") do
@@ -49,13 +49,12 @@ describe command("#{consul_command} members -detailed") do
 end
 
 unless windows?
-  config_dir  = '/etc/consul'
+  config_dir = '/etc/consul'
 
-  describe file(config_dir) do
-    it { should be_directory }
-    it { should be_owned_by     'root' }
+  describe directory(config_dir) do
+    it { should be_owned_by 'root' }
     it { should be_grouped_into 'consul' }
-    it { should be_mode 755 }
+    its('mode') { should cmp '0755' }
   end
 
   describe file('/usr/local/bin/consul') do
@@ -78,7 +77,7 @@ describe file(config_file) do
   unless windows?
     it { should be_owned_by     'root' }
     it { should be_grouped_into 'consul' }
-    it { should be_mode 640 }
+    its('mode') { should cmp '0640' }
   end
 end
 
@@ -87,16 +86,15 @@ describe file(confd_dir) do
   unless windows?
     it { should be_owned_by     'root' }
     it { should be_grouped_into 'consul' }
-    it { should be_mode 755 }
+    its('mode') { should cmp '0755' }
   end
 end
 
-describe file(data_dir) do
-  it { should be_directory }
+describe directory(data_dir) do
   unless windows?
     it { should be_owned_by     'consul' }
     it { should be_grouped_into 'consul' }
-    it { should be_mode 750 }
+    its('mode') { should cmp '0750' }
   end
 end
 
@@ -105,7 +103,7 @@ describe file("#{confd_dir}/consul_definition_check.json") do
   unless windows?
     it { should be_owned_by     'root' }
     it { should be_grouped_into 'consul' }
-    it { should be_mode 640 }
+    its('mode') { should cmp '0640' }
   end
 end
 
@@ -114,6 +112,6 @@ describe file("#{confd_dir}/consul_watch_check.json") do
   unless windows?
     it { should be_owned_by     'root' }
     it { should be_grouped_into 'consul' }
-    it { should be_mode 640 }
+    its('mode') { should cmp '0640' }
   end
 end
