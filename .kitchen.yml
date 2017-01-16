@@ -21,13 +21,6 @@ platforms:
   - name: freebsd-10.2
     named_run_list: freebsd
   - name: windows-2012r2
-    driver_config:
-      network:
-        - ["forwarded_port", {guest: 3389, host: 3389}]
-        - ["forwarded_port", {guest: 5985, host: 5985}]
-      communicator: winrm
-      customize:
-        usbehci: "off"
 
 suites:
   - name: default
@@ -44,6 +37,8 @@ suites:
           acl_master_token: doublesecret
           acl_datacenter: FortMeade
           acl_default_policy: deny
+    excludes:
+      - windows-2012r2
   - name: client
     named_run_list: client
     attributes:
@@ -68,3 +63,9 @@ suites:
           ui: true
           datacenter: FortMeade
           encrypt: CGXC2NsXW4AvuB4h5ODYzQ==
+  - name: windows
+    attributes:
+      consul:
+        config: *default-config
+    includes:
+      - windows-2012r2
