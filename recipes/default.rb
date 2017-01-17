@@ -4,8 +4,6 @@
 #
 # Copyright 2014-2016, Bloomberg Finance L.P.
 #
-include_recipe 'chef-sugar::default'
-
 node.default['nssm']['install_location'] = '%WINDIR%'
 
 if node['firewall']['allow_consul']
@@ -33,7 +31,7 @@ service_name = node['consul']['service_name']
 poise_service_user node['consul']['service_user'] do
   group node['consul']['service_group']
   shell node['consul']['service_shell'] unless node['consul']['service_shell'].nil?
-  not_if { windows? }
+  not_if { node.platform_family?('windows') }
   not_if { node['consul']['service_user'] == 'root' }
   not_if { node['consul']['create_service_user'] == false }
   notifies :restart, "consul_service[#{service_name}]", :delayed
@@ -51,11 +49,10 @@ install = consul_installation node['consul']['version'] do |r|
 end
 
 consul_service service_name do |r|
-  version node['consul']['version']
   config_file config.path
   program install.consul_program
 
-  unless windows?
+  unless node.platform_family?('windows')
     user node['consul']['service_user']
     group node['consul']['service_group']
   end
