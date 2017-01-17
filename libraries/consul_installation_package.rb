@@ -41,6 +41,7 @@ module ConsulCookbook
         notifying_block do
           package res_options[:package_name] do
             source res_options[:package_source]
+            provider res_options[:package_provider]
             version res_options[:version]
             action :upgrade
           end
@@ -51,6 +52,7 @@ module ConsulCookbook
         notifying_block do
           package res_options[:package_name] do
             source res_options[:package_source]
+            provider res_options[:package_provider]
             version res_options[:version]
             action :remove
           end
