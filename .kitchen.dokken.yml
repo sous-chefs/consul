@@ -3,12 +3,16 @@ driver:
   name: dokken
   chef_version: latest
   privileged: true
+
 transport:
   name: dokken
+
 provisioner:
   name: dokken
+
 verifier:
   name: inspec
+
 platforms:
   - name: centos-7
     driver:
@@ -16,69 +20,76 @@ platforms:
       platform: rhel
       pid_one_command: /usr/lib/systemd/systemd
       intermediate_instructions:
-        - RUN yum -y install lsof which systemd-sysv initscripts sudo
+        - RUN yum -y install lsof which systemd-sysv initscripts net-tools
     attributes:
       poise-service:
         consul:
           provider: systemd
+
   - name: centos-6
     driver:
       image: centos:6
       platform: rhel
       pid_one_command: /sbin/init
       intermediate_instructions:
-        - RUN yum -y install which initscripts sudo
+        - RUN yum -y install which initscripts net-tools
+
   - name: ubuntu-16.04
     driver:
       image: ubuntu:16.04
       pid_one_command: /bin/systemd
       intermediate_instructions:
         - RUN /usr/bin/apt-get update -y
-        - RUN /usr/bin/apt-get install sudo net-tools -y
+        - RUN /usr/bin/apt-get install net-tools -y
     attributes:
       poise-service:
         consul:
           provider: systemd
+
   - name: ubuntu-14.04
     driver:
       image: ubuntu-upstart:14.04
       pid_one_command: /sbin/init
       intermediate_instructions:
         - RUN /usr/bin/apt-get update -y
-        - RUN /usr/bin/apt-get install sudo net-tools -y
+        - RUN /usr/bin/apt-get install net-tools -y
     attributes:
       poise-service:
         consul:
           provider: upstart
+
   - name: ubuntu-12.04
     driver:
       image: ubuntu-upstart:12.04
       pid_one_command: /sbin/init
       intermediate_instructions:
         - RUN /usr/bin/apt-get update -y
-        - RUN /usr/bin/apt-get install sudo net-tools -y
+        - RUN /usr/bin/apt-get install net-tools -y
     attributes:
       poise-service:
         consul:
           provider: upstart
+
   - name: debian-8
     driver:
       image: debian:8
       pid_one_command: /bin/systemd
       intermediate_instructions:
         - RUN /usr/bin/apt-get update
-        - RUN /usr/bin/apt-get install lsb-release sudo net-tools -y
+        - RUN /usr/bin/apt-get install lsb-release net-tools -y
     attributes:
       poise-service:
         consul:
           provider: systemd
+
   - name: debian-7
     driver:
       image: debian:7
       pid_one_command: /sbin/init
       intermediate_instructions:
         - RUN /usr/bin/apt-get update
-        - RUN /usr/bin/apt-get install lsb-release sudo net-tools -y
+        - RUN /usr/bin/apt-get install lsb-release net-tools -y
+
 suites:
   - name: default
     provisioner:
@@ -95,6 +106,7 @@ suites:
           acl_master_token: doublesecret
           acl_datacenter: FortMeade
           acl_default_policy: deny
+
   - name: webui
     provisioner:
       policyfile: test/fixtures/policies/default.rb
