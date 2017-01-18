@@ -52,25 +52,6 @@ module ConsulCookbook
       end
     end
 
-    # 1 is command not found
-    def correct_version?(executable, version)
-      shell_out!(%{"#{executable}" version}, returns: [0, 1]).stdout.match version
-    end
-
-    def binary_checksum(item)
-      node['consul']['checksums'].fetch(binary_filename(item))
-    end
-
-    def binary_filename(item)
-      case item
-      when 'binary'
-        arch = arch_64? ? 'amd64' : '386'
-        ['consul', version, node['os'], arch].join('_')
-      when 'web_ui'
-        ['consul', version, 'web_ui'].join('_')
-      end
-    end
-
     def nssm_exe
       "#{node['nssm']['install_location']}\\nssm.exe"
     end
