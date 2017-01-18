@@ -4,60 +4,49 @@ driver:
 
 provisioner:
   name: chef_zero
+  policyfile: test/fixtures/policies/default.rb
+
+verifier:
+  name: inspec
 
 platforms:
   - name: ubuntu-16.04
-    named_run_list: debian
   - name: ubuntu-14.04
-    named_run_list: debian
   - name: ubuntu-12.04
-    named_run_list: debian
   - name: centos-7.2
-    named_run_list: centos
   - name: centos-6.7
-    named_run_list: centos
   - name: centos-5.11
-    named_run_list: centos
   - name: debian-8.2
-    named_run_list: debian
   - name: debian-7.9
-    named_run_list: debian
   - name: freebsd-10.2
     named_run_list: freebsd
   - name: windows-2012r2
-    named_run_list: windows
-    driver_config:
-      network:
-        - ["forwarded_port", {guest: 3389, host: 3389}]
-        - ["forwarded_port", {guest: 5985, host: 5985}]
-      communicator: winrm
-      customize:
-        usbehci: "off"
 
 suites:
   - name: default
-    provisioner:
-      policyfile: test/fixtures/policies/default.rb
     attributes:
       consul:
         config: &default-config
           owner: root
           group: consul
+          ui: true
           bootstrap: true
           server: true
           datacenter: FortMeade
           encrypt: CGXC2NsXW4AvuB4h5ODYzQ==
+          acl_master_token: doublesecret
+          acl_datacenter: FortMeade
+          acl_default_policy: deny
+    excludes:
+      - windows-2012r2
   - name: client
-    provisioner:
-      policyfile: test/fixtures/policies/default.rb
+    named_run_list: client
     attributes:
       consul:
         config:
           server: false
           bootstrap_expect: 1
   - name: git
-    provisioner:
-      policyfile: test/fixtures/policies/default.rb
     attributes:
       consul:
         config: *default-config
@@ -66,8 +55,6 @@ suites:
     excludes:
       - windows-2012r2
   - name: webui
-    provisioner:
-      policyfile: test/fixtures/policies/default.rb
     attributes:
       consul:
         config:
@@ -76,20 +63,9 @@ suites:
           ui: true
           datacenter: FortMeade
           encrypt: CGXC2NsXW4AvuB4h5ODYzQ==
-  - name: acl
-    provisioner:
-      policyfile: test/fixtures/policies/default.rb
+  - name: windows
     attributes:
       consul:
-        config:
-          bootstrap: true
-          server: true
-          datacenter: fortmeade
-          acl_master_token: doublesecret
-          acl_datacenter: fortmeade
-          acl_default_policy: deny
-    excludes:
+        config: *default-config
+    includes:
       - windows-2012r2
-      - centos-7.2
-      - centos-6.7
-      - centos-5.11
