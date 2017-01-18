@@ -195,7 +195,7 @@ module ConsulCookbook
           [::File.dirname(new_resource.path), new_resource.config_dir].each do |dir|
             directory dir do
               recursive true
-              unless node.platform?('windows')
+              unless platform?('windows')
                 owner new_resource.owner
                 group new_resource.group
                 mode '0755'
@@ -205,7 +205,7 @@ module ConsulCookbook
           end
 
           file new_resource.path do
-            unless node.platform?('windows')
+            unless platform?('windows')
               owner new_resource.owner
               group new_resource.group
               mode '0640'

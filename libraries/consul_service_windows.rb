@@ -54,10 +54,9 @@ module ConsulCookbook
             end
             # Check if the service is running, but don't bother if we're already
             # changing some nssm parameters
-            unless nssm_service_status?(%w(SERVICE_RUNNING)) && mismatch_params.empty?
-              powershell_script 'Trigger consul restart' do
-                code 'restart-service consul'
-              end
+            powershell_script 'Trigger consul restart' do
+              code 'restart-service consul'
+              not_if { nssm_service_status?(%w(SERVICE_RUNNING)) && mismatch_params.empty? }
             end
           end
         end
