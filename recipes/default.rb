@@ -6,8 +6,19 @@
 #
 node.default['nssm']['install_location'] = '%WINDIR%'
 
+consul_home = node['consul']['service_user_home']
 service_name = node['consul']['service_name']
+
+# poise_service_user resource doesn't create home directory
+directory consul_home do
+  owner node['consul']['service_user']
+  group node['consul']['service_user']
+  mode '0755'
+  only_if { node['os'] == 'linux' }
+end
+
 poise_service_user node['consul']['service_user'] do
+  home node['consul']['service_user_home']
   group node['consul']['service_group']
   shell node['consul']['service_shell'] unless node['consul']['service_shell'].nil?
   not_if { node.platform_family?('windows') }
