@@ -46,6 +46,8 @@ suites:
           bootstrap_expect: 1
   - name: git
     attributes:
+      go:
+        version: 1.7
       consul:
         config: *default-config
         installation:

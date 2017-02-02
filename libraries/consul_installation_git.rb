@@ -30,7 +30,7 @@ module ConsulCookbook
         super.merge(
           version: resource.version,
           git_url: 'https://github.com/hashicorp/consul',
-          git_path: '/usr/local/src/consul'
+          git_path: '/usr/local/go/src/github.com/hashicorp/consul'
         )
       end
 
@@ -39,6 +39,13 @@ module ConsulCookbook
           include_recipe 'golang::default', 'build-essential::default'
           golang_package 'github.com/mitchellh/gox'
           golang_package 'github.com/tools/godep'
+          directory options[:git_path] do
+            recursive true
+          end
+
+          package 'zip' do
+            action :install
+          end
 
           git options[:git_path] do
             repository options[:git_url]
