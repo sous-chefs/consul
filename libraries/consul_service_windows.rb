@@ -44,7 +44,7 @@ module ConsulCookbook
                 action = v.eql?('') ? "reset consul #{k}" : "set consul #{k} #{v}"
                 batch "Set nssm parameter - #{k}" do
                   code "#{nssm_exe} #{action}"
-                  notifies :run, 'powershell_script[Trigger consul restart]', :delayed
+                  notifies :run, 'powershell_script[Trigger consul restart]', :delayed if new_resource.restart_on_update
                 end
               end
               powershell_script 'Trigger consul restart' do
@@ -57,6 +57,7 @@ module ConsulCookbook
             unless nssm_service_status?(%w{SERVICE_RUNNING}) && mismatch_params.empty?
               powershell_script 'Trigger consul restart' do
                 code 'restart-service consul'
+                only_if { new_resource.restart_on_update }
               end
             end
           end
