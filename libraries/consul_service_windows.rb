@@ -14,15 +14,15 @@ module ConsulCookbook
     class ConsulServiceWindows < Chef::Provider
       include Poise
       include Chef::Mixin::ShellOut
-      provides(:consul_service, os: %w{windows})
+      provides(:consul_service, os: %w(windows))
       include ConsulCookbook::Helpers
 
       def action_enable
         notifying_block do
-          directories = %W{#{new_resource.data_dir}
+          directories = %W(#{new_resource.data_dir}
                            #{new_resource.config_dir}
                            #{::File.dirname(new_resource.nssm_params['AppStdout'])}
-                           #{::File.dirname(new_resource.nssm_params['AppStderr'])}}.uniq.compact
+                           #{::File.dirname(new_resource.nssm_params['AppStderr'])}).uniq.compact
           directories.delete_if { |i| i.eql? '.' }.each do |dirname|
             directory dirname do
               recursive true
@@ -54,10 +54,9 @@ module ConsulCookbook
             end
             # Check if the service is running, but don't bother if we're already
             # changing some nssm parameters
-            unless nssm_service_status?(%w{SERVICE_RUNNING}) && mismatch_params.empty?
-              powershell_script 'Trigger consul restart' do
-                code 'restart-service consul'
-              end
+            powershell_script 'Trigger consul restart' do
+              code 'restart-service consul'
+              not_if { nssm_service_status?(%w(SERVICE_RUNNING)) && mismatch_params.empty? }
             end
           end
         end
@@ -87,7 +86,7 @@ module ConsulCookbook
           powershell_script 'Stop consul' do
             action :run
             code 'stop-service consul'
-            only_if { nssm_service_installed? && nssm_service_status?(%w{SERVICE_RUNNING SERVICE_PAUSED}) }
+            only_if { nssm_service_installed? && nssm_service_status?(%w(SERVICE_RUNNING SERVICE_PAUSED)) }
           end
 
           nssm 'consul' do

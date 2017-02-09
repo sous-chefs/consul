@@ -29,7 +29,7 @@ module ConsulCookbook
 
       # @!attribute type
       # @return [String]
-      attribute(:type, equal_to: %w{check service checks services})
+      attribute(:type, equal_to: %w(check service checks services))
 
       # @!attribute parameters
       # @return [Hash]
@@ -45,7 +45,7 @@ module ConsulCookbook
         notifying_block do
           directory ::File.dirname(new_resource.path) do
             recursive true
-            unless node.platform?('windows')
+            unless platform?('windows')
               owner new_resource.user
               group new_resource.group
               mode '0755'
@@ -57,7 +57,7 @@ module ConsulCookbook
 
           file new_resource.path do
             content new_resource.to_json
-            unless node.platform?('windows')
+            unless platform?('windows')
               owner new_resource.user
               group new_resource.group
               mode '0640'

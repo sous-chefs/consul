@@ -19,7 +19,7 @@ describe user('consul') do
 end
 
 describe command("su - consul -c 'echo successfully logged in'") do
-  its(:stdout)      { should_not match /successfully logged in/ }
+  its(:stdout)      { should_not include 'successfully logged in' }
   its(:exit_status) { should_not eq 0 }
 end
 
@@ -36,8 +36,8 @@ end
 
 describe command("#{consul_executable} members -detailed") do
   its(:exit_status) { should eq 0 }
-  its(:stdout) { should match %r{\balive\b} }
-  its(:stdout) { should match %r{\brole=node\b} }
+  its(:stdout) { should include 'alive' }
+  its(:stdout) { should include 'role=node' }
 end
 
 describe file('/usr/local/bin/consul') do

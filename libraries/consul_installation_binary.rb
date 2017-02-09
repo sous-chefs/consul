@@ -32,7 +32,7 @@ module ConsulCookbook
       # @return [Hash]
       # @api private
       def self.default_inversion_options(node, resource)
-        extract_path = node.windows? ? node.config_prefix_path : '/opt/consul'
+        extract_path = node.platform_family?('windows') ? node.config_prefix_path : '/opt/consul'
         super.merge(extract_to: extract_path,
                     version: resource.version,
                     archive_url: 'https://releases.hashicorp.com/consul/%{version}/%{basename}',
@@ -47,7 +47,7 @@ module ConsulCookbook
             recursive true
           end
 
-          url = options[:archive_url] % {version: options[:version], basename: options[:archive_basename]}
+          url = options[:archive_url] % { version: options[:version], basename: options[:archive_basename] }
           poise_archive url do
             destination join_path(options[:extract_to], new_resource.version)
             source_properties checksum: options[:archive_checksum]

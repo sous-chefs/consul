@@ -24,10 +24,10 @@ end
 
 describe command("#{consul_command} members -detailed") do
   its(:exit_status) { should eq 0 }
-  its(:stdout) { should match %r{\balive\b} }
-  its(:stdout) { should match %r{\brole=consul\b} }
-  its(:stdout) { should match %r{\bbootstrap=1\b} }
-  its(:stdout) { should match %r{\bdc=fortmeade\b} }
+  its(:stdout) { should include 'alive' }
+  its(:stdout) { should include 'role=consul' }
+  its(:stdout) { should include 'bootstrap=1' }
+  its(:stdout) { should include 'dc=fortmeade' }
 end
 
 describe file(config_file) do

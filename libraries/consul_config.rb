@@ -176,8 +176,8 @@ module ConsulCookbook
           watches
         )
 
-        for_keeps << %i{bootstrap bootstrap_expect} if server
-        for_keeps << %i{ca_file cert_file key_file} if tls?
+        for_keeps << %i(bootstrap bootstrap_expect) if server
+        for_keeps << %i(ca_file cert_file key_file) if tls?
         for_keeps = for_keeps.flatten
 
         config = to_hash.keep_if do |k, _|
@@ -195,7 +195,7 @@ module ConsulCookbook
           [::File.dirname(new_resource.path), new_resource.config_dir].each do |dir|
             directory dir do
               recursive true
-              unless node.platform?('windows')
+              unless platform?('windows')
                 owner new_resource.owner
                 group new_resource.group
                 mode '0755'
@@ -205,7 +205,7 @@ module ConsulCookbook
           end
 
           file new_resource.path do
-            unless node.platform?('windows')
+            unless platform?('windows')
               owner new_resource.owner
               group new_resource.group
               mode '0640'
