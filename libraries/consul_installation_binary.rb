@@ -101,6 +101,8 @@ module ConsulCookbook
           when '0.7.0' then '74111674527c5be0db7a98600df8290395abdd94e2cd86bda7418d748413396d'
           when '0.7.1' then '9b3a199779a0d9b92266fae2abd7ed91c18ba437eba46e76114cd1940b3b7741'
           when '0.7.2' then '4403357fbfddbcdd0742946cab7856638cb0f15898c75d79d155753621d60b0c'
+          when '0.7.3' then '08dd9af590a6c6ecd629e532083bd898b42c6425d08aa9f62b8f090a6dd65826'
+          when '0.7.4' then 'a66cd4efdff376e7fd5c22d2710d7ef6734562c46df80a05e3144222965d9a97'
           end
         when 'darwin-i386'
           case resource.version
@@ -112,6 +114,8 @@ module ConsulCookbook
           when '0.7.0' then '16ab91969c9b268ccae532070221b6c4fecaad298e4662a46cdfe9847c80dd3f'
           when '0.7.1' then '668b0a5c577fc717de710391fa509a820c5640d73ab3b232023fc351e6084c36'
           when '0.7.2' then '23e6e8dd14c2be02fd095a865edd1725f5ccdbce1109ad5f70832866012d1d7f'
+          when '0.7.3' then 'cf369542e30c5aa22967459b25fec284284d292ff25e801bdcd1a5f37f1a5143'
+          when '0.7.4' then '7638e80c9db050ef8d63bad3baa338985da1a1bd4657f3b2fc4222d105c673a3'
           end
         when 'solaris-amd64'
           case resource.version
@@ -121,6 +125,8 @@ module ConsulCookbook
           when '0.7.0' then '0f1db173a95861bc84940b4dcdb2debfbfbc18f2b50e651d0e23dfda331018ea'
           when '0.7.1' then '9c77c5c904dce4832b9e7dede2cdc5f42f5fb360885583bc414fee868aed5cb9'
           when '0.7.2' then 'f1ccaf9d9dd62544323e130cee7221df2a6d4b577e9e4a120db357e59782f12d'
+          when '0.7.3' then '49b13f83f8099537e72adc1bb34b6cb70b3699aa10245db4b8ef1f48c6e0b007'
+          when '0.7.4' then '0300ffa4d1007b00bca37112cf934d3e281afdc300ce336735bbf3a33ebcfc19'
           end
         when 'windows-amd64'
           case resource.version
@@ -132,6 +138,8 @@ module ConsulCookbook
           when '0.7.0' then 'ac5973a58dd9c6f52c784a7106a29adcf7c94015036538155b6c0ee7efc3a330'
           when '0.7.1' then '71a4e073cbab336c0becb5c17a0173fdae56480558564138353dc0b89e989d82'
           when '0.7.2' then '7a5ec31018328a3764f22327c940765c9cd99e57c6759fc43fbfed8318d5e379'
+          when '0.7.3' then 'ec80a931603bf585704e338e6cb497af9aa58ebdae5e3442a3f78f7027d80b66'
+          when '0.7.4' then 'c2e071ebae166d4cfdf894966b2966026cf9175d394001704f68bcbccaa8e446'
           end
         when 'windows-i386'
           case resource.version
@@ -146,6 +154,8 @@ module ConsulCookbook
           when '0.7.0' then 'd0ddfe7d1de9879f02b0d110e45bb74cd5028a2910bcac8b2629d0659367cd96'
           when '0.7.1' then 'ad7b76ac8660c7417bbdccbe1905942fa2fcc4c53a093d7b2d64497bdf4fc315'
           when '0.7.2' then 'c041dc43995df3505d9146e3a2f532bfc491c49fb644bd1e2ceead7d7dc3011c'
+          when '0.7.3' then '87a7169bd5298e179a3bbd2f30b3447c09023dc771c97d083779090655bf0a5f'
+          when '0.7.4' then 'ede957f736758a40fb8e3e33eb423a71226db46085fe1507d880a0ce393e9658'
           end
         when 'linux-amd64'
           case resource.version
@@ -160,6 +170,8 @@ module ConsulCookbook
           when '0.7.0' then 'b350591af10d7d23514ebaa0565638539900cdb3aaa048f077217c4c46653dd8'
           when '0.7.1' then '5dbfc555352bded8a39c7a8bf28b5d7cf47dec493bc0496e21603c84dfe41b4b'
           when '0.7.2' then 'aa97f4e5a552d986b2a36d48fdc3a4a909463e7de5f726f3c5a89b8a1be74a58'
+          when '0.7.3' then '901a3796b645c3ce3853d5160080217a10ad8d9bd8356d0b73fcd6bc078b7f82'
+          when '0.7.4' then '23a61773bee9b29198cc1f8fe2e62c320f82f95006ff70840c15c1e58eead73b'
           end
         when 'linux-i386'
           case resource.version
@@ -174,6 +186,8 @@ module ConsulCookbook
           when '0.7.0' then 'babf618b1f10455b4ab65b91bdf5d5a7be5bfbb874ce41e8051caca884c43378'
           when '0.7.1' then '7a391a9adc251a5889405eab5512668b77e6ac0f7d818852928735fa82e8abad'
           when '0.7.2' then '43b22bcd04e74445c3ea6c143b3acbfe5546d6792c28d123ef5832cd8f96162f'
+          when '0.7.3' then 'b15e96a1b5833b08d785d67b8f2465a9a0185e34149855943717dd818b347750'
+          when '0.7.4' then '7fe40af0825b2c6ab6c7e4e3e7d68471cccbd54f9a1513ad622b832cfda5fa07'
           end
         when 'linux-arm'
           case resource.version
@@ -185,39 +199,8 @@ module ConsulCookbook
           when '0.7.0' then '7c9ee149d66d14cc8aa81b8d86e7df5a27876216578ab841ab3921e7f4a0ce4b'
           when '0.7.1' then 'e7b6846fb338c31e238f9b70cc42bd35f7de804cc31d2d91fe23cbe5de948aae'
           when '0.7.2' then 'e18934a3a38b980bc0cfaa8d74379a6bfe58cf1ecf4b164e28ff37dd6c7198b0'
-          end
-        when 'freebsd-amd64'
-          case resource.version
-          when '0.6.0' then 'd7be5c95b971f48ccbd2c53c342dced9a3d0a5bc58f57b4f2e75672d96929923'
-          when '0.6.1' then '04688dfabedf6ded7f3d548110c7d9ffc8d6d3a091062593e421702bc42b465d'
-          when '0.6.2' then '1ccf96cb58c6fa927ee21c24d9be368ebe91559ed32626a89a715a3781659e3f'
-          when '0.6.3' then '8bdf2da41e6118af18af9aba0a127d4abb3453a20a9064e1bd1206f5c11ac2c8'
-          when '0.6.4' then 'fe0b04a2111c6274e79cc86a91b48cb63879f0badd4d6dc848cb7105a572c7fd'
-          when '0.7.0' then '54c864ce0deeeb01d10752a787c3bc3154d6fb020859fcc8b089ac3548756702'
-          when '0.7.1' then '841e0c3406b967bef2e763d57d2827169e63156f972a1cc7894deb6d98a998d3'
-          when '0.7.2' then '2989fc85d8784ad658d42064d0b97a86efc34a8cff4c18c9a68604e43b44e665'
-          end
-        when 'freebsd-i386'
-          case resource.version
-          when '0.6.0' then 'c5eb9f5c211612148e1e1cd101670fd08fd1abf9b2e541ac2936ab9637626249'
-          when '0.6.1' then '87d8c56c0c02e2fcde5192614dff9c491af93f7186fd55caae3fbe2c4d6ca80c'
-          when '0.6.2' then 'fc87f2ddd2090031e79136954d9e3f85db480d5ed9eba6ae627bf460e4c95e6e'
-          when '0.6.3' then '4a1aa8f570852eb238b7406172c097f5b32f41a3f01186111e576faa7506248c'
-          when '0.6.4' then 'c2d0f7d5f785a83eeb962209a35ebb577b41c7f8cb1f78bf68a42e8f8be77d22'
-          when '0.7.0' then 'fe7f80ce8fcdd517f4228b66a4836119ad6e22c2a5285cf4de02c0ccf8c2eefd'
-          when '0.7.1' then 'ec4abcc0d16b480a59a7efec7533fdb0925d96b1f9d1034eac4e1648f7c5b749'
-          when '0.7.2' then 'b4cae7c51716dbff399e52881422218ccbca3aa02f6db5b87da41eccb9dd8f8f'
-          end
-        when 'freebsd-arm'
-          case resource.version
-          when '0.6.0' then '92f29ad00f8f44d3be43b3b038a904c332757eb2a6848a7d6754583c2791e18b'
-          when '0.6.1' then '7b907fbd4377671de1be2dc0c19f955e1b37cd862c1af8251e9bf6d668b0d3a8'
-          when '0.6.2' then '30d8d09dd88cdd8d5256cea445fd0fed787d73cc6585e2eef7212161f29c8053'
-          when '0.6.3' then '5452d29f1cf0720c4ae0e0ec1cc5e44b0068a0340a6b61ab5ec245fa0f3447ad'
-          when '0.6.4' then 'edf3862e3fef6a48ede1d2671fe6b8da8891ca57bd5381b8a19d8d1b68e4d5da'
-          when '0.7.0' then '1b16624f3581a7bef5328d17ff4ab9188ffdd07543cab3fb72b3cd7a7d469724'
-          when '0.7.1' then '4e32d717f8699b7f3b2ce6bd5b5d04ef63cfce5509ad185b996e9cf35518f7fe'
-          when '0.7.2' then 'f86fa7f17a37a8e8047cd7b7bb10c8ee42d3a201c0fa527650331e9ad4e92203'
+          when '0.7.3' then 'a2d2d2cf194e3768aae7c3cdf140a056bf2534f4c83fb7a66cfbd4090c98773e'
+          when '0.7.4' then 'bfd9cbef9c7c9f2128704940323d1727d8edbbd595c8d82aba923e04f04b266d'
           end
         end
       end

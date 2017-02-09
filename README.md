@@ -206,6 +206,11 @@ consul_execute 'uptime' do
   options(service: 'api')
 end
 ```
+### Warning on git based installs
+Consul states that Go 1.7 is a requirement. The default go installation uses
+1.5, so you may need to override a `['go']['version']` attribute to allow the
+git installation to work reliably.
+
 
 All of the [options available on the command-line][12] can be passed
 into the resource. This could potentially be a *very dangerous*
