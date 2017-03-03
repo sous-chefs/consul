@@ -60,7 +60,7 @@ module ConsulCookbook
             unless platform?('windows')
               owner new_resource.user
               group new_resource.group
-              mode '0640'
+              mode '0644'
             end
           end
         end
