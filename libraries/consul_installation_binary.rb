@@ -47,7 +47,7 @@ module ConsulCookbook
             recursive true
           end
 
-          url = options[:archive_url] % { version: options[:version], basename: options[:archive_basename] }
+          url = format(options[:archive_url], version: options[:version], basename: options[:archive_basename])
           poise_archive url do
             destination join_path(options[:extract_to], new_resource.version)
             source_properties checksum: options[:archive_checksum]
