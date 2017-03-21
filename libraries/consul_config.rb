@@ -32,9 +32,12 @@ module ConsulCookbook
       attribute(:options, option_collector: true)
 
       # @see: http://www.consul.io/docs/agent/options.html
+      attribute(:acl_agent_token, kind_of: String)
+      attribute(:acl_agent_master_token, kind_of: String)
       attribute(:acl_datacenter, kind_of: String)
       attribute(:acl_default_policy, kind_of: String)
       attribute(:acl_down_policy, kind_of: String)
+      attribute(:acl_enforce_version_8, equal_to: [true, false], default: false)
       attribute(:acl_master_token, kind_of: String)
       attribute(:acl_replication_token, kind_of: String)
       attribute(:acl_token, kind_of: String)
@@ -109,9 +112,12 @@ module ConsulCookbook
       # Consul service's configuration format.
       def to_json
         for_keeps = %i(
+          acl_agent_token
+          acl_agent_master_token
           acl_datacenter
           acl_default_policy
           acl_down_policy
+          acl_enforce_version_8
           acl_master_token
           acl_replication_token
           acl_token
