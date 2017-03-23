@@ -17,6 +17,10 @@ module ConsulCookbook
       provides(:consul_service, os: %w(windows))
       include ConsulCookbook::Helpers
 
+      def application_path
+        { 'Application' => new_resource.program }
+      end
+
       def action_enable
         notifying_block do
           directories = %W(#{new_resource.data_dir}
@@ -30,6 +34,8 @@ module ConsulCookbook
           end
 
           nssm 'consul' do
+            extend ConsulCookbook::Helpers
+
             program new_resource.program
             args command(new_resource.config_file, new_resource.config_dir)
             if respond_to? :parameters
@@ -42,7 +48,7 @@ module ConsulCookbook
           end
 
           if nssm_service_installed?
-            mismatch_params = check_nssm_params
+            mismatch_params = check_nssm_params(application_path)
             unless mismatch_params.empty?
               mismatch_params.each do |k, v|
                 action = v.eql?('') ? "reset consul #{k}" : "set consul #{k} #{v}"
@@ -88,6 +94,8 @@ module ConsulCookbook
         notifying_block do
           # nssm resource doesn't stop the service before it removes it
           powershell_script 'Stop consul' do
+            extend ConsulCookbook::Helpers
+
             action :run
             code 'stop-service consul'
             only_if { nssm_service_installed? && nssm_service_status?(%w(SERVICE_RUNNING SERVICE_PAUSED)) }
