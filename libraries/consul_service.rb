@@ -55,6 +55,7 @@ module ConsulCookbook
         {
           'GOMAXPROCS' => [node['cpu']['total'], 2].max.to_s,
           'PATH' => '/usr/local/bin:/usr/bin:/bin',
+          'SHELL' => node['consul']['service_shell'],
         }
       end
     end
