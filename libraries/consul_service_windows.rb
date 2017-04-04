@@ -30,10 +30,14 @@ module ConsulCookbook
           end
 
           nssm 'consul' do
-            action :install
             program new_resource.program
-            params new_resource.nssm_params.select { |_k, v| v != '' }
             args command(new_resource.config_file, new_resource.config_dir)
+            if respond_to? :parameters
+              parameters new_resource.nssm_params.select { |_k, v| v != '' }
+            else
+              params new_resource.nssm_params.select { |_k, v| v != '' }
+            end
+            action :install
             not_if { nssm_service_installed? }
           end
 
