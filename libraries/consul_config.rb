@@ -76,6 +76,7 @@ module ConsulCookbook
       attribute(:performance, kind_of: [Hash, Mash])
       attribute(:ports, kind_of: [Hash, Mash])
       attribute(:protocol, kind_of: String)
+      attribute(:raft_protocol, kind_of: Integer)
       attribute(:reap, equal_to: [true, false])
       attribute(:reconnect_timeout, kind_of: String)
       attribute(:reconnect_timeout_wan, kind_of: String)
@@ -153,6 +154,7 @@ module ConsulCookbook
           ports
           protocol
           reap
+          raft_protocol
           reconnect_timeout
           reconnect_timeout_wan
           recursor
