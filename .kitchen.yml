@@ -37,13 +37,10 @@ suites:
           acl_default_policy: deny
     excludes:
       - windows-2012r2
+
   - name: client
     named_run_list: client
-    attributes:
-      consul:
-        config:
-          server: false
-          bootstrap_expect: 1
+
   - name: git
     attributes:
       go:
