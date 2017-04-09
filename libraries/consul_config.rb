@@ -190,8 +190,9 @@ module ConsulCookbook
         for_keeps << %i(ca_file cert_file key_file) if tls?
         for_keeps = for_keeps.flatten
 
-        config = to_hash.keep_if do |k, _|
-          for_keeps.include?(k.to_sym)
+        # Filter out undefined attributes and keep only those listed above
+        config = to_hash.keep_if do |k, v|
+          !v.nil? && for_keeps.include?(k.to_sym)
         end.merge(options)
         JSON.pretty_generate(Hash[config.sort_by { |k, _| k.to_s }], quirks_mode: true)
       end
