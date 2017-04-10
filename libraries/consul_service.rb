@@ -51,12 +51,16 @@ module ConsulCookbook
         "#{program} agent -config-file=#{config_file} -config-dir=#{config_dir}"
       end
 
+      def shell_environment
+        shell = node['consul']['service_shell']
+        shell.nil? ? {} : { 'SHELL' => shell }
+      end
+
       def default_environment
         {
           'GOMAXPROCS' => [node['cpu']['total'], 2].max.to_s,
-          'PATH' => '/usr/local/bin:/usr/bin:/bin',
-          'SHELL' => node['consul']['service_shell'],
-        }
+          'PATH' => '/usr/local/bin:/usr/bin:/bin'
+        }.merge(shell_environment)
       end
     end
   end
