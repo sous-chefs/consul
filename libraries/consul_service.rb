@@ -59,7 +59,7 @@ module ConsulCookbook
       def default_environment
         {
           'GOMAXPROCS' => [node['cpu']['total'], 2].max.to_s,
-          'PATH' => '/usr/local/bin:/usr/bin:/bin'
+          'PATH' => '/usr/local/bin:/usr/bin:/bin',
         }.merge(shell_environment)
       end
     end
