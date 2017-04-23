@@ -1,28 +1,14 @@
+# This gemfile provides additional gems for testing and releasing this cookbook
+# It is meant to be installed on top of ChefDK which provides the majority
+# of the necessary gems for testing this cookbook
+#
+# Run 'chef exec bundle install' to install these dependencies
+
 source 'https://rubygems.org'
+
+gem 'berkshelf'
 gem 'poise', '~> 2.2'
-gem 'poise-service', '~> 1.0'
 gem 'poise-boiler'
-gem 'chef-sugar'
-
-group :lint do
-  gem 'cookstyle', '~> 1.0'
-  gem 'rubocop'
-  gem 'foodcritic'
-end
-
-group :unit, :integration do
-  gem 'berkshelf'
-  gem 'chefspec'
-  gem 'rubyzip'
-  gem 'serverspec'
-  gem 'rb-readline'
-end
-
-group :development do
-  gem 'awesome_print'
-  gem 'stove'
-end
-
-group :doc do
-  gem 'yard'
-end
+gem 'poise-service', '~> 1.0'
+gem 'rb-readline'
+gem 'stove'
