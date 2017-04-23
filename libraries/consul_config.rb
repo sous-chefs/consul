@@ -90,7 +90,7 @@ module ConsulCookbook
       attribute(:rejoin_after_leave, equal_to: [true, false], default: true)
       attribute(:serf_lan_bind, kind_of: String)
       attribute(:serf_wan_bind, kind_of: String)
-      attribute(:server, equal_to: [true, false], default: true)
+      attribute(:server, equal_to: [true, false])
       attribute(:server_name, kind_of: String)
       attribute(:session_ttl_min, kind_of: String)
       attribute(:skip_leave_on_interrupt, equal_to: [true, false], default: false)
@@ -192,8 +192,9 @@ module ConsulCookbook
         for_keeps << %i(ca_file cert_file key_file) if tls?
         for_keeps = for_keeps.flatten
 
-        config = to_hash.keep_if do |k, _|
-          for_keeps.include?(k.to_sym)
+        # Filter out undefined attributes and keep only those listed above
+        config = to_hash.keep_if do |k, v|
+          !v.nil? && for_keeps.include?(k.to_sym)
         end.merge(options)
         JSON.pretty_generate(Hash[config.sort_by { |k, _| k.to_s }], quirks_mode: true)
       end
