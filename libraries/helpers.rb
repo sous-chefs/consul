@@ -112,10 +112,11 @@ module ConsulCookbook
     end
 
     # Returns a hash of mismatched params
-    def check_nssm_params
+    def check_nssm_params(extra = {})
+      params = node['consul']['service']['nssm_params'].merge extra
       # nssm can only get certain values
-      params = node['consul']['service']['nssm_params'].select { |k, _v| nssm_params.include? k.to_s }
-      params.each.each_with_object({}) do |(k, v), mismatch|
+      to_check = params.select { |k, _v| nssm_params.include? k.to_s }
+      to_check.each.each_with_object({}) do |(k, v), mismatch|
         # shell_out! returns values with null bytes, need to delete them before we evaluate
         unless shell_out!(%("#{nssm_exe}" get consul #{k}), returns: [0]).stdout.delete("\0").strip.eql? v.to_s
           mismatch[k] = v
