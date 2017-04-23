@@ -11,7 +11,7 @@ group :lint do
 end
 
 group :unit, :integration do
-  gem 'chef-dk', '~> 1.0'
+  gem 'berkshelf'
   gem 'chefspec'
   gem 'rubyzip'
   gem 'serverspec'
