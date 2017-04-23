@@ -25,3 +25,5 @@ depends 'poise-service', '~> 1.4'
 
 source_url 'https://github.com/johnbellone/consul-cookbook' if respond_to?(:source_url)
 issues_url 'https://github.com/johnbellone/consul-cookbook/issues' if respond_to?(:issues_url)
+
+chef_version '>= 12.1' if respond_to?(:chef_version)
