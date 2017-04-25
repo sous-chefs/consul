@@ -43,7 +43,7 @@ matrix:
   include:
     - script:
       - bundle install
-      - bundle exec rake
+      - chef exec delivery local all
       env: UNIT_AND_LINT=1
 
 notifications:
