@@ -104,6 +104,7 @@ module ConsulCookbook
           when '0.7.3' then '08dd9af590a6c6ecd629e532083bd898b42c6425d08aa9f62b8f090a6dd65826'
           when '0.7.4' then 'a66cd4efdff376e7fd5c22d2710d7ef6734562c46df80a05e3144222965d9a97'
           when '0.7.5' then '60c1685bfbefe55d0ac67f37d4bc88752a204609221d0cc4425452f1ffc2e42b'
+          when '0.8.1' then 'd4d4e865e760df499a3ea884fa73ff5fc11a42ce23108c5ce0eb0eb80dafcb75'
           end
         when 'darwin-i386'
           case resource.version
@@ -118,6 +119,7 @@ module ConsulCookbook
           when '0.7.3' then 'cf369542e30c5aa22967459b25fec284284d292ff25e801bdcd1a5f37f1a5143'
           when '0.7.4' then '7638e80c9db050ef8d63bad3baa338985da1a1bd4657f3b2fc4222d105c673a3'
           when '0.7.5' then '9ff8798a94bab99fb2387afae5bc0fc2844a304675abbceb9315292019a8f582'
+          when '0.8.1' then '7e07930dd7085db838feabc8cdf0a9e6668eddc1b7db6496192a966a9548e447'
           end
         when 'solaris-amd64'
           case resource.version
@@ -130,6 +132,7 @@ module ConsulCookbook
           when '0.7.3' then '49b13f83f8099537e72adc1bb34b6cb70b3699aa10245db4b8ef1f48c6e0b007'
           when '0.7.4' then '0300ffa4d1007b00bca37112cf934d3e281afdc300ce336735bbf3a33ebcfc19'
           when '0.7.5' then 'aa3705a958d0403e2ddacaa75c1d3ede5f290b0ef3a60e6e24976f2d8f32d840'
+          when '0.8.1' then '67862913dae4dd968e7219aec2122d6e7a20dd42537e137c648d0a53f17c4c9e'
           end
         when 'windows-amd64'
           case resource.version
@@ -144,6 +147,7 @@ module ConsulCookbook
           when '0.7.3' then 'ec80a931603bf585704e338e6cb497af9aa58ebdae5e3442a3f78f7027d80b66'
           when '0.7.4' then 'c2e071ebae166d4cfdf894966b2966026cf9175d394001704f68bcbccaa8e446'
           when '0.7.5' then '6cc64b1bb949f926d403e0436d02bf740844cf268076cf6d3d345361c1aa5293'
+          when '0.8.1' then 'ea5475b9421dc93383480c622936203eb1b457ff6c96a11e10d65f1aaa061bff'
           end
         when 'windows-i386'
           case resource.version
@@ -161,6 +165,7 @@ module ConsulCookbook
           when '0.7.3' then '87a7169bd5298e179a3bbd2f30b3447c09023dc771c97d083779090655bf0a5f'
           when '0.7.4' then 'ede957f736758a40fb8e3e33eb423a71226db46085fe1507d880a0ce393e9658'
           when '0.7.5' then '7ea88aa53026cb14bab6a68d5b64c43515ea39552594ae399978fc13bcd74707'
+          when '0.8.1' then '175b63438846fbf800394d00cba1f966c16e967c3ebbf99cf8f3df8fa14ca84f'
           end
         when 'linux-amd64'
           case resource.version
@@ -178,6 +183,7 @@ module ConsulCookbook
           when '0.7.3' then '901a3796b645c3ce3853d5160080217a10ad8d9bd8356d0b73fcd6bc078b7f82'
           when '0.7.4' then '23a61773bee9b29198cc1f8fe2e62c320f82f95006ff70840c15c1e58eead73b'
           when '0.7.5' then '40ce7175535551882ecdff21fdd276cef6eaab96be8a8260e0599fadb6f1f5b8'
+          when '0.8.1' then '74cdd7ad458aa63192222ad2bd14178fc3596d4fd64d12a80520d4e6f93eaf34'
           end
         when 'linux-i386'
           case resource.version
@@ -195,6 +201,7 @@ module ConsulCookbook
           when '0.7.3' then 'b15e96a1b5833b08d785d67b8f2465a9a0185e34149855943717dd818b347750'
           when '0.7.4' then '7fe40af0825b2c6ab6c7e4e3e7d68471cccbd54f9a1513ad622b832cfda5fa07'
           when '0.7.5' then '8abf0189776ecc5c8746e12021b6cfe6d96e0b4689ce4a4948b7e3faa07f3025'
+          when '0.8.1' then '76b4a6a39a3299ceb9228bc5e37a6b8a968dc2635a9d72030a047ccff0388886'
           end
         when 'linux-arm'
           case resource.version
@@ -209,6 +216,7 @@ module ConsulCookbook
           when '0.7.3' then 'a2d2d2cf194e3768aae7c3cdf140a056bf2534f4c83fb7a66cfbd4090c98773e'
           when '0.7.4' then 'bfd9cbef9c7c9f2128704940323d1727d8edbbd595c8d82aba923e04f04b266d'
           when '0.7.5' then 'df4bc38eff4305632d29c5650fbb7e7ff97b8ef12a964fd8ee5f691849c51711'
+          when '0.8.1' then '552aa077ffbe6a52bf38d8feca5803a813a7a3986e4cb6efda61dad4480642c1'
           end
         end
       end
