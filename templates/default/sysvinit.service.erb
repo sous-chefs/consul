@@ -39,7 +39,7 @@ _start() {
 }
 
 _stop() {
-  start-stop-daemon --stop --quiet --pidfile $pidfile --user $user --signal "<%= @stop_signal %>"
+  start-stop-daemon --stop --quiet --pidfile $pidfile --user $user --retry="<%= @stop_signal %>"/30/KILL/5
 }
 
 _status() {
