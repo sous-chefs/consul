@@ -27,6 +27,9 @@ module ConsulCookbook
       # @!attribute config_dir
       # @return [String]
       attribute(:config_dir, kind_of: String, default: lazy { node['consul']['service']['config_dir'] })
+      # @!attribute config_dir_mode
+      # @return [String]
+      attribute(:config_dir_mode, kind_of: String, default: '0755')
       # @!attribute options
       # @return [Hash]
       attribute(:options, option_collector: true)
@@ -211,7 +214,7 @@ module ConsulCookbook
               unless platform?('windows')
                 owner new_resource.owner
                 group new_resource.group
-                mode '0755'
+                mode new_resource.config_dir_mode
               end
               not_if { dir == '/etc' }
             end
