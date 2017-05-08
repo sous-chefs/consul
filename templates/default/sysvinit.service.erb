@@ -32,10 +32,27 @@ export PATH="${PATH:+$PATH:}/usr/sbin:/sbin"
 _start() {
   touch $logfile
   chown $user $logfile
+  echo "Starting consul"
   start-stop-daemon --start --quiet --background \
       --pidfile $pidfile<% unless @pid_file_external %> --make-pidfile<% end %> \
       --chuid $user --chdir "<%= @directory %>" \
       --startas /bin/bash -- -c "exec $exec <%= @daemon_options %> >> $logfile 2>&1"
+
+  echo -n "Waiting for consul daemon to be listening..."
+  for i in `seq 1 30`; do
+    if ! start-stop-daemon --quiet --stop --test --pidfile $pidfile --user $user; then
+      echo " FAIL: consul process died"
+      return 2
+    fi
+    if "$exec" info >/dev/null; then
+      echo " OK"
+      return 0
+    fi
+    echo -n .
+    sleep 1
+  done
+  echo " FAIL: consul process is alive, but is not listening."
+  return 2
 }
 
 _stop() {
