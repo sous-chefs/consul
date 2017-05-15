@@ -22,7 +22,6 @@ default['consul']['config']['client_addr'] = '0.0.0.0'
 default['consul']['config']['ports'] = {
   'dns'      => 8600,
   'http'     => 8500,
-  'rpc'      => 8400,
   'serf_lan' => 8301,
   'serf_wan' => 8302,
   'server'   => 8300,
@@ -32,7 +31,7 @@ default['consul']['diplomat_version'] = nil
 
 default['consul']['service']['config_dir'] = join_path config_prefix_path, 'conf.d'
 
-default['consul']['version'] = '0.7.5'
+default['consul']['version'] = '0.8.3'
 
 # Windows only
 default['consul']['service']['nssm_params'] = {
