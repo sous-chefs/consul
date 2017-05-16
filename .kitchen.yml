@@ -13,11 +13,11 @@ platforms:
   - name: ubuntu-16.04
   - name: ubuntu-14.04
   - name: ubuntu-12.04
-  - name: centos-7.2
-  - name: centos-6.7
+  - name: centos-7.3
+  - name: centos-6.8
   - name: centos-5.11
-  - name: debian-8.2
-  - name: debian-7.9
+  - name: debian-8.7
+  - name: debian-7.11
   - name: windows-2012r2
 
 suites:
