@@ -30,13 +30,13 @@ describe service('consul') do
   it { should be_running }
 end
 
-[8300, 8400, 8500, 8600].each do |p|
+[8300, 8500, 8600].each do |p|
   describe port(p) do
     it { should be_listening }
   end
 end
 
-describe command("#{consul_executable} members -detailed") do
+describe command("#{consul_executable} members -detailed -token=doublesecret") do
   its(:exit_status) { should eq 0 }
   its(:stdout) { should include 'alive' }
   its(:stdout) { should include 'role=consul' }
