@@ -89,6 +89,10 @@ platforms:
       intermediate_instructions:
         - RUN /usr/bin/apt-get update
         - RUN /usr/bin/apt-get install lsb-release net-tools -y
+    attributes:
+      poise-service:
+        consul:
+          provider: sysvinit
 
 suites:
   - name: default
