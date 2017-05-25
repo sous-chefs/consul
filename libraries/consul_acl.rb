@@ -39,6 +39,26 @@ module ConsulCookbook
       # @return [String]
       attribute(:rules, kind_of: String, default: '')
 
+      # @!attribute client_cert
+      # @return [String]
+      attribute(:client_cert, kind_of: String, default: nil)
+
+      # @!attribute client_key
+      # @return [String]
+      attribute(:client_key, kind_of: String, default: nil)
+
+      # @!attribute ca_file
+      # @return [String]
+      attribute(:ca_file, kind_of: String, default: nil)
+
+      # @!attribute ca_path
+      # @return [String]
+      attribute(:ca_path, kind_of: String, default: nil)
+
+      # @!attribute cert_store
+      # @return [String]
+      attribute(:cert_store, kind_of: String, default: nil)
+
       def to_acl
         { 'ID' => id, 'Type' => type, 'Name' => acl_name, 'Rules' => rules }
       end
@@ -79,7 +99,18 @@ module ConsulCookbook
         Diplomat.configure do |config|
           config.url = new_resource.url
           config.acl_token = new_resource.auth_token
-          config.options = { request: { timeout: 10 } }
+          ssl_options = {}
+          ssl_options[:client_cert] = new_resource.client_cert unless new_resource.client_cert.nil?
+          ssl_options[:client_key] = new_resource.client_key unless new_resource.client_key.nil?
+          ssl_options[:ca_file] = new_resource.ca_file unless new_resource.ca_file.nil?
+          ssl_options[:ca_path] = new_resource.ca_path unless new_resource.ca_path.nil?
+          ssl_options[:cert_store] = new_resource.cert_store unless new_resource.cert_store.nil?
+
+          if ssl_options.empty?
+            config.options = { request: { timeout: 10 } }
+          else
+            config.options = { ssl: ssl_options, request: { timeout: 10 } }
+          end
         end
       end
 
