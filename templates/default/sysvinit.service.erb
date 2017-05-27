@@ -37,8 +37,6 @@ _start() {
         --pidfile $pidfile<% unless @pid_file_external %> --make-pidfile<% end %> \
         --chuid $user --chdir "<%= @directory %>" \
         --startas /bin/bash -- -c "exec $exec <%= @daemon_options %> >> $logfile 2>&1"
-
-    _wait_for_listening
 }
 
 _stop() {
@@ -68,10 +66,10 @@ _start() {
         --pidfile=$pidfile \
         --user=$user \
         " { $exec <%= @daemon_options %> >> $logfile 2>&1 & } ; echo \$! >| $pidfile "
-     RETVAL=$?
-     echo
-     [ $RETVAL -eq 0 ] && touch $lockfile
-     return $RETVAL
+    RETVAL=$?
+    echo
+    [ $RETVAL -eq 0 ] && touch $lockfile
+    return $RETVAL
 }
 
 _stop() {
@@ -107,25 +105,6 @@ _restart() {
 
 _status_q() {
     _status >/dev/null 2>&1
-}
-
-_wait_for_listening() {
-    echo -n "Waiting for consul daemon to be listening..."
-    for i in `seq 1 30`; do
-        sleep 1
-        # if ! start-stop-daemon --quiet --stop --test --pidfile $pidfile --user $user; then
-        if ! _status_q; then
-            echo " FAIL: consul process died"
-            return 2
-        fi
-        if "$exec" info >/dev/null; then
-            echo " OK"
-            return 0
-        fi
-        echo -n .
-    done
-    echo " FAIL: consul process is alive, but is not listening."
-    return 2
 }
 
 case "$1" in
