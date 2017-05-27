@@ -8,6 +8,7 @@
 default['consul']['service_name'] = 'consul'
 default['consul']['service_user'] = 'consul'
 default['consul']['service_group'] = 'consul'
+default['consul']['service_user_home'] = ::File.join('/home', node['consul']['service_user'])
 default['consul']['create_service_user'] = true
 
 default['consul']['config']['owner'] = 'consul'
