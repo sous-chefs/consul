@@ -66,10 +66,10 @@ _start() {
         --pidfile=$pidfile \
         --user=$user \
         " { $exec <%= @daemon_options %> >> $logfile 2>&1 & } ; echo \$! >| $pidfile "
-     RETVAL=$?
-     echo
-     [ $RETVAL -eq 0 ] && touch $lockfile
-     return $RETVAL
+    RETVAL=$?
+    echo
+    [ $RETVAL -eq 0 ] && touch $lockfile
+    return $RETVAL
 }
 
 _stop() {
