@@ -63,7 +63,8 @@ module ConsulCookbook
       attribute(:data_dir, kind_of: String)
       attribute(:datacenter, kind_of: String)
       attribute(:disable_anonymous_signature, equal_to: [true, false], default: false)
-      attribute(:disable_remote_exec, equal_to: [true, false], default: false)
+      attribute(:disable_host_node_id, equal_to: [true, false], default: false)
+      attribute(:disable_remote_exec, equal_to: [true, false], default: true)
       attribute(:disable_update_check, equal_to: [true, false], default: false)
       attribute(:dns_config, kind_of: [Hash, Mash])
       attribute(:domain, kind_of: String)
@@ -141,6 +142,7 @@ module ConsulCookbook
           data_dir
           datacenter
           disable_anonymous_signature
+          disable_host_node_id
           disable_remote_exec
           disable_update_check
           dns_config

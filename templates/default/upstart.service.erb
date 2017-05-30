@@ -47,6 +47,3 @@ pre-stop script
   fi
 end script
 <%- end -%>
-post-start script
-  while ! <%= @options[:executable] %> info ; do sleep 1; done
-end script
