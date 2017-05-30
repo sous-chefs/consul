@@ -6,6 +6,8 @@ describe ConsulCookbook::Resource::ConsulWatch do
   let(:chefspec_options) { { platform: 'ubuntu', version: '14.04' } }
   before do
     default_attributes['consul'] = {
+      'service_user' => 'consul',
+      'service_group' => 'consul',
       'service' => {
         'config_dir' => '/etc/consul/conf.d',
       },
