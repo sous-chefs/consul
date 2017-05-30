@@ -76,7 +76,7 @@ module ConsulCookbook
       def action_enable
         notifying_block do
           directory new_resource.data_dir do
-            recursive true
+            recursive false
             owner new_resource.user
             group new_resource.group
             mode '0750'
