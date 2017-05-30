@@ -85,7 +85,10 @@ end
 ```
 
 ### Security
-The default recipe makes the Consul configuration writable by the consul service user to avoid breaking existing implementations. You can make this more secure by setting the `node['consul']['config']` attribute to `root`, or set the `owner` property of `consul_config` explicitly:
+The default recipe makes the Consul configuration writable by the consul service
+user to avoid breaking existing implementations. You can make this more secure
+by setting the `node['consul']['config']['owner']` attribute to `root`, or set
+the `owner` property of `consul_config` explicitly:
 
 ```ruby
 # attributes file

@@ -26,7 +26,6 @@ suites:
       consul:
         config: &default-config
           owner: root
-          group: consul
           ui: true
           bootstrap: true
           server: true
