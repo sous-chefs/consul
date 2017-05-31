@@ -60,7 +60,7 @@ module ConsulCookbook
       end
 
       def consul_program
-        options.fetch(:program, '/usr/local/bin/consul')
+        options.fetch(:program, node['consul']['service']['program'])
       end
     end
   end

@@ -45,7 +45,7 @@ module ConsulCookbook
       # @!attribute program
       # The location of the Consul executable.
       # @return [String]
-      attribute(:program, kind_of: String, default: '/usr/local/bin/consul')
+      attribute(:program, kind_of: String, default: lazy { node['consul']['service']['program'] })
 
       def command
         "#{program} agent -config-file=#{config_file} -config-dir=#{config_dir}"
