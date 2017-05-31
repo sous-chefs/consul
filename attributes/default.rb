@@ -42,3 +42,9 @@ default['consul']['service']['nssm_params'] = {
   'AppRotateOnline'  => 1,
   'AppRotateBytes'   => 20_000_000,
 }
+
+if node['os'].eql?('windows')
+  node.default['consul']['service']['program'] = join_path program_files, 'consul', node['consul']['version'], 'consul.exe'
+else
+  node.default['consul']['service']['program'] = '/usr/local/bin/consul'
+end

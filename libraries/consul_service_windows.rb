@@ -18,7 +18,7 @@ module ConsulCookbook
       include ConsulCookbook::Helpers
 
       def application_path
-        { 'Application' => new_resource.program }
+        { 'Application' => node['consul']['service']['program'] }
       end
 
       def action_enable
