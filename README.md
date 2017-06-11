@@ -1,8 +1,6 @@
-consul-cookbook
-===============
+# Consul Cookbook
 [![Build Status](https://travis-ci.org/johnbellone/consul-cookbook.svg?branch=master)](https://travis-ci.org/johnbellone/consul-cookbook)
 [![Code Quality](https://img.shields.io/codeclimate/github/johnbellone/consul-cookbook.svg)](https://codeclimate.com/github/johnbellone/consul-cookbook)
-[![Test Coverage](https://codeclimate.com/github/johnbellone/consul-cookbook/badges/coverage.svg)](https://codeclimate.com/github/johnbellone/consul-cookbook/coverage)
 [![Cookbook Version](https://img.shields.io/cookbook/v/consul.svg)](https://supermarket.chef.io/cookbooks/consul)
 [![License](https://img.shields.io/badge/license-Apache_2-blue.svg)](https://www.apache.org/licenses/LICENSE-2.0)
 
@@ -26,14 +24,13 @@ are passed directly into the Chef resource/providers which are exposed
 for more advanced configuration.
 
 Out of the box the following platforms are certified to work and are
-tested using our [Test Kitchen][8
-] configuration. Additional platforms
+tested using our [Test Kitchen][8] configuration. Additional platforms
 _may_ work, but your mileage may vary.
 
-- CentOS (RHEL) 5.11, 6.7, 7.2
-- Ubuntu 12.04, 14.04
-- Windows 2012r2
-- Debian 7.9, 8.2
+- RHEL/CentOS 5.11, 6.8, 7.3
+- Ubuntu 12.04, 14.04, 16.04
+- Debian 7.11, 8.7
+- Windows Server 2012 R2
 
 ### Client
 Out of the box the default recipe installs and configures the Consul
@@ -233,7 +230,7 @@ nature of this command it is _impossible_ for it to be idempotent.
 [10]: https://consul.io/docs/agent/services.html
 [11]: https://consul.io/docs/agent/checks.html
 [12]: https://consul.io/docs/commands/exec.html
-[13]:https://en.wikipedia.org/wiki/Quorum_(distributed_computing)
+[13]: https://en.wikipedia.org/wiki/Quorum_(distributed_computing)
 [14]: https://github.com/johnbellone/consul-cluster-cookbook
 [15]: https://www.consul.io/docs/internals/acl.html
 [16]: https://github.com/WeAreFarmGeek/diplomat
