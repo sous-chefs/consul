@@ -1,7 +1,93 @@
-# Change Log
+## Next Version (Unreleased)
+[Full Changelog](https://github.com/johnbellone/consul-cookbook/compare/v3.0.0...master)
 
-## [2.3.0](https://github.com/johnbellone/consul-cookbook/tree/v2.3.0)
+DEPRECATIONS / BREAKING CHANGES:
 
+IMPROVEMENTS:
+
+BUG FIXES:
+
+
+## [v3.0.0](https://github.com/johnbellone/consul-cookbook/tree/v3.0.0) (2017-06-11)
+[Full Changelog](https://github.com/johnbellone/consul-cookbook/compare/v2.3.0...v3.0.0)
+
+DEPRECATIONS / BREAKING CHANGES:
+
+- consul_config: Don't set the default value of `server` config option, so
+  Consul agent will be configured in _client_ mode by default. To get it running
+  in server mode, set `node['consul']['config']['server'] = true`. Details:
+  [GH-423](https://github.com/johnbellone/consul-cookbook/issues/423)
+  [GH-424](https://github.com/johnbellone/consul-cookbook/issues/424)
+- consul_installation: `:webui` provider was removed. To get UI enabled, set
+  `node['consul']['config']['ui'] = true` instead. Details:
+  [GH-396](https://github.com/johnbellone/consul-cookbook/pull/396)
+- recipes/default: Changes of `poise_service_user` resource don't trigger
+  Consul service restart anymore. The notification was removed. Details: [GH-443](https://github.com/johnbellone/consul-cookbook/issues/443)
+- recipe/default: Dependency on `firewall` cookbook was removed
+  [GH-395](https://github.com/johnbellone/consul-cookbook/pull/395)
+- FreeBSD platform support was removed
+  [GH-402](https://github.com/johnbellone/consul-cookbook/pull/402)
+
+IMPROVEMENTS:
+
+- Add support of Consul 0.7.2, 0.7.3, 0.7.4, 0.7.5, 0.8.1, 0.8.2, 0.8.3
+  [GH-394](https://github.com/johnbellone/consul-cookbook/pull/394)
+  [GH-408](https://github.com/johnbellone/consul-cookbook/pull/408)
+  [GH-421](https://github.com/johnbellone/consul-cookbook/pull/421)
+  [GH-431](https://github.com/johnbellone/consul-cookbook/pull/431)
+  [GH-434](https://github.com/johnbellone/consul-cookbook/pull/434)
+- consul_service/windows: Implement the compatibility with cookbook `nssm` >= 3.0
+  [GH-422](https://github.com/johnbellone/consul-cookbook/pull/422)
+- consul_service/sysvinit: Add retry for stopping the Consul service on Debian-like systems
+  [GH-427](https://github.com/johnbellone/consul-cookbook/pull/427)
+- consul_config: Remove default values of config options. Consul agent will
+  handle defaults by itself.
+  [GH-447](https://github.com/johnbellone/consul-cookbook/issues/447)
+  [GH-424](https://github.com/johnbellone/consul-cookbook/issues/424)
+- consul_config: Remove invalid Consul config options
+  [GH-400](https://github.com/johnbellone/consul-cookbook/pull/400)
+- consul_config: Add new Consul config options
+  [GH-416](https://github.com/johnbellone/consul-cookbook/issues/416)
+  [GH-419](https://github.com/johnbellone/consul-cookbook/issues/419)
+  [GH-420](https://github.com/johnbellone/consul-cookbook/issues/420)
+  [GH-425](https://github.com/johnbellone/consul-cookbook/issues/425)
+- consul_config: Properly sort Consul config options
+  [GH-411](https://github.com/johnbellone/consul-cookbook/issues/411)
+- consul_config: Update options list for _log_level_ parameter
+  [GH-440](https://github.com/johnbellone/consul-cookbook/pull/440)
+- consul_config: Added `config_dir_mode` option allowing to modify permissions
+  on the _conf.d_ directory
+  [GH-430](https://github.com/johnbellone/consul-cookbook/pull/430)
+- Use "service_user" and "service_group" attributes as defaults for resource params
+  [GH-362](https://github.com/johnbellone/consul-cookbook/pull/362)
+  [GH-445](https://github.com/johnbellone/consul-cookbook/pull/445)
+- consul_acl: Add support of SSL options
+  [GH-442](https://github.com/johnbellone/consul-cookbook/pull/442)
+
+BUG FIXES:
+
+- consul_installation: Fix "package" provider options
+  [GH-389](https://github.com/johnbellone/consul-cookbook/pull/389)
+  [GH-398](https://github.com/johnbellone/consul-cookbook/pull/398)
+- consul_installation/git: Fix Consul installation from sources
+  [GH-408](https://github.com/johnbellone/consul-cookbook/pull/408)
+- consul_service: Fix service hanging on the start with custom `client_addr`
+  [GH-355](https://github.com/johnbellone/consul-cookbook/issues/355)
+- consul_service: Fix compatibility with Chef Client 12.6.0
+  [GH-414](https://github.com/johnbellone/consul-cookbook/issues/414)
+  [GH-417](https://github.com/johnbellone/consul-cookbook/issues/417)
+- consul_definition: Fix permissions of generated config file
+  [GH-415](https://github.com/johnbellone/consul-cookbook/pull/415)
+- recipes/default: Fix consul service restart followed by reload
+  [GH-407](https://github.com/johnbellone/consul-cookbook/issues/407)
+  [GH-438](https://github.com/johnbellone/consul-cookbook/issues/438)
+  [GH-443](https://github.com/johnbellone/consul-cookbook/issues/443)
+- Fix Consul config creation when `node['consul']['service_user']` is _root_
+  [GH-372](https://github.com/johnbellone/consul-cookbook/issues/372)
+  [GH-405](https://github.com/johnbellone/consul-cookbook/issues/405)
+  [GH-446](https://github.com/johnbellone/consul-cookbook/issues/446)
+
+## [v2.3.0](https://github.com/johnbellone/consul-cookbook/tree/v2.3.0) (2017-01-11)
 [Full Changelog](https://github.com/johnbellone/consul-cookbook/compare/v2.2.0...v2.3.0)
 
 **Fixed bugs:**
@@ -681,7 +767,3 @@
 - Fix issues with source install [\#5](https://github.com/johnbellone/consul-cookbook/pull/5) ([jemiam](https://github.com/jemiam))
 - Add default recipe which installs and starts consul as a service [\#4](https://github.com/johnbellone/consul-cookbook/pull/4) ([kevinreedy](https://github.com/kevinreedy))
 - Update README.md [\#3](https://github.com/johnbellone/consul-cookbook/pull/3) ([ijin](https://github.com/ijin))
-
-
-
-\* *This Change Log was automatically generated by [github_changelog_generator](https://github.com/skywinder/Github-Changelog-Generator)*
