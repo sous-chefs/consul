@@ -40,4 +40,36 @@ describe ConsulCookbook::Resource::ConsulService do
       )
     end
   end
+
+  describe 'reload' do
+    before do
+      default_attributes['consul'] = {
+        'config' => config,
+      }
+    end
+
+    recipe do
+      consul_service 'consul' do
+        action :reload
+      end
+    end
+
+    context 'with no ACL token' do
+      let(:config) { {} }
+      it do
+        is_expected.to run_execute('Reload consul').with(
+          command: 'consul.exe reload'
+        )
+      end
+    end
+
+    context 'with an ACL token' do
+      let(:config) { { 'acl_master_token' => 'my_token' } }
+      it do
+        is_expected.to run_execute('Reload consul').with(
+          command: 'consul.exe reload -token=my_token'
+        )
+      end
+    end
+  end
 end
