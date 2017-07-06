@@ -39,6 +39,8 @@ suites:
 
   - name: client
     named_run_list: client
+    excludes:
+      - windows-2012r2
 
   - name: git
     attributes:
@@ -50,9 +52,15 @@ suites:
           provider: git
     excludes:
       - windows-2012r2
+
   - name: windows
     attributes:
       consul:
         config: *default-config
+    includes:
+      - windows-2012r2
+
+  - name: windows_client
+    named_run_list: client
     includes:
       - windows-2012r2
