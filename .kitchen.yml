@@ -19,6 +19,13 @@ platforms:
   - name: debian-8.7
   - name: debian-7.11
   - name: windows-2012r2
+    driver:
+      box: mwrock/Windows2012R2
+      gui: false
+  - name: windows-2016
+    driver:
+      box: mwrock/Windows2016
+      gui: false
 
 suites:
   - name: default
@@ -36,11 +43,13 @@ suites:
           acl_default_policy: deny
     excludes:
       - windows-2012r2
+      - windows-2016
 
   - name: client
     named_run_list: client
     excludes:
       - windows-2012r2
+      - windows-2016
 
   - name: git
     attributes:
@@ -52,6 +61,7 @@ suites:
           provider: git
     excludes:
       - windows-2012r2
+      - windows-2016
 
   - name: windows
     attributes:
@@ -59,8 +69,10 @@ suites:
         config: *default-config
     includes:
       - windows-2012r2
+      - windows-2016
 
   - name: windows_client
     named_run_list: client
     includes:
       - windows-2012r2
+      - windows-2016
