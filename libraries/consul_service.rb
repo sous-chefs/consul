@@ -95,7 +95,7 @@ module ConsulCookbook
         service.options(:sysvinit, template: 'consul:sysvinit.service.erb')
         service.options(:upstart, template: 'consul:upstart.service.erb', executable: new_resource.program)
 
-        if node.platform_family?('rhel') && node['platform_version'].to_i == 6
+        if node.platform_family?('rhel') && node['platform_version'].to_i == 6 # ~FC028
           service.provider(:sysvinit)
         end
       end

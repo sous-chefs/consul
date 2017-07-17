@@ -32,7 +32,7 @@ module ConsulCookbook
       # @return [Hash]
       # @api private
       def self.default_inversion_options(node, resource)
-        extract_path = node.platform_family?('windows') ? node.config_prefix_path : '/opt/consul'
+        extract_path = windows? ? node.config_prefix_path : '/opt/consul'
         super.merge(extract_to: extract_path,
                     version: resource.version,
                     archive_url: 'https://releases.hashicorp.com/consul/%{version}/%{basename}',
