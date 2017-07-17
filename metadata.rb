@@ -17,7 +17,7 @@ supports 'arch'
 supports 'windows'
 
 depends 'build-essential'
-depends 'nssm'
+depends 'nssm', '>= 3.0.1'
 depends 'golang'
 depends 'poise', '~> 2.2'
 depends 'poise-archive', '~> 1.3'

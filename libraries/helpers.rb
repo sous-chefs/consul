@@ -46,7 +46,7 @@ module ConsulCookbook
 
     def command(config_file, config_dir)
       if windows?
-        %(agent -config-file="""#{config_file}""" -config-dir="""#{config_dir}""")
+        %(agent -config-file="#{config_file}" -config-dir="#{config_dir}")
       else
         "/usr/local/bin/consul agent -config-file=#{config_file} -config-dir=#{config_dir}"
       end
