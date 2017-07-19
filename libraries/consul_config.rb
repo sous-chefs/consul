@@ -71,6 +71,8 @@ module ConsulCookbook
       attribute(:enable_debug, equal_to: [true, false])
       attribute(:enable_syslog, equal_to: [true, false])
       attribute(:encrypt, kind_of: String)
+      attribute(:encrypt_verify_incoming, equal_to: [true, false])
+      attribute(:encrypt_verify_outgoing, equal_to: [true, false])
       attribute(:http_api_response_headers, kind_of: [Hash, Mash])
       attribute(:key_file, kind_of: String)
       attribute(:leave_on_terminate, equal_to: [true, false])
@@ -110,6 +112,7 @@ module ConsulCookbook
       attribute(:ui_dir, kind_of: String)
       attribute(:unix_sockets, kind_of: [Hash, Mash])
       attribute(:verify_incoming, equal_to: [true, false])
+      attribute(:verify_incoming_https, equal_to: [true, false])
       attribute(:verify_outgoing, equal_to: [true, false])
       attribute(:verify_server_hostname, equal_to: [true, false])
       attribute(:watches, kind_of: [Hash, Mash])
@@ -150,6 +153,8 @@ module ConsulCookbook
           enable_debug
           enable_syslog
           encrypt
+          encrypt_verify_incoming
+          encrypt_verify_outgoing
           http_api_response_headers
           leave_on_terminate
           log_level
@@ -188,6 +193,7 @@ module ConsulCookbook
           ui_dir
           unix_sockets
           verify_incoming
+          verify_incoming_https
           verify_outgoing
           verify_server_hostname
           watches
