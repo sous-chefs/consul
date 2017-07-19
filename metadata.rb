@@ -1,7 +1,7 @@
 name 'consul'
 maintainer 'John Bellone'
 maintainer_email 'jbellone@bloomberg.net'
-license 'Apache 2.0'
+license 'Apache-2.0'
 description 'Application cookbook which installs and configures Consul.'
 long_description 'Application cookbook which installs and configures Consul.'
 version '3.0.0'
