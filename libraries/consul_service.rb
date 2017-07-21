@@ -46,6 +46,10 @@ module ConsulCookbook
       # The location of the Consul executable.
       # @return [String]
       attribute(:program, kind_of: String, default: '/usr/local/bin/consul')
+      # @!attribute acl_token
+      # The ACL token. Needed to reload the Consul service on Windows
+      # @return [String]
+      attribute(:acl_token, kind_of: String, default: lazy { node['consul']['config']['acl_master_token'] })
 
       def command
         "#{program} agent -config-file=#{config_file} -config-dir=#{config_dir}"
