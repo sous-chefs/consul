@@ -69,6 +69,7 @@ module ConsulCookbook
       attribute(:dns_config, kind_of: [Hash, Mash])
       attribute(:domain, kind_of: String)
       attribute(:enable_debug, equal_to: [true, false])
+      attribute(:enable_script_checks, equal_to: [true, false])
       attribute(:enable_syslog, equal_to: [true, false])
       attribute(:encrypt, kind_of: String)
       attribute(:encrypt_verify_incoming, equal_to: [true, false])
@@ -151,6 +152,7 @@ module ConsulCookbook
           dns_config
           domain
           enable_debug
+          enable_script_checks
           enable_syslog
           encrypt
           encrypt_verify_incoming
