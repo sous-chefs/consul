@@ -28,7 +28,7 @@ default['consul']['config']['ports'] = {
 default['consul']['diplomat_version'] = nil
 
 default['consul']['service']['config_dir'] = join_path config_prefix_path, 'conf.d'
-default['consul']['service']['flags'] = ""
+default['consul']['service']['flags'] = ''
 
 default['consul']['version'] = '0.8.3'
 
