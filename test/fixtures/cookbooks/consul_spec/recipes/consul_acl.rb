@@ -2,6 +2,8 @@ include_recipe 'consul::client_gem'
 
 package 'curl'
 
+execute 'sleep 5'
+
 consul_acl 'anonymous' do
   acl_name 'Anonymous Token'
   type 'client'
