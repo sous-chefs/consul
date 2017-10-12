@@ -54,3 +54,4 @@ vendor
 Berksfile.lock
 coverage/
 *.lock.json
+.github_changelog_generator
