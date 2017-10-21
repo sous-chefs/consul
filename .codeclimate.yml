@@ -1,9 +1,0 @@
----
-engines:
-  foodcritic:
-    enabled: true
-  rubocop:
-    enabled: true
-ratings:
-  paths:
-    - "**.rb"

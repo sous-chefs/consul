@@ -29,7 +29,7 @@ default['consul']['diplomat_version'] = nil
 
 default['consul']['service']['config_dir'] = join_path config_prefix_path, 'conf.d'
 
-default['consul']['version'] = '0.8.3'
+default['consul']['version'] = '0.9.3'
 
 # Windows only
 default['consul']['service']['nssm_params'] = {
