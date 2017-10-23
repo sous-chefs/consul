@@ -130,7 +130,7 @@ module ConsulCookbook
 
       # Transforms the resource into a JSON format which matches the
       # Consul service's configuration format.
-      def to_json(opts = nil)
+      def to_json(opts = {})
         for_keeps = %i(
           acl_agent_token
           acl_agent_master_token
