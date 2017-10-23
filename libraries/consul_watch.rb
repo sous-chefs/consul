@@ -35,8 +35,8 @@ module ConsulCookbook
       # @return [Hash]
       attribute(:parameters, option_collector: true, default: {})
 
-      def to_json
-        JSON.pretty_generate(watches: [{ type: type }.merge(parameters)])
+      def to_json(opts = nil)
+        JSON.pretty_generate({ watches: [{ type: type }.merge(parameters)] }, opts)
       end
 
       action(:create) do

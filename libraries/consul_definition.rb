@@ -35,10 +35,10 @@ module ConsulCookbook
       # @return [Hash]
       attribute(:parameters, option_collector: true, default: {})
 
-      def to_json
+      def to_json(opts = nil)
         final_parameters = parameters
         final_parameters = final_parameters.merge(name: name) if final_parameters[:name].nil?
-        JSON.pretty_generate(type => final_parameters)
+        JSON.pretty_generate({ type => final_parameters }, opts)
       end
 
       action(:create) do

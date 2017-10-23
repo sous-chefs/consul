@@ -130,7 +130,7 @@ module ConsulCookbook
 
       # Transforms the resource into a JSON format which matches the
       # Consul service's configuration format.
-      def to_json
+      def to_json(opts = {})
         for_keeps = %i(
           acl_agent_token
           acl_agent_master_token
@@ -229,7 +229,8 @@ module ConsulCookbook
         config = to_hash.keep_if do |k, v|
           !v.nil? && for_keeps.include?(k.to_sym)
         end.merge(options)
-        JSON.pretty_generate(Hash[config.sort_by { |k, _| k.to_s }], quirks_mode: true)
+        opts[:quirks_mode] = true
+        JSON.pretty_generate(Hash[config.sort_by { |k, _| k.to_s }], opts)
       end
 
       def tls?
