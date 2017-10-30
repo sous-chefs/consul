@@ -130,7 +130,7 @@ module ConsulCookbook
 
       # Transforms the resource into a JSON format which matches the
       # Consul service's configuration format.
-      def to_json
+      def params_to_json
         for_keeps = %i(
           acl_agent_token
           acl_agent_master_token
@@ -256,7 +256,7 @@ module ConsulCookbook
               group new_resource.group
               mode '0640'
             end
-            content new_resource.to_json
+            content new_resource.params_to_json
             sensitive true
           end
         end
