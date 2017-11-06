@@ -54,7 +54,7 @@ suites:
   - name: git
     attributes:
       go:
-        version: 1.7
+        version: 1.9
       consul:
         config: *default-config
         installation:

@@ -207,7 +207,7 @@ consul_execute 'uptime' do
 end
 ```
 ### Warning on git based installs
-Consul states that Go 1.7 is a requirement. The default go installation uses
+Consul v1.0 states that Go 1.9 is a requirement. The default go installation uses
 1.5, so you may need to override a `['go']['version']` attribute to allow the
 git installation to work reliably.
 
