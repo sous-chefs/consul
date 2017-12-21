@@ -50,9 +50,14 @@ module ConsulCookbook
       # The ACL token. Needed to reload the Consul service on Windows
       # @return [String]
       attribute(:acl_token, kind_of: String, default: lazy { node['consul']['config']['acl_master_token'] })
+      # @!attribute params
+      # The cmd line params of the Consul executable.
+      # @return [String]
+      attribute(:params, kind_of: String, default: lazy { node['consul']['params'] })
+
 
       def command
-        "#{program} agent -config-file=#{config_file} -config-dir=#{config_dir}"
+        "#{program} agent #{params} -config-file=#{config_file} -config-dir=#{config_dir}"
       end
 
       def shell_environment

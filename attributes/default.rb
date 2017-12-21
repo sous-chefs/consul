@@ -10,6 +10,8 @@ default['consul']['service_user'] = 'consul'
 default['consul']['service_group'] = 'consul'
 default['consul']['create_service_user'] = true
 
+default['consul']['params'] = ''
+
 default['consul']['config']['path'] = join_path config_prefix_path, 'consul.json'
 default['consul']['config']['data_dir'] = data_path
 default['consul']['config']['ca_file'] = join_path config_prefix_path, 'ssl', 'CA', 'ca.crt'
