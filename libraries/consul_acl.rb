@@ -90,7 +90,7 @@ module ConsulCookbook
       end
 
       def up_to_date?
-        retry_block(attempts: 2, catch: Diplomat::UnknownStatus, sleep: 0.5) do
+        retry_block(attempts: 3, sleep: 0.5) do
           old_acl = Diplomat::Acl.info(new_resource.to_acl['ID'], nil, :return)
           return false if old_acl.nil? || old_acl.empty?
           old_acl.first.select! { |k, _v| %w(ID Type Name Rules).include?(k) }
@@ -100,10 +100,10 @@ module ConsulCookbook
 
       def retry_block(opts = {}, &_block)
         opts = {
-          sleep: 0, # Seconds to sleep between attempts
+          attempts: 3, # Number of attempts
+          sleep:    0, # Seconds to sleep between attempts
         }.merge(opts)
 
-        opts[:catch] = [opts[:catch]].flatten
         attempts = 1
 
         begin
@@ -115,7 +115,7 @@ module ConsulCookbook
           raise if attempts > opts[:attempts]
 
           # Sleep before the next retry if the option was given
-          sleep 0.5
+          sleep opts[:sleep]
 
           retry
         end
