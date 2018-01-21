@@ -90,7 +90,7 @@ module ConsulCookbook
       end
 
       def up_to_date?
-        retry_block(attempts: 3, sleep: 0.5) do
+        retry_block(max_tries: 3, sleep: 0.5) do
           old_acl = Diplomat::Acl.info(new_resource.to_acl['ID'], nil, :return)
           return false if old_acl.nil? || old_acl.empty?
           old_acl.first.select! { |k, _v| %w(ID Type Name Rules).include?(k) }
@@ -100,19 +100,19 @@ module ConsulCookbook
 
       def retry_block(opts = {}, &_block)
         opts = {
-          attempts: 3, # Number of attempts
-          sleep:    0, # Seconds to sleep between attempts
+          max_tries: 3, # Number of tries
+          sleep:     0, # Seconds to sleep between tries
         }.merge(opts)
 
-        attempts = 1
+        try_count = 1
 
         begin
-          return yield attempts
+          return yield try_count
         rescue Diplomat::UnknownStatus
-          attempts += 1
+          try_count += 1
 
           # If we've maxed out our attempts, raise the exception to the calling code
-          raise if attempts > opts[:attempts]
+          raise if try_count > opts[:max_tries]
 
           # Sleep before the next retry if the option was given
           sleep opts[:sleep]
