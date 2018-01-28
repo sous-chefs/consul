@@ -16,6 +16,7 @@ supports 'solaris2'
 supports 'arch'
 supports 'windows'
 
+depends 'apt'
 depends 'build-essential'
 depends 'nssm', '>= 4.0.0'
 depends 'golang'
