@@ -12,3 +12,10 @@ gem 'poise-boiler'
 gem 'poise-service', '~> 1.0'
 gem 'rb-readline'
 gem 'stove'
+
+group :development do
+  gem 'diplomat'
+  gem 'github_changelog_generator', require: false
+  gem 'stove', require: false
+  gem 'webmock', '~> 3.1'
+end
