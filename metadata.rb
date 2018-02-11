@@ -23,6 +23,7 @@ depends 'golang'
 depends 'poise', '~> 2.2'
 depends 'poise-archive', '~> 1.3'
 depends 'poise-service', '~> 1.4'
+depends 'windows', '~> 3.1'
 
 source_url 'https://github.com/johnbellone/consul-cookbook' if respond_to?(:source_url)
 issues_url 'https://github.com/johnbellone/consul-cookbook/issues' if respond_to?(:issues_url)
