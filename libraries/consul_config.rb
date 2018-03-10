@@ -58,6 +58,7 @@ module ConsulCookbook
       attribute(:bootstrap, equal_to: [true, false])
       attribute(:bootstrap_expect, kind_of: Integer)
       attribute(:ca_file, kind_of: String)
+      attribute(:ca_path, kind_of: String)
       attribute(:cert_file, kind_of: String)
       attribute(:check_update_interval, kind_of: String)
       attribute(:client_addr, kind_of: String)
@@ -68,6 +69,7 @@ module ConsulCookbook
       attribute(:disable_keyring_file, equal_to: [true, false])
       attribute(:disable_remote_exec, equal_to: [true, false])
       attribute(:disable_update_check, equal_to: [true, false])
+      attribute(:discard_check_output, equal_to: [true, false])
       attribute(:dns_config, kind_of: [Hash, Mash])
       attribute(:domain, kind_of: String)
       attribute(:enable_acl_replication, equal_to: [true, false])
@@ -86,6 +88,7 @@ module ConsulCookbook
       attribute(:node_id, kind_of: String)
       attribute(:node_name, kind_of: String)
       attribute(:node_meta, kind_of: [Hash, Mash])
+      attribute(:non_voting_server, equal_to: [true, false])
       attribute(:performance, kind_of: [Hash, Mash])
       attribute(:ports, kind_of: [Hash, Mash])
       attribute(:protocol, kind_of: String)
@@ -102,6 +105,8 @@ module ConsulCookbook
       attribute(:retry_join_wan, kind_of: Array)
       attribute(:retry_max, kind_of: Integer)
       attribute(:rejoin_after_leave, equal_to: [true, false])
+      attribute(:segment, kind_of: String)
+      attribute(:segments, kind_of: [Hash, Mash])
       attribute(:serf_lan_bind, kind_of: String)
       attribute(:serf_wan_bind, kind_of: String)
       attribute(:server, equal_to: [true, false])
@@ -124,6 +129,7 @@ module ConsulCookbook
       attribute(:unix_sockets, kind_of: [Hash, Mash])
       attribute(:verify_incoming, equal_to: [true, false])
       attribute(:verify_incoming_https, equal_to: [true, false])
+      attribute(:verify_incoming_rpc, equal_to: [true, false])
       attribute(:verify_outgoing, equal_to: [true, false])
       attribute(:verify_server_hostname, equal_to: [true, false])
       attribute(:watches, kind_of: [Hash, Mash])
@@ -161,6 +167,7 @@ module ConsulCookbook
           disable_keyring_file
           disable_remote_exec
           disable_update_check
+          discard_check_output
           dns_config
           domain
           enable_acl_replication
@@ -177,6 +184,7 @@ module ConsulCookbook
           log_level
           node_id
           node_meta
+          non_voting_server
           node_name
           performance
           ports
@@ -194,6 +202,8 @@ module ConsulCookbook
           retry_join_ec2
           retry_join_wan
           retry_max
+          segment
+          segments
           serf_lan_bind
           serf_wan_bind
           server
@@ -216,13 +226,14 @@ module ConsulCookbook
           unix_sockets
           verify_incoming
           verify_incoming_https
+          verify_incoming_rpc
           verify_outgoing
           verify_server_hostname
           watches
         )
 
         for_keeps << %i(bootstrap bootstrap_expect) if server
-        for_keeps << %i(ca_file cert_file key_file) if tls?
+        for_keeps << %i(ca_file ca_path cert_file key_file) if tls?
         for_keeps = for_keeps.flatten
 
         # Filter out undefined attributes and keep only those listed above
@@ -233,7 +244,7 @@ module ConsulCookbook
       end
 
       def tls?
-        verify_incoming || verify_outgoing
+        verify_incoming || verify_incoming_https || verify_incoming_rpc || verify_outgoing
       end
 
       action(:create) do
