@@ -5,6 +5,8 @@ driver:
 provisioner:
   name: chef_zero
   policyfile: test/fixtures/policies/default.rb
+  product_name: chef
+  product_version: 13
 
 verifier:
   name: inspec
