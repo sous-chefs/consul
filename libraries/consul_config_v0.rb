@@ -10,10 +10,12 @@ require_relative 'helpers'
 module ConsulCookbook
   module Resource
     # @since 1.0
-    class ConsulConfig < Chef::Resource
+    class ConsulConfig_v0 < Chef::Resource
       include Poise(fused: true)
       include ConsulCookbook::Helpers
-      provides(:consul_config)
+      provides :consul_config do |node|
+        node['consul']['version'].to_i < 1
+      end
 
       # @!attribute path
       # @return [String]
