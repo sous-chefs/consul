@@ -8,7 +8,6 @@ addons:
     packages:
       - chefdk
 
-install: echo "skip bundle install"
 services: docker
 
 env:
