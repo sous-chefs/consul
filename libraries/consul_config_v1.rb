@@ -225,21 +225,20 @@ module ConsulCookbook
         for_keeps << %i(bootstrap bootstrap_expect) if server
         for_keeps << %i(ca_file cert_file key_file) if tls?
         for_keeps = for_keeps.flatten
-        
-        if retry_join_ec2
-          Chef::Log.warn('Parameter \'retry_join_ec2\' is deprecated')
-          foo = retry_join_ec2.collect { |k,v| "#{k}=#{v}"}
-          bar = 'provider=aws ' << foo.join(' ')
-          existing_retry_join = retry_join
-          if existing_retry_join.nil?
-            retry_join [bar]
-          else
-            retry_join (existing_retry_join << bar)
-          end
-        end
-        
+
         raw_config = to_hash
-        
+
+        if raw_config[:retry_join_ec2]
+          Chef::Log.warn("Parameter 'retry_join_ec2' is deprecated")
+          join_string = consul_cloud_join_string('aws', retry_join_ec2)
+          existing_retry_join = raw_config[:retry_join]
+          raw_config[:retry_join] = if existing_retry_join.nil?
+                                      [join_string]
+                                    else
+                                      existing_retry_join.clone << join_string
+                                    end
+        end
+
         # Filter out undefined attributes and keep only those listed above
         config = raw_config.keep_if do |k, v|
           !v.nil? && for_keeps.include?(k.to_sym)
@@ -250,9 +249,9 @@ module ConsulCookbook
       def tls?
         verify_incoming || verify_outgoing
       end
-      
+
       def consul_cloud_join_string(provider, values)
-        "provider=#{provider}"
+        "provider=#{provider} " << values.collect { |k, v| "#{k}=#{v}" }.join(' ')
       end
 
       action(:create) do
