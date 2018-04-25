@@ -1,10 +1,10 @@
 require 'spec_helper'
 require_relative '../../../libraries/consul_config_v1'
 
-describe ConsulCookbook::Resource::ConsulConfig_v1 do
+describe ConsulCookbook::Resource::ConsulConfigV1 do
   # We have to specify the class here, because `poise_boiler/spec_helper` can't
   # resolve providers with node attributes
-  step_into(ConsulCookbook::Resource::ConsulConfig_v1)
+  step_into(ConsulCookbook::Resource::ConsulConfigV1)
   let(:chefspec_options) { { platform: 'ubuntu', version: '14.04' } }
 
   before do
@@ -16,7 +16,7 @@ describe ConsulCookbook::Resource::ConsulConfig_v1 do
       'service' => {
         'config_dir' => '/etc/consul/conf.d',
       },
-      'version' => '1.0'
+      'version' => '1.0',
     }
   end
 
@@ -57,7 +57,7 @@ describe ConsulCookbook::Resource::ConsulConfig_v1 do
 
     it { is_expected.to delete_file('/etc/consul/default.json') }
   end
-  
+
   describe 'parameters' do
     let(:config) { JSON.parse(subject.find_resource('consul_config', '/etc/consul/default.json').params_to_json) }
 
@@ -70,7 +70,7 @@ describe ConsulCookbook::Resource::ConsulConfig_v1 do
               'tag_key'           => 'foo',
               'tag_value'         => 'bar',
               'access_key_id'     => 'KEY_ID',
-              'secret_access_key' => 'SECRETS',
+              'secret_access_key' => 'SECRETS'
             )
           end
         end
@@ -85,7 +85,7 @@ describe ConsulCookbook::Resource::ConsulConfig_v1 do
             'tag_key'           => 'foo',
             'tag_value'         => 'bar',
             'access_key_id'     => 'KEY_ID',
-            'secret_access_key' => 'SECRETS',
+            'secret_access_key' => 'SECRETS'
           )
         end
         it 'does not set the `retry_join_ec2` field' do
@@ -103,9 +103,9 @@ describe ConsulCookbook::Resource::ConsulConfig_v1 do
           consul_config '/etc/consul/default.json' do
             retry_join ['127.0.0.1']
             retry_join_ec2(
-              'region'            => 'ca-central-1',
-              'tag_key'           => 'foo',
-              'tag_value'         => 'bar',
+              'region'    => 'ca-central-1',
+              'tag_key'   => 'foo',
+              'tag_value' => 'bar'
             )
           end
         end
@@ -115,11 +115,13 @@ describe ConsulCookbook::Resource::ConsulConfig_v1 do
               Hash[item.split.map { |pair| pair.split('=') }]
             end
           ).to contain_exactly(
-          {'127.0.0.1' => nil},
-            {'provider'          => 'aws',
-            'region'            => 'ca-central-1',
-            'tag_key'           => 'foo',
-            'tag_value'         => 'bar',}
+            { '127.0.0.1' => nil },
+            { # rubocop:disable Style/BracesAroundHashParameters
+              'provider'  => 'aws',
+              'region'    => 'ca-central-1',
+              'tag_key'   => 'foo',
+              'tag_value' => 'bar',
+            }
           )
         end
       end

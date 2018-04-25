@@ -10,7 +10,7 @@ require_relative 'helpers'
 module ConsulCookbook
   module Resource
     # @since 1.0
-    class ConsulConfig_v1 < Chef::Resource
+    class ConsulConfigV1 < Chef::Resource
       include Poise(fused: true)
       include ConsulCookbook::Helpers
       provides :consul_config do |node|

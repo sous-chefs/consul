@@ -1,10 +1,10 @@
 require 'spec_helper'
 require_relative '../../../libraries/consul_config_v0'
 
-describe ConsulCookbook::Resource::ConsulConfig_v0 do
+describe ConsulCookbook::Resource::ConsulConfigV0 do
   # We have to specify the class here, because `poise_boiler/spec_helper` can't
   # resolve providers with node attributes
-  step_into(ConsulCookbook::Resource::ConsulConfig_v0)  
+  step_into(ConsulCookbook::Resource::ConsulConfigV0)
   let(:chefspec_options) { { platform: 'ubuntu', version: '14.04' } }
 
   before do
@@ -16,7 +16,7 @@ describe ConsulCookbook::Resource::ConsulConfig_v0 do
       'service' => {
         'config_dir' => '/etc/consul/conf.d',
       },
-      'version' => '0.9.3'
+      'version' => '0.9.3',
     }
   end
 
@@ -57,10 +57,10 @@ describe ConsulCookbook::Resource::ConsulConfig_v0 do
 
     it { is_expected.to delete_file('/etc/consul/default.json') }
   end
-  
+
   describe 'parameters' do
     let(:config) { JSON.parse(subject.find_resource('consul_config', '/etc/consul/default.json').params_to_json) }
-    
+
     describe 'retry_join_ec2' do
       recipe do
         consul_config '/etc/consul/default.json' do
@@ -69,18 +69,18 @@ describe ConsulCookbook::Resource::ConsulConfig_v0 do
             'tag_key'           => 'foo',
             'tag_value'         => 'bar',
             'access_key_id'     => 'KEY_ID',
-            'secret_access_key' => 'SECRETS',
+            'secret_access_key' => 'SECRETS'
           )
         end
       end
       it 'sets the `retry_join_ec2` field' do
         expect(config['retry_join_ec2']).to include(
-            'region'            => 'ca-central-1',
-            'tag_key'           => 'foo',
-            'tag_value'         => 'bar',
-            'access_key_id'     => 'KEY_ID',
-            'secret_access_key' => 'SECRETS',
-          )
+          'region'            => 'ca-central-1',
+          'tag_key'           => 'foo',
+          'tag_value'         => 'bar',
+          'access_key_id'     => 'KEY_ID',
+          'secret_access_key' => 'SECRETS'
+        )
       end
     end
   end
