@@ -100,6 +100,7 @@ module ConsulCookbook
       attribute(:retry_interval, kind_of: String)
       attribute(:retry_interval_wan, kind_of: String)
       attribute(:retry_join, kind_of: Array)
+      attribute(:retry_join_azure, kind_of: [Hash, Mash])
       attribute(:retry_join_ec2, kind_of: [Hash, Mash])
       attribute(:retry_join_wan, kind_of: Array)
       attribute(:retry_max, kind_of: Integer)
@@ -231,6 +232,16 @@ module ConsulCookbook
         if raw_config[:retry_join_ec2]
           Chef::Log.warn("Parameter 'retry_join_ec2' is deprecated")
           join_string = consul_cloud_join_string('aws', retry_join_ec2)
+          existing_retry_join = raw_config[:retry_join]
+          raw_config[:retry_join] = if existing_retry_join.nil?
+                                      [join_string]
+                                    else
+                                      existing_retry_join.clone << join_string
+                                    end
+        end
+        if raw_config[:retry_join_azure]
+          Chef::Log.warn("Parameter 'retry_join_azure' is deprecated")
+          join_string = consul_cloud_join_string('azure', retry_join_azure)
           existing_retry_join = raw_config[:retry_join]
           raw_config[:retry_join] = if existing_retry_join.nil?
                                       [join_string]

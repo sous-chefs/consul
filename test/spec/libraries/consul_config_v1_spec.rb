@@ -96,7 +96,44 @@ describe ConsulCookbook::Resource::ConsulConfigV1 do
           chef_run
         end
       end
+      describe 'retry_join_azure' do
+        recipe do
+          consul_config '/etc/consul/default.json' do
+            retry_join_azure(
+              'tag_name'          => 'foo',
+              'tag_value'         => 'bar',
+              'subscription_id' => 'SUBSCRIPTION_ID',
+              'tenant_id' => 'TENANT_ID',
+              'client_id' => 'CLIENT_ID',
+              'secret_access_key' => 'SECRETS'
+            )
+          end
+        end
+        it 'sets the `retry_join` field' do
+          expect(
+            config['retry_join'].collect do |item|
+              Hash[item.split.map { |pair| pair.split('=') }]
+            end
+          ).to contain_exactly(
+            'provider'          => 'azure',
+            'tag_name'          => 'foo',
+            'tag_value'         => 'bar',
+            'subscription_id' => 'SUBSCRIPTION_ID',
+            'tenant_id' => 'TENANT_ID',
+            'client_id' => 'CLIENT_ID',
+            'secret_access_key' => 'SECRETS'
+          )
+        end
+        it 'does not set the `retry_join_azure` field' do
+          expect(config['retry_join_azure']).to be_nil
+        end
+        it 'logs a warning' do
+          expect(Chef::Log).to receive(:warn).with('Parameter \'retry_join_azure\' is deprecated')
+          chef_run
+        end
+      end
     end
+
     context 'with another retry_join parameter' do
       describe 'retry_join_ec2' do
         recipe do
@@ -120,6 +157,31 @@ describe ConsulCookbook::Resource::ConsulConfigV1 do
               'provider'  => 'aws',
               'region'    => 'ca-central-1',
               'tag_key'   => 'foo',
+              'tag_value' => 'bar',
+            }
+          )
+        end
+      end
+      describe 'retry_join_azure' do
+        recipe do
+          consul_config '/etc/consul/default.json' do
+            retry_join ['127.0.0.1']
+            retry_join_azure(
+              'tag_name'  => 'foo',
+              'tag_value' => 'bar'
+            )
+          end
+        end
+        it 'sets the `retry_join` field' do
+          expect(
+            config['retry_join'].collect do |item|
+              Hash[item.split.map { |pair| pair.split('=') }]
+            end
+          ).to contain_exactly(
+            { '127.0.0.1' => nil },
+            { # rubocop:disable Style/BracesAroundHashParameters
+              'provider'  => 'azure',
+              'tag_name'  => 'foo',
               'tag_value' => 'bar',
             }
           )

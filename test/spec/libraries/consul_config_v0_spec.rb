@@ -83,5 +83,30 @@ describe ConsulCookbook::Resource::ConsulConfigV0 do
         )
       end
     end
+
+    describe 'retry_join_azure' do
+      recipe do
+        consul_config '/etc/consul/default.json' do
+          retry_join_azure(
+            'tag_name'          => 'foo',
+            'tag_value'         => 'bar',
+            'subscription_id'   => 'SUBSCRIPTION_ID',
+            'tenant_id'         => 'TENANT_ID',
+            'client_id'         => 'CLIENT_ID',
+            'secret_access_key' => 'SECRETS'
+          )
+        end
+      end
+      it 'sets the `retry_join_azure` field' do
+        expect(config['retry_join_azure']).to include(
+          'tag_name'          => 'foo',
+          'tag_value'         => 'bar',
+          'subscription_id'   => 'SUBSCRIPTION_ID',
+          'tenant_id'         => 'TENANT_ID',
+          'client_id'         => 'CLIENT_ID',
+          'secret_access_key' => 'SECRETS'
+        )
+      end
+    end
   end
 end
