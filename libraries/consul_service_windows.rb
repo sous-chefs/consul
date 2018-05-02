@@ -38,36 +38,8 @@ module ConsulCookbook
 
             program new_resource.program
             args command(new_resource.config_file, new_resource.config_dir)
-            if respond_to? :parameters
-              parameters new_resource.nssm_params.select { |_k, v| v != '' }
-            else
-              params new_resource.nssm_params.select { |_k, v| v != '' }
-            end
+            parameters new_resource.nssm_params.select { |_k, v| v != '' }
             action :install
-            not_if { nssm_service_installed? }
-          end
-
-          if nssm_service_installed?
-            mismatch_params = check_nssm_params(application_path)
-            unless mismatch_params.empty?
-              mismatch_params.each do |k, v|
-                action = v.eql?('') ? "reset consul #{k}" : "set consul #{k} #{v}"
-                batch "Set nssm parameter - #{k}" do
-                  code "#{nssm_exe} #{action}"
-                  notifies :run, 'powershell_script[Trigger consul restart]', :delayed
-                end
-              end
-              powershell_script 'Trigger consul restart' do
-                action :nothing
-                code 'restart-service consul'
-              end
-            end
-            # Check if the service is running, but don't bother if we're already
-            # changing some nssm parameters
-            powershell_script 'Trigger consul restart' do
-              code 'restart-service consul'
-              not_if { nssm_service_status?(%w(SERVICE_RUNNING)) && mismatch_params.empty? }
-            end
           end
         end
       end
@@ -92,17 +64,8 @@ module ConsulCookbook
 
       def action_disable
         notifying_block do
-          # nssm resource doesn't stop the service before it removes it
-          powershell_script 'Stop consul' do
-            extend ConsulCookbook::Helpers
-
-            action :run
-            code 'stop-service consul'
-            only_if { nssm_service_installed? && nssm_service_status?(%w(SERVICE_RUNNING SERVICE_PAUSED)) }
-          end
-
           nssm 'consul' do
-            action :remove
+            action %i(stop remove)
           end
 
           file new_resource.config_file do

@@ -1,7 +1,6 @@
 sudo: required
 dist: trusty
 
-# install the pre-release chef-dk.  Use chef-stable-trusty to install the stable release
 addons:
   apt:
     sources:
@@ -9,9 +8,7 @@ addons:
     packages:
       - chefdk
 
-# Don't `bundle install` which takes about 1.5 mins
 install: echo "skip bundle install"
-
 services: docker
 
 env:
@@ -45,6 +42,3 @@ matrix:
       - bundle install
       - chef exec delivery local all
       env: UNIT_AND_LINT=1
-
-notifications:
-  slack: bloomberg-rnd:BvYmxrV9xj902XWTRNrkLNkR

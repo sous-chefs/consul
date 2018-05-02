@@ -53,10 +53,12 @@ module ConsulCookbook
       attribute(:atlas_join, equal_to: [true, false])
       attribute(:atlas_token, kind_of: String)
       attribute(:atlas_endpoint, kind_of: String)
+      attribute(:autopilot, kind_of: [Hash, Mash])
       attribute(:bind_addr, kind_of: String)
       attribute(:bootstrap, equal_to: [true, false])
       attribute(:bootstrap_expect, kind_of: Integer)
       attribute(:ca_file, kind_of: String)
+      attribute(:ca_path, kind_of: String)
       attribute(:cert_file, kind_of: String)
       attribute(:check_update_interval, kind_of: String)
       attribute(:client_addr, kind_of: String)
@@ -64,10 +66,13 @@ module ConsulCookbook
       attribute(:datacenter, kind_of: String)
       attribute(:disable_anonymous_signature, equal_to: [true, false])
       attribute(:disable_host_node_id, equal_to: [true, false])
+      attribute(:disable_keyring_file, equal_to: [true, false])
       attribute(:disable_remote_exec, equal_to: [true, false])
       attribute(:disable_update_check, equal_to: [true, false])
+      attribute(:discard_check_output, equal_to: [true, false])
       attribute(:dns_config, kind_of: [Hash, Mash])
       attribute(:domain, kind_of: String)
+      attribute(:enable_acl_replication, equal_to: [true, false])
       attribute(:enable_debug, equal_to: [true, false])
       attribute(:enable_script_checks, equal_to: [true, false])
       attribute(:enable_syslog, equal_to: [true, false])
@@ -75,11 +80,15 @@ module ConsulCookbook
       attribute(:encrypt_verify_incoming, equal_to: [true, false])
       attribute(:encrypt_verify_outgoing, equal_to: [true, false])
       attribute(:http_api_response_headers, kind_of: [Hash, Mash])
+      attribute(:http_config, kind_of: [Hash, Mash])
       attribute(:key_file, kind_of: String)
       attribute(:leave_on_terminate, equal_to: [true, false])
+      attribute(:limits, kind_of: [Hash, Mash])
       attribute(:log_level, equal_to: %w(INFO DEBUG WARN ERR))
       attribute(:node_id, kind_of: String)
       attribute(:node_name, kind_of: String)
+      attribute(:node_meta, kind_of: [Hash, Mash])
+      attribute(:non_voting_server, equal_to: [true, false])
       attribute(:performance, kind_of: [Hash, Mash])
       attribute(:ports, kind_of: [Hash, Mash])
       attribute(:protocol, kind_of: String)
@@ -94,7 +103,10 @@ module ConsulCookbook
       attribute(:retry_join, kind_of: Array)
       attribute(:retry_join_ec2, kind_of: [Hash, Mash])
       attribute(:retry_join_wan, kind_of: Array)
+      attribute(:retry_max, kind_of: Integer)
       attribute(:rejoin_after_leave, equal_to: [true, false])
+      attribute(:segment, kind_of: String)
+      attribute(:segments, kind_of: [Hash, Mash])
       attribute(:serf_lan_bind, kind_of: String)
       attribute(:serf_wan_bind, kind_of: String)
       attribute(:server, equal_to: [true, false])
@@ -108,19 +120,23 @@ module ConsulCookbook
       attribute(:statsite_prefix, kind_of: String)
       attribute(:telemetry, kind_of: [Hash, Mash])
       attribute(:syslog_facility, kind_of: String)
+      attribute(:tls_cipher_suites, kind_of: Array)
+      attribute(:tls_min_version, equal_to: %w(tls10 tls11 tls12))
+      attribute(:tls_prefer_server_cipher_suites, equal_to: [true, false])
       attribute(:translate_wan_addrs, equal_to: [true, false])
       attribute(:ui, equal_to: [true, false])
       attribute(:ui_dir, kind_of: String)
       attribute(:unix_sockets, kind_of: [Hash, Mash])
       attribute(:verify_incoming, equal_to: [true, false])
       attribute(:verify_incoming_https, equal_to: [true, false])
+      attribute(:verify_incoming_rpc, equal_to: [true, false])
       attribute(:verify_outgoing, equal_to: [true, false])
       attribute(:verify_server_hostname, equal_to: [true, false])
       attribute(:watches, kind_of: [Hash, Mash])
 
       # Transforms the resource into a JSON format which matches the
       # Consul service's configuration format.
-      def to_json
+      def params_to_json
         for_keeps = %i(
           acl_agent_token
           acl_agent_master_token
@@ -140,6 +156,7 @@ module ConsulCookbook
           atlas_infrastructure
           atlas_join
           atlas_token
+          autopilot
           bind_addr
           check_update_interval
           client_addr
@@ -147,10 +164,13 @@ module ConsulCookbook
           datacenter
           disable_anonymous_signature
           disable_host_node_id
+          disable_keyring_file
           disable_remote_exec
           disable_update_check
+          discard_check_output
           dns_config
           domain
+          enable_acl_replication
           enable_debug
           enable_script_checks
           enable_syslog
@@ -158,10 +178,14 @@ module ConsulCookbook
           encrypt_verify_incoming
           encrypt_verify_outgoing
           http_api_response_headers
+          http_config
           leave_on_terminate
+          limits
           log_level
-          node_name
           node_id
+          node_meta
+          non_voting_server
+          node_name
           performance
           ports
           protocol
@@ -177,6 +201,9 @@ module ConsulCookbook
           retry_join
           retry_join_ec2
           retry_join_wan
+          retry_max
+          segment
+          segments
           serf_lan_bind
           serf_wan_bind
           server
@@ -190,19 +217,23 @@ module ConsulCookbook
           statsite_prefix
           syslog_facility
           telemetry
+          tls_cipher_suites
+          tls_min_version
+          tls_prefer_server_cipher_suites
           translate_wan_addrs
           ui
           ui_dir
           unix_sockets
           verify_incoming
           verify_incoming_https
+          verify_incoming_rpc
           verify_outgoing
           verify_server_hostname
           watches
         )
 
         for_keeps << %i(bootstrap bootstrap_expect) if server
-        for_keeps << %i(ca_file cert_file key_file) if tls?
+        for_keeps << %i(ca_file ca_path cert_file key_file) if tls?
         for_keeps = for_keeps.flatten
 
         # Filter out undefined attributes and keep only those listed above
@@ -213,7 +244,7 @@ module ConsulCookbook
       end
 
       def tls?
-        verify_incoming || verify_outgoing
+        verify_incoming || verify_incoming_https || verify_incoming_rpc || verify_outgoing
       end
 
       action(:create) do
@@ -236,7 +267,7 @@ module ConsulCookbook
               group new_resource.group
               mode '0640'
             end
-            content new_resource.to_json
+            content new_resource.params_to_json
             sensitive true
           end
         end
