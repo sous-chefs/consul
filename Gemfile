@@ -11,6 +11,7 @@ gem 'poise', '~> 2.2'
 gem 'poise-boiler'
 gem 'poise-service', '~> 1.0'
 gem 'rb-readline'
+gem 'stove'
 
 group :development do
   gem 'diplomat'
