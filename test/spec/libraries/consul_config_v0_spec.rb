@@ -1,6 +1,12 @@
 require 'spec_helper'
 require_relative '../../../libraries/consul_config_v0'
 
+shared_examples 'a string field' do |field_name, field_value|
+  it "sets `#{field_name}`" do
+    expect(config[field_name]).to eq field_value
+  end
+end
+
 describe ConsulCookbook::Resource::ConsulConfigV0 do
   # We have to specify the class here, because `poise_boiler/spec_helper` can't
   # resolve providers with node attributes
@@ -115,9 +121,7 @@ describe ConsulCookbook::Resource::ConsulConfigV0 do
           atlas_infrastructure 'infra'
         end
       end
-      it 'sets the `atlas_infrastructure` field' do
-        expect(config['atlas_infrastructure']).to eq 'infra'
-      end
+      it_should_behave_like 'a string field', 'atlas_infrastructure', 'infra'
     end
     describe 'atlas_token' do
       skip
