@@ -1,6 +1,16 @@
 require 'spec_helper'
 require_relative '../../../libraries/consul_config_v1'
 
+shared_examples 'a removed field' do |field_name|
+  it "does not set `#{field_name}`" do
+    expect(config[field_name]).to be_nil
+  end
+  it 'logs a warning' do
+    expect(Chef::Log).to receive(:warn).with("Parameter '#{field_name}' is deprecated")
+    chef_run
+  end
+end
+
 describe ConsulCookbook::Resource::ConsulConfigV1 do
   # We have to specify the class here, because `poise_boiler/spec_helper` can't
   # resolve providers with node attributes
@@ -189,7 +199,12 @@ describe ConsulCookbook::Resource::ConsulConfigV1 do
       end
 
       describe 'atlas_infrastructure' do
-        skip
+        recipe do
+          consul_config '/etc/consul/default.json' do
+            atlas_infrastructure 'infra'
+          end
+        end
+        it_should_behave_like 'a removed field', 'atlas_infrastructure'
       end
       describe 'atlas_token' do
         skip

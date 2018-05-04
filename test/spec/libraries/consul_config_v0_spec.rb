@@ -110,7 +110,14 @@ describe ConsulCookbook::Resource::ConsulConfigV0 do
     end
 
     describe 'atlas_infrastructure' do
-      skip
+      recipe do
+        consul_config '/etc/consul/default.json' do
+          atlas_infrastructure 'infra'
+        end
+      end
+      it 'sets the `atlas_infrastructure` field' do
+        expect(config['atlas_infrastructure']).to eq 'infra'
+      end
     end
     describe 'atlas_token' do
       skip

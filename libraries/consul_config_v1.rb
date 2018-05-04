@@ -150,7 +150,6 @@ module ConsulCookbook
           advertise_addr_wan
           atlas_acl_token
           atlas_endpoint
-          atlas_infrastructure
           atlas_join
           atlas_token
           autopilot
@@ -248,6 +247,9 @@ module ConsulCookbook
                                     else
                                       existing_retry_join.clone << join_string
                                     end
+        end
+        if raw_config[:atlas_infrastructure]
+          Chef::Log.warn("Parameter 'atlas_infrastructure' is deprecated")
         end
 
         # Filter out undefined attributes and keep only those listed above
