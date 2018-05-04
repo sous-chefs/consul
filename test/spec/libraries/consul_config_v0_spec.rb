@@ -108,5 +108,41 @@ describe ConsulCookbook::Resource::ConsulConfigV0 do
         )
       end
     end
+
+    describe 'atlas_infrastructure' do
+      skip
+    end
+    describe 'atlas_token' do
+      skip
+    end
+    describe 'atlas_acl_token' do
+      skip
+    end
+    describe 'atlas_join' do
+      skip
+    end
+    describe 'atlas_endpoint' do
+      skip
+    end
+
+    describe 'http_api_response_headers' do
+      skip
+    end
+
+    describe 'recursor' do
+      skip
+    end
+
+    describe 'statsd_addr' do
+      skip
+    end
+
+    describe 'statsite_addr' do
+      skip
+    end
+
+    describe 'statsite_prefix' do
+      skip
+    end
   end
 end
