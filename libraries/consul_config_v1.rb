@@ -148,10 +148,6 @@ module ConsulCookbook
           addresses
           advertise_addr
           advertise_addr_wan
-          atlas_acl_token
-          atlas_endpoint
-          atlas_join
-          atlas_token
           autopilot
           bind_addr
           check_update_interval
@@ -250,6 +246,18 @@ module ConsulCookbook
         end
         if raw_config[:atlas_infrastructure]
           Chef::Log.warn("Parameter 'atlas_infrastructure' is deprecated")
+        end
+        if raw_config[:atlas_token]
+          Chef::Log.warn("Parameter 'atlas_token' is deprecated")
+        end
+        if raw_config[:atlas_acl_token]
+          Chef::Log.warn("Parameter 'atlas_acl_token' is deprecated")
+        end
+        if raw_config[:atlas_join]
+          Chef::Log.warn("Parameter 'atlas_join' is deprecated")
+        end
+        if raw_config[:atlas_endpoint]
+          Chef::Log.warn("Parameter 'atlas_endpoint' is deprecated")
         end
 
         # Filter out undefined attributes and keep only those listed above

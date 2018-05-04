@@ -207,16 +207,36 @@ describe ConsulCookbook::Resource::ConsulConfigV1 do
         it_should_behave_like 'a removed field', 'atlas_infrastructure'
       end
       describe 'atlas_token' do
-        skip
+        recipe do
+          consul_config '/etc/consul/default.json' do
+            atlas_token 'token'
+          end
+        end
+        it_should_behave_like 'a removed field', 'atlas_token'
       end
       describe 'atlas_acl_token' do
-        skip
+        recipe do
+          consul_config '/etc/consul/default.json' do
+            atlas_acl_token 'acl_token'
+          end
+        end
+        it_should_behave_like 'a removed field', 'atlas_acl_token'
       end
       describe 'atlas_join' do
-        skip
+        recipe do
+          consul_config '/etc/consul/default.json' do
+            atlas_join true
+          end
+        end
+        it_should_behave_like 'a removed field', 'atlas_join'
       end
       describe 'atlas_endpoint' do
-        skip
+        recipe do
+          consul_config '/etc/consul/default.json' do
+            atlas_endpoint 'endpoint'
+          end
+        end
+        it_should_behave_like 'a removed field', 'atlas_endpoint'
       end
 
       describe 'http_api_response_headers' do

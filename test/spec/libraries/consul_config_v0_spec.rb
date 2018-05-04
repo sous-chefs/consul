@@ -1,7 +1,7 @@
 require 'spec_helper'
 require_relative '../../../libraries/consul_config_v0'
 
-shared_examples 'a string field' do |field_name, field_value|
+shared_examples 'a simple field' do |field_name, field_value|
   it "sets `#{field_name}`" do
     expect(config[field_name]).to eq field_value
   end
@@ -121,19 +121,39 @@ describe ConsulCookbook::Resource::ConsulConfigV0 do
           atlas_infrastructure 'infra'
         end
       end
-      it_should_behave_like 'a string field', 'atlas_infrastructure', 'infra'
+      it_should_behave_like 'a simple field', 'atlas_infrastructure', 'infra'
     end
     describe 'atlas_token' do
-      skip
+      recipe do
+        consul_config '/etc/consul/default.json' do
+          atlas_token 'token'
+        end
+      end
+      it_should_behave_like 'a simple field', 'atlas_token', 'token'
     end
     describe 'atlas_acl_token' do
-      skip
+      recipe do
+        consul_config '/etc/consul/default.json' do
+          atlas_acl_token 'acl_token'
+        end
+      end
+      it_should_behave_like 'a simple field', 'atlas_acl_token', 'acl_token'
     end
     describe 'atlas_join' do
-      skip
+      recipe do
+        consul_config '/etc/consul/default.json' do
+          atlas_join true
+        end
+      end
+      it_should_behave_like 'a simple field', 'atlas_join', true
     end
     describe 'atlas_endpoint' do
-      skip
+      recipe do
+        consul_config '/etc/consul/default.json' do
+          atlas_endpoint 'endpoint'
+        end
+      end
+      it_should_behave_like 'a simple field', 'atlas_endpoint', 'endpoint'
     end
 
     describe 'http_api_response_headers' do
