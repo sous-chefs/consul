@@ -181,15 +181,30 @@ describe ConsulCookbook::Resource::ConsulConfigV0 do
     end
 
     describe 'statsd_addr' do
-      skip
+      recipe do
+        consul_config '/etc/consul/default.json' do
+          statsd_addr '127.0.0.1:123'
+        end
+      end
+      it_should_behave_like 'a simple field', 'statsd_addr', '127.0.0.1:123'
     end
 
     describe 'statsite_addr' do
-      skip
+      recipe do
+        consul_config '/etc/consul/default.json' do
+          statsite_addr '127.0.0.1:123'
+        end
+      end
+      it_should_behave_like 'a simple field', 'statsite_addr', '127.0.0.1:123'
     end
 
     describe 'statsite_prefix' do
-      skip
+      recipe do
+        consul_config '/etc/consul/default.json' do
+          statsite_prefix 'prefix'
+        end
+      end
+      it_should_behave_like 'a simple field', 'statsite_prefix', 'prefix'
     end
   end
 end

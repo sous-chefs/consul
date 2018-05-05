@@ -285,15 +285,39 @@ describe ConsulCookbook::Resource::ConsulConfigV1 do
       end
 
       describe 'statsd_addr' do
-        skip
+        recipe do
+          consul_config '/etc/consul/default.json' do
+            statsd_addr '127.0.0.1:123'
+          end
+        end
+        it_should_behave_like 'a removed field', 'statsd_addr'
+        it 'sets the [`telemetry`][`statsd_address`] field' do
+          expect(config['telemetry']['statsd_address']).to eq '127.0.0.1:123'
+        end
       end
 
       describe 'statsite_addr' do
-        skip
+        recipe do
+          consul_config '/etc/consul/default.json' do
+            statsite_addr '127.0.0.1:123'
+          end
+        end
+        it_should_behave_like 'a removed field', 'statsite_addr'
+        it 'sets the [`telemetry`][`statsite_address`] field' do
+          expect(config['telemetry']['statsite_address']).to eq '127.0.0.1:123'
+        end
       end
 
       describe 'statsite_prefix' do
-        skip
+        recipe do
+          consul_config '/etc/consul/default.json' do
+            statsite_prefix 'prefix'
+          end
+        end
+        it_should_behave_like 'a removed field', 'statsite_prefix'
+        it 'sets the [`telemetry`][`statsite_prefix`] field' do
+          expect(config['telemetry']['statsite_prefix']).to eq 'prefix'
+        end
       end
     end
   end

@@ -197,9 +197,6 @@ module ConsulCookbook
           skip_leave_on_interrupt
           start_join
           start_join_wan
-          statsd_addr
-          statsite_addr
-          statsite_prefix
           syslog_facility
           telemetry
           tls_cipher_suites
@@ -261,6 +258,16 @@ module ConsulCookbook
                                    else
                                      existing_recursors.clone << raw_config[:recursor]
                                    end
+        end
+        {
+          statsd_addr:     :statsd_address,
+          statsite_addr:   :statsite_address,
+          statsite_prefix: :statsite_prefix,
+        }.each do |field, replacement|
+          next unless raw_config[field]
+          Chef::Log.warn("Parameter '#{field}' is deprecated")
+          raw_config[:telemetry] ||= {}
+          raw_config[:telemetry][replacement] = raw_config[field]
         end
 
         # Filter out undefined attributes and keep only those listed above
