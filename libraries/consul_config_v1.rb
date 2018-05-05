@@ -182,7 +182,6 @@ module ConsulCookbook
           raft_protocol
           reconnect_timeout
           reconnect_timeout_wan
-          recursor
           recursors
           rejoin_after_leave
           retry_interval
@@ -253,6 +252,15 @@ module ConsulCookbook
           raw_config[:http_config] = {
             'response_headers' => raw_config[:http_api_response_headers],
           }
+        end
+        if raw_config[:recursor]
+          Chef::Log.warn("Parameter 'recursor' is deprecated")
+          existing_recursors = raw_config[:recursors]
+          raw_config[:recursors] = if existing_recursors.nil?
+                                     [raw_config[:recursor]]
+                                   else
+                                     existing_recursors.clone << raw_config[:recursor]
+                                   end
         end
 
         # Filter out undefined attributes and keep only those listed above

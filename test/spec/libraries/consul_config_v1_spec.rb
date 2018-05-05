@@ -35,7 +35,6 @@ describe ConsulCookbook::Resource::ConsulConfigV1 do
       consul_config '/etc/consul/default.json' do
         owner 'root'
         options do
-          recursor 'foo'
           translate_wan_addrs true
         end
       end
@@ -51,7 +50,6 @@ describe ConsulCookbook::Resource::ConsulConfigV1 do
         .with(user: 'root', group: 'consul', mode: '0640')
         .with(content: <<-EOH.chomp.gsub(/^        /, ''))
         {
-          "recursor": "foo",
           "translate_wan_addrs": true
         }
         EOH
@@ -248,7 +246,7 @@ describe ConsulCookbook::Resource::ConsulConfigV1 do
           end
         end
         it_should_behave_like 'a removed field', 'http_api_response_headers'
-        it 'sets the `http_config` field' do
+        it 'sets the [`http_config`][`response_headers`] field' do
           expect(config['http_config']['response_headers']).to include(
             'Access-Control-Allow-Origin' => '*'
           )
@@ -256,7 +254,34 @@ describe ConsulCookbook::Resource::ConsulConfigV1 do
       end
 
       describe 'recursor' do
-        skip
+        context 'when no `recursors` are set' do
+          recipe do
+            consul_config '/etc/consul/default.json' do
+              recursor '127.0.0.1'
+            end
+          end
+          it_should_behave_like 'a removed field', 'recursor'
+          it 'sets the `recursors` field' do
+            expect(config['recursors']).to contain_exactly(
+              '127.0.0.1'
+            )
+          end
+        end
+        context 'when other `recursors` are set' do
+          recipe do
+            consul_config '/etc/consul/default.json' do
+              recursor  '127.0.0.1'
+              recursors ['168.192.1.1']
+            end
+          end
+          it_should_behave_like 'a removed field', 'recursor'
+          it 'sets the `recursors` field' do
+            expect(config['recursors']).to contain_exactly(
+              '127.0.0.1',
+              '168.192.1.1'
+            )
+          end
+        end
       end
 
       describe 'statsd_addr' do

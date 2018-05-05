@@ -172,7 +172,12 @@ describe ConsulCookbook::Resource::ConsulConfigV0 do
     end
 
     describe 'recursor' do
-      skip
+      recipe do
+        consul_config '/etc/consul/default.json' do
+          recursor '127.0.0.1'
+        end
+      end
+      it_should_behave_like 'a simple field', 'recursor', '127.0.0.1'
     end
 
     describe 'statsd_addr' do
