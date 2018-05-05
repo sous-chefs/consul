@@ -128,9 +128,9 @@ describe ConsulCookbook::Resource::ConsulConfigV1 do
             'provider'          => 'azure',
             'tag_name'          => 'foo',
             'tag_value'         => 'bar',
-            'subscription_id' => 'SUBSCRIPTION_ID',
-            'tenant_id' => 'TENANT_ID',
-            'client_id' => 'CLIENT_ID',
+            'subscription_id'   => 'SUBSCRIPTION_ID',
+            'tenant_id'         => 'TENANT_ID',
+            'client_id'         => 'CLIENT_ID',
             'secret_access_key' => 'SECRETS'
           )
         end
@@ -240,7 +240,19 @@ describe ConsulCookbook::Resource::ConsulConfigV1 do
       end
 
       describe 'http_api_response_headers' do
-        skip
+        recipe do
+          consul_config '/etc/consul/default.json' do
+            http_api_response_headers(
+              'Access-Control-Allow-Origin' => '*'
+            )
+          end
+        end
+        it_should_behave_like 'a removed field', 'http_api_response_headers'
+        it 'sets the `http_config` field' do
+          expect(config['http_config']['response_headers']).to include(
+            'Access-Control-Allow-Origin' => '*'
+          )
+        end
       end
 
       describe 'recursor' do

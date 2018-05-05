@@ -157,7 +157,18 @@ describe ConsulCookbook::Resource::ConsulConfigV0 do
     end
 
     describe 'http_api_response_headers' do
-      skip
+      recipe do
+        consul_config '/etc/consul/default.json' do
+          http_api_response_headers(
+            'Access-Control-Allow-Origin' => '*'
+          )
+        end
+      end
+      it 'sets the `http_api_response_headers` field' do
+        expect(config['http_api_response_headers']).to include(
+          'Access-Control-Allow-Origin' => '*'
+        )
+      end
     end
 
     describe 'recursor' do

@@ -168,7 +168,6 @@ module ConsulCookbook
           encrypt
           encrypt_verify_incoming
           encrypt_verify_outgoing
-          http_api_response_headers
           http_config
           leave_on_terminate
           limits
@@ -248,6 +247,12 @@ module ConsulCookbook
           if raw_config[field]
             Chef::Log.warn("Parameter '#{field}' is deprecated")
           end
+        end
+        if raw_config[:http_api_response_headers]
+          Chef::Log.warn("Parameter 'http_api_response_headers' is deprecated")
+          raw_config[:http_config] = {
+            'response_headers' => raw_config[:http_api_response_headers],
+          }
         end
 
         # Filter out undefined attributes and keep only those listed above
