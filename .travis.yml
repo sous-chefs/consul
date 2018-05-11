@@ -8,7 +8,6 @@ addons:
     packages:
       - chefdk=2.4.17-1
 
-install: echo "skip bundle install"
 services: docker
 
 env:
@@ -17,9 +16,7 @@ env:
     - INSTANCE=default-centos-6
     - INSTANCE=default-ubuntu-1604
     - INSTANCE=default-ubuntu-1404
-    - INSTANCE=default-ubuntu-1204
     - INSTANCE=default-debian-8
-    - INSTANCE=default-debian-7
 
 before_script:
   # https://github.com/zuazo/kitchen-in-travis-native/issues/1#issuecomment-142230889

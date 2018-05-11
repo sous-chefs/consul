@@ -7,7 +7,7 @@ describe 'consul::default' do
 
   let(:chef_run) do
     runner = ChefSpec::SoloRunner.new(platform) do |node|
-      node.normal['consul']['service_user']        = service_user
+      node.normal['consul']['service_user']        = service_user if service_user
       node.normal['consul']['create_service_user'] = create_service_user
     end
     runner.converge(described_recipe)

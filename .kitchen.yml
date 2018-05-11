@@ -5,6 +5,8 @@ driver:
 provisioner:
   name: chef_zero
   policyfile: test/fixtures/policies/default.rb
+  product_name: chef
+  product_version: 13
 
 verifier:
   name: inspec
@@ -12,12 +14,10 @@ verifier:
 platforms:
   - name: ubuntu-16.04
   - name: ubuntu-14.04
-  - name: ubuntu-12.04
   - name: centos-7.3
   - name: centos-6.8
-  - name: centos-5.11
+  - name: debian-9.3
   - name: debian-8.7
-  - name: debian-7.11
   - name: windows-2012r2
     driver:
       box: mwrock/Windows2012R2
@@ -54,7 +54,7 @@ suites:
   - name: git
     attributes:
       go:
-        version: 1.7
+        version: 1.9
       consul:
         config: *default-config
         installation:
