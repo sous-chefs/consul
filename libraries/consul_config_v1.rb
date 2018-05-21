@@ -262,7 +262,7 @@ module ConsulCookbook
         {
           statsd_addr:     :statsd_address,
           statsite_addr:   :statsite_address,
-          statsite_prefix: :statsite_prefix,
+          statsite_prefix: :metrics_prefix,
         }.each do |field, replacement|
           next unless raw_config[field]
           Chef::Log.warn("Parameter '#{field}' is deprecated")

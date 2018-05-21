@@ -315,8 +315,8 @@ describe ConsulCookbook::Resource::ConsulConfigV1 do
           end
         end
         it_should_behave_like 'a removed field', 'statsite_prefix'
-        it 'sets the [`telemetry`][`statsite_prefix`] field' do
-          expect(config['telemetry']['statsite_prefix']).to eq 'prefix'
+        it 'sets the [`telemetry`][`metrics_prefix`] field' do
+          expect(config['telemetry']['metrics_prefix']).to eq 'prefix'
         end
       end
     end
