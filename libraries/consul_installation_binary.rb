@@ -32,7 +32,7 @@ module ConsulCookbook
       # @return [Hash]
       # @api private
       def self.default_inversion_options(node, resource)
-        extract_path = node.platform_family?('windows') ? node.config_prefix_path : '/opt/consul'
+        extract_path = node.platform_family?('windows') ? node.config_prefix_path_consul : '/opt/consul'
         super.merge(extract_to: extract_path,
                     version: resource.version,
                     archive_url: 'https://releases.hashicorp.com/consul/%{version}/%{basename}',
@@ -58,15 +58,6 @@ module ConsulCookbook
           link '/usr/local/bin/consul' do
             to ::File.join(options[:extract_to], new_resource.version, 'consul')
             not_if { windows? }
-          end
-
-          link "#{node.config_prefix_path}\\consul.exe" do
-            to ::File.join(options[:extract_to], new_resource.version, 'consul.exe')
-            only_if { windows? }
-          end
-          windows_path node.config_prefix_path do
-            action :add
-            only_if { windows? }
           end
         end
       end
