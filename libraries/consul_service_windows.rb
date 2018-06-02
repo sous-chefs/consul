@@ -37,7 +37,7 @@ module ConsulCookbook
             extend ConsulCookbook::Helpers
 
             program new_resource.program
-            args command(new_resource.config_file, new_resource.config_dir)
+            args command_consul(new_resource.config_file, new_resource.config_dir)
             parameters new_resource.nssm_params.select { |_k, v| v != '' }
             action :install
           end

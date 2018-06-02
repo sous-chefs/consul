@@ -10,11 +10,11 @@ default['consul']['service_user'] = 'consul'
 default['consul']['service_group'] = 'consul'
 default['consul']['create_service_user'] = true
 
-default['consul']['config']['path'] = join_path config_prefix_path, 'consul.json'
-default['consul']['config']['data_dir'] = data_path
-default['consul']['config']['ca_file'] = join_path config_prefix_path, 'ssl', 'CA', 'ca.crt'
-default['consul']['config']['cert_file'] = join_path config_prefix_path, 'ssl', 'certs', 'consul.crt'
-default['consul']['config']['key_file'] = join_path config_prefix_path, 'ssl', 'private', 'consul.key'
+default['consul']['config']['path'] = join_path config_prefix_path_consul, 'consul.json'
+default['consul']['config']['data_dir'] = data_path_consul
+default['consul']['config']['ca_file'] = join_path config_prefix_path_consul, 'ssl', 'CA', 'ca.crt'
+default['consul']['config']['cert_file'] = join_path config_prefix_path_consul, 'ssl', 'certs', 'consul.crt'
+default['consul']['config']['key_file'] = join_path config_prefix_path_consul, 'ssl', 'private', 'consul.key'
 
 default['consul']['config']['client_addr'] = '0.0.0.0'
 default['consul']['config']['ports'] = {
@@ -27,15 +27,15 @@ default['consul']['config']['ports'] = {
 
 default['consul']['diplomat_version'] = nil
 
-default['consul']['service']['config_dir'] = join_path config_prefix_path, 'conf.d'
+default['consul']['service']['config_dir'] = join_path config_prefix_path_consul, 'conf.d'
 
 default['consul']['version'] = '0.9.3'
 
 # Windows only
 default['consul']['service']['nssm_params'] = {
-  'AppDirectory'     => data_path,
-  'AppStdout'        => join_path(config_prefix_path, 'stdout.log'),
-  'AppStderr'        => join_path(config_prefix_path, 'error.log'),
+  'AppDirectory'     => data_path_consul,
+  'AppStdout'        => join_path(config_prefix_path_consul, 'stdout.log'),
+  'AppStderr'        => join_path(config_prefix_path_consul, 'error.log'),
   'AppRotateFiles'   => 1,
   'AppRotateOnline'  => 1,
   'AppRotateBytes'   => 20_000_000,
