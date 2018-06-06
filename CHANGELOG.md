@@ -1,5 +1,7 @@
 # Change Log
 
+- Removed node send in helper.rb (Stop polutiting node object - Collides with hashicorp-vault too. So the practice should be stopped. Added extend to attributes/default
+
 ## [v3.0.0](https://github.com/johnbellone/consul-cookbook/tree/v3.0.0) (2017-06-11)
 [Full Changelog](https://github.com/johnbellone/consul-cookbook/compare/v2.3.0...v3.0.0)
 
