@@ -16,7 +16,7 @@ describe ConsulCookbook::Resource::ConsulService do
       allow(shellout).to receive(:stderr)
       allow(shellout).to receive(:run_command)
       allow(shellout).to receive(:exitstatus)
-      allow(shellout).to receive(:stdout).and_return("Consul v0.9.3\nConsul Protocol: 3 (Understands back to: 1)\n")
+      allow(shellout).to receive(:stdout).and_return("Consul v1.0.7\nProtocol 2 spoken by default, understands 2 to 3 (agent will automatically use protocol >2 when speaking to compatible agents)\n")
 
       # Stub admin_user method since we are testing a Windows host via Linux
       # Fixed in https://github.com/poise/poise/commit/2f42850c82e295af279d060155bcd5c7ebb31d6a but not released yet
