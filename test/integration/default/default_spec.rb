@@ -1,6 +1,8 @@
 require_relative '../spec_helper'
 
 consul_executable = "/opt/consul/#{consul_version}/consul"
+symlink_path      = '/usr/local/bin/consul'
+consul_command    = symlink_path
 
 config_file = '/etc/consul/consul.json'
 confd_dir   = '/etc/consul/conf.d'
@@ -36,7 +38,7 @@ end
   end
 end
 
-describe command("#{consul_executable} members -detailed -token=doublesecret") do
+describe command("#{consul_command} members -detailed -token=doublesecret") do
   its(:exit_status) { should eq 0 }
   its(:stdout) { should include 'alive' }
   its(:stdout) { should include 'role=consul' }
@@ -44,7 +46,7 @@ describe command("#{consul_executable} members -detailed -token=doublesecret") d
   its(:stdout) { should include 'dc=fortmeade' }
 end
 
-describe file('/usr/local/bin/consul') do
+describe file(symlink_path) do
   it { should be_symlink }
 end
 
