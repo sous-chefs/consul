@@ -35,7 +35,7 @@ describe ConsulCookbook::Resource::ConsulService do
 
     it do
       expect(chef_run).to install_nssm('consul').with(
-        program: 'C:\Program Files\consul\0.9.3\consul.exe',
+        program: 'C:\Program Files\consul\1.0.7\consul.exe',
         args: 'agent -config-file="C:\Program Files\consul\consul.json" -config-dir="C:\Program Files\consul\conf.d"'
       )
     end
