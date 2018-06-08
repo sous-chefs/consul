@@ -5,6 +5,7 @@ driver:
 provisioner:
   name: chef_zero
   policyfile: test/fixtures/policies/default.rb
+  require_chef_omnibus: latest
 
 verifier:
   name: inspec
@@ -20,10 +21,14 @@ platforms:
     driver:
       box: mwrock/Windows2012R2
       gui: false
+    provisioner:
+      require_chef_omnibus: 13
   - name: windows-2016
     driver:
       box: mwrock/Windows2016
       gui: false
+    provisioner:
+      require_chef_omnibus: 13
 
 suites:
   - name: default
