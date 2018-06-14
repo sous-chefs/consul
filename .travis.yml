@@ -6,9 +6,8 @@ addons:
     sources:
       - chef-stable-trusty
     packages:
-      - chefdk=2.4.17-1
+      - chefdk
 
-install: echo "skip bundle install"
 services: docker
 
 env:

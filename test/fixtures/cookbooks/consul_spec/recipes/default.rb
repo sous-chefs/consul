@@ -3,8 +3,6 @@
 # this allows the consul_definition recipe to run correctly
 node.default['consul']['config']['enable_script_checks'] = true
 
-include_recipe 'apt::default' if node.platform_family?('debian')
-
 include_recipe 'consul::default'
 include_recipe 'consul_spec::consul_definition'
 include_recipe 'consul_spec::consul_watch'
