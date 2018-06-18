@@ -120,7 +120,7 @@ module ConsulCookbook
       attribute(:statsite_prefix, kind_of: String)
       attribute(:telemetry, kind_of: [Hash, Mash])
       attribute(:syslog_facility, kind_of: String)
-      attribute(:tls_cipher_suites, kind_of: Array)
+      attribute(:tls_cipher_suites, kind_of: String)
       attribute(:tls_min_version, equal_to: %w(tls10 tls11 tls12))
       attribute(:tls_prefer_server_cipher_suites, equal_to: [true, false])
       attribute(:translate_wan_addrs, equal_to: [true, false])
