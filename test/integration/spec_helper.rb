@@ -1,3 +1,3 @@
 def consul_version
-  '0.9.3'
+  '1.0.7'
 end
