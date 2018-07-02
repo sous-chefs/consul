@@ -72,6 +72,8 @@ module ConsulCookbook
       attribute(:disable_remote_exec, equal_to: [true, false])
       attribute(:disable_update_check, equal_to: [true, false])
       attribute(:discard_check_output, equal_to: [true, false])
+      # Not supported, but allow same attribute for v0.x and 1.0.6+
+      attribute(:discovery_max_stale, kind_of: String)
       attribute(:dns_config, kind_of: [Hash, Mash])
       attribute(:domain, kind_of: String)
       attribute(:enable_acl_replication, equal_to: [true, false])
