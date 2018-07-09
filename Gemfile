@@ -18,4 +18,5 @@ group :development do
   gem 'kitchen-inspec'
   gem 'stove', require: false
   gem 'webmock', '~> 3.1'
+  gem 'foodcritic', '< 14'
 end
