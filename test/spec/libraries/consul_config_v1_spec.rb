@@ -331,7 +331,7 @@ describe ConsulCookbook::Resource::ConsulConfigV1 do
             discovery_max_stale '72h'
           end
         end
-        it 'sets the [`discovery_max_stale`] field' do
+        it 'does not set the [`discovery_max_stale`] field since unsupported' do
           expect(config['discovery_max_stale']).to be_nil
         end
       end
