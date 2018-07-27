@@ -319,6 +319,38 @@ describe ConsulCookbook::Resource::ConsulConfigV1 do
           expect(config['telemetry']['metrics_prefix']).to eq 'prefix'
         end
       end
+
+      describe 'discovery_max_stale_unsupported_old_version' do
+        before do
+          recipe = double('Chef::Recipe')
+          allow_any_instance_of(Chef::RunContext).to receive(:include_recipe).and_return([recipe])
+          default_attributes['consul']['version'] = '1.0.4'
+        end
+        recipe do
+          consul_config '/etc/consul/default.json' do
+            discovery_max_stale '72h'
+          end
+        end
+        it 'does not set the [`discovery_max_stale`] field since unsupported' do
+          expect(config['discovery_max_stale']).to be_nil
+        end
+      end
+
+      describe 'discovery_max_stale_supported' do
+        before do
+          recipe = double('Chef::Recipe')
+          allow_any_instance_of(Chef::RunContext).to receive(:include_recipe).and_return([recipe])
+          default_attributes['consul']['version'] = '1.0.7'
+        end
+        recipe do
+          consul_config '/etc/consul/default.json' do
+            discovery_max_stale '72h'
+          end
+        end
+        it 'sets the [`discovery_max_stale`] field' do
+          expect(config['discovery_max_stale']).to eq '72h'
+        end
+      end
     end
   end
 end

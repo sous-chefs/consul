@@ -206,5 +206,20 @@ describe ConsulCookbook::Resource::ConsulConfigV0 do
       end
       it_should_behave_like 'a simple field', 'statsite_prefix', 'prefix'
     end
+
+    describe 'discovery_max_stale_unsupported_old_version' do
+      before do
+        recipe = double('Chef::Recipe')
+        allow_any_instance_of(Chef::RunContext).to receive(:include_recipe).and_return([recipe])
+      end
+      recipe do
+        consul_config '/etc/consul/default.json' do
+          discovery_max_stale '72h'
+        end
+      end
+      it 'does not set the [`discovery_max_stale`] field since unsupported' do
+        expect(config['discovery_max_stale']).to be_nil
+      end
+    end
   end
 end
