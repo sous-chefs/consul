@@ -5,6 +5,8 @@
 # Copyright 2014-2016, Bloomberg Finance L.P.
 #
 
+extend ConsulCookbook::Helpers
+
 default['consul']['service_name'] = 'consul'
 default['consul']['service_user'] = 'consul'
 default['consul']['service_group'] = 'consul'
