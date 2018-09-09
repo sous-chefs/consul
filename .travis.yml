@@ -1,10 +1,11 @@
 sudo: required
 dist: trusty
-
+language: ruby
+cache: bundler
 addons:
   apt:
     sources:
-      - chef-stable-trusty
+      - chef-current-trusty
     packages:
       - chefdk
 
