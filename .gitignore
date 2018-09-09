@@ -52,6 +52,6 @@ vendor
 .kitchen
 .vagrant
 Berksfile.lock
+kitchen.local.yml
 coverage/
-*.lock.json
-.github_changelog_generator
+Policyfile.lock.json
