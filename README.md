@@ -1,6 +1,6 @@
 # Consul Cookbook
-[![Build Status](https://travis-ci.org/johnbellone/consul-cookbook.svg?branch=master)](https://travis-ci.org/johnbellone/consul-cookbook)
-[![Code Quality](https://img.shields.io/codeclimate/github/johnbellone/consul-cookbook.svg)](https://codeclimate.com/github/johnbellone/consul-cookbook)
+[![Build Status](https://travis-ci.org/sous-chefs/consul.svg?branch=master)](https://travis-ci.org/sous-chefs/consul)
+[![Code Quality](https://img.shields.io/codeclimate/github/sous-chefs/consul.svg)](https://codeclimate.com/github/sous-chefs/consul)
 [![Cookbook Version](https://img.shields.io/cookbook/v/consul.svg)](https://supermarket.chef.io/cookbooks/consul)
 [![License](https://img.shields.io/badge/license-Apache_2-blue.svg)](https://www.apache.org/licenses/LICENSE-2.0)
 
@@ -27,10 +27,10 @@ Out of the box the following platforms are certified to work and are
 tested using our [Test Kitchen][8] configuration. Additional platforms
 _may_ work, but your mileage may vary.
 
-- RHEL/CentOS 5.11, 6.8, 7.3
-- Ubuntu 12.04, 14.04, 16.04
-- Debian 7.11, 8.7
-- Windows Server 2012 R2
+- RHEL/CentOS 6+
+- Ubuntu 14.04+
+- Debian 8+
+- Windows Server 2012 R2+
 
 ### Client
 Out of the box the default recipe installs and configures the Consul
