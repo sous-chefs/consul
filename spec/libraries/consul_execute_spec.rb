@@ -1,5 +1,5 @@
 require 'spec_helper'
-require_relative '../../../libraries/consul_execute'
+require_relative '../../libraries/consul_execute'
 
 describe ConsulCookbook::Resource::ConsulExecute do
   step_into(:consul_execute)

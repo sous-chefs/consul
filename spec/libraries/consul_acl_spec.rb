@@ -1,7 +1,7 @@
 require 'spec_helper'
 require 'webmock/rspec'
 require 'diplomat'
-require_relative '../../../libraries/consul_acl'
+require_relative '../../libraries/consul_acl'
 
 describe ConsulCookbook::Resource::ConsulAcl do
   step_into(:consul_acl)

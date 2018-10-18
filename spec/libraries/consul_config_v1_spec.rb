@@ -1,5 +1,5 @@
 require 'spec_helper'
-require_relative '../../../libraries/consul_config_v1'
+require_relative '../../libraries/consul_config_v1'
 
 shared_examples 'a removed field' do |field_name|
   it "does not set `#{field_name}`" do

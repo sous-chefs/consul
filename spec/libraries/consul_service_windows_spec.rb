@@ -1,6 +1,6 @@
 require 'spec_helper'
-require_relative '../../../libraries/consul_service'
-require_relative '../../../libraries/consul_service_windows'
+require_relative '../../libraries/consul_service'
+require_relative '../../libraries/consul_service_windows'
 
 describe ConsulCookbook::Resource::ConsulService do
   step_into(:consul_service)
