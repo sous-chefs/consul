@@ -1,5 +1,5 @@
 require 'spec_helper'
-require_relative '../../../libraries/consul_definition'
+require_relative '../../libraries/consul_definition'
 
 describe ConsulCookbook::Resource::ConsulDefinition do
   step_into(:consul_definition)

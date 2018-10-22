@@ -1,5 +1,5 @@
 require 'spec_helper'
-require_relative '../../../libraries/consul_config_v0'
+require_relative '../../libraries/consul_config_v0'
 
 shared_examples 'a simple field' do |field_name, field_value|
   it "sets `#{field_name}`" do

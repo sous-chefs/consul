@@ -1,5 +1,5 @@
 require 'spec_helper'
-require_relative '../../../libraries/consul_watch'
+require_relative '../../libraries/consul_watch'
 
 describe ConsulCookbook::Resource::ConsulWatch do
   step_into(:consul_watch)
