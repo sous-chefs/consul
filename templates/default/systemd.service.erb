@@ -5,7 +5,7 @@ After=network.target
 
 [Service]
 Environment=<%= @environment.map {|key, val| %Q{"#{key}=#{val}"} }.join(' ') %>
-ExecStart=<%= @command %>
+ExecStart=<%= @command %> >> /var/log/consul.log 2>&1
 ExecReload=/bin/kill -<%= @reload_signal %> $MAINPID
 KillSignal=<%= @stop_signal %>
 User=<%= @user %>
