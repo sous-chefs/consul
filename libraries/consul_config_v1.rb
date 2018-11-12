@@ -63,6 +63,7 @@ module ConsulCookbook
       attribute(:cert_file, kind_of: String)
       attribute(:check_update_interval, kind_of: String)
       attribute(:client_addr, kind_of: String)
+      attribute(:connect, kind_of: [Hash, Mash])
       attribute(:data_dir, kind_of: String)
       attribute(:datacenter, kind_of: String)
       attribute(:disable_anonymous_signature, equal_to: [true, false])
@@ -214,6 +215,7 @@ module ConsulCookbook
           watches
         )
 
+        for_keeps << %i(connect) if node['consul']['version'] >= '1.2.0'
         for_keeps << %i(discovery_max_stale) if node['consul']['version'] > '1.0.6'
         for_keeps << %i(bootstrap bootstrap_expect) if server
         for_keeps << %i(ca_file cert_file key_file) if tls?

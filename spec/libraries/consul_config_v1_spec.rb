@@ -320,6 +320,37 @@ describe ConsulCookbook::Resource::ConsulConfigV1 do
         end
       end
 
+      describe 'connect_not_supported' do
+        before do
+          recipe = double('Chef::Recipe')
+          allow_any_instance_of(Chef::RunContext).to receive(:include_recipe).and_return([recipe])
+          default_attributes['consul']['version'] = '1.1.0'
+        end
+        recipe do
+          consul_config '/etc/consul/default.json' do
+            connect(enabled: true)
+          end
+        end
+        it 'does not set the [`connect`] field since unsupported' do
+          expect(config['connect']).to be_nil
+        end
+      end
+      describe 'connect_supported' do
+        before do
+          recipe = double('Chef::Recipe')
+          allow_any_instance_of(Chef::RunContext).to receive(:include_recipe).and_return([recipe])
+          default_attributes['consul']['version'] = '1.2.0'
+        end
+        recipe do
+          consul_config '/etc/consul/default.json' do
+            connect(enabled: true)
+          end
+        end
+        it 'sets the [`connect`] field' do
+          expect(config['connect']['enabled']).to be true
+        end
+      end
+
       describe 'discovery_max_stale_unsupported_old_version' do
         before do
           recipe = double('Chef::Recipe')

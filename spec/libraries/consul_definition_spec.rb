@@ -19,7 +19,7 @@ describe ConsulCookbook::Resource::ConsulDefinition do
       consul_definition 'redis' do
         type 'service'
         user 'root'
-        parameters(tags: %w(master), address: '127.0.0.1', port: 6379, interval: '10s')
+        parameters(tags: %w(master), address: '127.0.0.1', port: 6379, interval: '10s', connect: { proxy: '' })
       end
     end
 
@@ -33,6 +33,9 @@ describe ConsulCookbook::Resource::ConsulDefinition do
             address: '127.0.0.1',
             port: 6379,
             interval: '10s',
+            connect: {
+              proxy: '',
+            },
             name: 'redis',
           }
         ))
