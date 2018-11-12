@@ -1,5 +1,6 @@
 # Change Log
 
+- Support for Consul Connect for Consul > 1.2.0
 - Removed node send in helper.rb (Stop polutiting node object - Collides with hashicorp-vault too. So the practice should be stopped. Added extend to attributes/default
 - Changed testing to be circleci
 
