@@ -1,7 +1,7 @@
 # Change Log
 
 - Fix the Ruby type for `tls_cipher_suites` config property (#501, #510)
-- Removed node send in helper.rb (Stop polutiting node object - Collides with hashicorp-vault too. So the practice should be stopped. Added extend to attributes/default
+- Removed node send in helper.rb (Stop polluting node object - Collides with hashicorp-vault too. So the practice should be stopped. Added extend to attributes/default
 - Changed testing to be circleci
 - Restarts consul service when updated
 
