@@ -51,6 +51,16 @@ production server deployment.
 
 The [Consul cluster cookbook][14] is provided as an example.
 
+### Agent Reloads and Restarts
+
+Because Consul server clusters need to maintain quorum, this cookbook does not
+automatically restart the Consul agent on upgrade or configuration change.
+A restart should be safe for client agents.
+
+[Some configuration parameters][17] can be updated with a `reload` command, so the
+cookbook performs a `reload` when configuration is updated. If you change other
+parameters, you will need to perform your own restart.
+
 ## Advanced Usage
 As explained above this cookbook provides Chef primitives in the form
 of resource/provider to further manage the install and configuration
@@ -234,3 +244,4 @@ nature of this command it is _impossible_ for it to be idempotent.
 [14]: https://github.com/johnbellone/consul-cluster-cookbook
 [15]: https://www.consul.io/docs/internals/acl.html
 [16]: https://github.com/WeAreFarmGeek/diplomat
+[17]: https://www.consul.io/docs/agent/options.html#reloadable-configuration
