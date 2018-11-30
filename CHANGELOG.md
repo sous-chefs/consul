@@ -4,6 +4,15 @@
 - Removed node send in helper.rb (Stop polutiting node object - Collides with hashicorp-vault too. So the practice should be stopped. Added extend to attributes/default
 - Changed testing to be circleci
 
+## [v3.1.0](https://github.com/johnbellone/consul-cookbook/tree/v3.1.0) (2017-10-12)
+[Full Changelog](https://github.com/johnbellone/consul-cookbook/compare/v3.0.0...v3.1.0)
+
+* Add required ACL token to Windows reload action (#452)
+* Add config options `encrypt_verify_incoming`, `encrypt_verify_outgoing`, `verify_incoming_https` (#459)
+* Add `enable_script_checks` config param (#462)
+* Update Consul to v0.9.3 & add missing config values for 0.9 releases (#468)
+* Upgrade to nssm v4.x (#464)
+
 ## [v3.0.0](https://github.com/johnbellone/consul-cookbook/tree/v3.0.0) (2017-06-11)
 [Full Changelog](https://github.com/johnbellone/consul-cookbook/compare/v2.3.0...v3.0.0)
 
