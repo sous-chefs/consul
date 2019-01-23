@@ -50,6 +50,16 @@ suites:
       - windows-2012r2
       - windows-2016
 
+  - name: overrides
+    attributes:
+      consul:
+        config: *default-config
+        service:
+          nofile_limit: 2048
+    excludes:
+      - windows-2012r2
+      - windows-2016
+
   - name: client
     named_run_list: client
     excludes:

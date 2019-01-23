@@ -42,6 +42,10 @@ module ConsulCookbook
       # @!attribute nssm_params
       # @return [String]
       attribute(:nssm_params, kind_of: Hash, default: lazy { node['consul']['service']['nssm_params'] })
+      # @!attribute nofile_limit
+      # Set the Consul process's open file limit.
+      # @return [Integer]
+      attribute(:nofile_limit, kind_of: Integer)
       # @!attribute program
       # The location of the Consul executable.
       # @return [String]
@@ -95,9 +99,9 @@ module ConsulCookbook
         service.user(new_resource.user)
         service.environment(new_resource.environment)
         service.restart_on_update(false)
-        service.options(:systemd, template: 'consul:systemd.service.erb')
-        service.options(:sysvinit, template: 'consul:sysvinit.service.erb')
-        service.options(:upstart, template: 'consul:upstart.service.erb', executable: new_resource.program)
+        service.options(:systemd, template: 'consul:systemd.service.erb', nofile_limit: new_resource.nofile_limit)
+        service.options(:sysvinit, template: 'consul:sysvinit.service.erb', nofile_limit: new_resource.nofile_limit)
+        service.options(:upstart, template: 'consul:upstart.service.erb', executable: new_resource.program, nofile_limit: new_resource.nofile_limit)
 
         if node.platform_family?('rhel') && node['platform_version'].to_i == 6
           service.provider(:sysvinit)

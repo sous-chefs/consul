@@ -10,6 +10,9 @@ ExecReload=/bin/kill -<%= @reload_signal %> $MAINPID
 KillSignal=<%= @stop_signal %>
 User=<%= @user %>
 WorkingDirectory=<%= @directory %>
+<%- if @options['nofile_limit'] -%>
+LimitNOFILE=<%= @options['nofile_limit'] %>
+<%- end -%>
 
 [Install]
 WantedBy=multi-user.target

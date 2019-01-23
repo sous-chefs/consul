@@ -21,6 +21,9 @@ pidfile="<%= @pid_file %>"
 logfile="/var/log/$prog.log"
 lockfile="/var/lock/subsys/$prog"
 
+<%- if @options['nofile_limit'] -%>
+ulimit -n <%= @options['nofile_limit'] %>
+<%- end -%>
 <%- @environment.each do |key, val| -%>
 export <%= key %>="<%= val %>"
 <%- end -%>

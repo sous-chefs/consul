@@ -88,7 +88,7 @@ platforms:
       pid_one_command: /sbin/init
       intermediate_instructions:
         - RUN /usr/bin/apt-get update
-        - RUN /usr/bin/apt-get install lsb-release net-tools -y
+        - RUN /usr/bin/apt-get install lsb-release net-tools procps -y
     attributes:
       poise-service:
         consul:
@@ -109,3 +109,12 @@ suites:
           acl_master_token: doublesecret
           acl_datacenter: FortMeade
           acl_default_policy: deny
+
+  - name: overrides
+    provisioner:
+      policyfile: test/fixtures/policies/default.rb
+    attributes:
+      consul:
+        config: *default-config
+        service:
+          nofile_limit: 2048

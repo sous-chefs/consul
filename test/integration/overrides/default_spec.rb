@@ -100,7 +100,7 @@ when :systemd
     it { should be_owned_by 'root' }
     it { should be_grouped_into 'root' }
     its('mode') { should cmp '0644' }
-    its('content') { should_not include 'LimitNOFILE' }
+    its('content') { should include 'LimitNOFILE=2048' }
   end
 when :upstart
   describe file('/etc/init/consul.conf') do
@@ -108,7 +108,7 @@ when :upstart
     it { should be_owned_by 'root' }
     it { should be_grouped_into 'root' }
     its('mode') { should cmp '0644' }
-    its('content') { should_not include 'limit nofile' }
+    its('content') { should include 'limit nofile 2048 2048' }
   end
 when :sysv
   describe file('/etc/init.d/consul') do
@@ -116,6 +116,12 @@ when :sysv
     it { should be_owned_by 'root' }
     it { should be_grouped_into 'root' }
     its('mode') { should cmp '0755' }
-    its('content') { should_not include 'ulimit' }
+    its('content') { should include 'ulimit -n 2048' }
   end
+end
+
+pid = processes('consul agent').pids.first
+
+describe file("/proc/#{pid}/limits") do
+  its(:content) { should match(/^Max open files\W+2048\W+2048\W+files\W+$/) }
 end

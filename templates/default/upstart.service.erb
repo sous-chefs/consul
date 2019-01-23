@@ -9,6 +9,9 @@ respawn
 respawn limit 10 5
 umask 022
 chdir <%= @directory %>
+<%- if @options['nofile_limit'] -%>
+limit nofile <%= @options['nofile_limit'] %> <%= @options['nofile_limit'] %>
+<%- end -%>
 <%- @environment.each do |key, val| -%>
 env <%= key %>="<%= val %>"
 <%- end -%>
