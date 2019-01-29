@@ -35,6 +35,7 @@ module ConsulCookbook
       attribute(:options, option_collector: true)
 
       # @see: http://www.consul.io/docs/agent/options.html
+      attribute(:acl, kind_of: [Hash, Mash])
       attribute(:acl_agent_token, kind_of: String)
       attribute(:acl_agent_master_token, kind_of: String)
       attribute(:acl_datacenter, kind_of: String)
@@ -138,6 +139,7 @@ module ConsulCookbook
       # Consul service's configuration format.
       def params_to_json
         for_keeps = %i(
+          acl
           acl_agent_token
           acl_agent_master_token
           acl_datacenter
