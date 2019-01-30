@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 name              'consul'
 maintainer        'Sous Chefs'
 maintainer_email  'help@sous-chefs.org'
@@ -7,7 +8,6 @@ source_url        'https://github.com/sous-chefs/consul'
 issues_url        'https://github.com/sous-chefs/consul/issues'
 chef_version      '>= 13.4'
 version           '4.3.1'
-
 supports 'centos', '>= 7.0'
 supports 'redhat', '>= 7.0'
 supports 'debian', '>= 9.0'
