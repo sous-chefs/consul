@@ -4,7 +4,7 @@ maintainer_email 'jbellone@bloomberg.net'
 license 'Apache-2.0'
 description 'Application cookbook which installs and configures Consul.'
 long_description 'Application cookbook which installs and configures Consul.'
-version '3.1.0'
+version '3.1.1'
 
 recipe 'consul::default', 'Installs and configures the Consul service.'
 recipe 'consul::client_gem', 'Installs the Consul Ruby client as a gem.'
