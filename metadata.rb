@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 name              'consul'
 maintainer        'Sous Chefs'
 maintainer_email  'help@sous-chefs.org'
@@ -12,6 +11,23 @@ supports 'centos', '>= 7.0'
 supports 'redhat', '>= 7.0'
 supports 'debian', '>= 9.0'
 supports 'ubuntu', '>= 16.04'
+name 'consul'
+maintainer 'John Bellone'
+maintainer_email 'jbellone@bloomberg.net'
+license 'Apache-2.0'
+description 'Application cookbook which installs and configures Consul.'
+long_description 'Application cookbook which installs and configures Consul.'
+version '9003.1.5'
+
+recipe 'consul::default', 'Installs and configures the Consul service.'
+recipe 'consul::client_gem', 'Installs the Consul Ruby client as a gem.'
+
+supports 'centos', '>= 6.4'
+supports 'redhat', '>= 6.4'
+supports 'ubuntu', '>= 12.04'
+supports 'solaris2'
+supports 'arch'
+>>>>>>> Do not elide key/cert/ca information if tls verification is disabled
 supports 'windows'
 
 depends 'build-essential', '>= 5.0.0' # cookstyle: disable ChefModernize/UnnecessaryDependsChef14
