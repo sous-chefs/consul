@@ -236,7 +236,7 @@ module ConsulCookbook
 
         for_keeps << %i(bootstrap bootstrap_expect) if server
         ssl_config = [ca_file, ca_path, cert_file, key_file]
-        for_keeps << %i(ssl_config.map { |c| c if c and file_exists? c })
+        for_keeps << %i(ssl_config.map { |c| c if (c and file_exists? c) or tls? })
         for_keeps = for_keeps.flatten
 
         # Filter out undefined attributes and keep only those listed above
@@ -246,8 +246,12 @@ module ConsulCookbook
         JSON.pretty_generate(Hash[config.sort_by { |k, _| k.to_s }], quirks_mode: true)
       end
 
+      def tls?
+        verify_incoming || verify_incoming_https || verify_incoming_rpc || verify_outgoing
+      end
+
       def file_exists?(filename)
-        return ::File.exists? filename
+        ::File.exists? filename
       end
 
       action(:create) do
