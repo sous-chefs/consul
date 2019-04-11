@@ -235,8 +235,7 @@ module ConsulCookbook
         )
 
         for_keeps << %i(bootstrap bootstrap_expect) if server
-        ssl_config = [ca_file, ca_path, cert_file, key_file]
-        for_keeps << %i(ssl_config.map { |c| c if (c and file_exists? c) or tls? })
+        for_keeps << %i(ca_file ca_path cert_file key_file) if tls?
         for_keeps = for_keeps.flatten
 
         # Filter out undefined attributes and keep only those listed above
@@ -247,7 +246,11 @@ module ConsulCookbook
       end
 
       def tls?
-        verify_incoming || verify_incoming_https || verify_incoming_rpc || verify_outgoing
+        verify_incoming || verify_incoming_https || verify_incoming_rpc || verify_outgoing || tls_configured?
+      end
+
+      def tls_configured?
+        (ca_file && file_exists?(ca_file)) || (cert_file && file_exists?(cert_file)) || (key_file && file_exists?(key_file)) || (ca_path && file_exists?(ca_path))
       end
 
       def file_exists?(filename)
