@@ -8,10 +8,10 @@ require 'poise'
 
 module ConsulCookbook
   module Resource
-    # Resource for managing  Consul ACL policies.
-    class ConsulPolicy < Chef::Resource
+    # Resource for managing Consul ACL tokens.
+    class ConsulToken < Chef::Resource
       include Poise
-      provides(:consul_policy)
+      provides(:consul_token)
       actions(:create, :delete)
       default_action(:create)
 
@@ -23,50 +23,45 @@ module ConsulCookbook
       # @return [String]
       attribute(:auth_token, kind_of: String, required: true)
 
-      # @!attribute policy_name
-      # @return [String]
-      attribute(:policy_name, kind_of: String, name_attribute: true)
-
       # @!attribute description
       # @return [String]
-      attribute(:description, kind_of: String, default: '')
+      attribute(:description, kind_of: String, name_attribute: true)
 
-      # @!attribute type
+      # @!attribute policies
       # @return [Array]
-      attribute(:datacenters, kind_of: Array, default: [])
+      attribute(:policies, kind_of: Array, default: [])
 
-      # @!attribute rules
-      # @return [String]
-      attribute(:rules, kind_of: String, default: '')
+      # @!attribute local
+      # @return [Bool]
+      attribute(:local, kind_of: [TrueClass, FalseClass], default: false)
 
       # @!attribute ssl
       # @return [Hash]
       attribute(:ssl, kind_of: Hash, default: {})
 
       def to_acl
-        { 'Name' => policy_name,
-          'Description' => description,
-          'Datacenters' => datacenters,
-          'Rules' => rules }
+        { 'Description' => description,
+          'Local' => local,
+          'Policies' => policies }
       end
     end
   end
 
   module Provider
-    # Provider for managing Consul ACL policies.
-    class ConsulPolicy < Chef::Provider
+    # Provider for managing Consul ACL tokens.
+    class ConsulToken < Chef::Provider
       include Poise
-      provides(:consul_policy)
+      provides(:consul_token)
 
       def action_create
         configure_diplomat
         unless up_to_date?
-          converge_by 'creating ACL policy' do
-            policy = Diplomat.list.select { |p| p['Name'] == new_resource.policy_name}
-            if policy.empty?
-              Diplomat::Policy.create(new_resource.to_acl)
+          converge_by 'creating ACL token' do
+            token = Diplomat::Token.list.select { |p| p['Description'] == new_resource.description}
+            if token.empty?
+              Diplomat::Token.create(new_resource.to_acl)
             else
-              Diplomat::Policy.update(new_resource.to_acl)
+              Diplomat::Token.update(new_resource.to_acl)
             end
           end
         end
@@ -74,10 +69,10 @@ module ConsulCookbook
 
       def action_delete
         configure_diplomat
-        converge_by 'deleting ACL policy' do
-          policy = Diplomat::Policy.list.select { |p| p['Name'] == new_resource.policy_name}
-          unless policy.empty?
-            Diplomat::Policy.delete(policy['ID'])
+        converge_by 'deleting ACL token' do
+          token = Diplomat::Token.list.select { |p| p['Description'] == new_resource.description}
+          unless token.empty?
+            Diplomat::Token.delete(token['AccessorID'])
           end
         end
       end
@@ -100,12 +95,12 @@ module ConsulCookbook
 
       def up_to_date?
         retry_block(max_tries: 3, sleep: 0.5) do
-          old_policy_id = Diplomat::Policy.list.select { |p| p['Name'] == new_resource.policy_name}
-          return false if old_policy_id.empty?
-          old_policy = Diplomat::Policy.read(old_policy_id, {}, :return)
-          return false if old_policy.nil?
-          old_policy.first.select! { |k, _v| %w(Name Description Rules).include?(k) }
-          old_policy.first == new_resource.to_acl
+          old_token_id = Diplomat::Token.list.select { |p| p['Description'] == new_resource.description}
+          return false if old_token_id.empty?
+          old_token = Diplomat::Token.read(old_token_id, {}, :return)
+          return false if old_token.nil?
+          old_token.first.select! { |k, _v| %w(Description Local Policies).include?(k) }
+          old_token.first == new_resource.to_acl
         end
       end
 
