@@ -57,7 +57,7 @@ module ConsulCookbook
         configure_diplomat
         unless up_to_date?
           converge_by 'creating ACL token' do
-            token = Diplomat::Token.list.select { |p| p['Description'] == new_resource.description}
+            token = Diplomat::Token.list.select { |p| p['Description'] == new_resource.description }
             if token.empty?
               Diplomat::Token.create(new_resource.to_acl)
             else
@@ -70,10 +70,8 @@ module ConsulCookbook
       def action_delete
         configure_diplomat
         converge_by 'deleting ACL token' do
-          token = Diplomat::Token.list.select { |p| p['Description'] == new_resource.description}
-          unless token.empty?
-            Diplomat::Token.delete(token['AccessorID'])
-          end
+          token = Diplomat::Token.list.select { |p| p['Description'] == new_resource.description }
+          Diplomat::Token.delete(token['AccessorID']) unless token.empty?
         end
       end
 
@@ -95,11 +93,11 @@ module ConsulCookbook
 
       def up_to_date?
         retry_block(max_tries: 3, sleep: 0.5) do
-          old_token_id = Diplomat::Token.list.select { |p| p['Description'] == new_resource.description}
+          old_token_id = Diplomat::Token.list.select { |p| p['Description'] == new_resource.description }
           return false if old_token_id.empty?
           old_token = Diplomat::Token.read(old_token_id, {}, :return)
           return false if old_token.nil?
-          old_token.first.select! { |k, _v| %w(Description Local Policies).include?(k) }
+          old_token.first.select! { |k, _v| %w[Description Local Policies].include?(k) }
           old_token.first == new_resource.to_acl
         end
       end
