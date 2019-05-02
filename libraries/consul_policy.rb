@@ -62,7 +62,7 @@ module ConsulCookbook
         configure_diplomat
         unless up_to_date?
           converge_by 'creating ACL policy' do
-            policy = Diplomat.list.select { |p| p['Name'] == new_resource.policy_name }
+            policy = Diplomat::Policy.list.select { |p| p['Name'] == new_resource.policy_name }
             if policy.empty?
               Diplomat::Policy.create(new_resource.to_acl)
             else
