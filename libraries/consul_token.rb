@@ -42,7 +42,7 @@ module ConsulCookbook
       def to_acl
         { 'Description' => description,
           'Local' => local,
-          'Policies' => policies }
+          'Policies' => [ policies.each_with_object({}) { |k, h| h['Name'] = k } ] }
       end
     end
   end
@@ -61,7 +61,8 @@ module ConsulCookbook
             if token.empty?
               Diplomat::Token.create(new_resource.to_acl)
             else
-              Diplomat::Token.update(new_resource.to_acl)
+              token_to_update = new_resource.to_acl.merge('AccessorID' => @old_token_id.first['AccessorID'])
+              Diplomat::Token.update(new_resource.to_acl.merge('AccessorID' => @old_token_id.first['AccessorID']))
             end
           end
         end
@@ -93,12 +94,13 @@ module ConsulCookbook
 
       def up_to_date?
         retry_block(max_tries: 3, sleep: 0.5) do
-          old_token_id = Diplomat::Token.list.select { |p| p['Description'] == new_resource.description }
-          return false if old_token_id.empty?
-          old_token = Diplomat::Token.read(old_token_id, {}, :return)
+          @old_token_id = Diplomat::Token.list.select { |p| p['Description'] == new_resource.description }
+          Chef::Log.warn %|Token with description "#{new_resource.description}" was not found. Will create.|
+          return false if @old_token_id.empty?
+          old_token = Diplomat::Token.read(@old_token_id.first['AccessorID'], {}, :return)
           return false if old_token.nil?
-          old_token.first.select! { |k, _v| %w[Description Local Policies].include?(k) }
-          old_token.first == new_resource.to_acl
+          old_token.select! { |k, _v| %w[Description Local Policies].include?(k) }
+          old_token == new_resource.to_acl
         end
       end
 

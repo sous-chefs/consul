@@ -62,11 +62,11 @@ module ConsulCookbook
         configure_diplomat
         unless up_to_date?
           converge_by 'creating ACL policy' do
-            policy = Diplomat::Policy.list.select { |p| p['Name'] == new_resource.policy_name }
+            policy = Diplomat::Policy.list.select { |p| p['Name'] == new_resource.policy_name.downcase }
             if policy.empty?
               Diplomat::Policy.create(new_resource.to_acl)
             else
-              Diplomat::Policy.update(new_resource.to_acl)
+              Diplomat::Policy.update(new_resource.to_acl.merge('ID' => policy.first['ID']))
             end
           end
         end
@@ -75,7 +75,7 @@ module ConsulCookbook
       def action_delete
         configure_diplomat
         converge_by 'deleting ACL policy' do
-          policy = Diplomat::Policy.list.select { |p| p['Name'] == new_resource.policy_name }
+          policy = Diplomat::Policy.list.select { |p| p['Name'] == new_resource.policy_name.downcase }
           Diplomat::Policy.delete(policy['ID']) unless policy.empty?
         end
       end
@@ -98,9 +98,9 @@ module ConsulCookbook
 
       def up_to_date?
         retry_block(max_tries: 3, sleep: 0.5) do
-          old_policy_id = Diplomat::Policy.list.select { |p| p['Name'] == new_resource.policy_name }
+          old_policy_id = Diplomat::Policy.list.select { |p| p['Name'] == new_resource.policy_name.downcase }
           return false if old_policy_id.empty?
-          old_policy = Diplomat::Policy.read(old_policy_id, {}, :return)
+          old_policy = Diplomat::Policy.read(old_policy_id.first['ID'], {}, :return)
           return false if old_policy.nil?
           old_policy.first.select! { |k, _v| %w[Name Description Rules].include?(k) }
           old_policy.first == new_resource.to_acl
