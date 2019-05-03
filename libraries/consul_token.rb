@@ -40,7 +40,7 @@ module ConsulCookbook
       attribute(:ssl, kind_of: Hash, default: {})
 
       def to_acl
-        { 'Description' => description,
+        { 'Description' => description.downcase,
           'Local' => local,
           'Policies' => [ policies.each_with_object({}) { |k, h| h['Name'] = k } ] }
       end
@@ -57,12 +57,12 @@ module ConsulCookbook
         configure_diplomat
         unless up_to_date?
           converge_by 'creating ACL token' do
-            token = Diplomat::Token.list.select { |p| p['Description'] == new_resource.description }
+            token = Diplomat::Token.list.select { |p| p['Description'].downcase == new_resource.description.downcase }
             if token.empty?
-              Diplomat::Token.create(new_resource.to_acl)
+              node.default['consul']['tokens'][new_resource.description.downcase] = Diplomat::Token.create(new_resource.to_acl)
             else
               token_to_update = new_resource.to_acl.merge('AccessorID' => @old_token_id.first['AccessorID'])
-              Diplomat::Token.update(new_resource.to_acl.merge('AccessorID' => @old_token_id.first['AccessorID']))
+              node.default['consul']['tokens'][new_resource.description.downcase] = Diplomat::Token.update(new_resource.to_acl.merge('AccessorID' => @old_token_id.first['AccessorID']))
             end
           end
         end
@@ -71,7 +71,7 @@ module ConsulCookbook
       def action_delete
         configure_diplomat
         converge_by 'deleting ACL token' do
-          token = Diplomat::Token.list.select { |p| p['Description'] == new_resource.description }
+          token = Diplomat::Token.list.select { |p| p['Description'].downcase == new_resource.description.downcase }
           Diplomat::Token.delete(token['AccessorID']) unless token.empty?
         end
       end
@@ -94,12 +94,18 @@ module ConsulCookbook
 
       def up_to_date?
         retry_block(max_tries: 3, sleep: 0.5) do
-          @old_token_id = Diplomat::Token.list.select { |p| p['Description'] == new_resource.description }
-          Chef::Log.warn %|Token with description "#{new_resource.description}" was not found. Will create.|
-          return false if @old_token_id.empty?
+          @old_token_id = Diplomat::Token.list.select { |p| p['Description'].downcase == new_resource.description.downcase }
+          if @old_token_id.empty?
+            Chef::Log.warn %|Token with description "#{new_resource.description.downcase}" was not found. Will create.|
+            return false
+          end
           old_token = Diplomat::Token.read(@old_token_id.first['AccessorID'], {}, :return)
-          return false if old_token.nil?
+          if old_token.nil?
+            Chef::Log.warn %|Could not read token AccessorID matching description "#{new_resource.description.downcase}". Will create.|
+            return false
+          end
           old_token.select! { |k, _v| %w[Description Local Policies].include?(k) }
+          old_token['Description'].downcase!
           old_token == new_resource.to_acl
         end
       end
