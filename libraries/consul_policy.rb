@@ -61,7 +61,7 @@ module ConsulCookbook
       def action_create
         configure_diplomat
         unless up_to_date?
-          converge_by 'creating ACL policy' do
+          converge_by %|creating ACL policy "#{new_resource.policy_name.downcase}"| do
             policy = Diplomat::Policy.list.select { |p| p['Name'].downcase == new_resource.policy_name.downcase }
             if policy.empty?
               Diplomat::Policy.create(new_resource.to_acl)
@@ -74,7 +74,7 @@ module ConsulCookbook
 
       def action_delete
         configure_diplomat
-        converge_by 'deleting ACL policy' do
+        converge_by %|deleting ACL policy "#{new_resource.policy_name.downcase}"| do
           policy = Diplomat::Policy.list.select { |p| p['Name'].downcase == new_resource.policy_name.downcase }
           Diplomat::Policy.delete(policy['ID']) unless policy.empty?
         end

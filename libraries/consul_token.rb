@@ -56,7 +56,7 @@ module ConsulCookbook
       def action_create
         configure_diplomat
         unless up_to_date?
-          converge_by 'creating ACL token' do
+          converge_by %|creating ACL token "#{new_resource.description.downcase}"| do
             token = Diplomat::Token.list.select { |p| p['Description'].downcase == new_resource.description.downcase }
             if token.empty?
               node.default['consul']['tokens'][new_resource.description.downcase] = Diplomat::Token.create(new_resource.to_acl)
@@ -70,7 +70,7 @@ module ConsulCookbook
 
       def action_delete
         configure_diplomat
-        converge_by 'deleting ACL token' do
+        converge_by %|deleting ACL token "#{new_resource.description.downcase}"| do
           token = Diplomat::Token.list.select { |p| p['Description'].downcase == new_resource.description.downcase }
           Diplomat::Token.delete(token['AccessorID']) unless token.empty?
         end
