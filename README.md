@@ -1,8 +1,10 @@
 # Consul Cookbook
-[![CircleCI](https://circleci.com/gh/sous-chefs/consul.svg?style=svg)](https://circleci.com/gh/sous-chefs/consul)
-[![Code Quality](https://img.shields.io/codeclimate/github/johnbellone/consul-cookbook.svg)](https://codeclimate.com/github/johnbellone/consul-cookbook)
+
 [![Cookbook Version](https://img.shields.io/cookbook/v/consul.svg)](https://supermarket.chef.io/cookbooks/consul)
-[![License](https://img.shields.io/badge/license-Apache_2-blue.svg)](https://www.apache.org/licenses/LICENSE-2.0)
+[![Build Status](https://circleci.com/gh/sous-chefs/consul.svg?style=svg)](https://circleci.com/gh/sous-chefs/consul)
+[![OpenCollective](https://opencollective.com/sous-chefs/backers/badge.svg)](#backers)
+[![OpenCollective](https://opencollective.com/sous-chefs/sponsors/badge.svg)](#sponsors)
+[![License](https://img.shields.io/badge/License-Apache%202.0-green.svg)](https://opensource.org/licenses/Apache-2.0)
 
 [Application cookbook][0] which installs and configures [Consul][1].
 
@@ -13,6 +15,7 @@ Consul. Additionally, it provides Chef primitives for more advanced
 configuration.
 
 ## Basic Usage
+
 For most infrastructure we suggest first starting with the default
 recipe. This installs and configures Consul from the latest supported
 release. It is also what is used to certify platform support through
@@ -33,17 +36,20 @@ _may_ work, but your mileage may vary.
 - Windows Server 2012 R2
 
 ### Client
+
 Out of the box the default recipe installs and configures the Consul
 agent to run as a service in _client mode_. The intent here is that
 your infrastructure already has a [quorum of servers][13]. In order
 to configure Consul to connect to your cluster you would supply an
 array of addresses for the Consul agent to join. This would be done
 in your [wrapper cookbook][2]:
+
 ```ruby
 node.default['consul']['config']['start_join'] = %w{c1.internal.corporate.com c2.internal.corporate.com c3.internal.corporate.com}
 ```
 
 ### Server
+
 This cookbook is designed to allow for the flexibility to bootstrap a
 new cluster. The best way to do this is through the use of a
 [wrapper cookbook][2] which tunes specific node attributes for a
@@ -52,6 +58,7 @@ production server deployment.
 The [Consul cluster cookbook][14] is provided as an example.
 
 ## Advanced Usage
+
 As explained above this cookbook provides Chef primitives in the form
 of resource/provider to further manage the install and configuration
 of Consul. These primitives are what is used in the default recipe,
@@ -59,6 +66,7 @@ and should be used in your own [wrapper cookbooks][2] for more
 advanced configurations.
 
 ### Configuration
+
 It is very important to understand that each resource/provider has
 defaults for some properties. Any changes to a resource's default
 properties may need to be also changed in other resources. The best
@@ -74,6 +82,7 @@ Inside of a recipe in your [wrapper cookbook][2] you'll want to do
 something like the following block of code. It uses the validated
 input from the configuration resource and passes it into the service
 resource. This ensures that we're using the _same data_.
+
 ```ruby
 config = consul_config '/data/consul/default.json'
 consul_service 'consul' do
@@ -82,6 +91,7 @@ end
 ```
 
 ### Security
+
 The default recipe makes the Consul configuration writable by the consul service
 user to avoid breaking existing implementations. You can make this more secure
 by setting the `node['consul']['config']['owner']` attribute to `root`, or set
@@ -92,6 +102,7 @@ the `owner` property of `consul_config` explicitly:
 default['consul']['config']['owner'] = 'root'
 ```
 or
+
 ```ruby
 # recipe file
 consul_config '/etc/consul/consul.json' do
@@ -100,6 +111,7 @@ end
 ```
 
 ### Watches/Definitions
+
 In order to provide an idempotent implementation of Consul
 watches and definitions. We write these out as
 a separate configuration file in the JSON file format. The provider
@@ -109,6 +121,7 @@ Below is an example of writing a [Consul service definition][10] for
 the master instance of Redis. We pass in several parameters and tell
 the resource to notify the proper instance of the Consul service to
 reload.
+
 ```ruby
 consul_definition 'redis' do
   type 'service'
@@ -120,6 +133,7 @@ end
 A [check definition][11] can easily be added as well. You simply have
 to change the type and pass in the correct parameters. The definition
 below checks memory utilization using a script on a ten second interval.
+
 ```ruby
 consul_definition 'mem-util' do
   type 'check'
@@ -129,6 +143,7 @@ end
 ```
 
 A service definition with an integrated check can also be created. You will have to define a regular service and then add a check as a an additional parameter. The definition below checks if the vault service is healthy on a 10 second interval and 5 second timeout.
+
 ```ruby
 consul_definition 'vault' do
   type 'service'
@@ -150,6 +165,7 @@ Finally, a [watch][9] is created below to tell the agent to monitor to
 see if an application has been deployed. Once that application is
 deployed a script is run locally. This can be used, for example, as a
 lazy way to clear a HTTP disk cache.
+
 ```ruby
 consul_watch 'app-deploy' do
   type 'event'
@@ -165,6 +181,7 @@ there are several definitions this may save a little time off your
 Chef run.
 
 ### ACLs
+
 The `consul_acl` resource allows management of [Consul ACL rules][15]. Supported
 actions are `:create` and `:delete`. The `:create` action will update/insert
 as necessary.
@@ -181,6 +198,7 @@ in the resulting ACL.
 
 The example below will create a client ACL token with an `ID` of the given UUID,
 `Name` of "AwesomeApp Token", and `Rules` of the given string.
+
 ```ruby
 consul_acl '49f06aa9-782f-465a-becf-44f0aaefd335' do
   acl_name 'AwesomeApp Token'
@@ -198,19 +216,22 @@ end
 ```
 
 ### Execute
+
 The command-line agent provides a mechanism to facilitate remote
 execution. For example, this can be used to run the `uptime` command
 across your fleet of nodes which are hosting a particular API service.
+
 ```ruby
 consul_execute 'uptime' do
   options(service: 'api')
 end
 ```
+
 ### Warning on git based installs
+
 Consul v1.0 states that Go 1.9 is a requirement. The default go installation uses
 1.5, so you may need to override a `['go']['version']` attribute to allow the
 git installation to work reliably.
-
 
 All of the [options available on the command-line][12] can be passed
 into the resource. This could potentially be a *very dangerous*
@@ -234,3 +255,28 @@ nature of this command it is _impossible_ for it to be idempotent.
 [14]: https://github.com/johnbellone/consul-cluster-cookbook
 [15]: https://www.consul.io/docs/internals/acl.html
 [16]: https://github.com/WeAreFarmGeek/diplomat
+
+## Contributors
+
+This project exists thanks to all the people who [contribute.](https://opencollective.com/sous-chefs/contributors.svg?width=890&button=false)
+
+### Backers
+
+Thank you to all our backers!
+
+![https://opencollective.com/sous-chefs#backers](https://opencollective.com/sous-chefs/backers.svg?width=600&avatarHeight=40)
+
+### Sponsors
+
+Support this project by becoming a sponsor. Your logo will show up here with a link to your website.
+
+![https://opencollective.com/sous-chefs/sponsor/0/website](https://opencollective.com/sous-chefs/sponsor/0/avatar.svg?avatarHeight=100)
+![https://opencollective.com/sous-chefs/sponsor/1/website](https://opencollective.com/sous-chefs/sponsor/1/avatar.svg?avatarHeight=100)
+![https://opencollective.com/sous-chefs/sponsor/2/website](https://opencollective.com/sous-chefs/sponsor/2/avatar.svg?avatarHeight=100)
+![https://opencollective.com/sous-chefs/sponsor/3/website](https://opencollective.com/sous-chefs/sponsor/3/avatar.svg?avatarHeight=100)
+![https://opencollective.com/sous-chefs/sponsor/4/website](https://opencollective.com/sous-chefs/sponsor/4/avatar.svg?avatarHeight=100)
+![https://opencollective.com/sous-chefs/sponsor/5/website](https://opencollective.com/sous-chefs/sponsor/5/avatar.svg?avatarHeight=100)
+![https://opencollective.com/sous-chefs/sponsor/6/website](https://opencollective.com/sous-chefs/sponsor/6/avatar.svg?avatarHeight=100)
+![https://opencollective.com/sous-chefs/sponsor/7/website](https://opencollective.com/sous-chefs/sponsor/7/avatar.svg?avatarHeight=100)
+![https://opencollective.com/sous-chefs/sponsor/8/website](https://opencollective.com/sous-chefs/sponsor/8/avatar.svg?avatarHeight=100)
+![https://opencollective.com/sous-chefs/sponsor/9/website](https://opencollective.com/sous-chefs/sponsor/9/avatar.svg?avatarHeight=100)
