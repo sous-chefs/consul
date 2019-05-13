@@ -78,8 +78,15 @@ module ConsulCookbook
       def action_create
         configure_diplomat
         unless up_to_date?
-          converge_by %|creating ACL token "#{new_resource.description.downcase}"| do
-            Diplomat::Token.create(new_resource.to_acl)
+          old_token = Diplomat::Token.list.select { |p| p['Description'].downcase == new_resource.description.downcase }
+          if old_token.empty?
+            converge_by %|creating ACL token "#{new_resource.description.downcase}"| do
+              Diplomat::Token.create(new_resource.to_acl)
+            end
+          else
+            converge_by %|updating ACL token "#{new_resource.description.downcase}"| do
+              Diplomat::Token.update(new_resource.to_acl.merge('AccessorID' => old_token.first['AccessorID']))
+            end
           end
         end
       end
@@ -116,7 +123,7 @@ module ConsulCookbook
             return false
           end
           old_token = Diplomat::Token.read(old_token_id.first['AccessorID'], {}, :return)
-          old_token.select! { |k, _v| %w(AccessorID SecretID Description Policies Local).include?(k) }
+          old_token.select! { |k, _v| %w(SecretID Description Policies Local).include?(k) }
           old_token['Description'].downcase!
           old_token == new_resource.to_acl
         end
