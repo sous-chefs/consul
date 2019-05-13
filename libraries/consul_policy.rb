@@ -61,11 +61,13 @@ module ConsulCookbook
       def action_create
         configure_diplomat
         unless up_to_date?
-          converge_by %|creating ACL policy "#{new_resource.policy_name.downcase}"| do
-            policy = Diplomat::Policy.list.select { |p| p['Name'].downcase == new_resource.policy_name.downcase }
-            if policy.empty?
+          policy = Diplomat::Policy.list.select { |p| p['Name'].downcase == new_resource.policy_name.downcase }
+          if policy.empty?
+            converge_by %|creating ACL policy "#{new_resource.policy_name.downcase}"| do
               Diplomat::Policy.create(new_resource.to_acl)
-            else
+            end
+          else
+            converge_by %|updating ACL policy "#{new_resource.policy_name.downcase}"| do
               Diplomat::Policy.update(new_resource.to_acl.merge('ID' => policy.first['ID']))
             end
           end
