@@ -53,10 +53,10 @@ module ConsulCookbook
   end
 
   module Provider
-    # Provider for managing Consul ACL policies.
-    class ConsulPolicy < Chef::Provider
+    # Provider for managing Consul ACL roles.
+    class ConsulRole < Chef::Provider
       include Poise
-      provides(:consul_policy)
+      provides(:consul_role)
 
       def action_create
         configure_diplomat
