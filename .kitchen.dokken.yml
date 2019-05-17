@@ -3,6 +3,7 @@ driver:
   name: dokken
   chef_version: latest
   privileged: true
+  env: [CHEF_LICENSE=accept]
 
 transport:
   name: dokken
