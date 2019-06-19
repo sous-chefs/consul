@@ -75,6 +75,7 @@ module ConsulCookbook
       attribute(:domain, kind_of: String)
       attribute(:enable_acl_replication, equal_to: [true, false])
       attribute(:enable_debug, equal_to: [true, false])
+      attribute(:enable_local_script_checks, equal_to: [true, false])
       attribute(:enable_script_checks, equal_to: [true, false])
       attribute(:enable_syslog, equal_to: [true, false])
       attribute(:encrypt, kind_of: String)
@@ -217,6 +218,9 @@ module ConsulCookbook
         for_keeps << %i(discovery_max_stale) if node['consul']['version'] > '1.0.6'
         for_keeps << %i(bootstrap bootstrap_expect) if server
         for_keeps << %i(ca_file cert_file key_file) if tls?
+        for_keeps << %i(enable_local_script_checks) if node['consul']['version'] >= '1.2.4' ||
+                                                       node['consul']['version'] >= '1.1.1' && node['consul']['version'] < '1.2.0' ||
+                                                       node['consul']['version'] >= '1.0.8' && node['consul']['version'] < '1.1.0'
         for_keeps = for_keeps.flatten
 
         raw_config = to_hash

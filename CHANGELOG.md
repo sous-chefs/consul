@@ -3,6 +3,7 @@
 - Fix the Ruby type for `tls_cipher_suites` config property (#501, #510)
 - Removed node send in helper.rb (Stop polutiting node object - Collides with hashicorp-vault too. So the practice should be stopped. Added extend to attributes/default
 - Changed testing to be circleci
+- Add config option `enable_local_script_checks` (#526)
 
 ## [v3.1.0](https://github.com/johnbellone/consul-cookbook/tree/v3.1.0) (2017-10-12)
 [Full Changelog](https://github.com/johnbellone/consul-cookbook/compare/v3.0.0...v3.1.0)
