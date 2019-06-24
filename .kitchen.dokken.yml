@@ -1,7 +1,6 @@
 ---
 driver:
   name: dokken
-  chef_version: latest
   privileged: true
   env: [CHEF_LICENSE=accept]
 
@@ -10,18 +9,16 @@ transport:
 
 provisioner:
   name: dokken
-
-verifier:
-  name: inspec
+  product_name: chef
+  product_version: <%= ENV['CHEF_VERSION'] || 'latest' %>
+  install_strategy: once
 
 platforms:
   - name: centos-7
     driver:
-      image: centos:7
+      image: dokken/centos-7
       platform: rhel
       pid_one_command: /usr/lib/systemd/systemd
-      intermediate_instructions:
-        - RUN yum -y install lsof which systemd-sysv initscripts net-tools
     attributes:
       poise-service:
         consul:
@@ -29,51 +26,41 @@ platforms:
 
   - name: centos-6
     driver:
-      image: centos:6
+      image: dokken/centos-6
       platform: rhel
       pid_one_command: /sbin/init
       intermediate_instructions:
         - RUN yum -y install which initscripts net-tools
+    attributes:
+      poise-service:
+        consul:
+          provider: upstart
 
   - name: ubuntu-16.04
     driver:
-      image: ubuntu:16.04
+      image: dokken/ubuntu-16.04
+      pid_one_command: /sbin/init
+      intermediate_instructions:
+        - RUN /usr/bin/apt-get update
+    attributes:
+      poise-service:
+        consul:
+          provider: upstart
+
+  - name: ubuntu-18.04
+    driver:
+      image: dokken/ubuntu-18.04
       pid_one_command: /bin/systemd
       intermediate_instructions:
-        - RUN /usr/bin/apt-get update -y
-        - RUN /usr/bin/apt-get install net-tools -y
+        - RUN /usr/bin/apt-get update
     attributes:
       poise-service:
         consul:
           provider: systemd
-
-  - name: ubuntu-14.04
-    driver:
-      image: ubuntu-upstart:14.04
-      pid_one_command: /sbin/init
-      intermediate_instructions:
-        - RUN /usr/bin/apt-get update -y
-        - RUN /usr/bin/apt-get install net-tools -y
-    attributes:
-      poise-service:
-        consul:
-          provider: upstart
-
-  - name: ubuntu-12.04
-    driver:
-      image: ubuntu-upstart:12.04
-      pid_one_command: /sbin/init
-      intermediate_instructions:
-        - RUN /usr/bin/apt-get update -y
-        - RUN /usr/bin/apt-get install net-tools -y
-    attributes:
-      poise-service:
-        consul:
-          provider: upstart
 
   - name: debian-8
     driver:
-      image: debian:8
+      image: dokken/debian-8
       pid_one_command: /bin/systemd
       intermediate_instructions:
         - RUN /usr/bin/apt-get update
@@ -83,30 +70,22 @@ platforms:
         consul:
           provider: systemd
 
-  - name: debian-7
+  - name: debian-9
     driver:
-      image: debian:7
-      pid_one_command: /sbin/init
+      image: dokken/debian-9
+      pid_one_command: /bin/systemd
       intermediate_instructions:
         - RUN /usr/bin/apt-get update
-        - RUN /usr/bin/apt-get install lsb-release net-tools -y
     attributes:
       poise-service:
         consul:
-          provider: sysvinit
+          provider: systemd
 
-suites:
-  - name: default
-    provisioner:
-      policyfile: test/fixtures/policies/default.rb
+  - name: amazonlinux-2
+    driver:
+      image: dokken/amazonlinux-2
+      pid_one_command: /usr/lib/systemd/systemd
     attributes:
-      consul:
-        config: &default-config
-          owner: root
-          bootstrap: true
-          server: true
-          datacenter: FortMeade
-          encrypt: CGXC2NsXW4AvuB4h5ODYzQ==
-          acl_master_token: doublesecret
-          acl_datacenter: FortMeade
-          acl_default_policy: deny
+      poise-service:
+        consul:
+          provider: systemd
