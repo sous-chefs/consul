@@ -1,5 +1,7 @@
 # Change Log
 
+- Only set `name` if the parameters are not an array #568
+
 ## [4.0.3](https://github.com/sous-chefs/consul/tree/v4.0.3 (2020-07-20)
 
 - resolved cookstyle error: libraries/consul_installation_binary.rb:43:7 refactor: `ChefModernize/ActionMethodInResource`
