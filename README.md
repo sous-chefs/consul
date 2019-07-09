@@ -105,6 +105,7 @@ the `owner` property of `consul_config` explicitly:
 # attributes file
 default['consul']['config']['owner'] = 'root'
 ```
+
 or
 
 ```ruby

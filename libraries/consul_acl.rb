@@ -101,7 +101,7 @@ module ConsulCookbook
       def retry_block(opts = {}, &_block)
         opts = {
           max_tries: 3, # Number of tries
-          sleep:     0, # Seconds to sleep between tries
+          sleep: 0, # Seconds to sleep between tries
         }.merge(opts)
 
         try_count = 1
