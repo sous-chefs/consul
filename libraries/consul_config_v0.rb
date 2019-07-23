@@ -79,6 +79,7 @@ module ConsulCookbook
       attribute(:domain, kind_of: String)
       attribute(:enable_acl_replication, equal_to: [true, false])
       attribute(:enable_debug, equal_to: [true, false])
+      attribute(:enable_local_script_checks, equal_to: [true, false])
       attribute(:enable_script_checks, equal_to: [true, false])
       attribute(:enable_syslog, equal_to: [true, false])
       attribute(:encrypt, kind_of: String)
@@ -179,6 +180,7 @@ module ConsulCookbook
           domain
           enable_acl_replication
           enable_debug
+          enable_local_script_checks
           enable_script_checks
           enable_syslog
           encrypt
