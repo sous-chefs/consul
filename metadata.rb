@@ -17,7 +17,7 @@ supports 'arch'
 supports 'windows'
 
 # build-essential is obsolete in chef 14+
-depends 'build-essential' # ~FC121
+# ~FC121
 depends 'nssm', '>= 4.0.0'
 depends 'golang'
 depends 'poise', '~> 2.2'
