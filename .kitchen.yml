@@ -31,6 +31,9 @@ platforms:
       gui: false
     provisioner:
       product_version: 13
+    transport:
+      name: winrm
+      username: administrator
 
 suites:
   - name: default
