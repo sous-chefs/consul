@@ -15,7 +15,14 @@ default['consul']['config']['ca_file'] = join_path config_prefix_path, 'ssl', 'C
 default['consul']['config']['cert_file'] = join_path config_prefix_path, 'ssl', 'certs', 'consul.crt'
 default['consul']['config']['client_addr'] = '0.0.0.0'
 default['consul']['config']['data_dir'] = data_path
-default['consul']['config']['enable_local_script_checks'] = true
+
+# The mere presence of the below line breaks config derived prior to its introduction.
+# This breaks the kitchen tests.
+# The value can still be used, it just will omit itself by default.
+# When https://github.com/sous-chefs/consul/issues/520 is fixed,
+# we can use the later versions that support this as we fail for other reasons later.
+# default['consul']['config']['enable_local_script_checks'] = true
+
 default['consul']['config']['key_file'] = join_path config_prefix_path, 'ssl', 'private', 'consul.key'
 default['consul']['config']['path'] = join_path config_prefix_path, 'consul.json'
 default['consul']['config']['ports'] = {
@@ -31,6 +38,10 @@ default['consul']['diplomat_version'] = nil
 default['consul']['service']['config_dir'] = join_path config_prefix_path, 'conf.d'
 
 default['consul']['version'] = '0.9.3'
+
+default['consul']['archive_url_root'] = 'https://releases.hashicorp.com'
+
+default['consul']['enterprise'] = false
 
 # Windows only
 default['consul']['service']['nssm_params'] = {
