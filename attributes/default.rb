@@ -40,10 +40,15 @@ default['consul']['diplomat_version'] = nil
 
 default['consul']['service']['config_dir'] = join_path config_prefix_path, 'conf.d'
 
-default['consul']['version'] = '1.0.7'
+default['consul']['version'] = '1.2.4'
 
+# Our repo for testing enterprise packages.
+# Use this location when testing enterprise.
+# default['consul']['archive_url_root'] = 'https://cdn.aws.robloxlabs.com'
 default['consul']['archive_url_root'] = 'https://releases.hashicorp.com'
 
+# When turning this to true, be sure the enterprise packages are located
+# at archive_url_root.
 default['consul']['enterprise'] = false
 
 # Windows only
