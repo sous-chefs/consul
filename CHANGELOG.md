@@ -4,6 +4,7 @@
 - Removed node send in helper.rb (Stop polutiting node object - Collides with hashicorp-vault too. So the practice should be stopped. Added extend to attributes/default
 - Changed testing to be circleci
 - Updated circleci orb to latest - implemented markdown and yaml linting
+- Updated with latest cookstyle
 
 ## [v3.1.0](https://github.com/johnbellone/consul-cookbook/tree/v3.1.0) (2017-10-12)
 
