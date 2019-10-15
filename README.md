@@ -14,6 +14,10 @@ simplified approach to configuring and installing
 Consul. Additionally, it provides Chef primitives for more advanced
 configuration.
 
+## Maintainers
+
+This cookbook is maintained by the Sous Chefs. The Sous Chefs are a community of Chef cookbook maintainers working together to maintain important cookbooks. If you’d like to know more please visit [sous-chefs.org](https://sous-chefs.org/) or come chat with us on the Chef Community Slack in [#sous-chefs](https://chefcommunity.slack.com/messages/C2V7B88SF).
+
 ## Basic Usage
 
 For most infrastructure we suggest first starting with the default
@@ -101,6 +105,7 @@ the `owner` property of `consul_config` explicitly:
 # attributes file
 default['consul']['config']['owner'] = 'root'
 ```
+
 or
 
 ```ruby

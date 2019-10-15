@@ -74,10 +74,10 @@ describe ConsulCookbook::Resource::ConsulConfigV1 do
         recipe do
           consul_config '/etc/consul/default.json' do
             retry_join_ec2(
-              'region'            => 'ca-central-1',
-              'tag_key'           => 'foo',
-              'tag_value'         => 'bar',
-              'access_key_id'     => 'KEY_ID',
+              'region' => 'ca-central-1',
+              'tag_key' => 'foo',
+              'tag_value' => 'bar',
+              'access_key_id' => 'KEY_ID',
               'secret_access_key' => 'SECRETS'
             )
           end
@@ -88,11 +88,11 @@ describe ConsulCookbook::Resource::ConsulConfigV1 do
               Hash[item.split.map { |pair| pair.split('=') }]
             end
           ).to contain_exactly(
-            'provider'          => 'aws',
-            'region'            => 'ca-central-1',
-            'tag_key'           => 'foo',
-            'tag_value'         => 'bar',
-            'access_key_id'     => 'KEY_ID',
+            'provider' => 'aws',
+            'region' => 'ca-central-1',
+            'tag_key' => 'foo',
+            'tag_value' => 'bar',
+            'access_key_id' => 'KEY_ID',
             'secret_access_key' => 'SECRETS'
           )
         end
@@ -108,8 +108,8 @@ describe ConsulCookbook::Resource::ConsulConfigV1 do
         recipe do
           consul_config '/etc/consul/default.json' do
             retry_join_azure(
-              'tag_name'          => 'foo',
-              'tag_value'         => 'bar',
+              'tag_name' => 'foo',
+              'tag_value' => 'bar',
               'subscription_id' => 'SUBSCRIPTION_ID',
               'tenant_id' => 'TENANT_ID',
               'client_id' => 'CLIENT_ID',
@@ -123,12 +123,12 @@ describe ConsulCookbook::Resource::ConsulConfigV1 do
               Hash[item.split.map { |pair| pair.split('=') }]
             end
           ).to contain_exactly(
-            'provider'          => 'azure',
-            'tag_name'          => 'foo',
-            'tag_value'         => 'bar',
-            'subscription_id'   => 'SUBSCRIPTION_ID',
-            'tenant_id'         => 'TENANT_ID',
-            'client_id'         => 'CLIENT_ID',
+            'provider' => 'azure',
+            'tag_name' => 'foo',
+            'tag_value' => 'bar',
+            'subscription_id' => 'SUBSCRIPTION_ID',
+            'tenant_id' => 'TENANT_ID',
+            'client_id' => 'CLIENT_ID',
             'secret_access_key' => 'SECRETS'
           )
         end
@@ -148,8 +148,8 @@ describe ConsulCookbook::Resource::ConsulConfigV1 do
           consul_config '/etc/consul/default.json' do
             retry_join ['127.0.0.1']
             retry_join_ec2(
-              'region'    => 'ca-central-1',
-              'tag_key'   => 'foo',
+              'region' => 'ca-central-1',
+              'tag_key' => 'foo',
               'tag_value' => 'bar'
             )
           end
@@ -162,9 +162,9 @@ describe ConsulCookbook::Resource::ConsulConfigV1 do
           ).to contain_exactly(
             { '127.0.0.1' => nil },
             { # rubocop:disable Style/BracesAroundHashParameters
-              'provider'  => 'aws',
-              'region'    => 'ca-central-1',
-              'tag_key'   => 'foo',
+              'provider' => 'aws',
+              'region' => 'ca-central-1',
+              'tag_key' => 'foo',
               'tag_value' => 'bar',
             }
           )
@@ -175,7 +175,7 @@ describe ConsulCookbook::Resource::ConsulConfigV1 do
           consul_config '/etc/consul/default.json' do
             retry_join ['127.0.0.1']
             retry_join_azure(
-              'tag_name'  => 'foo',
+              'tag_name' => 'foo',
               'tag_value' => 'bar'
             )
           end
@@ -188,8 +188,8 @@ describe ConsulCookbook::Resource::ConsulConfigV1 do
           ).to contain_exactly(
             { '127.0.0.1' => nil },
             { # rubocop:disable Style/BracesAroundHashParameters
-              'provider'  => 'azure',
-              'tag_name'  => 'foo',
+              'provider' => 'azure',
+              'tag_name' => 'foo',
               'tag_value' => 'bar',
             }
           )

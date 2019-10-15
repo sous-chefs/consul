@@ -71,20 +71,20 @@ describe ConsulCookbook::Resource::ConsulConfigV0 do
       recipe do
         consul_config '/etc/consul/default.json' do
           retry_join_ec2(
-            'region'            => 'ca-central-1',
-            'tag_key'           => 'foo',
-            'tag_value'         => 'bar',
-            'access_key_id'     => 'KEY_ID',
+            'region' => 'ca-central-1',
+            'tag_key' => 'foo',
+            'tag_value' => 'bar',
+            'access_key_id' => 'KEY_ID',
             'secret_access_key' => 'SECRETS'
           )
         end
       end
       it 'sets the `retry_join_ec2` field' do
         expect(config['retry_join_ec2']).to include(
-          'region'            => 'ca-central-1',
-          'tag_key'           => 'foo',
-          'tag_value'         => 'bar',
-          'access_key_id'     => 'KEY_ID',
+          'region' => 'ca-central-1',
+          'tag_key' => 'foo',
+          'tag_value' => 'bar',
+          'access_key_id' => 'KEY_ID',
           'secret_access_key' => 'SECRETS'
         )
       end
@@ -94,22 +94,22 @@ describe ConsulCookbook::Resource::ConsulConfigV0 do
       recipe do
         consul_config '/etc/consul/default.json' do
           retry_join_azure(
-            'tag_name'          => 'foo',
-            'tag_value'         => 'bar',
-            'subscription_id'   => 'SUBSCRIPTION_ID',
-            'tenant_id'         => 'TENANT_ID',
-            'client_id'         => 'CLIENT_ID',
+            'tag_name' => 'foo',
+            'tag_value' => 'bar',
+            'subscription_id' => 'SUBSCRIPTION_ID',
+            'tenant_id' => 'TENANT_ID',
+            'client_id' => 'CLIENT_ID',
             'secret_access_key' => 'SECRETS'
           )
         end
       end
       it 'sets the `retry_join_azure` field' do
         expect(config['retry_join_azure']).to include(
-          'tag_name'          => 'foo',
-          'tag_value'         => 'bar',
-          'subscription_id'   => 'SUBSCRIPTION_ID',
-          'tenant_id'         => 'TENANT_ID',
-          'client_id'         => 'CLIENT_ID',
+          'tag_name' => 'foo',
+          'tag_value' => 'bar',
+          'subscription_id' => 'SUBSCRIPTION_ID',
+          'tenant_id' => 'TENANT_ID',
+          'client_id' => 'CLIENT_ID',
           'secret_access_key' => 'SECRETS'
         )
       end

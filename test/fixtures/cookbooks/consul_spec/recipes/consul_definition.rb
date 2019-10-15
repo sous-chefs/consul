@@ -1,4 +1,3 @@
-
 # The ruby interpreter is guaranteed to exist since it's currently running.
 file '/consul_definition_check.rb' do
   content <<-EOF.gsub(/^ */, '')
