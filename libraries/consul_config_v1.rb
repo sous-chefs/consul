@@ -2,7 +2,7 @@
 # Cookbook: consul
 # License: Apache 2.0
 #
-# Copyright 2014-2016, Bloomberg Finance L.P.
+# Copyright:: 2014-2016, Bloomberg Finance L.P.
 #
 require 'poise'
 require_relative 'helpers'
@@ -266,8 +266,8 @@ module ConsulCookbook
                                    end
         end
         {
-          statsd_addr:     :statsd_address,
-          statsite_addr:   :statsite_address,
+          statsd_addr: :statsd_address,
+          statsite_addr: :statsite_address,
           statsite_prefix: :metrics_prefix,
         }.each do |field, replacement|
           next unless raw_config[field]
