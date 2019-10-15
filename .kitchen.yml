@@ -4,21 +4,26 @@ driver:
 
 provisioner:
   name: chef_zero
-  policyfile: test/fixtures/policies/default.rb
   product_name: chef
-  product_version: latest
-  install_strategy: always
+  product_version: <%= ENV['CHEF_VERSION'] || 'latest' %>
+  install_strategy: once
+
+client_rb:
+  treat_deprecation_warnings_as_errors: true
 
 verifier:
   name: inspec
 
 platforms:
+  - name: amazonlinux-2
+    driver_config:
+      box: ywatase/amzn2
   - name: ubuntu-16.04
-  - name: ubuntu-14.04
-  - name: centos-7.3
-  - name: centos-6.8
-  - name: debian-9.3
-  - name: debian-8.7
+  - name: ubuntu-18.04
+  - name: centos-7
+  - name: centos-6
+  - name: debian-9
+  - name: debian-8
   - name: windows-2012r2
     driver:
       box: mwrock/Windows2012R2
