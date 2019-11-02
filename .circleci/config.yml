@@ -1,13 +1,23 @@
 ---
+jobs:
+  final:
+    docker:
+      - image: bash:latest
+    steps:
+      - run:
+          name: Finish cooking
+          command: echo "Finished cooking"
+lint_and_unit: &lint_and_unit
+  - delivery
+  - danger
+  - lint-yaml
+  - lint-markdown
 version: 2.1
-
 orbs:
   kitchen: sous-chefs/kitchen@2
-
 workflows:
   kitchen:
     jobs:
-      # Lint and Unit Test
       - kitchen/yamllint:
           name: lint-yaml
       - kitchen/mdlint:
@@ -17,3 +27,110 @@ workflows:
           context: Danger
       - kitchen/delivery:
           name: delivery
+      - kitchen/dokken-single:
+          name: default-centos-7
+          suite: default-centos-7
+          requires: *lint_and_unit
+      - kitchen/dokken-single:
+          name: default-centos-6
+          suite: default-centos-6
+          requires: *lint_and_unit
+      - kitchen/dokken-single:
+          name: default-ubuntu-1604
+          suite: default-ubuntu-1604
+          requires: *lint_and_unit
+      - kitchen/dokken-single:
+          name: default-ubuntu-1804
+          suite: default-ubuntu-1804
+          requires: *lint_and_unit
+      - kitchen/dokken-single:
+          name: default-debian-8
+          suite: default-debian-8
+          requires: *lint_and_unit
+      - kitchen/dokken-single:
+          name: default-debian-9
+          suite: default-debian-9
+          requires: *lint_and_unit
+      - kitchen/dokken-single:
+          name: default-amazonlinux-2
+          suite: default-amazonlinux-2
+          requires: *lint_and_unit
+      - kitchen/dokken-single:
+          name: client-centos-7
+          suite: client-centos-7
+          requires: *lint_and_unit
+      - kitchen/dokken-single:
+          name: client-centos-6
+          suite: client-centos-6
+          requires: *lint_and_unit
+      - kitchen/dokken-single:
+          name: client-ubuntu-1604
+          suite: client-ubuntu-1604
+          requires: *lint_and_unit
+      - kitchen/dokken-single:
+          name: client-ubuntu-1804
+          suite: client-ubuntu-1804
+          requires: *lint_and_unit
+      - kitchen/dokken-single:
+          name: client-debian-8
+          suite: client-debian-8
+          requires: *lint_and_unit
+      - kitchen/dokken-single:
+          name: client-debian-9
+          suite: client-debian-9
+          requires: *lint_and_unit
+      - kitchen/dokken-single:
+          name: client-amazonlinux-2
+          suite: client-amazonlinux-2
+          requires: *lint_and_unit
+      - kitchen/dokken-single:
+          name: git-centos-7
+          suite: git-centos-7
+          requires: *lint_and_unit
+      - kitchen/dokken-single:
+          name: git-centos-6
+          suite: git-centos-6
+          requires: *lint_and_unit
+      - kitchen/dokken-single:
+          name: git-ubuntu-1604
+          suite: git-ubuntu-1604
+          requires: *lint_and_unit
+      - kitchen/dokken-single:
+          name: git-ubuntu-1804
+          suite: git-ubuntu-1804
+          requires: *lint_and_unit
+      - kitchen/dokken-single:
+          name: git-debian-8
+          suite: git-debian-8
+          requires: *lint_and_unit
+      - kitchen/dokken-single:
+          name: git-debian-9
+          suite: git-debian-9
+          requires: *lint_and_unit
+      - kitchen/dokken-single:
+          name: git-amazonlinux-2
+          suite: git-amazonlinux-2
+          requires: *lint_and_unit
+      - final:
+          requires:
+            - default-centos-7
+            - default-centos-6
+            - default-ubuntu-1604
+            - default-ubuntu-1804
+            - default-debian-8
+            - default-debian-9
+            - default-amazonlinux-2
+            - client-centos-7
+            - client-centos-6
+            - client-ubuntu-1604
+            - client-ubuntu-1804
+            - client-debian-8
+            - client-debian-9
+            - client-amazonlinux-2
+            - git-centos-7
+            - git-centos-6
+            - git-ubuntu-1604
+            - git-ubuntu-1804
+            - git-debian-8
+            - git-debian-9
+            - git-amazonlinux-2
