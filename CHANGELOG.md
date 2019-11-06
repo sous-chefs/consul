@@ -1,5 +1,6 @@
 # Change Log
 
+- Add `enable_local_script_checks` parameter (#540)
 - Fix the Ruby type for `tls_cipher_suites` config property (#501, #510)
 - Removed node send in helper.rb (Stop polutiting node object - Collides with hashicorp-vault too. So the practice should be stopped. Added extend to attributes/default
 - Changed testing to be circleci
