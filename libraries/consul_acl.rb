@@ -12,7 +12,6 @@ module ConsulCookbook
     class ConsulAcl < Chef::Resource
       include Poise
       provides(:consul_acl)
-      actions(:create, :delete)
       default_action(:create)
 
       # @!attribute url

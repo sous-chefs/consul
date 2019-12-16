@@ -1,6 +1,6 @@
 require_relative '../spec_helper'
 
-consul_root       = 'C:\Program Files\consul'
+consul_root = 'C:\Program Files\consul'
 
 consul_executable = File.join(consul_root, consul_version, 'consul.exe')
 symlink_path      = File.join(consul_root, 'consul.exe')

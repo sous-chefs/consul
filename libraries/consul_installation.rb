@@ -15,7 +15,6 @@ module ConsulCookbook
     class ConsulInstallation < Chef::Resource
       include Poise(inversion: true)
       provides(:consul_installation)
-      actions(:create, :remove)
       default_action(:create)
 
       # @!attribute version
