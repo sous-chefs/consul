@@ -14,7 +14,7 @@ consul_definition 'consul_definition_check' do
   type 'check'
   user 'root'
   parameters(id: 'consul_definition_check',
-             script: '/consul_definition_check.rb',
+             args: ['/consul_definition_check.rb'],
              interval: '10s',
              timeout: '10s')
   notifies :reload, 'consul_service[consul]', :delayed
