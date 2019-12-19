@@ -11,4 +11,10 @@ end
 # Stop and disable systemd-resolved
 systemd_unit 'systemd-resolved.service' do
     action [:disable, :stop]
+    notifies :reload, 'service[consul]'
+end
+
+# Defined to avoid any issues with poise-*
+service 'consul' do
+  action [:nothing]
 end
