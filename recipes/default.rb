@@ -8,7 +8,7 @@
 case node['platform']
 when 'ubuntu'
   if node['consul']['config']['server'] === true
-    include_recipe '::systemd-resolved'
+    include_recipe '::dns'
   end
 end
 
