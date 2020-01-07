@@ -47,8 +47,8 @@ jobs:
           - 'ubuntu-1804'
           - 'amazonlinux-2'
         suite:
-          - 'default'
           - 'client'
+          - 'default'
           - 'git'
       fail-fast: false
 
