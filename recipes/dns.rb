@@ -1,6 +1,8 @@
 # undo stub symlink to standard symlink
 link '/etc/resolv.conf' do
     to '/run/systemd/resolve/resolv.conf'
+    # Don't execute this if inside a docker container
+    not_if { ::File.exists?('/.dockerenv') }
 end
 
 # Stop and disable dnsmasq
