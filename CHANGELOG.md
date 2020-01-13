@@ -1,11 +1,14 @@
 # Change Log
 
+## unreleased
+
 - Added all missing configuration options up to Consul 1.7.0 (#517)
 - Fix the Ruby type for `tls_cipher_suites` config property (#501, #510)
 - Removed node send in helper.rb (Stop polutiting node object - Collides with hashicorp-vault too. So the practice should be stopped. Added extend to attributes/default
 - Changed testing to be circleci
 - Updated circleci orb to latest - implemented markdown and yaml linting
 - Updated with latest cookstyle
+- Migrate to actions
 
 ## [v3.1.0](https://github.com/johnbellone/consul-cookbook/tree/v3.1.0) (2017-10-12)
 
