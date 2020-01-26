@@ -2,7 +2,7 @@
 # Cookbook: consul
 # License: Apache 2.0
 #
-# Copyright 2014-2016, Bloomberg Finance L.P.
+# Copyright:: 2014-2016, Bloomberg Finance L.P.
 #
 require 'poise'
 
@@ -12,7 +12,6 @@ module ConsulCookbook
     class ConsulAcl < Chef::Resource
       include Poise
       provides(:consul_acl)
-      actions(:create, :delete)
       default_action(:create)
 
       # @!attribute url
@@ -101,7 +100,7 @@ module ConsulCookbook
       def retry_block(opts = {}, &_block)
         opts = {
           max_tries: 3, # Number of tries
-          sleep:     0, # Seconds to sleep between tries
+          sleep: 0, # Seconds to sleep between tries
         }.merge(opts)
 
         try_count = 1
