@@ -27,6 +27,10 @@ module ConsulCookbook
       # @return [String]
       attribute(:group, kind_of: String, default: lazy { node['consul']['service_group'] })
 
+      # @!attribute mode
+      # @return [String]
+      attribute(:mode, kind_of: String, default: '0640')
+
       # @!attribute type
       # @return [String]
       attribute(:type, equal_to: %w(check service checks services))
@@ -60,7 +64,7 @@ module ConsulCookbook
             unless platform?('windows')
               owner new_resource.user
               group new_resource.group
-              mode '0644'
+              mode new_resource.mode
             end
           end
         end

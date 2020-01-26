@@ -1,7 +1,8 @@
 # Change Log
 
-## unreleased
+## UNRELEASED
 
+- Set default mode of Consul definitions to 640 to avoid ACL tokens leak attack.
 - Added all missing configuration options up to Consul 1.7.0 (#517)
 - Fix the Ruby type for `tls_cipher_suites` config property (#501, #510)
 - Removed node send in helper.rb (Stop polutiting node object - Collides with hashicorp-vault too. So the practice should be stopped. Added extend to attributes/default
