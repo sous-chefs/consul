@@ -9,7 +9,7 @@ module ConsulCookbook
   module Helpers
     include Chef::Mixin::ShellOut
 
-    extend self
+    module_function
 
     def arch_64?
       node['kernel']['machine'] =~ /x86_64/ ? true : false
