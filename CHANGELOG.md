@@ -1,6 +1,6 @@
 # Change Log
 
-## UNRELEASED
+## [v3.2.0](https://github.com/johnbellone/consul-cookbook/tree/v3.2.0) (2020-01-26)
 
 - Set default mode of Consul definitions to 640 to avoid ACL tokens leak attack.
 - Added all missing configuration options up to Consul 1.7.0 (#517)
