@@ -2,7 +2,7 @@
 # Cookbook: consul
 # License: Apache 2.0
 #
-# Copyright 2014-2016, Bloomberg Finance L.P.
+# Copyright:: 2014-2016, Bloomberg Finance L.P.
 #
 require 'poise'
 
@@ -63,11 +63,11 @@ module ConsulCookbook
         unless up_to_date?
           policy = Diplomat::Policy.list.select { |p| p['Name'].downcase == new_resource.policy_name.downcase }
           if policy.empty?
-            converge_by %|creating ACL policy "#{new_resource.policy_name.downcase}"| do
+            converge_by %(creating ACL policy "#{new_resource.policy_name.downcase}") do
               Diplomat::Policy.create(new_resource.to_acl)
             end
           else
-            converge_by %|updating ACL policy "#{new_resource.policy_name.downcase}"| do
+            converge_by %(updating ACL policy "#{new_resource.policy_name.downcase}") do
               Diplomat::Policy.update(new_resource.to_acl.merge('ID' => policy.first['ID']))
             end
           end
@@ -76,7 +76,7 @@ module ConsulCookbook
 
       def action_delete
         configure_diplomat
-        converge_by %|deleting ACL policy "#{new_resource.policy_name.downcase}"| do
+        converge_by %(deleting ACL policy "#{new_resource.policy_name.downcase}") do
           policy = Diplomat::Policy.list.select { |p| p['Name'].downcase == new_resource.policy_name.downcase }
           Diplomat::Policy.delete(policy['ID']) unless policy.empty?
         end
@@ -104,7 +104,7 @@ module ConsulCookbook
           return false if old_policy_id.empty?
           old_policy = Diplomat::Policy.read(old_policy_id.first['ID'], {}, :return)
           return false if old_policy.nil?
-          old_policy.first.select! { |k, _v| %w[Name Description Rules].include?(k) }
+          old_policy.first.select! { |k, _v| %w(Name Description Rules).include?(k) }
           old_policy['Description'].downcase!
           old_policy.first == new_resource.to_acl
         end
@@ -113,7 +113,7 @@ module ConsulCookbook
       def retry_block(opts = {}, &_block)
         opts = {
           max_tries: 3, # Number of tries
-          sleep:     0, # Seconds to sleep between tries
+          sleep: 0, # Seconds to sleep between tries
         }.merge(opts)
 
         try_count = 1

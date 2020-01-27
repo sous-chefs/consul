@@ -2,7 +2,7 @@
 # Cookbook: consul
 # License: Apache 2.0
 #
-# Copyright 2014-2016, Bloomberg Finance L.P.
+# Copyright:: 2014-2016, Bloomberg Finance L.P.
 #
 require 'poise'
 
@@ -80,11 +80,11 @@ module ConsulCookbook
         unless up_to_date?
           old_token = Diplomat::Token.list.select { |p| p['Description'].downcase == new_resource.description.downcase }
           if old_token.empty?
-            converge_by %|creating ACL token "#{new_resource.description.downcase}"| do
+            converge_by %(creating ACL token "#{new_resource.description.downcase}") do
               Diplomat::Token.create(new_resource.to_acl)
             end
           else
-            converge_by %|updating ACL token "#{new_resource.description.downcase}"| do
+            converge_by %(updating ACL token "#{new_resource.description.downcase}") do
               Diplomat::Token.update(new_resource.to_acl.merge('AccessorID' => old_token.first['AccessorID']))
             end
           end
@@ -93,7 +93,7 @@ module ConsulCookbook
 
       def action_delete
         configure_diplomat
-        converge_by %|deleting ACL token "#{new_resource.description.downcase}"| do
+        converge_by %(deleting ACL token "#{new_resource.description.downcase}") do
           token = Diplomat::Token.list.select { |p| p['Description'].downcase == new_resource.description.downcase }
           Diplomat::Token.delete(token['AccessorID']) unless token.empty?
         end
@@ -119,7 +119,7 @@ module ConsulCookbook
         retry_block(max_tries: 3, sleep: 0.5) do
           old_token_id = Diplomat::Token.list.select { |p| p['Description'].downcase == new_resource.description.downcase }
           if old_token_id.empty?
-            Chef::Log.warn %|Token with description "#{new_resource.description.downcase}" was not found. Will create.|
+            Chef::Log.warn %(Token with description "#{new_resource.description.downcase}" was not found. Will create.)
             return false
           end
           old_token = Diplomat::Token.read(old_token_id.first['AccessorID'], {}, :return)
@@ -132,7 +132,7 @@ module ConsulCookbook
       def retry_block(opts = {}, &_block)
         opts = {
           max_tries: 3, # Number of tries
-          sleep:     0, # Seconds to sleep between tries
+          sleep: 0, # Seconds to sleep between tries
         }.merge(opts)
 
         try_count = 1

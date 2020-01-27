@@ -1,7 +1,7 @@
 # Consul Cookbook
 
 [![Cookbook Version](https://img.shields.io/cookbook/v/consul.svg)](https://supermarket.chef.io/cookbooks/consul)
-[![Build Status](https://circleci.com/gh/sous-chefs/consul.svg?style=svg)](https://circleci.com/gh/sous-chefs/consul)
+[![CI State](https://github.com/sous-chefs/consul/workflows/ci/badge.svg)](https://github.com/sous-chefs/consul/actions?query=workflow%3Aci)
 [![OpenCollective](https://opencollective.com/sous-chefs/backers/badge.svg)](#backers)
 [![OpenCollective](https://opencollective.com/sous-chefs/sponsors/badge.svg)](#sponsors)
 [![License](https://img.shields.io/badge/License-Apache%202.0-green.svg)](https://opensource.org/licenses/Apache-2.0)

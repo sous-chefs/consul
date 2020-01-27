@@ -2,7 +2,7 @@
 # Cookbook: consul
 # License: Apache 2.0
 #
-# Copyright 2014-2016, Bloomberg Finance L.P.
+# Copyright:: 2014-2016, Bloomberg Finance L.P.
 #
 require 'poise'
 
@@ -63,11 +63,11 @@ module ConsulCookbook
         unless up_to_date?
           role = Diplomat::Role.list.select { |p| p['Name'] == new_resource.role_name }
           if role.empty?
-            converge_by %|creating ACL role "#{new_resource.role_name}"| do
+            converge_by %(creating ACL role "#{new_resource.role_name}") do
               Diplomat::Role.create(new_resource.to_acl)
             end
           else
-            converge_by %|updating ACL role "#{new_resource.role_name}"| do
+            converge_by %(updating ACL role "#{new_resource.role_name}") do
               Diplomat::Role.update(new_resource.to_acl.merge('ID' => role.first['ID']))
             end
           end
@@ -76,7 +76,7 @@ module ConsulCookbook
 
       def action_delete
         configure_diplomat
-        converge_by %|deleting ACL role "#{new_resource.role_name}"| do
+        converge_by %(deleting ACL role "#{new_resource.role_name}") do
           role = Diplomat::Role.list.select { |p| p['Name'] == new_resource.role_name }
           Diplomat::Role.delete(role['ID']) unless role.empty?
         end
@@ -102,7 +102,7 @@ module ConsulCookbook
         retry_block(max_tries: 3, sleep: 0.5) do
           old_role = Diplomat::Role.list.select { |p| p['Name'] == new_resource.role_name }.first
           return false if old_role.nil?
-          old_role.select! { |k, _v| %w[Name Description Policies ServiceIdentities].include?(k) }
+          old_role.select! { |k, _v| %w(Name Description Policies ServiceIdentities).include?(k) }
           old_role == new_resource.to_acl
         end
       end
@@ -110,7 +110,7 @@ module ConsulCookbook
       def retry_block(opts = {}, &_block)
         opts = {
           max_tries: 3, # Number of tries
-          sleep:     0, # Seconds to sleep between tries
+          sleep: 0, # Seconds to sleep between tries
         }.merge(opts)
 
         try_count = 1

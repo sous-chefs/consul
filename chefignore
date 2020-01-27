@@ -1,5 +1,5 @@
 # Put files/directories that should be ignored in this file when uploading
-# or sharing to the community site.
+# to a chef-server or supermarket.
 # Lines that start with '# ' are comments.
 
 # OS generated files #
@@ -51,8 +51,22 @@ spec/*
 spec/fixtures/*
 test/*
 features/*
+examples/*
 Guardfile
 Procfile
+.kitchen*
+kitchen*
+*.yml
+.circleci/*.yml
+.delivery/project.toml
+.github/*
+documentation/*
+spec/*
+Rakefile
+.foodcritic
+.mdlrc
+Dangerfile
+
 
 # SCM #
 #######
@@ -69,13 +83,17 @@ Procfile
 
 # Berkshelf #
 #############
+Berksfile
+Berksfile.lock
 cookbooks/*
 tmp
 
 # Cookbooks #
 #############
-CONTRIBUTING
+CONTRIBUTING*
 CHANGELOG*
+TESTING*
+MAINTAINERS.toml
 
 # Strainer #
 ############
@@ -88,7 +106,3 @@ Strainerfile
 ###########
 .vagrant
 Vagrantfile
-
-# Travis #
-##########
-.travis.yml
