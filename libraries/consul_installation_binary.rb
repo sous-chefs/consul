@@ -48,7 +48,7 @@ module ConsulCookbook
           end
 
           url = format(options[:archive_url], version: options[:version], basename: options[:archive_basename])
-          poise_archive url do
+          poise_archive url do # cookstyle: disable ChefDeprecations/PoiseArchiveUsage
             destination join_path(options[:extract_to], new_resource.version)
             source_properties checksum: options[:archive_checksum]
             strip_components 0

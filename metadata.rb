@@ -12,7 +12,7 @@ supports 'solaris2'
 supports 'arch'
 supports 'windows'
 
-depends 'build-essential', '>= 5.0.0' # required for the resource
+depends 'build-essential', '>= 5.0.0' # cookstyle: disable ChefModernize/UnnecessaryDependsChef14
 depends 'nssm', '>= 4.0.0'
 depends 'golang'
 depends 'poise', '~> 2.2'
