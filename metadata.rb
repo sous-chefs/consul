@@ -3,7 +3,7 @@ maintainer 'Sous Chefs'
 maintainer_email 'help@sous-chefs.org'
 license 'Apache-2.0'
 description 'Application cookbook which installs and configures Consul.'
-version '3.2.0'
+version '3.3.0'
 
 supports 'centos', '>= 6.4'
 supports 'redhat', '>= 6.4'

@@ -1,5 +1,14 @@
 # Change Log
 
+## [v3.3.0](https://github.com/johnbellone/consul-cookbook/tree/v3.3.0) (2020-01-26)
+
+- Add back the dependency on build-essential cookbook to restore Chef Infra Client < 14 compatibility
+- Remove the complex compile_time logic to install the gem in the default recipe as compile_time is available in Chef Infra Client 12.1+
+- Added 3 new resources for Consule 1.5+
+  - consul_token
+  - consul_policy
+  - consul_role
+
 ## [v3.2.0](https://github.com/johnbellone/consul-cookbook/tree/v3.2.0) (2020-01-26)
 
 - Set default mode of Consul definitions to 640 to avoid ACL tokens leak attack.
