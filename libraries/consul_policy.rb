@@ -2,16 +2,17 @@
 # Cookbook: consul
 # License: Apache 2.0
 #
-# Copyright:: 2014-2016, Bloomberg Finance L.P.
+# Copyright 2014-2016, Bloomberg Finance L.P.
 #
 require 'poise'
 
 module ConsulCookbook
   module Resource
-    # Resource for managing  Consul ACLs.
-    class ConsulAcl < Chef::Resource
+    # Resource for managing  Consul ACL policies.
+    class ConsulPolicy < Chef::Resource
       include Poise
-      provides(:consul_acl)
+      provides(:consul_policy)
+      actions(:create, :delete)
       default_action(:create)
 
       # @!attribute url
@@ -22,17 +23,17 @@ module ConsulCookbook
       # @return [String]
       attribute(:auth_token, kind_of: String, required: true)
 
-      # @!attribute id
+      # @!attribute policy_name
       # @return [String]
-      attribute(:id, kind_of: String, name_attribute: true)
+      attribute(:policy_name, kind_of: String, name_attribute: true)
 
-      # @!attribute acl_name
+      # @!attribute description
       # @return [String]
-      attribute(:acl_name, kind_of: String, default: '')
+      attribute(:description, kind_of: String, default: '')
 
       # @!attribute type
-      # @return [String]
-      attribute(:type, equal_to: %w(client management), default: 'client')
+      # @return [Array]
+      attribute(:datacenters, kind_of: Array, default: [])
 
       # @!attribute rules
       # @return [String]
@@ -43,32 +44,41 @@ module ConsulCookbook
       attribute(:ssl, kind_of: Hash, default: {})
 
       def to_acl
-        { 'ID' => id, 'Type' => type, 'Name' => acl_name, 'Rules' => rules }
+        { 'Name' => policy_name,
+          'Description' => description,
+          'Datacenters' => datacenters,
+          'Rules' => rules }
       end
     end
   end
 
   module Provider
-    # Provider for managing  Consul ACLs.
-    class ConsulAcl < Chef::Provider
+    # Provider for managing Consul ACL policies.
+    class ConsulPolicy < Chef::Provider
       include Poise
-      provides(:consul_acl)
+      provides(:consul_policy)
 
       def action_create
         configure_diplomat
         unless up_to_date?
-          converge_by 'creating ACL' do
-            Diplomat::Acl.create(new_resource.to_acl)
+          policy = Diplomat::Policy.list.select { |p| p['Name'].downcase == new_resource.policy_name.downcase }
+          if policy.empty?
+            converge_by %|creating ACL policy "#{new_resource.policy_name.downcase}"| do
+              Diplomat::Policy.create(new_resource.to_acl)
+            end
+          else
+            converge_by %|updating ACL policy "#{new_resource.policy_name.downcase}"| do
+              Diplomat::Policy.update(new_resource.to_acl.merge('ID' => policy.first['ID']))
+            end
           end
         end
       end
 
       def action_delete
         configure_diplomat
-        unless Diplomat::Acl.info(new_resource.id).empty?
-          converge_by 'destroying ACL' do
-            Diplomat::Acl.destroy(new_resource.id)
-          end
+        converge_by %|deleting ACL policy "#{new_resource.policy_name.downcase}"| do
+          policy = Diplomat::Policy.list.select { |p| p['Name'].downcase == new_resource.policy_name.downcase }
+          Diplomat::Policy.delete(policy['ID']) unless policy.empty?
         end
       end
 
@@ -90,17 +100,20 @@ module ConsulCookbook
 
       def up_to_date?
         retry_block(max_tries: 3, sleep: 0.5) do
-          old_acl = Diplomat::Acl.info(new_resource.to_acl['ID'], {}, :return)
-          return false if old_acl.nil? || old_acl.empty?
-          old_acl.first.select! { |k, _v| %w(ID Type Name Rules).include?(k) }
-          old_acl.first == new_resource.to_acl
+          old_policy_id = Diplomat::Policy.list.select { |p| p['Name'].downcase == new_resource.policy_name.downcase }
+          return false if old_policy_id.empty?
+          old_policy = Diplomat::Policy.read(old_policy_id.first['ID'], {}, :return)
+          return false if old_policy.nil?
+          old_policy.first.select! { |k, _v| %w[Name Description Rules].include?(k) }
+          old_policy['Description'].downcase!
+          old_policy.first == new_resource.to_acl
         end
       end
 
       def retry_block(opts = {}, &_block)
         opts = {
           max_tries: 3, # Number of tries
-          sleep: 0, # Seconds to sleep between tries
+          sleep:     0, # Seconds to sleep between tries
         }.merge(opts)
 
         try_count = 1
