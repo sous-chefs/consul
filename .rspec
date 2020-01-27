@@ -1,1 +1,1 @@
---default-path test/spec --color
+--default-path spec --color
