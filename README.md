@@ -193,7 +193,9 @@ as necessary.
 
 The `consul_acl` resource requires the [Diplomat Ruby API][16] gem to be
 installed and available to Chef before using the resource. This can be
-accomplished by including `consul::client_gem` recipe in your run list.
+accomplished by including `consul::client_gem` recipe in your run list. If you
+are using Chef Infra Client 15.8+ you will need to make sure you are using at
+least version 2.2.6 of the diplomat gem.
 
 In order to make the resource idempotent and only notify when necessary, the
 `id` field is always required (defaults to the name of the resource).
