@@ -1,7 +1,7 @@
 [Unit]
 Description=<%= @name %>
-Wants=network.target
-After=network.target
+Wants=network-online.target
+After=network-online.target
 
 [Service]
 Environment=<%= @environment.map {|key, val| %Q{"#{key}=#{val}"} }.join(' ') %>
