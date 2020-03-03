@@ -8,6 +8,8 @@ Environment=<%= @environment.map {|key, val| %Q{"#{key}=#{val}"} }.join(' ') %>
 ExecStart=<%= @command %>
 ExecReload=/bin/kill -<%= @reload_signal %> $MAINPID
 KillSignal=<%= @stop_signal %>
+Restart=always
+RestartSec="5s"
 User=<%= @user %>
 WorkingDirectory=<%= @directory %>
 <% if node['consul']['config']['server'] %>
