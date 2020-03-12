@@ -39,7 +39,7 @@ module ConsulCookbook
             program new_resource.program
             args command(new_resource.config_file, new_resource.config_dir)
             parameters new_resource.nssm_params.select { |_k, v| v != '' }
-            action :install
+            action %i(install start)
           end
         end
       end
