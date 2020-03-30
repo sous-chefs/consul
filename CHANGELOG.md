@@ -1,5 +1,13 @@
 # Change Log
 
+## [v4.0.0](https://github.com/sous-chefs/consul/tree/v4.0.0) (2020-03-30)
+
+- Eliminates the need for the windows cookbook.
+- Update Linux testing versions.
+- Set minimum Chef version to 13.4.
+- Update dokken testing to Chef 14.
+
+
 ## [v3.3.1](https://github.com/sous-chefs/consul/tree/v3.3.1) (2020-02-03)
 
 - Fix undefined method 'join_path' errors
