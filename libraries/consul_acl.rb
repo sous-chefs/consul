@@ -106,7 +106,7 @@ module ConsulCookbook
         try_count = 1
 
         begin
-          return yield try_count
+          yield try_count
         rescue Diplomat::UnknownStatus
           try_count += 1
 

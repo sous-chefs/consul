@@ -16,7 +16,7 @@ module ConsulCookbook
     end
 
     def windows?
-      node['os'].eql?('windows') ? true : false
+      platform_family?('windows') ? true : false
     end
 
     # returns windows friendly version of the provided path,
