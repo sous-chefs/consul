@@ -26,7 +26,7 @@ end
 
 consul_service service_name do |r|
   config_file config.path
-  program install.consul_program
+  program install.consul_command
 
   if node.platform_family?('windows')
     acl_token node['consul']['config']['acl_master_token']
