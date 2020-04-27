@@ -1,0 +1,88 @@
+---
+driver:
+  name: vagrant
+
+provisioner:
+  name: chef_zero
+  product_name: chef
+  product_version: <%= ENV['CHEF_VERSION'] || 'latest' %>
+  install_strategy: once
+
+client_rb:
+  treat_deprecation_warnings_as_errors: true
+
+verifier:
+  name: inspec
+
+platforms:
+  - name: amazonlinux-2
+    driver_config:
+      box: ywatase/amzn2
+  - name: ubuntu-16.04
+  - name: ubuntu-18.04
+  - name: centos-7
+  - name: centos-8
+  - name: debian-9
+  - name: debian-10
+  - name: windows-2012r2
+    driver:
+      box: mwrock/Windows2012R2
+      gui: false
+    provisioner:
+      product_version: 13
+  - name: windows-2016
+    driver:
+      box: mwrock/Windows2016
+      gui: false
+    provisioner:
+      product_version: 13
+
+suites:
+  - name: default
+    attributes:
+      consul:
+        config: &default-config
+          owner: root
+          ui: true
+          bootstrap: true
+          server: true
+          datacenter: FortMeade
+          encrypt: CGXC2NsXW4AvuB4h5ODYzQ==
+          acl_master_token: doublesecret
+          acl_datacenter: FortMeade
+          acl_default_policy: deny
+    excludes:
+      - windows-2012r2
+      - windows-2016
+
+  - name: client
+    named_run_list: client
+    excludes:
+      - windows-2012r2
+      - windows-2016
+
+  - name: git
+    attributes:
+      go:
+        version: "1.10"
+      consul:
+        config: *default-config
+        installation:
+          provider: git
+    excludes:
+      - windows-2012r2
+      - windows-2016
+
+  - name: windows
+    attributes:
+      consul:
+        config: *default-config
+    includes:
+      - windows-2012r2
+      - windows-2016
+
+  - name: windows_client
+    named_run_list: client
+    includes:
+      - windows-2012r2
+      - windows-2016
