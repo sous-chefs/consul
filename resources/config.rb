@@ -1,4 +1,3 @@
-require 'pry'
 property :config_file, String, name_attribute: true
 property :owner, String, default: 'root'
 property :group, String, default: 'consul'
