@@ -210,11 +210,7 @@ action :create do
       verify_incoming_https: new_resource.verify_incoming_https,
       verify_outgoing: new_resource.verify_outgoing,
       verify_server_hostname: new_resource.verify_server_hostname,
-      watches: new_resource.watches,
+      watches: new_resource.watches
     )
   end
-end
-
-action_class do
-  include Consul::Cookbook::Helpers
 end
