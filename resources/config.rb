@@ -1,4 +1,4 @@
-property :config_file, String, name_attribute: true
+property :config_file, String, name_property: true
 property :owner, String, default: 'root'
 property :group, String, default: 'consul'
 property :config_dir, String, default: '/etc/consul/conf.d'
@@ -115,7 +115,7 @@ action :create do
     cookbook 'consul'
     owner new_resource.owner
     group new_resource.group
-    mode 0640
+    mode '0640'
     variables(
       acl_agent_token: new_resource.acl_agent_token,
       acl_agent_master_token: new_resource.acl_agent_master_token,
