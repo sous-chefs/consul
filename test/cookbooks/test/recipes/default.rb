@@ -10,4 +10,5 @@ end
 
 consul_config 'consul.json' do
   server true
+  advertise_addr '127.0.0.1'
 end

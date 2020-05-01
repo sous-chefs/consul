@@ -4,8 +4,6 @@ consul_executable = "/opt/consul/#{consul_version}/consul"
 symlink_path      = '/usr/local/bin/consul'
 consul_command    = symlink_path
 
-config_file = '/etc/consul/consul.json'
-confd_dir   = '/etc/consul/conf.d'
 data_dir    = '/var/lib/consul'
 
 describe file(consul_executable) do
@@ -50,37 +48,9 @@ describe file(symlink_path) do
   it { should be_symlink }
 end
 
-describe file(config_file) do
-  it { should be_file }
-  it { should be_owned_by 'root' }
-  it { should be_grouped_into 'consul' }
-  its('mode') { should cmp '0640' }
-end
-
-describe file(confd_dir) do
-  it { should be_directory }
-  it { should be_owned_by 'root' }
-  it { should be_grouped_into 'consul' }
-  its('mode') { should cmp '0755' }
-end
-
 describe directory(data_dir) do
   it { should be_directory }
   it { should be_owned_by 'consul' }
   it { should be_grouped_into 'consul' }
   its('mode') { should cmp '0750' }
-end
-
-describe file("#{confd_dir}/consul_definition_check.json") do
-  it { should be_file }
-  it { should be_owned_by 'root' }
-  it { should be_grouped_into 'consul' }
-  its('mode') { should cmp '0644' }
-end
-
-describe file("#{confd_dir}/consul_watch_check.json") do
-  it { should be_file }
-  it { should be_owned_by 'root' }
-  it { should be_grouped_into 'consul' }
-  its('mode') { should cmp '0640' }
 end
