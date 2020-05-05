@@ -1,6 +1,6 @@
 # Change Log
 
-## Unreleased
+## [4.0.1](https://github.com/sous-chefs/consul/tree/v4.0.1) (2020-05-05)
 
 - resolved cookstyle error: libraries/consul_acl.rb:109:11 convention: `Style/RedundantReturn`
 - resolved cookstyle error: libraries/consul_policy.rb:122:11 convention: `Style/RedundantReturn`
@@ -14,7 +14,6 @@
 - Update Linux testing versions.
 - Set minimum Chef version to 13.4.
 - Update dokken testing to Chef 14.
-
 
 ## [v3.3.1](https://github.com/sous-chefs/consul/tree/v3.3.1) (2020-02-03)
 
