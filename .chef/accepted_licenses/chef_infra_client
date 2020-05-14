@@ -1,0 +1,8 @@
+---
+id: infra-client
+name: Chef Infra Client
+date_accepted: '2019-08-08T00:05:08+01:00'
+accepting_product: chef-workstation
+accepting_product_version: 4.2.0
+user: jfield
+file_format: 1

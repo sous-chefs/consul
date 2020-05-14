@@ -1,5 +1,20 @@
 # Change Log
 
+## [4.0.1](https://github.com/sous-chefs/consul/tree/v4.0.1) (2020-05-05)
+
+- resolved cookstyle error: libraries/consul_acl.rb:109:11 convention: `Style/RedundantReturn`
+- resolved cookstyle error: libraries/consul_policy.rb:122:11 convention: `Style/RedundantReturn`
+- resolved cookstyle error: libraries/consul_role.rb:119:11 convention: `Style/RedundantReturn`
+- resolved cookstyle error: libraries/consul_token.rb:141:11 convention: `Style/RedundantReturn`
+- resolved cookstyle error: libraries/helpers.rb:19:7 refactor: `ChefStyle/UnnecessaryOSCheck`
+
+## [v4.0.0](https://github.com/sous-chefs/consul/tree/v4.0.0) (2020-03-30)
+
+- Eliminates the need for the windows cookbook.
+- Update Linux testing versions.
+- Set minimum Chef version to 13.4.
+- Update dokken testing to Chef 14.
+
 ## [v3.3.1](https://github.com/sous-chefs/consul/tree/v3.3.1) (2020-02-03)
 
 - Fix undefined method 'join_path' errors

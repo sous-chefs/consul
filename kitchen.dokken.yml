@@ -3,7 +3,7 @@ driver:
   name: dokken
   privileged: true
   env: [CHEF_LICENSE=accept]
-  chef_version: '13.12.14'
+  chef_version: 14
 
 transport:
   name: dokken
@@ -21,9 +21,9 @@ platforms:
         consul:
           provider: systemd
 
-  - name: centos-6
+  - name: centos-8
     driver:
-      image: dokken/centos-6
+      image: dokken/centos-8
       pid_one_command: /sbin/init
       intermediate_instructions:
         - RUN yum -y install which initscripts net-tools
@@ -54,9 +54,9 @@ platforms:
         consul:
           provider: systemd
 
-  - name: debian-8
+  - name: debian-9
     driver:
-      image: dokken/debian-8
+      image: dokken/debian-9
       pid_one_command: /bin/systemd
       intermediate_instructions:
         - RUN /usr/bin/apt-get update
@@ -65,9 +65,9 @@ platforms:
         consul:
           provider: systemd
 
-  - name: debian-9
+  - name: debian-10
     driver:
-      image: dokken/debian-9
+      image: dokken/debian-10
       pid_one_command: /bin/systemd
       intermediate_instructions:
         - RUN /usr/bin/apt-get update
