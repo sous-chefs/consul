@@ -12,3 +12,7 @@ consul_config 'consul.json' do
   server true
   advertise_addr '127.0.0.1'
 end
+
+consul_watch 'consul_watch_check.json' do
+  
+end
