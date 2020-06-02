@@ -1,5 +1,9 @@
 # Change Log
 
+## [4.0.2](https://github.com/sous-chefs/consul/tree/v4.0.2) (2020-06-02)
+
+- resolved cookstyle error: libraries/consul_service_windows.rb:16:7 refactor: `ChefModernize/IncludingMixinShelloutInResources`
+
 ## [4.0.1](https://github.com/sous-chefs/consul/tree/v4.0.1) (2020-05-05)
 
 - resolved cookstyle error: libraries/consul_acl.rb:109:11 convention: `Style/RedundantReturn`
