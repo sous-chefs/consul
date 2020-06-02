@@ -1,6 +1,6 @@
 # Change Log
 
-## Unreleased
+## [4.0.2](https://github.com/sous-chefs/consul/tree/v4.0.2) (2020-06-02)
 
 - resolved cookstyle error: libraries/consul_service_windows.rb:16:7 refactor: `ChefModernize/IncludingMixinShelloutInResources`
 
