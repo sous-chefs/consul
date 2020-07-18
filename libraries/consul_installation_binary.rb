@@ -40,7 +40,7 @@ module ConsulCookbook
                     archive_checksum: binary_checksum(node, resource))
       end
 
-      def action_create
+      action :create do
         notifying_block do
           directory join_path(options[:extract_to], new_resource.version) do
             mode '0755'
@@ -71,7 +71,7 @@ module ConsulCookbook
         end
       end
 
-      def action_remove
+      action :remove do
         notifying_block do
           directory join_path(options[:extract_to], new_resource.version) do
             action :delete

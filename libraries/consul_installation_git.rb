@@ -34,7 +34,7 @@ module ConsulCookbook
         )
       end
 
-      def action_create
+      action :create do
         notifying_block do
           include_recipe 'golang::default'
           build_essential 'build-essential'
@@ -62,7 +62,7 @@ module ConsulCookbook
         end
       end
 
-      def action_remove
+      action :remove do
         notifying_block do
           directory options[:git_path] do
             recursive true
