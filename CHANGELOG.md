@@ -1,5 +1,14 @@
 # Change Log
 
+## Unreleased
+
+- resolved cookstyle error: libraries/consul_installation_binary.rb:43:7 refactor: `ChefModernize/ActionMethodInResource`
+- resolved cookstyle error: libraries/consul_installation_binary.rb:74:7 refactor: `ChefModernize/ActionMethodInResource`
+- resolved cookstyle error: libraries/consul_installation_git.rb:37:7 refactor: `ChefModernize/ActionMethodInResource`
+- resolved cookstyle error: libraries/consul_installation_git.rb:65:7 refactor: `ChefModernize/ActionMethodInResource`
+- resolved cookstyle error: libraries/consul_installation_package.rb:40:7 refactor: `ChefModernize/ActionMethodInResource`
+- resolved cookstyle error: libraries/consul_installation_package.rb:51:7 refactor: `ChefModernize/ActionMethodInResource`
+
 ## [4.0.2](https://github.com/sous-chefs/consul/tree/v4.0.2) (2020-06-02)
 
 - resolved cookstyle error: libraries/consul_service_windows.rb:16:7 refactor: `ChefModernize/IncludingMixinShelloutInResources`

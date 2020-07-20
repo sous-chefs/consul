@@ -37,7 +37,7 @@ module ConsulCookbook
         )
       end
 
-      def action_create
+      action :create do
         notifying_block do
           package res_options[:package_name] do
             source res_options[:package_source]
@@ -48,7 +48,7 @@ module ConsulCookbook
         end
       end
 
-      def action_remove
+      action :remove do
         notifying_block do
           package res_options[:package_name] do
             source res_options[:package_source]
