@@ -6,7 +6,7 @@ description       'Application cookbook which installs and configures Consul.'
 source_url        'https://github.com/sous-chefs/consul'
 issues_url        'https://github.com/sous-chefs/consul/issues'
 chef_version      '>= 13.4'
-version           '4.0.2'
+version           '4.0.3'
 
 supports 'centos', '>= 6.4'
 supports 'redhat', '>= 6.4'
