@@ -237,7 +237,7 @@ module ConsulCookbook
           watches
         )
 
-        for_keep << %i(discovery_max_stale) if node['consul']['version'] > '1.0.6'
+        for_keeps << %i(discovery_max_stale) if node['consul']['version'] > '1.0.6'
         for_keeps << %i(bootstrap bootstrap_expect) if server
         for_keeps << %i(ca_file ca_path cert_file key_file) if tls?
         for_keeps = for_keeps.flatten
