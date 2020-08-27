@@ -8,9 +8,9 @@ issues_url        'https://github.com/sous-chefs/consul/issues'
 chef_version      '>= 13.4'
 version           '4.0.3'
 
-supports 'centos', '>= 7'
-supports 'redhat', '>= 7'
-supports 'debian', '>= 9'
+supports 'centos', '>= 7.0'
+supports 'redhat', '>= 7.0'
+supports 'debian', '>= 9.0'
 supports 'ubuntu', '>= 16.04'
 supports 'windows'
 
