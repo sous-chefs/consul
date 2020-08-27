@@ -71,16 +71,16 @@ describe directory(data_dir) do
   its('mode') { should cmp '0750' }
 end
 
-describe file("#{confd_dir}/consul_definition_check.json") do
-  it { should be_file }
-  it { should be_owned_by 'root' }
-  it { should be_grouped_into 'consul' }
-  its('mode') { should cmp '0644' }
-end
-
-describe file("#{confd_dir}/consul_watch_check.json") do
-  it { should be_file }
-  it { should be_owned_by 'root' }
-  it { should be_grouped_into 'consul' }
-  its('mode') { should cmp '0640' }
-end
+# describe file("#{confd_dir}/consul_definition_check.json") do
+#   it { should be_file }
+#   it { should be_owned_by 'root' }
+#   it { should be_grouped_into 'consul' }
+#   its('mode') { should cmp '0644' }
+# end
+#
+# describe file("#{confd_dir}/consul_watch_check.json") do
+#   it { should be_file }
+#   it { should be_owned_by 'root' }
+#   it { should be_grouped_into 'consul' }
+#   its('mode') { should cmp '0640' }
+# end

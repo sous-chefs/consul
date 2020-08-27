@@ -56,7 +56,6 @@ suites:
       - windows-2016
 
   - name: client
-    named_run_list: client
     excludes:
       - windows-2012r2
       - windows-2016

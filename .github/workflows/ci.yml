@@ -50,7 +50,7 @@ jobs:
         suite:
           - 'client'
           - 'default'
-          - 'git'
+          # - 'git'
       fail-fast: false
 
     steps:
