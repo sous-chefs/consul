@@ -46,6 +46,7 @@ jobs:
           - 'debian-10'
           - 'ubuntu-1604'
           - 'ubuntu-1804'
+          - 'ubuntu-2004'
           - 'amazonlinux-2'
         suite:
           - 'client'

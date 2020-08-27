@@ -3,13 +3,11 @@ driver:
   name: vagrant
 
 provisioner:
-  name: chef_zero
+  name: chef_solo
   product_name: chef
-  product_version: <%= ENV['CHEF_VERSION'] || 'latest' %>
-  install_strategy: once
-
-client_rb:
-  treat_deprecation_warnings_as_errors: true
+  enforce_idempotency: true
+  multiple_converge: 2
+  deprecations_as_errors: true
 
 verifier:
   name: inspec
@@ -20,6 +18,7 @@ platforms:
       box: ywatase/amzn2
   - name: ubuntu-16.04
   - name: ubuntu-18.04
+  - name: ubuntu-20.04
   - name: centos-7
   - name: centos-8
   - name: debian-9
