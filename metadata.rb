@@ -8,11 +8,10 @@ issues_url        'https://github.com/sous-chefs/consul/issues'
 chef_version      '>= 13.4'
 version           '4.0.3'
 
-supports 'centos', '>= 6.4'
-supports 'redhat', '>= 6.4'
-supports 'ubuntu', '>= 12.04'
-supports 'solaris2'
-supports 'arch'
+supports 'centos', '>= 7.0'
+supports 'redhat', '>= 7.0'
+supports 'debian', '>= 9.0'
+supports 'ubuntu', '>= 16.04'
 supports 'windows'
 
 depends 'build-essential', '>= 5.0.0' # cookstyle: disable ChefModernize/UnnecessaryDependsChef14
