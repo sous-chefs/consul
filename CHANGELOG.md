@@ -1,6 +1,15 @@
 # Change Log
 
-## [4.0.3](https://github.com/sous-chefs/consul/tree/v4.0.3 (2020-07-20)
+## Unreleased
+
+- Disable broken tests and suites and fix client suite
+- Update kitchen.yml to our standards and default to current channel
+- Add testing for Ubuntu 20.04
+- Fix Dokken configuration for CentOS 8 and Ubuntu 16.04
+- Enable enforce_idempotency checks
+- Remove support for CentOS 6, Ubuntu < 16.04
+
+## [4.0.3](https://github.com/sous-chefs/consul/tree/v4.0.3) (2020-07-20)
 
 - resolved cookstyle error: libraries/consul_installation_binary.rb:43:7 refactor: `ChefModernize/ActionMethodInResource`
 - resolved cookstyle error: libraries/consul_installation_binary.rb:74:7 refactor: `ChefModernize/ActionMethodInResource`

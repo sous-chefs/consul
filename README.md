@@ -34,9 +34,9 @@ Out of the box the following platforms are certified to work and are
 tested using our [Test Kitchen][8] configuration. Additional platforms
 _may_ work, but your mileage may vary.
 
-- RHEL/CentOS 5.11, 6.8, 7.3
-- Ubuntu 12.04, 14.04, 16.04
-- Debian 7.11, 8.7
+- RHEL/CentOS 7 & 8
+- Ubuntu 16.04, 18.04 & 20.04
+- Debian 9 & 10
 - Windows Server 2012 R2
 
 ### Client
