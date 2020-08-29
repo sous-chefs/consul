@@ -111,7 +111,7 @@ module ConsulCookbook
       attribute(:retry_max, kind_of: Integer)
       attribute(:rejoin_after_leave, equal_to: [true, false])
       attribute(:segment, kind_of: String)
-      attribute(:segments, kind_of: [Hash, Mash])
+      attribute(:segments, kind_of: Array)
       attribute(:serf_lan_bind, kind_of: String)
       attribute(:serf_wan_bind, kind_of: String)
       attribute(:server, equal_to: [true, false])
