@@ -1,6 +1,6 @@
 # Change Log
 
-## Unreleased
+## [4.0.4](https://github.com/sous-chefs/consul/tree/v4.0.4) (2020-08-31)
 
 - Disable broken tests and suites and fix client suite
 - Update kitchen.yml to our standards and default to current channel
