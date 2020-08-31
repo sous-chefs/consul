@@ -1,6 +1,6 @@
 # Change Log
 
-## Unreleased
+## [4.0.5](https://github.com/sous-chefs/consul/tree/v4.0.5) (2020-08-31)
 
 - Change segments to Array type #549
 
