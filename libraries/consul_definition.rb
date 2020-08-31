@@ -41,7 +41,7 @@ module ConsulCookbook
 
       def params_to_json
         final_parameters = parameters
-        final_parameters = final_parameters.merge(name: name) if final_parameters[:name].nil?
+        final_parameters = final_parameters.merge(name: name) if %w(check service).include?(type) && final_parameters[:name].nil?
         JSON.pretty_generate(type => final_parameters)
       end
 
