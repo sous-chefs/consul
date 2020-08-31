@@ -2,13 +2,16 @@
 
 ## Unreleased
 
+- Change segments to Array type #549
+
+## [4.0.4](https://github.com/sous-chefs/consul/tree/v4.0.4) (2020-08-31)
+
 - Disable broken tests and suites and fix client suite
 - Update kitchen.yml to our standards and default to current channel
 - Add testing for Ubuntu 20.04
 - Fix Dokken configuration for CentOS 8 and Ubuntu 16.04
 - Enable enforce_idempotency checks
 - Remove support for CentOS 6, Ubuntu < 16.04
-- Change segments to Array type #549
 - Only set `name` if the parameters are not an array #568
 
 ## [4.0.3](https://github.com/sous-chefs/consul/tree/v4.0.3) (2020-07-20)
