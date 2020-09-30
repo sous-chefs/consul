@@ -90,6 +90,7 @@ module ConsulCookbook
         when 'x86_64', 'amd64' then ['consul', resource.version, node['os'], 'amd64'].join('_')
         when /i\d86/ then ['consul', resource.version, node['os'], '386'].join('_')
         when /^arm/ then ['consul', resource.version, node['os'], 'arm'].join('_')
+        when 'aarch64' then ['consul', resource.version, node['os'], 'arm64'].join('_')
         else ['consul', resource.version, node['os'], node['kernel']['machine']].join('_')
         end.concat('.zip')
       end
