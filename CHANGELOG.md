@@ -1,6 +1,6 @@
 # Change Log
 
-## Unreleased
+## [4.0.6](https://github.com/sous-chefs/consul/tree/v4.0.6) (2020-10-01)
 
 - Support binary download for linux arm64
 
