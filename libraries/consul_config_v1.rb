@@ -99,7 +99,7 @@ module ConsulCookbook
       attribute(:log_file, kind_of: String)
       attribute(:log_level, equal_to: %w(INFO DEBUG WARN ERR))
       attribute(:log_rotate_duration, kind_of: String)
-      attribute(:log_rotate_bytes, kind_of: String)
+      attribute(:log_rotate_bytes, kind_of: Integer)
       attribute(:log_rotate_max_files, kind_of: Integer)
       attribute(:node_id, kind_of: String)
       attribute(:node_name, kind_of: String)
