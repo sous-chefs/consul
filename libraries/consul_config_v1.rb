@@ -140,7 +140,7 @@ module ConsulCookbook
       attribute(:start_join, kind_of: Array)
       attribute(:start_join_wan, kind_of: Array)
       attribute(:statsd_addr, kind_of: String)
-      attribute(:statsd_address, kind_of: String)      
+      attribute(:statsd_address, kind_of: String)
       attribute(:statsite_addr, kind_of: String)
       attribute(:statsite_address, kind_of: String)
       attribute(:statsite_prefix, kind_of: String)
