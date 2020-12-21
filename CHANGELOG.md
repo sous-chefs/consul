@@ -1,6 +1,6 @@
 # Change Log
 
-## Unreleased
+## 4.1.0 - *2020-12-21*
 
 - Added renamed parameters metrics_prefix, statsd_address, statsite_address
 
