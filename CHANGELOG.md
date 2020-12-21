@@ -1,5 +1,7 @@
 # Change Log
 
+## Unreleased
+
 ## 4.3.1 - *2020-12-21*
 
 - Added the renamed parameters from consul 1.0.0:
