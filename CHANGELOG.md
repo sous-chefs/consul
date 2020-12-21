@@ -1,10 +1,13 @@
 # Change Log
 
-## 4.1.0 - *2020-12-21*
+## Unreleased
 
-- Added renamed parameters metrics_prefix, statsd_address, statsite_address
+- Added the renamed parameters from consul 1.0.0:
+  - `metrics_prefix`
+  - `statsd_address`
+  - `statsite_address`
 
-## [4.0.7](https://github.com/sous-chefs/consul/tree/v4.0.7) (2020-11-12)
+## 4.0.7 2020-11-12
 
 - Changed type of log_rotate_bytes to Integer.
 
