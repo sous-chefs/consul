@@ -49,12 +49,9 @@ module ConsulCookbook
           end
 
 #<<<<<<< HEAD
-#<<<<<<< HEAD
           #url = format(options[:archive_url], version: options[:version], basename: options[:archive_basename])
           #poise_archive url do # cookstyle: disable ChefDeprecations/PoiseArchiveUsage
 #=======
-#=======
-#>>>>>>> c3d91e0a0cac676920bc34eeebff9482ca12b12b
           url = format(options[:archive_url], archive_url_root: options[:archive_url_root], version: options[:version], basename: options[:archive_basename])
           poise_archive url do
 #>>>>>>> Add support for enterprise consul packages and private repos
@@ -99,10 +96,18 @@ module ConsulCookbook
         version = node['consul']['enterprise'] ? "#{resource.version}%2bprem" : resource.version
 
         case node['kernel']['machine']
+#<<<<<<< HEAD
+        #when 'x86_64', 'amd64' then ['consul', resource.version, node['os'], 'amd64'].join('_')
+        #when /i\d86/ then ['consul', resource.version, node['os'], '386'].join('_')
+        #when /^arm/ then ['consul', resource.version, node['os'], 'arm'].join('_')
+        #when 'aarch64' then ['consul', resource.version, node['os'], 'arm64'].join('_')
+        #else ['consul', resource.version, node['os'], node['kernel']['machine']].join('_')
+#=======
         when 'x86_64', 'amd64' then [filename, version, node['os'], 'amd64'].join('_')
         when /i\d86/ then [filename, version, node['os'], '386'].join('_')
         when /^arm/ then [filename, version, node['os'], 'arm'].join('_')
         else [filename, version, node['os'], node['kernel']['machine']].join('_')
+#>>>>>>> Add support for enterprise consul packages and private repos
         end.concat('.zip')
       end
 
