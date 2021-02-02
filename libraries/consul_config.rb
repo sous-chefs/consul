@@ -100,6 +100,7 @@ module ConsulCookbook
       attribute(:protocol, kind_of: String)
       attribute(:raft_protocol, kind_of: Integer)
       attribute(:raft_trailing_logs, kind_of: Integer)
+      attribute(:raft_snapshot_threshold, kind_of: Integer)
       attribute(:reap, equal_to: [true, false])
       attribute(:read_replica, equal_to: [true, false])
       attribute(:reconnect_timeout, kind_of: String)
@@ -209,6 +210,7 @@ module ConsulCookbook
           read_replica
           raft_protocol
           raft_trailing_logs
+          raft_snapshot_threshold
           reconnect_timeout
           reconnect_timeout_wan
           recursor
