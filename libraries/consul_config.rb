@@ -55,11 +55,13 @@ module ConsulCookbook
       attribute(:atlas_token, kind_of: String)
       attribute(:atlas_endpoint, kind_of: String)
       attribute(:autopilot, kind_of: [Hash, Mash])
+      attribute(:auto_config, kind_of: [Hash, Mash])
       attribute(:bind_addr, kind_of: String)
       attribute(:bootstrap, equal_to: [true, false])
       attribute(:bootstrap_expect, kind_of: Integer)
       attribute(:ca_file, kind_of: String)
       attribute(:ca_path, kind_of: String)
+      attribute(:cache, kind_of: [Hash, Mash])
       attribute(:cert_file, kind_of: String)
       attribute(:check_update_interval, kind_of: String)
       attribute(:client_addr, kind_of: String)
@@ -88,6 +90,7 @@ module ConsulCookbook
       attribute(:leave_on_terminate, equal_to: [true, false])
       attribute(:limits, kind_of: [Hash, Mash])
       attribute(:log_level, equal_to: %w(INFO DEBUG WARN ERR))
+      attribute(:log_json, equal_to: [true, false])
       attribute(:node_id, kind_of: String)
       attribute(:node_name, kind_of: String)
       attribute(:node_meta, kind_of: [Hash, Mash])
@@ -96,7 +99,9 @@ module ConsulCookbook
       attribute(:ports, kind_of: [Hash, Mash])
       attribute(:protocol, kind_of: String)
       attribute(:raft_protocol, kind_of: Integer)
+      attribute(:raft_trailing_logs, kind_of: Integer)
       attribute(:reap, equal_to: [true, false])
+      attribute(:read_replica, equal_to: [true, false])
       attribute(:reconnect_timeout, kind_of: String)
       attribute(:reconnect_timeout_wan, kind_of: String)
       attribute(:recursor, kind_of: String)
@@ -108,6 +113,7 @@ module ConsulCookbook
       attribute(:retry_join_wan, kind_of: Array)
       attribute(:retry_max, kind_of: Integer)
       attribute(:rejoin_after_leave, equal_to: [true, false])
+      attribute(:rpc, kind_of: [Hash, Mash])
       attribute(:segment, kind_of: String)
       attribute(:segments, kind_of: [Hash, Mash])
       attribute(:serf_lan_bind, kind_of: String)
@@ -128,8 +134,10 @@ module ConsulCookbook
       attribute(:tls_prefer_server_cipher_suites, equal_to: [true, false])
       attribute(:translate_wan_addrs, equal_to: [true, false])
       attribute(:ui, equal_to: [true, false])
+      attribute(:ui_config, kind_of: [Hash, Mash])
       attribute(:ui_dir, kind_of: String)
       attribute(:unix_sockets, kind_of: [Hash, Mash])
+      attribute(:use_streaming_backend, equal_to: [true, false])
       attribute(:verify_incoming, equal_to: [true, false])
       attribute(:verify_incoming_https, equal_to: [true, false])
       attribute(:verify_incoming_rpc, equal_to: [true, false])
@@ -161,7 +169,9 @@ module ConsulCookbook
           atlas_join
           atlas_token
           autopilot
+          auto_config
           bind_addr
+          cache
           check_update_interval
           client_addr
           data_dir
@@ -187,6 +197,7 @@ module ConsulCookbook
           leave_on_terminate
           limits
           log_level
+          log_json
           node_id
           node_meta
           non_voting_server
@@ -195,12 +206,15 @@ module ConsulCookbook
           ports
           protocol
           reap
+          read_replica
           raft_protocol
+          raft_trailing_logs
           reconnect_timeout
           reconnect_timeout_wan
           recursor
           recursors
           rejoin_after_leave
+          rpc
           retry_interval
           retry_interval_wan
           retry_join
@@ -227,8 +241,10 @@ module ConsulCookbook
           tls_prefer_server_cipher_suites
           translate_wan_addrs
           ui
+          ui_config
           ui_dir
           unix_sockets
+          user_streaming_backend
           verify_incoming
           verify_incoming_https
           verify_incoming_rpc
