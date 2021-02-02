@@ -1,6 +1,6 @@
 require_relative '../spec_helper'
 
-consul_root = 'C:\Program Files\consul'
+consul_root       = 'C:\Program Files\consul'
 
 consul_executable = File.join(consul_root, consul_version, 'consul.exe')
 symlink_path      = File.join(consul_root, 'consul.exe')
@@ -19,7 +19,7 @@ describe service('consul') do
   it { should be_running }
 end
 
-[8300, 8500, 8600].each do |p|
+[8300, 8500, 53].each do |p|
   describe port(p) do
     it { should be_listening }
   end

@@ -2,7 +2,7 @@
 # Cookbook: consul
 # License: Apache 2.0
 #
-# Copyright:: 2014-2016, Bloomberg Finance L.P.
+# Copyright 2014-2016, Bloomberg Finance L.P.
 #
 require 'poise'
 require_relative 'helpers'
@@ -10,12 +10,10 @@ require_relative 'helpers'
 module ConsulCookbook
   module Resource
     # @since 1.0
-    class ConsulConfigV0 < Chef::Resource
+    class ConsulConfig < Chef::Resource
       include Poise(fused: true)
       include ConsulCookbook::Helpers
-      provides :consul_config do |node|
-        node['consul']['version'].to_i < 1
-      end
+      provides(:consul_config)
 
       # @!attribute path
       # @return [String]
@@ -73,8 +71,6 @@ module ConsulCookbook
       attribute(:disable_remote_exec, equal_to: [true, false])
       attribute(:disable_update_check, equal_to: [true, false])
       attribute(:discard_check_output, equal_to: [true, false])
-      # Not supported, but allow same attribute for v0.x and 1.0.6+
-      attribute(:discovery_max_stale, kind_of: String)
       attribute(:dns_config, kind_of: [Hash, Mash])
       attribute(:discovery_max_stale, kind_of: String)
       attribute(:domain, kind_of: String)
@@ -108,13 +104,12 @@ module ConsulCookbook
       attribute(:retry_interval, kind_of: String)
       attribute(:retry_interval_wan, kind_of: String)
       attribute(:retry_join, kind_of: Array)
-      attribute(:retry_join_azure, kind_of: [Hash, Mash])
       attribute(:retry_join_ec2, kind_of: [Hash, Mash])
       attribute(:retry_join_wan, kind_of: Array)
       attribute(:retry_max, kind_of: Integer)
       attribute(:rejoin_after_leave, equal_to: [true, false])
       attribute(:segment, kind_of: String)
-      attribute(:segments, kind_of: Array)
+      attribute(:segments, kind_of: [Hash, Mash])
       attribute(:serf_lan_bind, kind_of: String)
       attribute(:serf_wan_bind, kind_of: String)
       attribute(:server, equal_to: [true, false])
@@ -128,7 +123,7 @@ module ConsulCookbook
       attribute(:statsite_prefix, kind_of: String)
       attribute(:telemetry, kind_of: [Hash, Mash])
       attribute(:syslog_facility, kind_of: String)
-      attribute(:tls_cipher_suites, kind_of: String)
+      attribute(:tls_cipher_suites, kind_of: Array)
       attribute(:tls_min_version, equal_to: %w(tls10 tls11 tls12))
       attribute(:tls_prefer_server_cipher_suites, equal_to: [true, false])
       attribute(:translate_wan_addrs, equal_to: [true, false])
@@ -209,7 +204,6 @@ module ConsulCookbook
           retry_interval
           retry_interval_wan
           retry_join
-          retry_join_azure
           retry_join_ec2
           retry_join_wan
           retry_max
@@ -303,3 +297,4 @@ module ConsulCookbook
     end
   end
 end
+

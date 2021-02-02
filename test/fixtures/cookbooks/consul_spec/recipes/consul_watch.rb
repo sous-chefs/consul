@@ -1,3 +1,4 @@
+
 # The ruby interpreter is guaranteed to exist since it's currently running.
 file '/consul_watch_handler.rb' do
   content <<-EOF.gsub(/^ */, '')

@@ -1,8 +1,6 @@
 require_relative '../spec_helper'
 
 consul_executable = "/opt/consul/#{consul_version}/consul"
-symlink_path      = '/usr/local/bin/consul'
-consul_command    = symlink_path
 
 config_file = '/etc/consul/consul.json'
 confd_dir   = '/etc/consul/conf.d'
@@ -40,7 +38,7 @@ end
   end
 end
 
-describe command("#{consul_command} members -detailed -token=doublesecret") do
+describe command("#{consul_executable} members -detailed -token=doublesecret") do
   its(:exit_status) { should eq 0 }
   its(:stdout) { should include 'alive' }
   its(:stdout) { should include 'role=consul' }
@@ -48,7 +46,7 @@ describe command("#{consul_command} members -detailed -token=doublesecret") do
   its(:stdout) { should include 'dc=fortmeade' }
 end
 
-describe file(symlink_path) do
+describe file('/usr/local/bin/consul') do
   it { should be_symlink }
 end
 
@@ -73,16 +71,16 @@ describe directory(data_dir) do
   its('mode') { should cmp '0750' }
 end
 
-# describe file("#{confd_dir}/consul_definition_check.json") do
-#   it { should be_file }
-#   it { should be_owned_by 'root' }
-#   it { should be_grouped_into 'consul' }
-#   its('mode') { should cmp '0644' }
-# end
-#
-# describe file("#{confd_dir}/consul_watch_check.json") do
-#   it { should be_file }
-#   it { should be_owned_by 'root' }
-#   it { should be_grouped_into 'consul' }
-#   its('mode') { should cmp '0640' }
-# end
+describe file("#{confd_dir}/consul_definition_check.json") do
+  it { should be_file }
+  it { should be_owned_by 'root' }
+  it { should be_grouped_into 'consul' }
+  its('mode') { should cmp '0644' }
+end
+
+describe file("#{confd_dir}/consul_watch_check.json") do
+  it { should be_file }
+  it { should be_owned_by 'root' }
+  it { should be_grouped_into 'consul' }
+  its('mode') { should cmp '0640' }
+end
