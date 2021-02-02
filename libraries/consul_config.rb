@@ -244,7 +244,7 @@ module ConsulCookbook
           ui_config
           ui_dir
           unix_sockets
-          user_streaming_backend
+          use_streaming_backend
           verify_incoming
           verify_incoming_https
           verify_incoming_rpc
