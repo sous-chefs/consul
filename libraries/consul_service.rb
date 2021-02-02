@@ -2,7 +2,7 @@
 # Cookbook: consul
 # License: Apache 2.0
 #
-# Copyright:: 2014-2016, Bloomberg Finance L.P.
+# Copyright 2014-2016, Bloomberg Finance L.P.
 #
 require 'poise_service/service_mixin'
 require_relative 'helpers'
@@ -106,3 +106,4 @@ module ConsulCookbook
     end
   end
 end
+

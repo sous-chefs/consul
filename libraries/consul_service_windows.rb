@@ -2,7 +2,7 @@
 # Cookbook: consul
 # License: Apache 2.0
 #
-# Copyright:: 2014-2016, Bloomberg Finance L.P.
+# Copyright 2014-2016, Bloomberg Finance L.P.
 #
 require 'poise'
 require_relative 'helpers'
@@ -13,6 +13,7 @@ module ConsulCookbook
     # @since 1.0.0
     class ConsulServiceWindows < Chef::Provider
       include Poise
+      include Chef::Mixin::ShellOut
       provides(:consul_service, os: %w(windows))
       include ConsulCookbook::Helpers
 

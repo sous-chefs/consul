@@ -2,7 +2,7 @@
 # Cookbook: consul
 # License: Apache 2.0
 #
-# Copyright:: 2014-2016, Bloomberg Finance L.P.
+# Copyright 2014-2016, Bloomberg Finance L.P.
 #
 require 'poise'
 
@@ -37,7 +37,7 @@ module ConsulCookbook
         )
       end
 
-      action :create do
+      def action_create
         notifying_block do
           package res_options[:package_name] do
             source res_options[:package_source]
@@ -48,7 +48,7 @@ module ConsulCookbook
         end
       end
 
-      action :remove do
+      def action_remove
         notifying_block do
           package res_options[:package_name] do
             source res_options[:package_source]
@@ -65,3 +65,4 @@ module ConsulCookbook
     end
   end
 end
+

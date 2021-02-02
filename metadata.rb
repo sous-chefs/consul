@@ -1,16 +1,3 @@
-name              'consul'
-maintainer        'Sous Chefs'
-maintainer_email  'help@sous-chefs.org'
-license           'Apache-2.0'
-description       'Application cookbook which installs and configures Consul.'
-source_url        'https://github.com/sous-chefs/consul'
-issues_url        'https://github.com/sous-chefs/consul/issues'
-chef_version      '>= 13.4'
-version           '4.3.1'
-supports 'centos', '>= 7.0'
-supports 'redhat', '>= 7.0'
-supports 'debian', '>= 9.0'
-supports 'ubuntu', '>= 16.04'
 name 'consul'
 maintainer 'John Bellone'
 maintainer_email 'jbellone@bloomberg.net'
@@ -29,7 +16,7 @@ supports 'solaris2'
 supports 'arch'
 supports 'windows'
 
-depends 'build-essential', '>= 5.0.0' # cookstyle: disable ChefModernize/UnnecessaryDependsChef14
+depends 'build-essential'
 depends 'nssm', '>= 4.0.0'
 depends 'golang'
 depends 'poise', '~> 2.2'
@@ -41,3 +28,4 @@ source_url 'https://github.com/johnbellone/consul-cookbook' if respond_to?(:sour
 issues_url 'https://github.com/johnbellone/consul-cookbook/issues' if respond_to?(:issues_url)
 
 chef_version '>= 12.1' if respond_to?(:chef_version)
+

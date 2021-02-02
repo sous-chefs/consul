@@ -1,49 +1,58 @@
-*.rbc
-.config
-InstalledFiles
-pkg
-test/tmp
-test/version_tmp
-tmp
-_Store
-*~
-*#
-.#*
-\#*#
-*.un~
-*.tmp
-*.bk
-*.bkup
-
-# editor files
-.idea
-.*.sw[a-z]
-
-# ruby/bundler/rspec files
+# Ignore docs files
+_gh_pages
+_site
 .ruby-version
-.ruby-gemset
-.rvmrc
+.node-version
 Gemfile.lock
+
+# Numerous always-ignore extensions
+*.diff
+*.err
+*.orig
+*.log
+*.rej
+*.swo
+*.swp
+*.zip
+*.vi
+*~
+
+# OS or Editor folders
+.DS_Store
+._*
+Thumbs.db
+.cache
+.project
+.settings
+.tmproj
+*.esproj
+nbproject
+*.sublime-project
+*.sublime-workspace
+.idea
+
+# Komodo
+*.komodoproject
+.komodotools
+
+# grunt-html-validation
+validation-status.json
+validation-report.json
+
+# Folders to ignore
+bin
+node_modules
+tmp
+vendor
 .bundle
-*.gem
-coverage
-spec/reports
 
-# YARD / rdoc artifacts
-.yardoc
-_yardoc
-doc/
-rdoc
-
-# chef infra stuff
-Berksfile.lock
+# Chef specifics to ignore
+.chef
+.chefdk
 .kitchen
-kitchen.local.yml
-vendor/
-.coverage/
-.zero-knife.rb
-Policyfile.lock.json
+.vagrant
+Berksfile.lock
+coverage/
+*.lock.json
+.github_changelog_generator
 
-# vagrant stuff
-.vagrant/
-.vagrant.d/

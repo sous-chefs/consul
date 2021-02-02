@@ -2,7 +2,7 @@
 # Cookbook: consul
 # License: Apache 2.0
 #
-# Copyright:: 2014-2016, Bloomberg Finance L.P.
+# Copyright 2014-2016, Bloomberg Finance L.P.
 #
 require 'poise'
 
@@ -34,10 +34,9 @@ module ConsulCookbook
         )
       end
 
-      action :create do
+      def action_create
         notifying_block do
-          include_recipe 'golang::default'
-          build_essential 'build-essential'
+          include_recipe 'golang::default', 'build-essential::default'
           golang_package 'github.com/mitchellh/gox'
           golang_package 'github.com/tools/godep'
           directory options[:git_path] do
@@ -62,7 +61,7 @@ module ConsulCookbook
         end
       end
 
-      action :remove do
+      def action_remove
         notifying_block do
           directory options[:git_path] do
             recursive true
@@ -77,3 +76,4 @@ module ConsulCookbook
     end
   end
 end
+

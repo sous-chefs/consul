@@ -3,11 +3,10 @@ driver:
   name: vagrant
 
 provisioner:
-  name: chef_solo
+  name: chef_zero
+  policyfile: test/fixtures/policies/default.rb
   product_name: chef
-  enforce_idempotency: true
-  multiple_converge: 2
-  deprecations_as_errors: true
+  product_version: 14
 
 verifier:
   name: inspec
@@ -19,14 +18,14 @@ platforms:
     driver:
       box: mwrock/Windows2012R2
       gui: false
-    provisioner:
-      product_version: 13
   - name: windows-2016
     driver:
       box: mwrock/Windows2016
       gui: false
     provisioner:
-      product_version: 13
+      install_strategy: always
+      product_version: 14
+
 
 suites:
   - name: default
@@ -53,6 +52,7 @@ suites:
       - windows-2016
 
   - name: client
+    named_run_list: client
     excludes:
       - windows-2012r2
       - windows-2016
@@ -60,7 +60,7 @@ suites:
   - name: git
     attributes:
       go:
-        version: '1.10'
+        version: 1.9
       consul:
         config: *default-config
         installation:

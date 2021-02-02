@@ -2,7 +2,7 @@
 # Cookbook: consul
 # License: Apache 2.0
 #
-# Copyright:: 2014-2016, Bloomberg Finance L.P.
+# Copyright 2014-2016, Bloomberg Finance L.P.
 #
 require 'poise'
 require_relative './helpers'
@@ -41,20 +41,15 @@ module ConsulCookbook
                     archive_checksum: binary_checksum(node, resource))
       end
 
-      action :create do
+      def action_create
         notifying_block do
           directory join_path(options[:extract_to], new_resource.version) do
             mode '0755'
             recursive true
           end
 
-#<<<<<<< HEAD
-          #url = format(options[:archive_url], version: options[:version], basename: options[:archive_basename])
-          #poise_archive url do # cookstyle: disable ChefDeprecations/PoiseArchiveUsage
-#=======
           url = format(options[:archive_url], archive_url_root: options[:archive_url_root], version: options[:version], basename: options[:archive_basename])
           poise_archive url do
-#>>>>>>> Add support for enterprise consul packages and private repos
             destination join_path(options[:extract_to], new_resource.version)
             source_properties checksum: options[:archive_checksum]
             strip_components 0
@@ -77,7 +72,7 @@ module ConsulCookbook
         end
       end
 
-      action :remove do
+      def action_remove
         notifying_block do
           directory join_path(options[:extract_to], new_resource.version) do
             action :delete
@@ -96,18 +91,10 @@ module ConsulCookbook
         version = node['consul']['enterprise'] ? "#{resource.version}%2bprem" : resource.version
 
         case node['kernel']['machine']
-#<<<<<<< HEAD
-        #when 'x86_64', 'amd64' then ['consul', resource.version, node['os'], 'amd64'].join('_')
-        #when /i\d86/ then ['consul', resource.version, node['os'], '386'].join('_')
-        #when /^arm/ then ['consul', resource.version, node['os'], 'arm'].join('_')
-        #when 'aarch64' then ['consul', resource.version, node['os'], 'arm64'].join('_')
-        #else ['consul', resource.version, node['os'], node['kernel']['machine']].join('_')
-#=======
         when 'x86_64', 'amd64' then [filename, version, node['os'], 'amd64'].join('_')
         when /i\d86/ then [filename, version, node['os'], '386'].join('_')
         when /^arm/ then [filename, version, node['os'], 'arm'].join('_')
         else [filename, version, node['os'], node['kernel']['machine']].join('_')
-#>>>>>>> Add support for enterprise consul packages and private repos
         end.concat('.zip')
       end
 
@@ -358,3 +345,4 @@ module ConsulCookbook
     end
   end
 end
+

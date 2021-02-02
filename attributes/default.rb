@@ -5,8 +5,6 @@
 # Copyright:: 2014-2016, Bloomberg Finance L.P.
 #
 
-extend ConsulCookbook::Helpers
-
 default['consul']['service_name'] = 'consul'
 default['consul']['service_user'] = 'consul'
 default['consul']['service_group'] = 'consul'
@@ -35,7 +33,6 @@ default['consul']['config']['ports'] = {
   'server' => 8300,
 }
 
-default['consul']['diplomat_gem'] = 'diplomat'
 default['consul']['diplomat_version'] = nil
 
 default['consul']['service']['config_dir'] = join_path config_prefix_path, 'conf.d'
