@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+- Proper error messages when installing diplomat for issues such as #583
+
 ## 4.3.1 - *2020-12-21*
 
 - Added the renamed parameters from consul 1.0.0:
