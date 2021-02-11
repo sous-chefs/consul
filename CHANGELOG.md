@@ -1,6 +1,6 @@
 # Change Log
 
-## Unreleased
+## 4.3.2 - *2021-02-11*
 
 - Proper error messages when installing diplomat for issues such as #583
 
