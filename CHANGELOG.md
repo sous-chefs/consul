@@ -2,8 +2,6 @@
 
 ## Unreleased
 
-## 4.3.3 - *2021-03-16*
-
 - Added the ability to define open file limit for the consul service
 
 ## 4.3.2 - *2021-02-11*
