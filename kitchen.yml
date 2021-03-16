@@ -3,7 +3,7 @@ driver:
   name: vagrant
 
 provisioner:
-  name: chef_solo
+  name: chef_zero
   product_name: chef
   enforce_idempotency: true
   multiple_converge: 2
@@ -50,6 +50,7 @@ suites:
           acl_master_token: doublesecret
           acl_datacenter: FortMeade
           acl_default_policy: deny
+        service_nofile: 9001
     excludes:
       - windows-2012r2
       - windows-2016

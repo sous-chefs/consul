@@ -10,6 +10,7 @@ ExecReload=/bin/kill -<%= @reload_signal %> $MAINPID
 KillSignal=<%= @stop_signal %>
 User=<%= @user %>
 WorkingDirectory=<%= @directory %>
+<%= "LimitNOFILE=#{node['consul']['service_nofile']}" if node['consul']['service_nofile'] %>
 
 [Install]
 WantedBy=multi-user.target

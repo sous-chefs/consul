@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+- Added the ability to define open file limit for the consul service
+
 ## 4.3.2 - *2021-02-11*
 
 - Proper error messages when installing diplomat for issues such as #583

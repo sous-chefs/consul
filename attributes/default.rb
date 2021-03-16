@@ -10,6 +10,8 @@ extend ConsulCookbook::Helpers
 default['consul']['service_name'] = 'consul'
 default['consul']['service_user'] = 'consul'
 default['consul']['service_group'] = 'consul'
+# To set the open file limit for the service. If unset system default is used
+default['consul']['service_nofile'] = nil
 default['consul']['create_service_user'] = true
 
 default['consul']['config']['path'] = join_path config_prefix_path, 'consul.json'
