@@ -71,6 +71,10 @@ describe directory(data_dir) do
   its('mode') { should cmp '0750' }
 end
 
+describe command('grep files /proc/$(pgrep consul)/limits') do
+  its(:stdout) { should include '9001' }
+end
+
 # describe file("#{confd_dir}/consul_definition_check.json") do
 #   it { should be_file }
 #   it { should be_owned_by 'root' }
