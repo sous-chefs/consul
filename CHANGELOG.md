@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+- Added `advertise_addr_ipv4` and `advertise_addr_ipv6` attributes
+
 ## 4.4.0 - *2021-03-16*
 
 - Added the ability to define open file limit for the consul service
