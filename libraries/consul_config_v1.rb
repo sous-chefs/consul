@@ -50,6 +50,8 @@ module ConsulCookbook
       attribute(:acl_ttl, kind_of: String)
       attribute(:addresses, kind_of: [Hash, Mash])
       attribute(:advertise_addr, kind_of: String)
+      attribute(:advertise_addr_ipv4, kind_of: String)
+      attribute(:advertise_addr_ipv6, kind_of: String)
       attribute(:advertise_addr_wan, kind_of: String)
       attribute(:atlas_acl_token, kind_of: String)
       attribute(:atlas_infrastructure, kind_of: String)
@@ -177,6 +179,8 @@ module ConsulCookbook
           acl_ttl
           addresses
           advertise_addr
+          advertise_addr_ipv4
+          advertise_addr_ipv6
           advertise_addr_wan
           autopilot
           auto_encrypt
