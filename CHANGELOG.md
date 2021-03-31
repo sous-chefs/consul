@@ -1,6 +1,6 @@
 # Change Log
 
-## Unreleased
+## 4.5.0 - *2021-03-31*
 
 - Added `advertise_addr_ipv4` and `advertise_addr_ipv6` attributes
 
