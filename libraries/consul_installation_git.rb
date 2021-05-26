@@ -37,7 +37,6 @@ module ConsulCookbook
       action :create do
         notifying_block do
           include_recipe 'golang::default'
-          build_essential 'build-essential'
           golang_package 'github.com/mitchellh/gox'
           golang_package 'github.com/tools/godep'
           directory options[:git_path] do

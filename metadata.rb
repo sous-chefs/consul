@@ -14,7 +14,6 @@ supports 'debian', '>= 9.0'
 supports 'ubuntu', '>= 16.04'
 supports 'windows'
 
-depends 'build-essential', '>= 5.0.0' # cookstyle: disable ChefModernize/UnnecessaryDependsChef14
 depends 'nssm', '>= 4.0.0'
 depends 'golang'
 depends 'poise', '~> 2.2'
