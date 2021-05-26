@@ -48,10 +48,14 @@ module ConsulCookbook
           end
 
           url = format(options[:archive_url], version: options[:version], basename: options[:archive_basename])
-          poise_archive url do # cookstyle: disable ChefDeprecations/PoiseArchiveUsage
+          remote_file url do
             destination join_path(options[:extract_to], new_resource.version)
-            source_properties checksum: options[:archive_checksum]
-            strip_components 0
+            checksum options[:archive_checksum]
+            not_if { ::File.exist?(consul_program) }
+          end
+
+          archive_file join_path(options[:extract_to], new_resource.version) do
+            destination join_path(options[:extract_to], new_resource.version)
             not_if { ::File.exist?(consul_program) }
           end
 

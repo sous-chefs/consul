@@ -18,5 +18,4 @@ depends 'build-essential', '>= 5.0.0' # cookstyle: disable ChefModernize/Unneces
 depends 'nssm', '>= 4.0.0'
 depends 'golang'
 depends 'poise', '~> 2.2'
-depends 'poise-archive', '~> 1.3'
 depends 'poise-service', '~> 1.4'
