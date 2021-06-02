@@ -65,6 +65,7 @@ module ConsulCookbook
       attribute(:cert_file, kind_of: String)
       attribute(:check_update_interval, kind_of: String)
       attribute(:client_addr, kind_of: String)
+      attribute(:connect, kind_of: [Hash, Mash])
       attribute(:data_dir, kind_of: String)
       attribute(:datacenter, kind_of: String)
       attribute(:disable_anonymous_signature, equal_to: [true, false])
@@ -175,6 +176,7 @@ module ConsulCookbook
           cache
           check_update_interval
           client_addr
+          connect
           data_dir
           datacenter
           disable_anonymous_signature
