@@ -2,6 +2,7 @@
 
 ## Unreleased
 
+- resolved cookstyle error: Policyfile.rb:2:1 warning: `Chef/Deprecations/PolicyfileCommunitySource`
 ## 4.5.1 - *2021-06-01*
 
 ## 4.5.0 - *2021-03-31*
