@@ -1,6 +1,8 @@
 # Change Log
 
-## Unreleased
+## 4.5.2 - *2021-08-12*
+
+- Added `enable_additional_node_meta_txt` attributes
 
 ## 4.6.0 - *2021-08-29*
 
