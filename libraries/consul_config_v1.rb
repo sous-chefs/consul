@@ -82,6 +82,7 @@ module ConsulCookbook
       attribute(:dns_config, kind_of: [Hash, Mash])
       attribute(:domain, kind_of: String)
       attribute(:enable_acl_replication, equal_to: [true, false])
+      attribute(:enable_additional_node_meta_txt, equal_to: [true, false])
       attribute(:enable_agent_tls_for_checks, equal_to: [true, false])
       attribute(:enable_central_service_config, equal_to: [true, false])
       attribute(:enable_debug, equal_to: [true, false])
@@ -200,6 +201,7 @@ module ConsulCookbook
           dns_config
           domain
           enable_acl_replication
+          enable_additional_node_meta_txt
           enable_central_service_config
           enable_debug
           enable_local_script_checks
