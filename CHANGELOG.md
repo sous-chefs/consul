@@ -1,5 +1,7 @@
 # Change Log
 
+## Unreleased
+
 ## 4.6.0 - *2021-08-29*
 
 - Exclude Chef Infra Client >= 17.0 until Poise support has been removed
