@@ -2,7 +2,13 @@
 
 ## Unreleased
 
+- Exclude Chef Infra Client >= 17.0 until Poise support has been removed
+- resolved cookstyle error: Policyfile.rb:2:1 warning: `Chef/Deprecations/PolicyfileCommunitySource`
+- Standardise files with files in sous-chefs/repo-management
+
 ## 4.5.1 - *2021-06-01*
+
+- Standardise files with files in sous-chefs/repo-management
 
 ## 4.5.0 - *2021-03-31*
 

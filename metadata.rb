@@ -5,7 +5,7 @@ license           'Apache-2.0'
 description       'Application cookbook which installs and configures Consul.'
 source_url        'https://github.com/sous-chefs/consul'
 issues_url        'https://github.com/sous-chefs/consul/issues'
-chef_version      '>= 13.4'
+chef_version      '>= 13.4', '< 17.0' # >= 17.0 does not support Poise
 version           '4.5.1'
 
 supports 'centos', '>= 7.0'
