@@ -1,94 +1,115 @@
 # Put files/directories that should be ignored in this file when uploading
-# or sharing to the community site.
+# to a Chef Infra Server or Supermarket.
 # Lines that start with '# ' are comments.
 
 # OS generated files #
 ######################
 .DS_Store
+ehthumbs.db
 Icon?
 nohup.out
-ehthumbs.db
 Thumbs.db
-
-# SASS #
-########
-.sass-cache
+.envrc
 
 # EDITORS #
 ###########
-\#*
 .#*
-*~
-*.sw[a-z]
+.project
+.settings
+*_flymake
+*_flymake.*
 *.bak
+*.sw[a-z]
+*.tmproj
+*~
+\#*
 REVISION
 TAGS*
 tmtags
-*_flymake.*
-*_flymake
-*.tmproj
-.project
-.settings
-mkmf.log
+.vscode
+.editorconfig
 
 ## COMPILED ##
 ##############
-a.out
+*.class
+*.com
+*.dll
+*.exe
 *.o
 *.pyc
 *.so
-*.com
-*.class
-*.dll
-*.exe
 */rdoc/
+a.out
+mkmf.log
 
 # Testing #
 ###########
-.watchr
+.circleci/*
+.codeclimate.yml
+.delivery/*
+.foodcritic
+.kitchen*
+.mdlrc
+.overcommit.yml
 .rspec
-spec/*
-spec/fixtures/*
-test/*
+.rubocop.yml
+.travis.yml
+.watchr
+.yamllint
+azure-pipelines.yml
+Dangerfile
+examples/*
 features/*
 Guardfile
+kitchen.yml*
+mlc_config.json
 Procfile
+Rakefile
+spec/*
+test/*
 
 # SCM #
 #######
 .git
-*/.git
-.gitignore
-.gitmodules
-.gitconfig
 .gitattributes
+.gitconfig
+.github/*
+.gitignore
+.gitkeep
+.gitmodules
 .svn
 */.bzr/*
+*/.git
 */.hg/*
 */.svn/*
 
 # Berkshelf #
 #############
+Berksfile
+Berksfile.lock
 cookbooks/*
 tmp
 
-# Cookbooks #
-#############
-CONTRIBUTING
-CHANGELOG*
+# Bundler #
+###########
+vendor/*
+Gemfile
+Gemfile.lock
 
-# Strainer #
-############
-Colanderfile
-Strainerfile
-.colander
-.strainer
+# Policyfile #
+##############
+Policyfile.rb
+Policyfile.lock.json
+
+# Documentation #
+#############
+CODE_OF_CONDUCT*
+CONTRIBUTING*
+documentation/*
+TESTING*
+UPGRADING*
 
 # Vagrant #
 ###########
 .vagrant
 Vagrantfile
-
-# Travis #
-##########
-.travis.yml

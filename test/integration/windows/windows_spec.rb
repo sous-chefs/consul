@@ -19,7 +19,7 @@ describe service('consul') do
   it { should be_running }
 end
 
-[8300, 8500, 8600].each do |p|
+[8300, 8500, 53].each do |p|
   describe port(p) do
     it { should be_listening }
   end

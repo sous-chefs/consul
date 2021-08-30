@@ -55,3 +55,4 @@ module ConsulCookbook
 end
 
 Chef::Node.send(:include, ConsulCookbook::Helpers)
+

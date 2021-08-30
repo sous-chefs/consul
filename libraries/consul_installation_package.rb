@@ -65,3 +65,4 @@ module ConsulCookbook
     end
   end
 end
+

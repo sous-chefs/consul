@@ -2,12 +2,14 @@
 # Cookbook: consul
 # License: Apache 2.0
 #
-# Copyright 2014-2016, Bloomberg Finance L.P.
+# Copyright:: 2014-2016, Bloomberg Finance L.P.
 #
+
 
 case node['platform']
 when 'ubuntu'
   if node['consul']['config']['server'] === true
+    include_recipe '::systemd-resolved'
     include_recipe '::dns'
   end
 end

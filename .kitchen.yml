@@ -6,7 +6,7 @@ provisioner:
   name: chef_zero
   policyfile: test/fixtures/policies/default.rb
   product_name: chef
-  product_version: 13
+  product_version: 14
 
 verifier:
   name: inspec
@@ -22,6 +22,10 @@ platforms:
     driver:
       box: mwrock/Windows2016
       gui: false
+    provisioner:
+      install_strategy: always
+      product_version: 14
+
 
 suites:
   - name: default
