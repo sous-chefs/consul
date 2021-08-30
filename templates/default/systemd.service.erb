@@ -9,7 +9,7 @@ ExecStart=<%= @command %>
 ExecReload=/bin/kill -<%= @reload_signal %> $MAINPID
 KillSignal=<%= @stop_signal %>
 Restart=always
-RestartSec="5s"
+RestartSec=5
 User=<%= @user %>
 WorkingDirectory=<%= @directory %>
 <% if node['consul']['config']['server'] %>
