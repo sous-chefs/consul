@@ -1,5 +1,7 @@
 # Change Log
 
+## Unreleased
+
 ## 4.8.0 - *2021-09-28*
 
 - Added `advertise_addr_wan_ipv4` and `advertise_addr_wan_ipv6` attributes
