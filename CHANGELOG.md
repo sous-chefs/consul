@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+- Added `advertise_addr_wan_ipv4` and `advertise_addr_wan_ipv6` attributes
+
 ## 4.7.0 - *2021-08-29*
 
 - Added `enable_additional_node_meta_txt` attributes
