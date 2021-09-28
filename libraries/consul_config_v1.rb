@@ -53,6 +53,8 @@ module ConsulCookbook
       attribute(:advertise_addr_ipv4, kind_of: String)
       attribute(:advertise_addr_ipv6, kind_of: String)
       attribute(:advertise_addr_wan, kind_of: String)
+      attribute(:advertise_addr_wan_ipv4, kind_of: String)
+      attribute(:advertise_addr_wan_ipv6, kind_of: String)
       attribute(:atlas_acl_token, kind_of: String)
       attribute(:atlas_infrastructure, kind_of: String)
       attribute(:atlas_join, equal_to: [true, false])
@@ -183,6 +185,8 @@ module ConsulCookbook
           advertise_addr_ipv4
           advertise_addr_ipv6
           advertise_addr_wan
+          advertise_addr_wan_ipv4
+          advertise_addr_wan_ipv6
           autopilot
           auto_encrypt
           bind_addr
