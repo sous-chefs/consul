@@ -4,9 +4,18 @@
 #
 # Copyright:: 2014-2016, Bloomberg Finance L.P.
 #
-poise_service_user node['consul']['service_user'] do
+
+group node['consul']['service_group'] do
+  system true
+  not_if { node.platform_family?('windows') }
+  not_if { node['consul']['service_group'] == 'root' }
+  not_if { node['consul']['create_service_user'] == false }
+end
+
+user node['consul']['service_user'] do
+  system true
   group node['consul']['service_group']
-  shell node['consul']['service_shell'] unless node['consul']['service_shell'].nil?
+  shell node['consul']['service_shell']
   not_if { node.platform_family?('windows') }
   not_if { node['consul']['service_user'] == 'root' }
   not_if { node['consul']['create_service_user'] == false }

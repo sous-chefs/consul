@@ -50,7 +50,9 @@ suites:
           acl_master_token: doublesecret
           acl_datacenter: FortMeade
           acl_default_policy: deny
-        service_nofile: 9001
+        service:
+          systemd_params:
+            LimitNOFILE: 9001
     excludes:
       - windows-2012r2
       - windows-2016
