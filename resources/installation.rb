@@ -4,9 +4,11 @@ default_action :create
 
 property :version, String, name_property: true
 
+include ConsulCookbook::Helpers
+
 def consul_program
-  bin = node.join_path(node.platform_family?('windows') ? node.config_prefix_path : '/opt/consul', version, 'consul')
-  node.windows? ? "#{bin}.exe" : bin
+  bin = join_path(platform?('windows') ? config_prefix_path : '/opt/consul', version, 'consul')
+  platform?('windows') ? "#{bin}.exe" : bin
 end
 
 action_class do
@@ -17,7 +19,7 @@ action :create do
   attrs = node['consul']['install']['binary']
 
   directory ::File.dirname(consul_program) do
-    unless node.windows?
+    unless platform?('windows')
       mode '0755'
     end
     recursive true
@@ -25,7 +27,7 @@ action :create do
 
   # TODO: replace remote_file + extract with archive_file when Chef>15
   basename = attrs['archive_basename'] || binary_basename(new_resource)
-  archive_path = node.join_path(Chef::Config[:file_cache_path], basename)
+  archive_path = ::File.join(Chef::Config[:file_cache_path], basename)
   remote_file archive_path do
     source format(attrs['archive_url'], version: new_resource.version, basename: basename)
     checksum binary_checksum(node, new_resource.version)
@@ -52,12 +54,12 @@ action :create do
 
   link '/usr/local/bin/consul' do
     to consul_program
-    not_if { node.windows? }
+    not_if { platform?('windows') }
   end
 
-  windows_path node.config_prefix_path do
+  windows_path ::File.dirname(consul_program) do
     action :add
-    only_if { node.windows? }
+    only_if { platform?('windows') }
   end
 end
 

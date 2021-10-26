@@ -5,7 +5,7 @@ property :user, String, default: lazy { node['consul']['service_user'] }
 property :group, String, default: lazy { node['consul']['service_group'] }
 property :environment, Hash, default: lazy { default_environment }
 property :data_dir, String, default: lazy { node['consul']['config']['data_dir'] }
-property :config_dir, String, default: lazy { node['consul']['service']['config_dir'] }
+property :config_dir, String, default: lazy { node['consul']['config_dir'] }
 property :nssm_params, Hash, default: lazy { node['consul']['service']['nssm_params'] }
 property :systemd_params, Hash, default: lazy { node['consul']['service']['systemd_params'] }
 property :program, String, default: '/usr/local/bin/consul'

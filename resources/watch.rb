@@ -2,7 +2,7 @@ unified_mode true
 
 default_action :create
 
-property :path, String, default: lazy { node.join_path(node['consul']['service']['config_dir'], "#{name}.json") }
+property :path, String, default: lazy { ::File.join(node['consul']['config_dir'], "#{name}.json") }
 property :user, String, default: lazy { node['consul']['service_user'] }
 property :group, String, default: lazy { node['consul']['service_group'] }
 property :type, String, equal_to: %w(checks event key keyprefix nodes service services)

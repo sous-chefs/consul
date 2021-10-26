@@ -7,7 +7,7 @@ unified_mode true
 property :path, String, name_property: true
 property :owner, String, default: lazy { node['consul']['service_user'] }
 property :group, String, default: lazy { node['consul']['service_group'] }
-property :config_dir, String, default: lazy { node['consul']['service']['config_dir'] }
+property :config_dir, String, default: lazy { node['consul']['config_dir'] }
 property :config_dir_mode, String, default: '0755'
 property :options, Hash, default: {}
 

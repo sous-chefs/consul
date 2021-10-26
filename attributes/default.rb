@@ -31,7 +31,7 @@ default['consul']['config']['ports'] = {
 default['consul']['diplomat_gem'] = 'diplomat'
 default['consul']['diplomat_version'] = nil
 
-default['consul']['service']['config_dir'] = join_path config_prefix_path, 'conf.d'
+default['consul']['config_dir'] = join_path(config_prefix_path, 'conf.d')
 
 default['consul']['version'] = '1.0.7'
 
