@@ -10,15 +10,7 @@ def consul_program
 end
 
 action_class do
-  def binary_basename
-    case node['kernel']['machine']
-    when 'x86_64', 'amd64' then ['consul', new_resource.version, node['os'], 'amd64'].join('_')
-    when /i\d86/ then ['consul', new_resource.version, node['os'], '386'].join('_')
-    when /^arm/ then ['consul', new_resource.version, node['os'], 'arm'].join('_')
-    when 'aarch64' then ['consul', new_resource.version, node['os'], 'arm64'].join('_')
-    else ['consul', new_resource.version, node['os'], node['kernel']['machine']].join('_')
-    end.concat('.zip')
-  end
+  include ConsulCookbook::ResourceHelpers
 end
 
 action :create do
@@ -32,11 +24,11 @@ action :create do
   end
 
   # TODO: replace remote_file + extract with archive_file when Chef>15
-  basename = attrs['archive_basename'] || binary_basename
+  basename = attrs['archive_basename'] || binary_basename(new_resource)
   archive_path = node.join_path(Chef::Config[:file_cache_path], basename)
   remote_file archive_path do
     source format(attrs['archive_url'], version: new_resource.version, basename: basename)
-    checksum node.binary_checksum(node, new_resource.version)
+    checksum binary_checksum(node, new_resource.version)
   end
 
   if archive_path.end_with?('.zip')
