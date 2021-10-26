@@ -2,10 +2,7 @@ unified_mode true
 
 default_action :create
 
-# @!property version
-# The version of Consul to install.
-# @return [String]
-property :version, kind_of: String, name_property: true
+property :version, String, name_property: true
 
 def consul_program
   bin = node.join_path(node.platform_family?('windows') ? node.config_prefix_path : '/opt/consul', version, 'consul')

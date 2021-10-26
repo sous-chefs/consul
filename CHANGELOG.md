@@ -4,6 +4,7 @@
 
 - Remove Poise dependencies
 - Rewrite resources as Chef custom resources
+- Drop compatibility with Chef < 15.3
 
 ## 4.8.0 - *2021-09-28*
 

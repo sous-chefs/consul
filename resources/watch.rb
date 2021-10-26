@@ -2,21 +2,11 @@ unified_mode true
 
 default_action :create
 
-# @!property path
-# @return [String]
-property :path, kind_of: String, default: lazy { node.join_path(node['consul']['service']['config_dir'], "#{name}.json") }
-# @!property user
-# @return [String]
-property :user, kind_of: String, default: lazy { node['consul']['service_user'] }
-# @!property group
-# @return [String]
-property :group, kind_of: String, default: lazy { node['consul']['service_group'] }
-# @!property type
-# @return [String]
-property :type, kind_of: String, equal_to: %w(checks event key keyprefix nodes service services)
-# @!property parameters
-# @return [Hash]
-property :parameters, kind_of: Hash, default: {}
+property :path, String, default: lazy { node.join_path(node['consul']['service']['config_dir'], "#{name}.json") }
+property :user, String, default: lazy { node['consul']['service_user'] }
+property :group, String, default: lazy { node['consul']['service_group'] }
+property :type, String, equal_to: %w(checks event key keyprefix nodes service services)
+property :parameters, Hash, default: {}
 
 def params_to_json
   JSON.pretty_generate(watches: [{ type: type }.merge(parameters)])

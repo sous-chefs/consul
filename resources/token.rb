@@ -2,49 +2,17 @@ unified_mode true
 
 default_action(:create)
 
-# @!property url
-# @return [String]
-property :url, kind_of: String, default: 'http://localhost:8500'
-
-# @!property auth_token
-# @return [String]
-property :auth_token, kind_of: String, required: true
-
-# @!property secret_id
-# @return [String]
-property :secret_id, kind_of: String, default: nil
-
-# @!property description
-# @return [String]
-property :description, kind_of: String, name_property: true
-
-# @!property policies
-# @return [Array]
-property :policies, kind_of: Array, default: []
-
-# @!property roles
-# @return [Array]
-property :roles, kind_of: Array, default: []
-
-# @!property service_identities
-# @return [Array]
-property :service_identities, kind_of: Array, default: []
-
-# @!property expiration_time
-# @return [String]
-property :expiration_time, kind_of: String, default: ''
-
-# @!property expiration_ttl
-# @return [String]
-property :expiration_ttl, kind_of: String, default: nil
-
-# @!property local
-# @return [Bool]
-property :local, kind_of: [TrueClass, FalseClass], default: false
-
-# @!property ssl
-# @return [Hash]
-property :ssl, kind_of: Hash, default: {}
+property :url, String, default: 'http://localhost:8500'
+property :auth_token, String, required: true
+property :secret_id, String
+property :description, String, name_property: true
+property :policies, Array, default: []
+property :roles, Array, default: []
+property :service_identities, Array, default: []
+property :expiration_time, String, default: ''
+property :expiration_ttl, String
+property :local, [true, false], default: false
+property :ssl, Hash, default: {}
 
 def to_acl
   { 'SecretID' => secret_id,

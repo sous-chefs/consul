@@ -2,33 +2,13 @@ unified_mode true
 
 default_action(:create)
 
-# @!property url
-# @return [String]
-property :url, kind_of: String, default: 'http://localhost:8500'
-
-# @!property auth_token
-# @return [String]
-property :auth_token, kind_of: String, required: true
-
-# @!property role_name
-# @return [String]
-property :role_name, kind_of: String, name_property: true
-
-# @!property description
-# @return [String]
-property :description, kind_of: String, default: ''
-
-# @!property policies
-# @return [Array]
-property :policies, kind_of: Array, default: []
-
-# @!property service_identities
-# @return [Array]
-property :service_identities, kind_of: Array, default: []
-
-# @!property ssl
-# @return [Hash]
-property :ssl, kind_of: Hash, default: {}
+property :url, String, default: 'http://localhost:8500'
+property :auth_token, String, required: true
+property :role_name, String, name_property: true
+property :description, String, default: ''
+property :policies, Array, default: []
+property :service_identities, Array, default: []
+property :ssl, Hash, default: {}
 
 def to_acl
   { 'Name' => role_name,

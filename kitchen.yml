@@ -62,18 +62,6 @@ suites:
       - windows-2012r2
       - windows-2016
 
-  - name: git
-    attributes:
-      go:
-        version: '1.10'
-      consul:
-        config: *default-config
-        installation:
-          provider: git
-    excludes:
-      - windows-2012r2
-      - windows-2016
-
   - name: windows
     attributes:
       consul:

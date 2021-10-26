@@ -2,33 +2,13 @@ unified_mode true
 
 default_action :create
 
-# @!property url
-# @return [String]
-property :url, kind_of: String, default: 'http://localhost:8500'
-
-# @!property auth_token
-# @return [String]
-property :auth_token, kind_of: String, required: true
-
-# @!property id
-# @return [String]
-property :id, kind_of: String, name_property: true
-
-# @!property acl_name
-# @return [String]
-property :acl_name, kind_of: String, default: ''
-
-# @!property type
-# @return [String]
-property :type, kind_of: String, equal_to: %w(client management), default: 'client'
-
-# @!property rules
-# @return [String]
-property :rules, kind_of: String, default: ''
-
-# @!property ssl
-# @return [Hash]
-property :ssl, kind_of: Hash, default: {}
+property :url, String, default: 'http://localhost:8500'
+property :auth_token, String, required: true
+property :id, String, name_property: true
+property :acl_name, String, default: ''
+property :type, String, equal_to: %w(client management), default: 'client'
+property :rules, String, default: ''
+property :ssl, Hash, default: {}
 
 def to_acl
   { 'ID' => id,

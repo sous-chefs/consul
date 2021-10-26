@@ -1,45 +1,17 @@
 provides :consul_service, os: 'windows'
 unified_mode true
 
-# @!property config_file
-# @return [String]
-property :config_file, kind_of: String, default: lazy { node['consul']['config']['path'] }
-# @!property user
-# The service user the Consul process runs as.
-# @return [String]
-property :user, kind_of: String, default: lazy { node['consul']['service_user'] }
-# @!property group
-# The service group the Consul process runs as.
-# @return [String]
-property :group, kind_of: String, default: lazy { node['consul']['service_group'] }
-# @!property environment
-# The environment that the Consul process starts with.
-# @return [Hash]
-property :environment, kind_of: Hash, default: {}
-# @!property data_dir
-# @return [String]
-property :data_dir, kind_of: String, default: lazy { node['consul']['config']['data_dir'] }
-# @!property config_dir
-# @return [String]
-property :config_dir, kind_of: String, default: lazy { node['consul']['service']['config_dir'] }
-# @!property nssm_params
-# @return [Hash]
-property :nssm_params, kind_of: Hash, default: lazy { node['consul']['service']['nssm_params'] }
-# @!property systemd_params
-# @return [Hash]
-property :systemd_params, kind_of: Hash, default: lazy { node['consul']['service']['systemd_params'] }
-# @!property program
-# The location of the Consul executable.
-# @return [String]
-property :program, kind_of: String, default: '/usr/local/bin/consul'
-# @!property acl_token
-# The ACL token. Needed to reload the Consul service on Windows
-# @return [String]
-property :acl_token, kind_of: String, default: lazy { node['consul']['config']['acl_master_token'] }
-# @!property restart_on_update
-# Restart on service config change
-# @return [Boolean]
-property :restart_on_update, kind_of: [TrueClass, FalseClass], default: true
+property :config_file, String, default: lazy { node['consul']['config']['path'] }
+property :user, String, default: lazy { node['consul']['service_user'] }
+property :group, String, default: lazy { node['consul']['service_group'] }
+property :environment, Hash, default: {}
+property :data_dir, String, default: lazy { node['consul']['config']['data_dir'] }
+property :config_dir, String, default: lazy { node['consul']['service']['config_dir'] }
+property :nssm_params, Hash, default: lazy { node['consul']['service']['nssm_params'] }
+property :systemd_params, Hash, default: lazy { node['consul']['service']['systemd_params'] }
+property :program, String, default: '/usr/local/bin/consul'
+property :acl_token, String, default: lazy { node['consul']['config']['acl_master_token'] }
+property :restart_on_update, [true, false], default: true
 
 action_class do
   include ConsulCookbook::Helpers

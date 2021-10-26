@@ -2,33 +2,13 @@ unified_mode true
 
 default_action :create
 
-# @!property url
-# @return [String]
-property :url, kind_of: String, default: 'http://localhost:8500'
-
-# @!property auth_token
-# @return [String]
-property :auth_token, kind_of: String, required: true
-
-# @!property policy_name
-# @return [String]
-property :policy_name, kind_of: String, name_property: true
-
-# @!property description
-# @return [String]
-property :description, kind_of: String, default: ''
-
-# @!property type
-# @return [Array]
-property :datacenters, kind_of: Array, default: []
-
-# @!property rules
-# @return [String]
-property :rules, kind_of: String, default: ''
-
-# @!property ssl
-# @return [Hash]
-property :ssl, kind_of: Hash, default: {}
+property :url, String, default: 'http://localhost:8500'
+property :auth_token, String, required: true
+property :policy_name, String, name_property: true
+property :description, String, default: ''
+property :datacenters, Array, default: []
+property :rules, String, default: ''
+property :ssl, Hash, default: {}
 
 def to_acl
   { 'Name' => policy_name,

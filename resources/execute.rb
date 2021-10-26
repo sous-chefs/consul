@@ -2,9 +2,9 @@ unified_mode true
 
 default_action :run
 
-property(:command, kind_of: String, name_property: true)
-property(:environment, kind_of: Hash, default: { 'PATH' => '/usr/local/bin:/usr/bin:/bin' })
-property(:options, kind_of: Hash, default: {})
+property :command, String, name_property: true
+property :environment, Hash, default: { 'PATH' => '/usr/local/bin:/usr/bin:/bin' }
+property :options, Hash, default: {}
 
 action :run do
   options = new_resource.options.map do |k, v|
