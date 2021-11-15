@@ -28,13 +28,13 @@ platforms:
       box: mwrock/Windows2012R2
       gui: false
     provisioner:
-      product_version: 13
+      product_version: 15.3
   - name: windows-2016
     driver:
       box: mwrock/Windows2016
       gui: false
     provisioner:
-      product_version: 13
+      product_version: 15.3
 
 suites:
   - name: default

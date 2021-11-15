@@ -15,7 +15,7 @@
 
 #   context 'with default service_user' do
 #     it 'creates the user without a login shell' do
-#       expect(chef_run).to create_poise_service_user('consul')
+#       expect(chef_run).to create_user('consul')
 #     end
 #   end
 
@@ -23,10 +23,10 @@
 #     let(:service_user) { 'johnny5' }
 
 #     it 'creates the requested user' do
-#       expect(chef_run).to create_poise_service_user('johnny5')
+#       expect(chef_run).to create_user('johnny5')
 #     end
 #     it 'does not try to create the default user' do
-#       expect(chef_run).to_not create_poise_service_user('consul')
+#       expect(chef_run).to_not create_user('consul')
 #     end
 #   end
 
@@ -34,10 +34,10 @@
 #     let(:service_user) { 'root' }
 
 #     it 'does not try to create the root user' do
-#       expect(chef_run).to_not create_poise_service_user('root')
+#       expect(chef_run).to_not create_user('root')
 #     end
 #     it 'does not try to create the default user' do
-#       expect(chef_run).to_not create_poise_service_user('consul')
+#       expect(chef_run).to_not create_user('consul')
 #     end
 #   end
 
@@ -45,7 +45,7 @@
 #     let(:create_service_user) { false }
 
 #     it 'does not try to create the user' do
-#       expect(chef_run).to_not create_poise_service_user('consul')
+#       expect(chef_run).to_not create_user('consul')
 #     end
 #   end
 
@@ -53,7 +53,7 @@
 #     let(:platform) { { platform: 'windows', version: '2012R2' } }
 
 #     it 'does not try to create the user' do
-#       expect(chef_run).to_not create_poise_service_user('consul')
+#       expect(chef_run).to_not create_user('consul')
 #     end
 #   end
 # end

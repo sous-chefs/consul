@@ -2,6 +2,11 @@
 
 ## Unreleased
 
+- Set minimum Chef version to 15.3.14 for `archive_file`
+- Replace `poise_archive` with `archive_file`
+- Replace `poise_service_user` with `user` and `group` resources
+- Remove `build_essential` since it's already included in Chef 14+
+
 ## 4.8.0 - *2021-09-28*
 
 - Added `advertise_addr_wan_ipv4` and `advertise_addr_wan_ipv6` attributes

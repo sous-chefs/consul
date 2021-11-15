@@ -42,21 +42,16 @@ module ConsulCookbook
 
       action :create do
         notifying_block do
-          directory join_path(options[:extract_to], new_resource.version) do
-            mode '0755'
-            recursive true
-          end
-
           url = format(options[:archive_url], version: options[:version], basename: options[:archive_basename])
-          remote_file url do
-            destination join_path(options[:extract_to], new_resource.version)
+          remote_file join_path(options[:extract_to], options[:archive_basename]) do
+            source url
             checksum options[:archive_checksum]
-            not_if { ::File.exist?(consul_program) }
+            action :create
           end
 
-          archive_file join_path(options[:extract_to], new_resource.version) do
+          archive_file join_path(options[:extract_to], options[:archive_basename]) do
             destination join_path(options[:extract_to], new_resource.version)
-            not_if { ::File.exist?(consul_program) }
+            action :extract
           end
 
           link '/usr/local/bin/consul' do

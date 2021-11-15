@@ -4,7 +4,14 @@
 #
 # Copyright:: 2014-2016, Bloomberg Finance L.P.
 #
-poise_service_user node['consul']['service_user'] do
+group node['consul']['service_group'] do
+  not_if { node.platform_family?('windows') }
+  not_if { node['consul']['service_user'] == 'root' }
+  not_if { node['consul']['create_service_user'] == false }
+end
+
+user node['consul']['service_user'] do
+  comment "Service user for #{node['consul']['service_name']}"
   group node['consul']['service_group']
   shell node['consul']['service_shell'] unless node['consul']['service_shell'].nil?
   not_if { node.platform_family?('windows') }
