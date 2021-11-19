@@ -22,18 +22,18 @@ user node['consul']['service_user'] do
 end
 
 service_name = node['consul']['service_name']
-config = consul_config service_name do |r|
-  node['consul']['config'].each_pair { |k, v| r.send(k, v) }
+config = consul_config service_name do
+  node['consul']['config'].each_pair { |k, v| send(k.to_sym, v) }
   notifies :reload, "consul_service[#{service_name}]", :delayed
 end
 
-install = consul_installation node['consul']['version'] do |r|
+install = consul_installation node['consul']['version'] do
   if node['consul']['installation']
-    node['consul']['installation'].each_pair { |k, v| r.send(k, v) }
+    node['consul']['installation'].each_pair { |k, v| send(k.to_sym, v) }
   end
 end
 
-consul_service service_name do |r|
+consul_service service_name do
   config_file config.path
   program install.consul_program
 
@@ -44,6 +44,6 @@ consul_service service_name do |r|
     group node['consul']['service_group']
   end
   if node['consul']['service']
-    node['consul']['service'].each_pair { |k, v| r.send(k, v) }
+    node['consul']['service'].each_pair { |k, v| send(k.to_sym, v) }
   end
 end
