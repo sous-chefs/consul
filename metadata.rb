@@ -14,4 +14,4 @@ supports 'debian', '>= 9.0'
 supports 'ubuntu', '>= 16.04'
 supports 'windows'
 
-depends 'nssm', '>= 4.0.0'
+depends 'nssm', '>= 5.1.0'
