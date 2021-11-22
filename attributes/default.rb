@@ -10,8 +10,7 @@ extend ConsulCookbook::Helpers
 default['consul']['service_name'] = 'consul'
 default['consul']['service_user'] = 'consul'
 default['consul']['service_group'] = 'consul'
-# To set the open file limit for the service. If unset system default is used
-default['consul']['service_nofile'] = nil
+default['consul']['service_shell'] = '/bin/false'
 default['consul']['create_service_user'] = true
 
 default['consul']['config']['path'] = join_path config_prefix_path, 'consul.json'
@@ -32,9 +31,12 @@ default['consul']['config']['ports'] = {
 default['consul']['diplomat_gem'] = 'diplomat'
 default['consul']['diplomat_version'] = nil
 
-default['consul']['service']['config_dir'] = join_path config_prefix_path, 'conf.d'
+default['consul']['config_dir'] = join_path(config_prefix_path, 'conf.d')
 
 default['consul']['version'] = '1.0.7'
+
+# To set extra service params, such as open file limit.
+default['consul']['service']['systemd_params'] = {}
 
 # Windows only
 default['consul']['service']['nssm_params'] = {
@@ -45,3 +47,6 @@ default['consul']['service']['nssm_params'] = {
   'AppRotateOnline' => 1,
   'AppRotateBytes' => 20_000_000,
 }
+
+default['consul']['install']['binary']['archive_url'] = 'https://releases.hashicorp.com/consul/%{version}/%{basename}'
+default['consul']['install']['binary']['archive_basename'] = nil

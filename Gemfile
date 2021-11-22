@@ -7,9 +7,6 @@
 source 'https://rubygems.org'
 
 gem 'diplomat', '~> 2.2.6'
-gem 'poise', '~> 2.2'
-gem 'poise-boiler'
-gem 'poise-service', '~> 1.0'
 gem 'rb-readline'
 
 group :development do
