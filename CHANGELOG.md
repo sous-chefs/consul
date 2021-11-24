@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+- Fix setting `program` in `consul_service` resource
+
 ## 5.0.0 - *2021-11-22*
 
 - Remove Poise dependencies

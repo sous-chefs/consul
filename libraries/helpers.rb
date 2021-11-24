@@ -44,11 +44,11 @@ module ConsulCookbook
       windows? ? join_path(program_files, 'consul', 'data') : join_path('/var/lib', 'consul')
     end
 
-    def command(config_file, config_dir)
+    def command(program, config_file, config_dir)
       if windows?
         %(agent -config-file="#{config_file}" -config-dir="#{config_dir}")
       else
-        "/usr/local/bin/consul agent -config-file=#{config_file} -config-dir=#{config_dir}"
+        "#{program} agent -config-file=#{config_file} -config-dir=#{config_dir}"
       end
     end
   end
