@@ -1,5 +1,7 @@
 # Change Log
 
+## Unreleased
+
 ## 5.0.1 - *2021-11-24*
 
 - Fix setting `program` in `consul_service` resource
