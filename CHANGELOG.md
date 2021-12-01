@@ -1,6 +1,6 @@
 # Change Log
 
-## Unreleased
+## 5.1.0 - *2021-12-01*
 
 - Support `:stop` action for `consul_service` resource
 
