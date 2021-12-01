@@ -75,6 +75,7 @@ property :http_api_response_headers, [Hash, Mash]
 property :http_config, [Hash, Mash]
 property :key_file, String
 property :leave_on_terminate, [true, false]
+property :license_path, String
 property :limits, [Hash, Mash]
 property :log_file, String
 property :log_level, String, equal_to: %w(INFO DEBUG WARN ERR)
@@ -193,6 +194,7 @@ def params_to_json
     gossip_wan
     http_config
     leave_on_terminate
+    license_path
     limits
     log_file
     log_level
