@@ -91,3 +91,9 @@ action :disable do
     action %i(disable delete)
   end
 end
+
+action :stop do
+  service 'consul' do
+    action :stop
+  end
+end
