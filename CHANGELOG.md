@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+- Support `:stop` action for `consul_service` resource
+
 ## 5.0.1 - *2021-11-24*
 
 - Fix setting `program` in `consul_service` resource
