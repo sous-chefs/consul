@@ -1,6 +1,6 @@
 # Change Log
 
-## Unreleased
+## 5.2.0 - *2021-12-01*
 
 - Added setting `license_path` in `consul_config` resource for enterprise installations
 
