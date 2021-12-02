@@ -45,7 +45,7 @@ action :enable do
       },
       Service: {
         Environment: new_resource.environment.map { |key, val| %("#{key}=#{val}") }.join(' '),
-        ExecStart: command(new_resource.program, new_resource.config_file, new_resource.config_dir),
+        ExecStart: command(new_resource.config_file, new_resource.config_dir, new_resource.program),
         ExecReload: '/bin/kill -HUP $MAINPID',
         KillSignal: 'TERM',
         User: new_resource.user,
