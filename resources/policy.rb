@@ -50,9 +50,10 @@ action_class do
       return false if old_policy_id.empty?
       old_policy = Diplomat::Policy.read(old_policy_id.first['ID'], {}, :return)
       return false if old_policy.nil?
-      old_policy.first.select! { |k, _v| %w(Name Description Rules).include?(k) }
+      old_policy.select! { |k, _v| %w(Name Description Datacenters Rules).include?(k) }
       old_policy['Description'].downcase!
-      old_policy.first == new_resource.to_acl
+      old_policy['Datacenters'] = [] unless old_policy.key?('Datacenters')
+      old_policy == new_resource.to_acl
     end
   end
 end
