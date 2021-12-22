@@ -59,7 +59,7 @@ action_class do
       old_token = Diplomat::Token.read(old_token_id.first['AccessorID'], {}, :return)
       old_token.select! { |k, _v| %w(SecretID Description Policies Local).include?(k) }
       old_token['Description'].downcase!
-      old_token['Policies'].map! { |p| p.slice('Name') }
+      old_token['Policies'].map! { |p| p.slice('Name') } unless old_token['Policies'].nil?
       old_token == new_resource.to_acl
     end
   end
