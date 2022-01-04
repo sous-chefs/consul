@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+- Fix idempotency checks for `consul_token` and `consul_policy`
+
 ## 5.3.0 - *2022-01-04*
 
 - Fix wrong number of arguments when calling action `:enable` service on Windows platform
