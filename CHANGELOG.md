@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+- Remove delivery folder
+
 ## 5.3.1 - *2022-01-04*
 
 - Fix idempotency checks for `consul_token` and `consul_policy`
