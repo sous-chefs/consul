@@ -1,6 +1,8 @@
 # Change Log
 
-## Unreleased
+## 5.4.0 - *2022-09-12*
+
+- Add missing `ui_config` attribute to `consul_config`, as `ui` is [deprecated in Consul 1.9.0](https://www.consul.io/docs/agent/config/config-files#ui-parameters)
 
 Standardise files with files in sous-chefs/repo-management
 
