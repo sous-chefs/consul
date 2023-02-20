@@ -6,7 +6,7 @@
 
 source 'https://rubygems.org'
 
-gem 'diplomat', '~> 2.2.6'
+gem 'diplomat', '~> 2.6.0'
 gem 'rb-readline'
 
 group :development do
