@@ -241,26 +241,14 @@ Consul v1.0 states that Go 1.9 is a requirement. The default go installation use
 git installation to work reliably.
 
 All of the [options available on the command-line][12] can be passed
-into the resource. This could potentially be a *very dangerous*
+into the resource. This could potentially be a very dangerous
 operation. You should absolutely understand what you are doing. By the
 nature of this command it is _impossible_ for it to be idempotent.
 
-[0]: http://blog.vialstudios.com/the-environment-cookbook-pattern/#theapplicationcookbook
 [1]: http://consul.io
-[2]: http://blog.vialstudios.com/the-environment-cookbook-pattern#thewrappercookbook
-[3]: http://blog.vialstudios.com/the-environment-cookbook-pattern#thelibrarycookbook
-[4]: https://github.com/johnbellone/libartifact-cookbook
-[5]: https://github.com/poise/poise
-[6]: https://github.com/poise/poise-service
-[7]: https://github.com/skottler/selinux
 [8]: https://github.com/test-kitchen/test-kitchen
-[9]: https://consul.io/docs/agent/watches.html
-[10]: https://consul.io/docs/agent/services.html
-[11]: https://consul.io/docs/agent/checks.html
-[12]: https://consul.io/docs/commands/exec.html
 [13]: https://en.wikipedia.org/wiki/Quorum_(distributed_computing)
 [14]: https://github.com/johnbellone/consul-cluster-cookbook
-[15]: https://www.consul.io/docs/internals/acl.html
 [16]: https://github.com/WeAreFarmGeek/diplomat
 
 ## Contributors
