@@ -16,7 +16,7 @@ module ConsulCookbook
     end
 
     def windows?
-      platform_family?('windows') ? true : false
+      platform_family?('windows') || false
     end
 
     # returns windows friendly version of the provided path,
