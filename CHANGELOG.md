@@ -1,5 +1,10 @@
 # Changelog
 
+## Unreleased
+
+Standardise files with files in sous-chefs/repo-management
+
+
 ## [5.6.9](https://github.com/sous-chefs/consul/compare/5.6.8...v5.6.9) (2025-10-15)
 
 
