@@ -1,5 +1,12 @@
 # Changelog
 
+## [5.6.9](https://github.com/sous-chefs/consul/compare/5.6.8...v5.6.9) (2025-10-15)
+
+
+### Bug Fixes
+
+* **ci:** Update workflows to use release pipeline ([#646](https://github.com/sous-chefs/consul/issues/646)) ([5524f5f](https://github.com/sous-chefs/consul/commit/5524f5f552870944072d9ca29cce712dd1829944))
+
 ## 5.6.8 - *2025-09-04*
 
 * Standardise files with files in sous-chefs/repo-management
