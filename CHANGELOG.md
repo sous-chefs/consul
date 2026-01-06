@@ -1,5 +1,17 @@
 # Changelog
 
+## [5.7.0](https://github.com/sous-chefs/consul/compare/v5.6.9...v5.7.0) (2026-01-06)
+
+
+### Features
+
+* **config:** add the ui_config parameter to configuration ([#608](https://github.com/sous-chefs/consul/issues/608)) ([61387f4](https://github.com/sous-chefs/consul/commit/61387f43323680da17dbf84901467c36d9e27666))
+
+
+### Bug Fixes
+
+* **ci:** Update workflows to use release pipeline ([#646](https://github.com/sous-chefs/consul/issues/646)) ([5524f5f](https://github.com/sous-chefs/consul/commit/5524f5f552870944072d9ca29cce712dd1829944))
+
 ## [5.6.9](https://github.com/sous-chefs/consul/compare/5.6.8...v5.6.9) (2025-10-15)
 
 
