@@ -13,4 +13,4 @@ permissions:
 
 jobs:
   conventional-commits:
-    uses: sous-chefs/.github/.github/workflows/conventional-commits.yml@5.0.3
+    uses: sous-chefs/.github/.github/workflows/conventional-commits.yml@5.0.8
