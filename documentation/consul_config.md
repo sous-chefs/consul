@@ -11,23 +11,23 @@ Manages the Consul agent configuration file in JSON format.
 
 ## Properties
 
-| Property          | Type           | Default                | Description                       |
-|-------------------|----------------|------------------------|-----------------------------------|
-| `path`            | String         | name                   | Path to config file (name property) |
-| `owner`           | String         | `'consul'`             | File owner                        |
-| `group`           | String         | `'consul'`             | File group                        |
-| `config_dir`      | String         | `'/etc/consul/conf.d'` | Configuration directory           |
-| `config_dir_mode` | String         | `'0755'`               | Config directory mode             |
-| `options`         | Hash           | `{}`                   | Additional options merged into config |
-| `server`          | true, false    |                        | Run as server                     |
-| `bootstrap`       | true, false    |                        | Bootstrap the cluster             |
-| `datacenter`      | String         |                        | Datacenter name                   |
-| `encrypt`         | String         |                        | Gossip encryption key             |
-| `ui`              | true, false    |                        | Enable the web UI                 |
-| `bind_addr`       | String         |                        | Bind address                      |
-| `client_addr`     | String         |                        | Client address                    |
-| `retry_join`      | Array          |                        | Addresses to join on start        |
-| `acl`             | Hash, Mash     |                        | ACL configuration block           |
+| Property          | Type        | Default                | Description                           |
+|-------------------|-------------|------------------------|---------------------------------------|
+| `path`            | String      | name                   | Path to config file (name property)   |
+| `owner`           | String      | `'consul'`             | File owner                            |
+| `group`           | String      | `'consul'`             | File group                            |
+| `config_dir`      | String      | `'/etc/consul/conf.d'` | Configuration directory               |
+| `config_dir_mode` | String      | `'0755'`               | Config directory mode                 |
+| `options`         | Hash        | `{}`                   | Additional options merged into config |
+| `server`          | true, false |                        | Run as server                         |
+| `bootstrap`       | true, false |                        | Bootstrap the cluster                 |
+| `datacenter`      | String      |                        | Datacenter name                       |
+| `encrypt`         | String      |                        | Gossip encryption key                 |
+| `ui`              | true, false |                        | Enable the web UI                     |
+| `bind_addr`       | String      |                        | Bind address                          |
+| `client_addr`     | String      |                        | Client address                        |
+| `retry_join`      | Array       |                        | Addresses to join on start            |
+| `acl`             | Hash, Mash  |                        | ACL configuration block               |
 
 See the [Consul documentation](https://developer.hashicorp.com/consul/docs/agent/config) for all available configuration options. Most options are exposed as properties.
 

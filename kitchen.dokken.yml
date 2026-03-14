@@ -22,6 +22,11 @@ platforms:
       image: dokken/almalinux-9
       pid_one_command: /usr/lib/systemd/systemd
 
+  - name: almalinux-10
+    driver:
+      image: dokken/almalinux-10
+      pid_one_command: /usr/lib/systemd/systemd
+
   - name: amazonlinux-2023
     driver:
       image: dokken/amazonlinux-2023
@@ -30,6 +35,11 @@ platforms:
   - name: centos-stream-9
     driver:
       image: dokken/centos-stream-9
+      pid_one_command: /usr/lib/systemd/systemd
+
+  - name: centos-stream-10
+    driver:
+      image: dokken/centos-stream-10
       pid_one_command: /usr/lib/systemd/systemd
 
   - name: debian-12
@@ -52,6 +62,11 @@ platforms:
       image: dokken/opensuse-leap-15
       pid_one_command: /usr/lib/systemd/systemd
 
+  - name: opensuse-leap-16
+    driver:
+      image: dokken/opensuse-leap-16
+      pid_one_command: /usr/lib/systemd/systemd
+
   - name: oraclelinux-8
     driver:
       image: dokken/oraclelinux-8
@@ -60,6 +75,11 @@ platforms:
   - name: oraclelinux-9
     driver:
       image: dokken/oraclelinux-9
+      pid_one_command: /usr/lib/systemd/systemd
+
+  - name: oraclelinux-10
+    driver:
+      image: dokken/oraclelinux-10
       pid_one_command: /usr/lib/systemd/systemd
 
   - name: rockylinux-8
@@ -72,10 +92,10 @@ platforms:
       image: dokken/rockylinux-9
       pid_one_command: /usr/lib/systemd/systemd
 
-  - name: ubuntu-20.04
+  - name: rockylinux-10
     driver:
-      image: dokken/ubuntu-20.04
-      pid_one_command: /bin/systemd
+      image: dokken/rockylinux-10
+      pid_one_command: /usr/lib/systemd/systemd
 
   - name: ubuntu-22.04
     driver:

@@ -19,16 +19,16 @@ This cookbook is maintained by the Sous Chefs. The Sous Chefs are a community of
 
 ### Supported Platforms
 
-- AlmaLinux 8, 9
+- AlmaLinux 8, 9, 10
 - Amazon Linux 2023
-- CentOS Stream 9
+- CentOS Stream 9, 10
 - Debian 12, 13
 - Fedora (latest)
-- openSUSE Leap 15
-- Oracle Linux 8, 9
+- openSUSE Leap 15, 16
+- Oracle Linux 8, 9, 10
 - Red Hat Enterprise Linux 8, 9
-- Rocky Linux 8, 9
-- Ubuntu 20.04, 22.04, 24.04
+- Rocky Linux 8, 9, 10
+- Ubuntu 22.04, 24.04
 
 ## Resources
 

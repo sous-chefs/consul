@@ -4,22 +4,22 @@ Manages Consul ACL tokens using the Diplomat gem.
 
 ## Actions
 
-| Action    | Description                     |
-|-----------|---------------------------------|
+| Action    | Description                      |
+|-----------|----------------------------------|
 | `:create` | Creates or updates ACL (default) |
-| `:delete` | Removes the ACL                 |
+| `:delete` | Removes the ACL                  |
 
 ## Properties
 
-| Property     | Type   | Default                  | Description              |
-|--------------|--------|--------------------------|--------------------------|
-| `id`         | String | name                     | ACL ID (name property)   |
-| `url`        | String | `'http://localhost:8500'` | Consul HTTP API URL      |
-| `auth_token` | String | required                 | Authentication token     |
-| `ssl`        | Hash   | `{}`                     | SSL options              |
-| `acl_name`   | String | `''`                     | ACL name                 |
-| `type`       | String | `'client'`               | ACL type: client or management |
-| `rules`      | String | `''`                     | ACL rules                |
+| Property     | Type   | Default                   | Description                    |
+|--------------|--------|---------------------------|--------------------------------|
+| `id`         | String | name                      | ACL ID (name property)         |
+| `url`        | String | `'http://localhost:8500'` | Consul HTTP API URL            |
+| `auth_token` | String | required                  | Authentication token           |
+| `ssl`        | Hash   | `{}`                      | SSL options                    |
+| `acl_name`   | String | `''`                      | ACL name                       |
+| `type`       | String | `'client'`                | ACL type: client or management |
+| `rules`      | String | `''`                      | ACL rules                      |
 
 ## Examples
 

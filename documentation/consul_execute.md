@@ -4,17 +4,17 @@ Runs a command via `consul exec` on remote nodes.
 
 ## Actions
 
-| Action | Description              |
-|--------|--------------------------|
+| Action | Description                |
+|--------|----------------------------|
 | `:run` | Runs the command (default) |
 
 ## Properties
 
-| Property      | Type   | Default                                    | Description          |
-|---------------|--------|--------------------------------------------|----------------------|
-| `command`     | String | name                                       | Command to execute (name property) |
-| `environment` | Hash   | `{ 'PATH' => '/usr/local/bin:/usr/bin:/bin' }` | Environment variables |
-| `options`     | Hash   | `{}`                                       | Consul exec options  |
+| Property      | Type   | Default                                        | Description                        |
+|---------------|--------|------------------------------------------------|------------------------------------|
+| `command`     | String | name                                           | Command to execute (name property) |
+| `environment` | Hash   | `{ 'PATH' => '/usr/local/bin:/usr/bin:/bin' }` | Environment variables              |
+| `options`     | Hash   | `{}`                                           | Consul exec options                |
 
 ## Examples
 
