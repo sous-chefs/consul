@@ -1,10 +1,15 @@
+---
 driver:
   name: dokken
   privileged: true
+  chef_image: chef/chefworkstation
   chef_version: <%= ENV['CHEF_VERSION'] || 'current' %>
 
-transport: { name: dokken }
-provisioner: { name: dokken }
+transport:
+  name: dokken
+
+provisioner:
+  name: dokken
 
 platforms:
   - name: almalinux-8
@@ -17,11 +22,6 @@ platforms:
       image: dokken/almalinux-9
       pid_one_command: /usr/lib/systemd/systemd
 
-  - name: almalinux-10
-    driver:
-      image: dokken/almalinux-10
-      pid_one_command: /usr/lib/systemd/systemd
-
   - name: amazonlinux-2023
     driver:
       image: dokken/amazonlinux-2023
@@ -30,11 +30,6 @@ platforms:
   - name: centos-stream-9
     driver:
       image: dokken/centos-stream-9
-      pid_one_command: /usr/lib/systemd/systemd
-
-  - name: centos-stream-10
-    driver:
-      image: dokken/centos-stream-10
       pid_one_command: /usr/lib/systemd/systemd
 
   - name: debian-12
@@ -75,11 +70,6 @@ platforms:
   - name: rockylinux-9
     driver:
       image: dokken/rockylinux-9
-      pid_one_command: /usr/lib/systemd/systemd
-
-  - name: rockylinux-10
-    driver:
-      image: dokken/rockylinux-10
       pid_one_command: /usr/lib/systemd/systemd
 
   - name: ubuntu-20.04

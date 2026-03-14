@@ -1,77 +1,64 @@
 ---
 driver:
   name: vagrant
+  customize:
+    memory: 1024
+
+transport:
+  max_wait_until_ready: 600
+  connection_retries: 10
+  connection_retry_sleep: 10
 
 provisioner:
-  name: chef_zero
+  name: chef_infra
   product_name: chef
+  product_version: latest
+  channel: stable
+  chef_license: accept
   enforce_idempotency: true
   multiple_converge: 2
   deprecations_as_errors: true
 
 verifier:
   name: inspec
+  sudo: true
 
 platforms:
-  - name: amazonlinux-2
-    driver_config:
-      box: ywatase/amzn2
-  - name: ubuntu-16.04
-  - name: ubuntu-18.04
-  - name: ubuntu-20.04
-  - name: centos-7
-  - name: centos-8
-  - name: debian-9
-  - name: debian-10
-  - name: windows-2012r2
-    driver:
-      box: mwrock/Windows2012R2
-      gui: false
-    provisioner:
-      product_version: 13
-  - name: windows-2016
-    driver:
-      box: mwrock/Windows2016
-      gui: false
-    provisioner:
-      product_version: 13
+  - name: almalinux-9
+  - name: debian-12
+  - name: ubuntu-24.04
+
+# Reusable YAML anchors for run_lists
+x-run_lists:
+  default: &default_run_list
+    - recipe[test::default]
+  client: &client_run_list
+    - recipe[test::client]
+
+# Reusable YAML anchors for attributes
+x-attributes:
+  default: &default_attrs
+    consul_test:
+      version: latest
+      install_method: repository
+      config_path: /etc/consul/consul.json
+
+# Reusable YAML anchors for verifiers
+x-verifiers:
+  default: &default_verifier
+    inspec_tests:
+      - path: test/integration/default
+  client: &client_verifier
+    inspec_tests:
+      - path: test/integration/client
 
 suites:
   - name: default
-    attributes:
-      consul:
-        config: &default-config
-          owner: root
-          ui: true
-          bootstrap: true
-          server: true
-          datacenter: FortMeade
-          encrypt: CGXC2NsXW4AvuB4h5ODYzQ==
-          acl_master_token: doublesecret
-          acl_datacenter: FortMeade
-          acl_default_policy: deny
-        service:
-          systemd_params:
-            LimitNOFILE: 9001
-    excludes:
-      - windows-2012r2
-      - windows-2016
+    run_list: *default_run_list
+    attributes: *default_attrs
+    verifier: *default_verifier
 
   - name: client
-    excludes:
-      - windows-2012r2
-      - windows-2016
-
-  - name: windows
-    attributes:
-      consul:
-        config: *default-config
-    includes:
-      - windows-2012r2
-      - windows-2016
-
-  - name: windows_client
-    named_run_list: client
-    includes:
-      - windows-2012r2
-      - windows-2016
+    run_list: *client_run_list
+    attributes: *default_attrs
+    verifier: *client_verifier

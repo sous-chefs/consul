@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 def consul_version
-  '1.0.7'
+  input('consul_version', value: 'latest')
 end

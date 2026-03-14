@@ -24,17 +24,24 @@ jobs:
     strategy:
       matrix:
         os:
-          - "centos-7"
-          - "centos-8"
-          - "debian-9"
-          - "debian-10"
-          - "ubuntu-1604"
-          - "ubuntu-1804"
+          - "almalinux-8"
+          - "almalinux-9"
+          - "amazonlinux-2023"
+          - "centos-stream-9"
+          - "debian-12"
+          - "debian-13"
+          - "fedora-latest"
+          - "opensuse-leap-15"
+          - "oraclelinux-8"
+          - "oraclelinux-9"
+          - "rockylinux-8"
+          - "rockylinux-9"
           - "ubuntu-2004"
-          - "amazonlinux-2"
+          - "ubuntu-2204"
+          - "ubuntu-2404"
         suite:
-          - "client"
           - "default"
+          - "client"
       fail-fast: false
 
     steps:

@@ -1,0 +1,13 @@
+---
+name: client
+title: Client Suite - Consul Client
+maintainer: Sous Chefs
+license: Apache-2.0
+summary: Integration tests for consul client mode
+version: 1.0.0
+supports:
+  - platform-family: debian
+  - platform-family: rhel
+  - platform-family: fedora
+  - platform-family: suse
+  - platform-family: amazon
