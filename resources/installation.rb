@@ -13,12 +13,7 @@ property :archive_url, String
 include ConsulCookbook::Helpers
 
 def consul_program
-  case install_method
-  when 'binary'
-    ::File.join('/opt/consul', version, 'consul')
-  else
-    '/usr/bin/consul'
-  end
+  '/usr/bin/consul'
 end
 
 action :create do
@@ -111,7 +106,7 @@ action :remove do
       action :remove
     end
   when 'binary'
-    link '/usr/local/bin/consul' do
+    link '/usr/bin/consul' do
       action :delete
     end
 
@@ -145,7 +140,7 @@ action_class do
       destination install_dir
     end
 
-    link '/usr/local/bin/consul' do
+    link '/usr/bin/consul' do
       to ::File.join(install_dir, 'consul')
     end
   end

@@ -28,7 +28,7 @@ describe 'consul_installation' do
 
     it { is_expected.to create_remote_file(File.join(Chef::Config[:file_cache_path], 'consul_1.22.5_linux_amd64.zip')) }
     it { is_expected.to create_directory('/opt/consul/1.22.5') }
-    it { is_expected.to create_link('/usr/local/bin/consul').with(to: '/opt/consul/1.22.5/consul') }
+    it { is_expected.to create_link('/usr/bin/consul').with(to: '/opt/consul/1.22.5/consul') }
   end
 
   context 'with binary install method and custom checksum' do
@@ -61,7 +61,7 @@ describe 'consul_installation' do
       end
     end
 
-    it { is_expected.to delete_link('/usr/local/bin/consul') }
+    it { is_expected.to delete_link('/usr/bin/consul') }
     it { is_expected.to delete_directory('/opt/consul/1.22.5') }
   end
 end
