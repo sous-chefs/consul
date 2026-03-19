@@ -58,8 +58,7 @@ control 'consul-client-cluster-01' do
   impact 1.0
   title 'Consul client is alive'
 
-  # Retry to allow the consul agent time to fully initialize serf membership
-  describe command('for i in 1 2 3 4 5 6 7 8 9 10; do consul members 2>/dev/null && exit 0; sleep 3; done; exit 1') do
+  describe command('consul members 2>&1') do
     its(:exit_status) { should eq 0 }
     its(:stdout) { should include 'alive' }
     its(:stdout) { should include 'client' }
