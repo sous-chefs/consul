@@ -19,6 +19,7 @@ config = consul_config node['consul_test']['config_path'] do
   owner 'consul'
   group 'consul'
   data_dir '/var/lib/consul'
+  acl({ 'default_policy' => 'allow' })
   notifies :reload, 'consul_service[consul]', :delayed
 end
 
