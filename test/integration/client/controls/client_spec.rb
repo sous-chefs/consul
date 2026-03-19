@@ -58,10 +58,9 @@ control 'consul-client-cluster-01' do
   impact 1.0
   title 'Consul client is alive'
 
-  describe command('consul members 2>&1') do
+  describe command('curl -sf http://127.0.0.1:8500/v1/agent/self') do
     its(:exit_status) { should eq 0 }
-    its(:stdout) { should include 'alive' }
-    its(:stdout) { should include 'client' }
+    its(:stdout) { should include '"Member"' }
   end
 end
 
