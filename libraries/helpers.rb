@@ -52,6 +52,16 @@ module ConsulCookbook
       'https://apt.releases.hashicorp.com/gpg'
     end
 
+    def resolve_binary_version(version)
+      return version unless version == 'latest'
+
+      require 'net/http'
+      require 'json'
+      uri = URI('https://checkpoint-api.hashicorp.com/v1/check/consul')
+      response = Net::HTTP.get_response(uri)
+      JSON.parse(response.body)['current_version']
+    end
+
     def binary_archive_url(version)
       basename = "consul_#{version}_linux_#{consul_arch}.zip"
       "https://releases.hashicorp.com/consul/#{version}/#{basename}"

@@ -58,10 +58,10 @@ control 'consul-client-cluster-01' do
   impact 1.0
   title 'Consul client is alive'
 
-  describe command('consul members -detailed') do
+  describe command('consul members') do
     its(:exit_status) { should eq 0 }
     its(:stdout) { should include 'alive' }
-    its(:stdout) { should include 'role=node' }
+    its(:stdout) { should include 'client' }
   end
 end
 

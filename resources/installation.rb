@@ -126,10 +126,11 @@ action_class do
   include ConsulCookbook::Helpers
 
   def install_binary
-    archive_url = new_resource.archive_url || binary_archive_url(new_resource.version)
-    basename = binary_archive_basename(new_resource.version)
+    resolved_version = resolve_binary_version(new_resource.version)
+    archive_url = new_resource.archive_url || binary_archive_url(resolved_version)
+    basename = binary_archive_basename(resolved_version)
     archive_path = ::File.join(Chef::Config[:file_cache_path], basename)
-    install_dir = ::File.join('/opt/consul', new_resource.version)
+    install_dir = ::File.join('/opt/consul', resolved_version)
 
     remote_file archive_path do
       source archive_url

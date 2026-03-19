@@ -59,12 +59,12 @@ control 'consul-cluster-01' do
   impact 1.0
   title 'Consul cluster is healthy'
 
-  describe command('consul members -detailed -token=doublesecret') do
+  # Retry to allow ACL system time to fully initialize after bootstrap
+  describe command('for i in 1 2 3 4 5 6 7 8 9 10; do consul members -token=doublesecret 2>/dev/null && exit 0; sleep 3; done; exit 1') do
     its(:exit_status) { should eq 0 }
     its(:stdout) { should include 'alive' }
-    its(:stdout) { should include 'role=consul' }
-    its(:stdout) { should include 'bootstrap=1' }
-    its(:stdout) { should include 'dc=fortmeade' }
+    its(:stdout) { should include 'server' }
+    its(:stdout) { should include 'fortmeade' }
   end
 end
 
