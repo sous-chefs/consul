@@ -2,7 +2,6 @@
 driver:
   name: dokken
   privileged: true
-  chef_image: chef/chefworkstation
   chef_version: <%= ENV['CHEF_VERSION'] || 'current' %>
 
 transport:
