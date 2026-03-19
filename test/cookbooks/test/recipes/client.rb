@@ -25,4 +25,5 @@ consul_service 'consul' do
   config_file config.path
   user 'consul'
   group 'consul'
+  action [:enable, :start]
 end

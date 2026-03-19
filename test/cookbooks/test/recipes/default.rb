@@ -22,10 +22,8 @@ config = consul_config node['consul_test']['config_path'] do
   bootstrap true
   datacenter 'FortMeade'
   encrypt 'CGXC2NsXW4AvuB4h5ODYzQ=='
-  acl_master_token 'doublesecret'
-  acl_datacenter 'FortMeade'
-  acl_default_policy 'deny'
-  ui true
+  acl({ 'enabled' => true, 'default_policy' => 'deny', 'tokens' => { 'initial_management' => 'doublesecret' } })
+  ui_config({ 'enabled' => true })
   notifies :reload, 'consul_service[consul]', :delayed
 end
 
@@ -34,4 +32,5 @@ consul_service 'consul' do
   user 'consul'
   group 'consul'
   systemd_params('LimitNOFILE' => 9001)
+  action [:enable, :start]
 end

@@ -14,7 +14,8 @@ describe 'consul_installation' do
     end
 
     it { is_expected.to install_package('apt-transport-https') }
-    it { is_expected.to create_remote_file('/usr/share/keyrings/hashicorp-archive-keyring.gpg') }
+    it { is_expected.to create_remote_file(File.join(Chef::Config[:file_cache_path], 'hashicorp-archive-keyring.asc')) }
+    it { is_expected.to nothing_execute('dearmor-hashicorp-gpg') }
     it { is_expected.to install_package('consul') }
   end
 

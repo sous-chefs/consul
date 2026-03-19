@@ -30,17 +30,19 @@ action :create do
         action :install
       end
 
-      remote_file '/usr/share/keyrings/hashicorp-archive-keyring.gpg' do
+      gpg_asc_path = ::File.join(Chef::Config[:file_cache_path], 'hashicorp-archive-keyring.asc')
+
+      remote_file gpg_asc_path do
         source 'https://apt.releases.hashicorp.com/gpg'
         mode '0644'
+        notifies :run, 'execute[dearmor-hashicorp-gpg]', :immediately
         action :create
       end
 
       execute 'dearmor-hashicorp-gpg' do
-        command 'gpg --dearmor -o /usr/share/keyrings/hashicorp-archive-keyring.gpg /usr/share/keyrings/hashicorp-archive-keyring.gpg'
-        not_if 'file /usr/share/keyrings/hashicorp-archive-keyring.gpg | grep -q "GPG keybox"'
+        command "gpg --batch --yes --dearmor -o /usr/share/keyrings/hashicorp-archive-keyring.gpg #{gpg_asc_path}"
+        creates '/usr/share/keyrings/hashicorp-archive-keyring.gpg'
         action :nothing
-        subscribes :run, 'remote_file[/usr/share/keyrings/hashicorp-archive-keyring.gpg]', :immediately
       end
 
       file '/etc/apt/sources.list.d/hashicorp.list' do
@@ -73,7 +75,7 @@ action :create do
 
       yum_repository 'hashicorp' do
         description 'HashiCorp Stable - $basearch'
-        baseurl 'https://rpm.releases.hashicorp.com/AmazonLinux/$releasever/$basearch/stable'
+        baseurl 'https://rpm.releases.hashicorp.com/AmazonLinux/latest/$basearch/stable'
         gpgkey 'https://rpm.releases.hashicorp.com/gpg'
         gpgcheck true
         only_if { platform_family?('amazon') }
