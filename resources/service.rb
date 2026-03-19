@@ -1,27 +1,23 @@
+# frozen_string_literal: true
+
+provides :consul_service
 unified_mode true
 
-property :config_file, String, default: lazy { node['consul']['config']['path'] }
-property :user, String, default: lazy { node['consul']['service_user'] }
-property :group, String, default: lazy { node['consul']['service_group'] }
+property :config_file, String, default: '/etc/consul/consul.json'
+property :user, String, default: 'consul'
+property :group, String, default: 'consul'
 property :environment, Hash, default: lazy { default_environment }
-property :data_dir, String, default: lazy { node['consul']['config']['data_dir'] }
-property :config_dir, String, default: lazy { node['consul']['config_dir'] }
-property :nssm_params, Hash, default: lazy { node['consul']['service']['nssm_params'] }
-property :systemd_params, Hash, default: lazy { node['consul']['service']['systemd_params'] }
-property :program, String, default: '/usr/local/bin/consul'
-property :acl_token, String, default: lazy { node['consul']['config']['acl_master_token'] }
+property :data_dir, String, default: '/var/lib/consul'
+property :config_dir, String, default: '/etc/consul/conf.d'
+property :systemd_params, Hash, default: {}
+property :program, String, default: '/usr/bin/consul'
 property :restart_on_update, [true, false], default: true
-
-def shell_environment
-  shell = node['consul']['service_shell']
-  shell.nil? ? {} : { 'SHELL' => shell }
-end
 
 def default_environment
   {
     'GOMAXPROCS' => [node['cpu']['total'], 2].max.to_s,
     'PATH' => '/usr/local/bin:/usr/bin:/bin',
-  }.merge(shell_environment)
+  }
 end
 
 action_class do
@@ -55,6 +51,7 @@ action :enable do
         WantedBy: 'multi-user.target',
       }
     )
+    verify false
     notifies :restart, 'service[consul]' if new_resource.restart_on_update
     action %i(create enable)
   end

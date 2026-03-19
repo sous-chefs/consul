@@ -1,5 +1,16 @@
 # Changelog
 
+## [6.0.0](https://github.com/sous-chefs/consul/compare/v5.7.0...v6.0.0) (2026-03-19)
+
+
+### ⚠ BREAKING CHANGES
+
+* modernize cookbook to resource-only pattern (v6.0)
+
+### Features
+
+* modernize cookbook to resource-only pattern (v6.0) ([10ce6dd](https://github.com/sous-chefs/consul/commit/10ce6dd0e4092fc0683ff952716f3445a6137dbd))
+
 ## [5.7.0](https://github.com/sous-chefs/consul/compare/v5.6.9...v5.7.0) (2026-01-06)
 
 
@@ -13,7 +24,6 @@
 * **ci:** Update workflows to use release pipeline ([#646](https://github.com/sous-chefs/consul/issues/646)) ([5524f5f](https://github.com/sous-chefs/consul/commit/5524f5f552870944072d9ca29cce712dd1829944))
 
 ## [5.6.9](https://github.com/sous-chefs/consul/compare/5.6.8...v5.6.9) (2025-10-15)
-
 
 ### Bug Fixes
 

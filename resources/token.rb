@@ -1,9 +1,12 @@
+# frozen_string_literal: true
+
+provides :consul_token
 unified_mode true
 
-default_action(:create)
+default_action :create
 
-property :url, String, default: 'http://localhost:8500'
-property :auth_token, String, required: true
+use '_partial/_diplomat'
+
 property :secret_id, String
 property :description, String, name_property: true
 property :policies, Array, default: []
@@ -12,7 +15,6 @@ property :service_identities, Array, default: []
 property :expiration_time, String, default: ''
 property :expiration_ttl, String
 property :local, [true, false], default: false
-property :ssl, Hash, default: {}
 
 def to_acl
   { 'SecretID' => secret_id,
@@ -47,7 +49,7 @@ action :delete do
 end
 
 action_class do
-  include ConsulCookbook::ResourceHelpers
+  include ConsulCookbook::DiplomatHelpers
 
   def up_to_date?
     retry_block(max_tries: 3, sleep: 0.5) do
