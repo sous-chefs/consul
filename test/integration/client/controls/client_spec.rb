@@ -58,7 +58,8 @@ control 'consul-client-cluster-01' do
   impact 1.0
   title 'Consul client is alive'
 
-  describe command('curl -sf http://127.0.0.1:8500/v1/agent/self') do
+  # Retry to allow consul HTTP API time to fully initialize after start
+  describe command('for i in 1 2 3 4 5 6 7 8 9 10; do out=$(curl -sf http://127.0.0.1:8500/v1/agent/self 2>/dev/null) && echo "$out" && exit 0; sleep 2; done; curl -s -w "\nHTTP_STATUS:%{http_code}" http://127.0.0.1:8500/v1/agent/self; exit 1') do
     its(:exit_status) { should eq 0 }
     its(:stdout) { should include '"Member"' }
   end

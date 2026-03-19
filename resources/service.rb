@@ -51,6 +51,7 @@ action :enable do
         WantedBy: 'multi-user.target',
       }
     )
+    verify false
     notifies :restart, 'service[consul]' if new_resource.restart_on_update
     action %i(create enable)
   end
