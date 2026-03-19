@@ -8,7 +8,7 @@ description       'Provides consul_installation, consul_config, consul_service, 
 source_url        'https://github.com/sous-chefs/consul'
 issues_url        'https://github.com/sous-chefs/consul/issues'
 chef_version      '>= 15.3'
-version           '5.7.0'
+version           '6.0.0'
 
 supports 'almalinux', '>= 8.0'
 supports 'amazon', '>= 2023.0'
