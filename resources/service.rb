@@ -10,7 +10,7 @@ property :environment, Hash, default: lazy { default_environment }
 property :data_dir, String, default: '/var/lib/consul'
 property :config_dir, String, default: '/etc/consul/conf.d'
 property :systemd_params, Hash, default: {}
-property :program, String, default: '/usr/local/bin/consul'
+property :program, String, default: '/usr/bin/consul'
 property :restart_on_update, [true, false], default: true
 
 def default_environment

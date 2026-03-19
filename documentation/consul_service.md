@@ -24,7 +24,7 @@ Manages the Consul systemd service unit.
 | `data_dir`          | String      | `'/var/lib/consul'`         | Data directory                |
 | `config_dir`        | String      | `'/etc/consul/conf.d'`      | Configuration directory       |
 | `systemd_params`    | Hash        | `{}`                        | Extra systemd unit parameters |
-| `program`           | String      | `'/usr/local/bin/consul'`   | Path to consul binary         |
+| `program`           | String      | `'/usr/bin/consul'`         | Path to consul binary         |
 | `restart_on_update` | true, false | `true`                      | Restart on unit file changes  |
 
 ## Examples
