@@ -60,5 +60,7 @@ suites:
 
   - name: client
     run_list: *client_run_list
+    provisioner:
+      named_run_list: client
     attributes: *default_attrs
     verifier: *client_verifier
