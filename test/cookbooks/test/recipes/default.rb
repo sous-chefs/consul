@@ -21,6 +21,7 @@ config = consul_config node['consul_test']['config_path'] do
   server true
   bootstrap true
   datacenter 'FortMeade'
+  data_dir '/var/lib/consul'
   encrypt 'CGXC2NsXW4AvuB4h5ODYzQ=='
   acl({ 'enabled' => true, 'default_policy' => 'deny', 'tokens' => { 'initial_management' => 'doublesecret' } })
   ui_config({ 'enabled' => true })
