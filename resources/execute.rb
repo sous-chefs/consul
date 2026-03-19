@@ -1,3 +1,6 @@
+# frozen_string_literal: true
+
+provides :consul_execute
 unified_mode true
 
 default_action :run

@@ -1,10 +1,14 @@
+---
 driver:
   name: dokken
   privileged: true
   chef_version: <%= ENV['CHEF_VERSION'] || 'current' %>
 
-transport: { name: dokken }
-provisioner: { name: dokken }
+transport:
+  name: dokken
+
+provisioner:
+  name: dokken
 
 platforms:
   - name: almalinux-8
@@ -52,11 +56,6 @@ platforms:
       image: dokken/fedora-latest
       pid_one_command: /usr/lib/systemd/systemd
 
-  - name: opensuse-leap-15
-    driver:
-      image: dokken/opensuse-leap-15
-      pid_one_command: /usr/lib/systemd/systemd
-
   - name: oraclelinux-8
     driver:
       image: dokken/oraclelinux-8
@@ -65,6 +64,11 @@ platforms:
   - name: oraclelinux-9
     driver:
       image: dokken/oraclelinux-9
+      pid_one_command: /usr/lib/systemd/systemd
+
+  - name: oraclelinux-10
+    driver:
+      image: dokken/oraclelinux-10
       pid_one_command: /usr/lib/systemd/systemd
 
   - name: rockylinux-8
@@ -81,11 +85,6 @@ platforms:
     driver:
       image: dokken/rockylinux-10
       pid_one_command: /usr/lib/systemd/systemd
-
-  - name: ubuntu-20.04
-    driver:
-      image: dokken/ubuntu-20.04
-      pid_one_command: /bin/systemd
 
   - name: ubuntu-22.04
     driver:

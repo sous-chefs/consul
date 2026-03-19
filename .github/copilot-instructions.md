@@ -13,7 +13,7 @@
 - `resources/` - Custom Chef resources with properties and actions (if this is a resource-driven cookbook)
 - `spec/` - ChefSpec unit tests
 - `test/integration/` - InSpec integration tests (tests all platforms supported)
-- `test/cookbooks/` or `test/fixtures/` - Example cookbooks used during testing that show good examples of custom resource usage
+- `test/cookbooks/test/` - Test cookbook used during integration testing that exercises custom resources
 - `attributes/` - Configuration for recipe driven cookbooks (not applicable to resource cookbooks)
 - `libraries/` - Library helpers to assist with the cookbook. May contain multiple files depending on complexity of the cookbook.
 - `templates/` - ERB templates that may be used in the cookbook

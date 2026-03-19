@@ -1,14 +1,16 @@
+# frozen_string_literal: true
+
+provides :consul_acl
 unified_mode true
 
 default_action :create
 
-property :url, String, default: 'http://localhost:8500'
-property :auth_token, String, required: true
+use '_partial/_diplomat'
+
 property :id, String, name_property: true
 property :acl_name, String, default: ''
 property :type, String, equal_to: %w(client management), default: 'client'
 property :rules, String, default: ''
-property :ssl, Hash, default: {}
 
 def to_acl
   { 'ID' => id,
@@ -36,7 +38,7 @@ action :delete do
 end
 
 action_class do
-  include ConsulCookbook::ResourceHelpers
+  include ConsulCookbook::DiplomatHelpers
 
   def up_to_date?
     retry_block(max_tries: 3, sleep: 0.5) do
