@@ -20,7 +20,7 @@ def to_acl
   { 'SecretID' => secret_id,
     'Description' => description.downcase,
     'Local' => local,
-    'Policies' => [ policies.each_with_object({}) { |k, h| h['Name'] = k } ],
+    'Policies' => [ policies.to_h { |k| ['Name', k] } ],
   }
 end
 
